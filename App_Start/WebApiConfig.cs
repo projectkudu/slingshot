@@ -4,14 +4,17 @@ using System.Linq;
 using System.Web.Http;
 using System.Web.Routing;
 
-namespace ARMOAuth
+namespace AzureDeployButton
 {
     public static class WebApiConfig
     {
         public static void Register(HttpConfiguration config)
         {
-            config.Routes.MapHttpRoute("get-token", "token", new { controller = "ARM", action = "GetToken" }, new { verb = new HttpMethodConstraint("GET", "HEAD") });
-            config.Routes.MapHttpRoute("get", "{*path}", new { controller = "ARM", action = "Get" }, new { verb = new HttpMethodConstraint("GET", "HEAD") });
+            config.Routes.MapHttpRoute("get-token", "api/token", new { controller = "ARM", action = "GetToken" }, new { verb = new HttpMethodConstraint("GET", "HEAD") });
+            config.Routes.MapHttpRoute("get-deploy", "api/deploy", new { controller = "ARM", action = "Deploy" }, new { verb = new HttpMethodConstraint("GET") });
+
+            
+            config.Routes.MapHttpRoute("get", "api/{*path}", new { controller = "ARM", action = "Get" }, new { verb = new HttpMethodConstraint("GET", "HEAD") });
 
             //config.Routes.MapHttpRoute(
             //    name: "DefaultApi",
