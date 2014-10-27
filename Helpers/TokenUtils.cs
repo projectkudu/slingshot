@@ -51,6 +51,11 @@ namespace AzureDeployButton.Helpers
             }
         }
 
+        public static string GetCsmUrl(AzureEnvs env)
+        {
+            return CSMUrls[(int)env];
+        }
+
         public class ResultOf<T>
         {
             public T[] value { get; set; }

@@ -1,0 +1,37 @@
+﻿<div class="form-group">
+    <label for="repositoryUrl">Git Repository Url</label>
+    <input type="text" class="form-control" name="name" ng-model="formData.repositoryUrl" disabled>
+</div>
+
+
+<!-- <div class="form-group">
+    <label for="siteName">Site Name</label>
+    <input type="text" class="form-control" name="siteName" ng-model="formData.siteName">
+</div>
+
+<div class="form-group">
+    <label for="location">Location</label>
+    <input type="text" class="form-control" name="location" ng-model="formData.location">
+</div> -->
+
+<div class="form-group">
+    <label for="subscription">Subscription</label>
+    <!-- <input type="text" class="form-control" name="subscription" ng-model="formData.location"> -->
+    <select class="form-control" ng-model="formData.subscription" ng-options="subscription.displayName for subscription in formData.subscriptions">
+    </select>
+</div>
+
+<div class="form-group" ng-repeat="param in formData.params">
+	<div class="form-group" ng-show="showParam(param)" >
+	    <label>{{param.name}}</label>
+    	<input type="text" class="form-control" name="param.name" ng-model="param.value">
+    </div>
+</div>
+
+<div class="form-group row">
+<div class="col-xs-6 col-xs-offset-3">
+    <a ui-sref="form.deploy" class="btn btn-block btn-info" >
+    Deploy <span class="glyphicon glyphicon-circle-arrow-right"></span>
+    </a>
+</div>
+</div>

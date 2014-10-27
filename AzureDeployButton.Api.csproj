@@ -125,6 +125,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\TokenUtils.cs" />
+    <Compile Include="Models\CreateDeploymentResponse.cs" />
     <Compile Include="Modules\AADOAuth2AccessToken.cs" />
     <Compile Include="Modules\ARMOAuthModule.cs" />
     <Compile Include="Modules\OpenIdConfiguration.cs" />
@@ -904,8 +905,10 @@
     <Content Include="Content\Scripts\jquery-1.9.0.js" />
     <Content Include="Content\Scripts\jquery-1.9.0.min.js" />
     <Content Include="ng\Scripts\controllers.js" />
-    <Content Include="ng\Views\Deploy.html" />
-    <Content Include="ng\Views\Setup.html" />
+    <Content Include="ng\Views\form-deploy.html" />
+    <Content Include="ng\Views\form-payment.html" />
+    <Content Include="ng\Views\form-setup.html" />
+    <Content Include="ng\Views\form.html" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -956,6 +959,7 @@
   <ItemGroup>
     <Content Include="Content\Scripts\angular.min.js.map" />
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

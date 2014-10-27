@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AzureDeployButton.Modules;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IdentityModel.Selectors;
@@ -10,7 +11,7 @@ using System.Text;
 using System.Threading;
 using System.Web;
 
-namespace ARMOAuth.Modules
+namespace AzureDeployButton.Modules
 {
     public class ARMOAuthModule : IHttpModule
     {
@@ -30,6 +31,7 @@ namespace ARMOAuth.Modules
         {
             get { return Environment.GetEnvironmentVariable("AADClientSecret"); }
         }
+
 
         public void Dispose()
         {
