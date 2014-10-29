@@ -2,10 +2,12 @@
 using AzureDeployButton.Models;
 using Microsoft.Azure.Management.Resources;
 using Microsoft.Azure.Management.Resources.Models;
+using Microsoft.Azure.Management.WebSites;
 using Microsoft.WindowsAzure;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -45,66 +47,8 @@ namespace AzureDeployButton.Controllers
         }
 
         [Authorize]
-        public async Task<HttpResponseMessage> Get()
-        {
-            var resourceGroupName = string.Empty;
-            var token = Request.Headers.GetValues("X-MS-OAUTH-TOKEN").FirstOrDefault();
-            var subscription = string.Empty;
-
-            var subscriptions = await TokenUtils.GetSubscriptionsAsync(TokenUtils.AzureEnvs.Prod, token);
-
-            //var creds = new TokenCloudCredentials(subscription, token);
-            //var client = new ResourceManagementClient(creds);
-
-            //var res1 = await client.ResourceGroups.CreateOrUpdateAsync(resourceGroupName, new BasicResourceGroup { Location = "East US" });
-            
-            //var parameters = new
-            //{
-            //    siteName = new { value = "TmpBlah678761" },
-            //    hostingPlanName = new { value = "TmpBlah67876HP" },
-            //    siteLocation = new { value = "East US" }
-            //};
-
-            //var basicDeployment = new BasicDeployment
-            //{
-            //    Parameters = JsonConvert.SerializeObject(parameters),
-            //    TemplateLink = new TemplateLink(new Uri("https://dl.dropboxusercontent.com/u/2209341/EmptySite.json"))
-            //};
-            //var res2 = await client.Deployments.CreateOrUpdateAsync(resourceGroupName, "MyDep", basicDeployment);
-
-            return Request.CreateResponse(HttpStatusCode.OK);
-            //IHttpRouteData routeData = Request.GetRouteData();
-            //string path = routeData.Values["path"] as string;
-            //if (String.IsNullOrEmpty(path))
-            //{
-            //    var response = Request.CreateResponse(HttpStatusCode.Redirect);
-            //    string fullyQualifiedUrl = Request.RequestUri.GetLeftPart(UriPartial.Authority);
-            //    response.Headers.Location = new Uri(new Uri(fullyQualifiedUrl), "subscriptions");
-            //    return response;
-            //}
-
-            //using (var client = GetClient("https://management.azure.com"))
-            //{
-            //    return await client.GetAsync(path + "?api-version=2014-04-01");
-            //}
-        }
-
-        [Authorize]
-        [HttpGet]
-        public HttpResponseMessage Deploy()
-        {
-            string repositoryUrl = Request.Headers.GetValues("referer").FirstOrDefault();
-
-            var response = Request.CreateResponse(HttpStatusCode.Moved);
-            string format = "https://{0}:{1}?repository={2}";
-            response.Headers.Location = new Uri(string.Format(format, Request.RequestUri.Host, Request.RequestUri.Port, repositoryUrl));
-            return response;
-            //return Request.CreateResponse(HttpStatusCode.OK);
-        }
-
-        [Authorize]
         [HttpPost]
-        public async Task<HttpResponseMessage> DeployTemplate([FromBody] JObject parameters, string subscriptionId, string templateUrl)
+        public async Task<HttpResponseMessage> Deploy([FromBody] JObject parameters, string subscriptionId, string templateUrl)
         {
             CreateDeploymentResponse responseObj = new CreateDeploymentResponse();
             HttpResponseMessage response = null;
@@ -112,12 +56,13 @@ namespace AzureDeployButton.Controllers
             try
             {
                 // etodo: what should we do about this?
-                var resourceGroupName = "ehrg01";
+                //var resourceGroupName = "ehrg01";
+                var resourceGroupName = GetParamOrDefault(parameters, "siteName", "mySite");
+
                 using (var client = GetRMClient(subscriptionId))
                 {
-                    string location = GetParamOrDefault(parameters, "siteLocation", "East US");
-
-                    var resourceResult = await client.ResourceGroups.CreateOrUpdateAsync(resourceGroupName, new BasicResourceGroup { Location = location });
+                    // For now we just default to East US for the resource group location.
+                    var resourceResult = await client.ResourceGroups.CreateOrUpdateAsync(resourceGroupName, new BasicResourceGroup { Location = "East US" });
                     var templateParams = parameters.ToString();
                     var basicDeployment = new BasicDeployment
                     {
@@ -125,8 +70,7 @@ namespace AzureDeployButton.Controllers
                         TemplateLink = new TemplateLink(new Uri(templateUrl))
                     };
 
-                    var deploymentResult = await client.Deployments.CreateOrUpdateAsync(resourceGroupName, "MyDep", basicDeployment);
-                    responseObj.DeploymentUrl = TokenUtils.GetCsmUrl(TokenUtils.AzureEnvs.Prod) + deploymentResult.Deployment.Id + "?api-version=" + TokenUtils.CSMApiVersion;
+                    var deploymentResult = await client.Deployments.CreateOrUpdateAsync(resourceGroupName, resourceGroupName, basicDeployment);
                     response = Request.CreateResponse(HttpStatusCode.OK, responseObj);
                 }
             }
@@ -143,15 +87,46 @@ namespace AzureDeployButton.Controllers
 
         [Authorize]
         [HttpGet]
-        public async Task<HttpResponseMessage> GetDeploymentStatus(string subscriptionId, string deploymentUrl)
+        public async Task<HttpResponseMessage> GetDeploymentStatus(string subscriptionId, string siteName)
         {
-            LongRunningOperationResponse status = null;
+            string provisioningState = null;
+            string hostName = null;
+            var responseObj = new JObject();
+
             using (var client = GetRMClient(subscriptionId))
             {
-                status = await client.GetLongRunningOperationStatusAsync(deploymentUrl);
+                var deployment = (await client.Deployments.GetAsync(siteName, siteName)).Deployment;
+                provisioningState = deployment.Properties.ProvisioningState;
             }
 
-            return Request.CreateResponse(HttpStatusCode.OK, status);
+            if (provisioningState == "Succeeded")
+            {
+                using (var wsClient = GetWSClient(subscriptionId))
+                {
+                    hostName = (await wsClient.WebSites.GetAsync(siteName, siteName, null, null)).WebSite.Properties.HostNames[0];
+                }
+            }
+
+            responseObj["provisioningState"] = provisioningState;
+            responseObj["siteUrl"] = string.Format("http://{0}", hostName);
+
+            return Request.CreateResponse(HttpStatusCode.OK, responseObj);
+        }
+
+        [Authorize]
+        [HttpGet]
+        public async Task<HttpResponseMessage> IsSiteNameAvailable(string subscriptionId, string siteName)
+        {
+            string token = GetTokenFromHeader();
+            bool isAvailable;
+
+            using (var webSiteMgmtClient =
+                CloudContext.Clients.CreateWebSiteManagementClient(new TokenCloudCredentials(subscriptionId, token)))
+            {
+                isAvailable = (await webSiteMgmtClient.WebSites.IsHostnameAvailableAsync(siteName)).IsAvailable;
+            }
+
+            return Request.CreateResponse(HttpStatusCode.OK, new { siteName = siteName, isAvailable = isAvailable });
         }
 
         [Authorize]
@@ -177,7 +152,6 @@ namespace AzureDeployButton.Controllers
             }
             else
             {
-                //repositoryUrl = repositoryUrl.TrimEnd(new char[] { '/' });
                 Uri repositoryUri = new Uri(repositoryUrl);
                 if (repositoryUri.Segments.Length >= 3)
                 {
@@ -185,19 +159,14 @@ namespace AzureDeployButton.Controllers
                     string repo = repositoryUri.Segments[2].Trim(new char[] { '/' });
                     templateUrl = string.Format("https://raw.githubusercontent.com/{0}/{1}/master/azuredeploy.json", user, repo);
                     template = await DownloadTemplate(templateUrl);
-                }
 
-                //templateUrl = repositoryUrl.TrimEnd(new char[] { '/' }) + "/blob/master/azuredeploy.json";
-                //if (repositoryUrl.EndsWith("readme.md", StringComparison.OrdinalIgnoreCase))
-                //{
-                //    //etodo: I think this probably should be handled on the client side before requesting the template
-                //    int lastSlashIndex = repositoryUrl.LastIndexOf('/');
-                //    templateUrl = repositoryUrl.Remove(lastSlashIndex) + "/azuredeploy.json";
-                //}
-                //else
-                //{
-                    //templateUrl = repositoryUrl.TrimEnd(new char[] { '/' }) + "/blob/master/azuredeploy.json";
-                //}
+                    // If a user opens the README.md file, and then clicks on the button, the referrer address will look something
+                    // like this:  https://github.com/user/repo/blob/master/README.md
+                    if (repositoryUri.Segments.Length > 3)
+                    {
+                        repositoryUrl = string.Format("https://github.com/{0}/{1}", user, repo);
+                    }
+                }
                 
                 if (template == null)
                 {
@@ -209,14 +178,26 @@ namespace AzureDeployButton.Controllers
             if (template != null)
             {
                 string token = GetTokenFromHeader();
-                var subscriptions = await TokenUtils.GetSubscriptionsAsync(TokenUtils.AzureEnvs.Prod, token);
 
-                // etodo: there's gotta be a better way to do this.
-                JObject returnObj = new JObject();
-                returnObj["template"] = template;
-                returnObj["subscriptions"] = JArray.Parse(JsonConvert.SerializeObject(subscriptions));
-                response = Request.CreateResponse(HttpStatusCode.OK, returnObj);
-                response.Headers.Add("templateUrl", templateUrl);
+                var subscriptions = (await TokenUtils.GetSubscriptionsAsync(TokenUtils.AzureEnvs.Prod, token))
+                                    .Where(s => s.state == "Enabled").ToArray();
+
+                if (subscriptions.Length >= 1)
+                {
+                    var locations = await GetSiteLocations(token, subscriptions);
+
+                    JObject returnObj = new JObject();
+                    returnObj["template"] = template;
+                    returnObj["templateUrl"] = templateUrl;
+                    returnObj["repositoryUrl"] = repositoryUrl;
+                    returnObj["siteLocations"] = JArray.FromObject(locations);
+                    returnObj["subscriptions"] = JArray.FromObject(subscriptions);
+                    response = Request.CreateResponse(HttpStatusCode.OK, returnObj);
+                }
+                else
+                {
+                    response = Request.CreateResponse(HttpStatusCode.InternalServerError, "No available active subscriptions");
+                }
             }
             else
             {
@@ -225,6 +206,15 @@ namespace AzureDeployButton.Controllers
 
 
             return response;
+        }
+
+        private async Task<IList<string>> GetSiteLocations(string token, SubscriptionInfo[] subscriptions)
+        {
+            using (var client = GetRMClient(token, subscriptions.FirstOrDefault().subscriptionId))
+            {
+                var websites = (await client.Providers.GetAsync("Microsoft.Web")).Provider;
+                return websites.ResourceTypes.FirstOrDefault(rt => rt.Name == "sites").Locations;
+            }
         }
 
         private async Task<JObject> DownloadTemplate(string templateUrl)
@@ -253,6 +243,18 @@ namespace AzureDeployButton.Controllers
         private ResourceManagementClient GetRMClient(string subscriptionId)
         {
             var token = Request.Headers.GetValues("X-MS-OAUTH-TOKEN").FirstOrDefault();
+            return GetRMClient(token, subscriptionId);
+        }
+
+        private WebSiteManagementClient GetWSClient(string subscriptionId)
+        {
+            var token = Request.Headers.GetValues("X-MS-OAUTH-TOKEN").FirstOrDefault();
+            var creds = new TokenCloudCredentials(subscriptionId, token);
+            return new WebSiteManagementClient(creds);
+        }
+
+        private ResourceManagementClient GetRMClient(string token, string subscriptionId)
+        {
             var creds = new TokenCloudCredentials(subscriptionId, token);
             return new ResourceManagementClient(creds);
         }

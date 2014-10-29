@@ -1,9 +1,4 @@
-﻿<!-- Button trigger modal -->
-<!-- <button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
-  Launch demo modal
-</button>
- -->
-<!-- Modal -->
+﻿<!-- Modal -->
 <div class="modal fade" id="errorModal" tabindex="-1" role="dialog" aria-labelledby="errorModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -16,7 +11,6 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
       </div>
     </div>
   </div>
@@ -27,13 +21,6 @@
 		<!-- <li ng-repeat="mesg in formData.statusMesgs">{{mesg}}</li> -->
 		<div ng-repeat="mesg in formData.statusMesgs">{{mesg}}</div>
 		<div ng-show="formData.errorMesg"><span class="text-danger">Deployment Failed</span><a href ng-click="showError()"> (View Error)</a></div>
+		<div ng-show="formData.siteUrl">Deployment Complete - <a target="_blank" ng-href="{{formData.siteUrl}}">{{formData.siteUrl}}</a></div>
 	</ul>
-</div>
-
-<div class="form-group row">
-<div class="col-xs-6 col-xs-offset-3">
-    <a ui-sref="form.payment" class="btn btn-block btn-info">
-    Next Section <span class="glyphicon glyphicon-circle-arrow-right"></span>
-    </a>
-</div>
 </div>

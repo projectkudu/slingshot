@@ -1,18 +1,12 @@
-﻿<div class="form-group">
+﻿<!-- <div class="form-group">
     <label for="repositoryUrl">Git Repository Url</label>
     <input type="text" class="form-control" name="name" ng-model="formData.repositoryUrl" disabled>
 </div>
-
-
-<!-- <div class="form-group">
-    <label for="siteName">Site Name</label>
-    <input type="text" class="form-control" name="siteName" ng-model="formData.siteName">
-</div>
-
+ -->
 <div class="form-group">
-    <label for="location">Location</label>
-    <input type="text" class="form-control" name="location" ng-model="formData.location">
-</div> -->
+	<span class="text-primary">Git Repository Url - </span>
+	<span class="text-info">{{formData.repositoryUrl}}</span>
+</div>
 
 <div class="form-group">
     <label for="subscription">Subscription</label>
@@ -21,8 +15,22 @@
     </select>
 </div>
 
-<div class="form-group" ng-repeat="param in formData.params">
-	<div class="form-group" ng-show="showParam(param)" >
+<div class="form-group" ng-repeat="param in formData.params" ng-switch on="param.name">
+	<div ng-switch-when="siteName" class="form-group">
+		<label>{{param.name}}</label>
+		<span ng-show="formData.siteName.length > 0 && formData.querySiteName.length > 0" class="text-success" ng-if="formData.siteNameAvailable"> - Name is available
+		</span>
+		<span ng-show="formData.siteName.length > 0 && formData.querySiteName.length > 0" class="text-danger" ng-if="!formData.siteNameAvailable"> - Name is not available
+		</span>
+    	<input type="text" class="form-control" name="param.name" ng-model="param.value" ng-change="checkSiteName(param.value)">
+	</div>
+
+	<div ng-switch-when="siteLocation" class="form-group">
+		<label>{{param.name}}</label>
+    	<select class="form-control" ng-model="param.value" ng-options="location for location in formData.siteLocations"></select>
+	</div>
+
+	<div ng-switch-default class="form-group" ng-show="showParam(param)" >
 	    <label>{{param.name}}</label>
     	<input type="text" class="form-control" name="param.name" ng-model="param.value">
     </div>
@@ -30,7 +38,7 @@
 
 <div class="form-group row">
 <div class="col-xs-6 col-xs-offset-3">
-    <a ui-sref="form.deploy" class="btn btn-block btn-info" >
+    <a ui-sref="form.deploy" ng-disabled="!canMoveToNextStep()" class="btn btn-block btn-info" >
     Deploy <span class="glyphicon glyphicon-circle-arrow-right"></span>
     </a>
 </div>

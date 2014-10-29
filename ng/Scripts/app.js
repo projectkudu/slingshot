@@ -82,6 +82,12 @@ angular.module('formApp', ['ngAnimate', 'ui.router'])
 			controller: 'FormDeployController'
 		})
 		
+		// url will be /form/payment
+		.state('form.payment', {
+			url: '/payment',
+			templateUrl: '/ng/views/form-payment.html'
+		});
+		
 	// catch all route
 	// send users to the form page 
 	$urlRouterProvider.otherwise('/form/setup');
@@ -105,6 +111,14 @@ angular.module('formApp', ['ngAnimate', 'ui.router'])
 
 	function initialize(){
 		$scope.formData.repositoryUrl = getQueryVariable("repository");
+		if(!$scope.formData.repositoryUrl || $scope.formData.repositoryUrl.length ==0){
+			$scope.formData.repositoryUrl = document.referrer;
+
+			if(!$scope.formData.repositoryUrl || $scope.formData.repositoryUrl.length ==0){
+				alert("No repository detected.");
+			}
+		}
+
 		$location.url("/");
 	}
 
@@ -144,7 +158,9 @@ angular.module('formApp', ['ngAnimate', 'ui.router'])
 		.then(function(result){
 			$scope.formData.template = result.data.template;
 			$scope.formData.subscriptions = result.data.subscriptions;
-			$scope.formData.templateUrl = result.headers('templateUrl');
+			$scope.formData.siteLocations = result.data.siteLocations;
+			$scope.formData.templateUrl = result.data.templateUrl;
+			$scope.formData.repositoryUrl = result.data.repositoryUrl;
 
 			$scope.formData.params = [];
 			var parameters = $scope.formData.template.parameters;
@@ -184,6 +200,49 @@ angular.module('formApp', ['ngAnimate', 'ui.router'])
 		return true;
 	}
 
+	$scope.canMoveToNextStep = function(){
+		if($scope.formData.subscription && $scope.formData.params && $scope.formData.siteNameAvailable){
+			var params = $scope.formData.params;
+			for(var i = 0; i < params.length; i++){
+
+				if(params[i].name === 'hostingPlanName' && $scope.formData.siteName){
+					params[i].value = $scope.formData.siteName;
+				}				
+
+				if(!params[i].value){
+					return false;
+				}
+			}
+
+			return true;
+		}
+
+		return false;
+	}
+
+	$scope.checkSiteName = function(siteName){
+		$scope.formData.querySiteName = siteName;
+		window.setTimeout(querySiteName, 250, $scope, $http, siteName);
+	}
+
+	function querySiteName($scope, $http, siteName){
+		if(siteName && $scope.formData.querySiteName === siteName){
+			var subscriptionId = $scope.formData.subscriptions[1].subscriptionId
+			$http({
+			    method: "get",
+			    url: "api/subscriptions/"+subscriptionId+"/sites/"+siteName
+			})
+			.then(function(result){
+				if(result.data.siteName === $scope.formData.querySiteName){
+					$scope.formData.siteNameAvailable = result.data.isAvailable;
+					$scope.formData.siteName = result.data.siteName;
+				}
+			},function(result){
+				alert(result.statusText);
+			});
+		}
+	}
+
 	initialize($scope, $http);
 
 }]) // end FormSetupController
@@ -197,31 +256,27 @@ angular.module('formApp', ['ngAnimate', 'ui.router'])
 	}
 
 	function initialize($scope, $http){
-		var queryParams = {}
+		var dataParams = {}
+		var subscriptionId = $scope.formData.subscription.subscriptionId;
 
 		var params = $scope.formData.params;
 		for(var i = 0; i < params.length; i++){
-			queryParams[params[i].name] = {value : params[i].value};
-		}
-
-		if(queryParams.hostingPlanName && queryParams.siteName){
-			queryParams.hostingPlanName.value = queryParams.siteName + "hostingPlan";
+			dataParams[params[i].name] = {value : params[i].value};
 		}
 
 		$scope.formData.statusMesgs.push("Submitting Deployment...");
 		$http({
 		    method: "post",
-		    url: "api/deployTemplate",
+		    url: "api/deployments/"+subscriptionId,
 		    params:{
 		    	"templateUrl" : $scope.formData.templateUrl,
-		    	"subscriptionId" : $scope.formData.subscription.subscriptionId
 		    },
-		    data: queryParams
+		    data: dataParams
 		})
 		.then(function(result){
 			$scope.formData.statusMesgs.push("Deployment Started...");
 
-			$scope.formData.statusId = window.setTimeout(getStatus, 1000, $scope, $http, result.data.deploymentUrl);
+			$scope.formData.statusId = window.setTimeout(getStatus, 5000, $scope, $http, result.data.deploymentUrl);
 		},
 		function(result){
 			$scope.formData.errorMesg = result.data.error;
@@ -229,24 +284,29 @@ angular.module('formApp', ['ngAnimate', 'ui.router'])
 	}
 
 	function getStatus($scope, $http, deploymentUrl){
+		var subscriptionId = $scope.formData.subscription.subscriptionId;
+		var siteName = $scope.formData.siteName;
+
 		$http({
 		    method: "get",
-		    url: "api/DeploymentStatus",
-		    params:{
-		    	"subscriptionId" : $scope.formData.subscription.subscriptionId,
-		    	"deploymentUrl" : deploymentUrl
-		    }
+		    url: "api/deployments/"+subscriptionId+"/sites/"+siteName
  		})
 		.then(function(result){
-			if(result.data.Status === 0){
-				$scope.formData.statusMesgs.push("Working...");	
-				$scope.formData.statusId = window.setTimeout(getStatus, 1000, $scope, $http, deploymentUrl);
+			if(result.data.provisioningState === "Failed"){
+				// etodo: add better error
+				$scope.formData.errorMesg = "Failed";
 			}
-			else if(result.data.Status === 1){
-				$scope.formData.statusMesgs.push("Deployment Complete...");	
+			else if(result.data.provisioningState === "Succeeded"){
+				// $scope.formData.statusMesgs.push("Deployment Complete.");
+				$scope.formData.siteUrl = result.data.siteUrl;
 			}
 			else{
-				$scope.formdata.errorMesg = result.data.error;
+				if(!$scope.formData.waitingForDeployment){
+					$scope.formData.statusMesgs.push("Working...");	
+					$scope.formData.waitingForDeployment = true;
+				}
+				$scope.formData.statusId = window.setTimeout(getStatus, 1000, $scope, $http, deploymentUrl);
+
 			}
 		},
 		function(result){

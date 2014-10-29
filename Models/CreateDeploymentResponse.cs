@@ -13,8 +13,5 @@ namespace AzureDeployButton.Models
 
         [JsonProperty("errorCode")]
         public string ErrorCode { get; set; }
-
-        [JsonProperty("deploymentUrl")]
-        public string DeploymentUrl { get; set; }
     }
 }
