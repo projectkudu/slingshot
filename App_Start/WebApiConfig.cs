@@ -12,14 +12,15 @@ namespace AzureDeployButton
         {
             config.Routes.MapHttpRoute("get-token", "api/token", new { controller = "ARM", action = "GetToken" }, new { verb = new HttpMethodConstraint("GET", "HEAD") });
             
-            config.Routes.MapHttpRoute("get-subscriptions", "api/subscriptions", new { controller = "ARM", action = "Subscriptions" }, new { verb = new HttpMethodConstraint("GET") });
+            //config.Routes.MapHttpRoute("get-subscriptions", "api/subscriptions", new { controller = "ARM", action = "Subscriptions" }, new { verb = new HttpMethodConstraint("GET") });
             config.Routes.MapHttpRoute("get-subscription-sitenameavailable", "api/subscriptions/{subscriptionId}/sites/{siteName}", new { controller = "ARM", action = "IsSiteNameAvailable" }, new { verb = new HttpMethodConstraint("GET") });
             config.Routes.MapHttpRoute("get-template", "api/template", new { controller = "ARM", action = "GetTemplate" }, new { verb = new HttpMethodConstraint("GET") });
+            config.Routes.MapHttpRoute("post-preview", "api/preview/{subscriptionId}", new { controller = "ARM", action = "Preview" }, new { verb = new HttpMethodConstraint("POST") });
             config.Routes.MapHttpRoute("post-deployments", "api/deployments/{subscriptionId}", new { controller = "ARM", action = "Deploy" }, new { verb = new HttpMethodConstraint("POST") });
             config.Routes.MapHttpRoute("get-deployments-status", "api/deployments/{subscriptionId}/sites/{siteName}", new { controller = "ARM", action = "GetDeploymentStatus" }, new { verb = new HttpMethodConstraint("GET") });
-            
 
-            //config.Routes.MapHttpRoute("get", "api/{*path}", new { controller = "ARM", action = "Get" }, new { verb = new HttpMethodConstraint("GET", "HEAD") });
+
+            config.Routes.MapHttpRoute("get", "api/{*path}", new { controller = "ARM", action = "Get" }, new { verb = new HttpMethodConstraint("GET", "HEAD") });
 
             //config.Routes.MapHttpRoute(
             //    name: "DefaultApi",

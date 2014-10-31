@@ -127,12 +127,16 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Abstract\Repository.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Concrete\GitHubRepository.cs" />
     <Compile Include="Controllers\ARMController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\Constants.cs" />
     <Compile Include="Helpers\TokenUtils.cs" />
+    <Compile Include="Helpers\Utils.cs" />
     <Compile Include="Models\CreateDeploymentResponse.cs" />
     <Compile Include="Modules\AADOAuth2AccessToken.cs" />
     <Compile Include="Modules\ARMOAuthModule.cs" />
@@ -915,6 +919,7 @@
     <Content Include="ng\Scripts\controllers.js" />
     <Content Include="ng\Views\form-deploy.html" />
     <Content Include="ng\Views\form-payment.html" />
+    <Content Include="ng\Views\form-preview.html" />
     <Content Include="ng\Views\form-setup.html" />
     <Content Include="ng\Views\form.html" />
     <Content Include="Web.config">

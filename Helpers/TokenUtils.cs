@@ -68,7 +68,6 @@ namespace AzureDeployButton.Helpers
             Dogfood = 2,
             Prod = 3
         }
-
     }
 
     public class SubscriptionInfo

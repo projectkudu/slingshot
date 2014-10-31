@@ -36,15 +36,6 @@ if (document.all && !window.setInterval.isPolyfill) {
 }
 
 
-// var globalObjects = function(){
-// 	var that = {};
-// 	// var repositoryUrl = null;
-
-// 	return that;
-// }
-
-// var globals = globalObjects();
-
 (function () {
 
 // app.js
@@ -74,15 +65,23 @@ angular.module('formApp', ['ngAnimate', 'ui.router'])
 			controller: 'FormSetupController'
 
 		})
+
+		// /form/preview
+		.state('form.preview', {
+			url: '/preview',
+			templateUrl: '/ng/views/form-preview.html',
+			controller: 'FormPreviewController'
+
+		})
 		
-		// url will be /form/deploy
+		// /form/deploy
 		.state('form.deploy', {
 			url: '/deploy',
 			templateUrl: '/ng/views/form-deploy.html',
 			controller: 'FormDeployController'
 		})
 		
-		// url will be /form/payment
+		// /form/payment
 		.state('form.payment', {
 			url: '/payment',
 			templateUrl: '/ng/views/form-payment.html'
@@ -93,6 +92,14 @@ angular.module('formApp', ['ngAnimate', 'ui.router'])
 	$urlRouterProvider.otherwise('/form/setup');
 })
 
+// Custom filters
+// =============================================================================
+.filter('camelCaseToHuman', function(){
+	return function(input) {
+	    return input.charAt(0).toUpperCase() + input.substr(1).replace(/[A-Z]/g, ' $&');
+  }
+})
+
 // our controller for the form
 // =============================================================================
 .controller('FormController', ['$scope', '$location', function($scope, $location) {
@@ -100,11 +107,6 @@ angular.module('formApp', ['ngAnimate', 'ui.router'])
 	// we will store all of our form data in this object
 	$scope.formData = {};
 	
-	// function to process the form
-	$scope.processForm = function() {
-		alert('awesome!');
-	};
-
 	////////////////////
 	// Private Methods
 	////////////////////
@@ -115,7 +117,7 @@ angular.module('formApp', ['ngAnimate', 'ui.router'])
 			$scope.formData.repositoryUrl = document.referrer;
 
 			if(!$scope.formData.repositoryUrl || $scope.formData.repositoryUrl.length ==0){
-				alert("No repository detected.");
+				$scope.formData.error = "No repository detected.  The repository must be passed as either a referrer header or as a query string.";
 			}
 		}
 
@@ -141,13 +143,20 @@ angular.module('formApp', ['ngAnimate', 'ui.router'])
 		var that = {};
 		that.name = null;
 		that.type = null;
-		that.allowedValues = [];
+		that.allowedValues = null;
+		that.aliasValues = null;
 		that.defaultValue = null;
 		that.value = null;
 		return that;
 	};
 
 	function initialize($scope, $http){
+		// If we don't have the repository url, then don't init.  Also
+		// if the user hit "back" from the next page, we don't re-init.
+		if(!$scope.formData.repositoryUrl || $scope.formData.subscriptions){
+			return;
+		}
+
 		$http({
 		    method: "get",
 		    url: "api/template",
@@ -156,12 +165,24 @@ angular.module('formApp', ['ngAnimate', 'ui.router'])
 		    }
 		})
 		.then(function(result){
+
 			$scope.formData.template = result.data.template;
 			$scope.formData.subscriptions = result.data.subscriptions;
 			$scope.formData.siteLocations = result.data.siteLocations;
 			$scope.formData.templateUrl = result.data.templateUrl;
 			$scope.formData.repositoryUrl = result.data.repositoryUrl;
+			$scope.formData.branch = result.data.branch;
+			$scope.formData.tenants = result.data.tenants;
 
+			// Select current tenant
+			var tenants = $scope.formData.tenants;
+			for(var i = 0; i < tenants.length; i++){
+				if(tenants[i].Current === true){
+					$scope.formData.tenant = tenants[i];
+				}
+			}
+
+			// Pull out template parameters to show on UI
 			$scope.formData.params = [];
 			var parameters = $scope.formData.template.parameters;
 			for(var name in parameters){
@@ -170,7 +191,7 @@ angular.module('formApp', ['ngAnimate', 'ui.router'])
 				
 				param.name = name;
 				param.type = parameter.type;
-				param.allowedValues = parameter.allow;
+				param.allowedValues = parameter.allowedValues;
 				param.defaultValue = parameter.defaultValue;
 
 				$scope.formData.params.push(param);
@@ -182,26 +203,61 @@ angular.module('formApp', ['ngAnimate', 'ui.router'])
 	}
 
 	$scope.showParam = function(param){
-		if(param.defaultValue){
+		if(!param.value){
 			param.value = param.defaultValue;
+		}
+
+		var name = param.name.toLowerCase();
+		if(name === 'repourl' && $scope.formData.repositoryUrl){
+			param.value = $scope.formData.repositoryUrl;
 			return false;
 		}
-		else{
-			var name = param.name.toLowerCase();
-			if(name === 'repourl' && $scope.formData.repositoryUrl){
-				param.value = $scope.formData.repositoryUrl;
-				return false;
+		else if(name === 'branch'){
+			param.value = $scope.formData.branch;
+			return false;
+		}
+		else if(name === 'hostingplanname'){
+			return false;
+		}
+		else if(name === 'workersize'){
+			if(!param.aliased){
+				param.aliased = true;
+
+				// Creating aliases this way means that we need to undo them later.  There should be a better
+				// way to get this to work with Angular's select box, but I couldn't get it to work so
+				// for now this will have to do.
+				param.allowedValues[0] = "Small";
+				param.allowedValues[1] = "Medium";
+				param.allowedValues[2] = "Large";
 			}
-			else if(name === 'hostingplanname'){
-				return false;
+
+			var skuParam = getParamByName($scope.formData.params, 'sku');
+			if(skuParam &&
+				skuParam.value === 'Free' ||
+			    skuParam.value === 'Shared'){
+					param.value = 'Small';
+					return false;
 			}
 		}
 
 		return true;
 	}
 
+	function getParamByName(params, name){
+		for(var i = 0; i < params.length; i++){
+			if(params[i].name.toLowerCase() === name.toLowerCase()){
+				return params[i];
+			}
+		}
+
+		return null;
+	}
+
 	$scope.canMoveToNextStep = function(){
-		if($scope.formData.subscription && $scope.formData.params && $scope.formData.siteNameAvailable){
+		if($scope.formData.tenant &&
+		   $scope.formData.subscription &&
+		   $scope.formData.params &&
+		   $scope.formData.siteNameAvailable){
 			var params = $scope.formData.params;
 			for(var i = 0; i < params.length; i++){
 
@@ -209,7 +265,7 @@ angular.module('formApp', ['ngAnimate', 'ui.router'])
 					params[i].value = $scope.formData.siteName;
 				}				
 
-				if(!params[i].value){
+				if(params[i].value === null){
 					return false;
 				}
 			}
@@ -221,19 +277,41 @@ angular.module('formApp', ['ngAnimate', 'ui.router'])
 	}
 
 	$scope.checkSiteName = function(siteName){
-		$scope.formData.querySiteName = siteName;
-		window.setTimeout(querySiteName, 250, $scope, $http, siteName);
+		if(siteName){
+			$scope.formData.siteNameQuery = siteName;
+			window.setTimeout(querySiteName, 250, $scope, $http, siteName);
+		}
+		else{
+			$scope.formData.siteNameAvailable = false;
+			$scope.formData.siteName = '';
+		}
+	}
+
+	$scope.showSiteNameAvailableMesg = function(){
+		if(($scope.formData.siteName && $scope.formData.siteName.length > 0) &&
+		   ($scope.formData.siteNameQuery && $scope.formData.siteNameQuery.length > 0)){
+			return true;
+		}
+
+		return false;
+	}
+
+	$scope.nextStep = function(){
+		$scope.formData.deployPayload = getDeployPayload($scope.formData.params);
 	}
 
 	function querySiteName($scope, $http, siteName){
-		if(siteName && $scope.formData.querySiteName === siteName){
+		// Check to make sure we still have the correct site name to query after the delay
+		if($scope.formData.siteNameQuery === siteName){
 			var subscriptionId = $scope.formData.subscriptions[1].subscriptionId
 			$http({
 			    method: "get",
 			    url: "api/subscriptions/"+subscriptionId+"/sites/"+siteName
 			})
 			.then(function(result){
-				if(result.data.siteName === $scope.formData.querySiteName){
+				// After getting the result, double check to make sure that the
+				// sitename we queried still matches what the user has typed in
+				if(result.data.siteName === $scope.formData.siteNameQuery){
 					$scope.formData.siteNameAvailable = result.data.isAvailable;
 					$scope.formData.siteName = result.data.siteName;
 				}
@@ -243,9 +321,53 @@ angular.module('formApp', ['ngAnimate', 'ui.router'])
 		}
 	}
 
+	function getDeployPayload(params){
+		var dataParams = {}
+		for(var i = 0; i < params.length; i++){
+			var param = params[i];
+
+			// Since we tranformed workersize to pretty values earlier, we need to convert them back
+			if(param.name.toLowerCase() === "workersize"){
+				param.value = param.allowedValues.indexOf(param.value).toString();
+			}
+			
+			// JavaScript may convert string representations of numbers incorrectly
+			if(typeof param.value === "number" && param.type.toLowerCase() === 'string'){
+				param.value = param.value.toString();
+			}
+
+			dataParams[param.name] = {value : param.value};
+		}
+
+		return dataParams;
+	}
+
 	initialize($scope, $http);
 
 }]) // end FormSetupController
+
+.controller('FormPreviewController', ['$scope', '$http', function($scope, $http){
+	function initialize($scope, $http){
+		var subscriptionId = $scope.formData.subscription.subscriptionId;
+
+		$http({
+		    method: "post",
+		    url: "api/preview/"+subscriptionId,
+		    params:{
+		    	"templateUrl" : $scope.formData.templateUrl,
+		    },
+		    data: $scope.formData.deployPayload
+		})
+		.then(function(result){
+			$scope.formData.providers = result.data.providers;
+		},
+		function(result){
+			alert("Failed to preview");
+		});
+	}
+
+	initialize($scope, $http);
+}]) // end FormPreviewController
 
 .controller('FormDeployController', ['$scope', '$http', function($scope, $http){
 	$scope.formData.statusMesgs = [];
@@ -256,13 +378,7 @@ angular.module('formApp', ['ngAnimate', 'ui.router'])
 	}
 
 	function initialize($scope, $http){
-		var dataParams = {}
 		var subscriptionId = $scope.formData.subscription.subscriptionId;
-
-		var params = $scope.formData.params;
-		for(var i = 0; i < params.length; i++){
-			dataParams[params[i].name] = {value : params[i].value};
-		}
 
 		$scope.formData.statusMesgs.push("Submitting Deployment...");
 		$http({
@@ -271,7 +387,7 @@ angular.module('formApp', ['ngAnimate', 'ui.router'])
 		    params:{
 		    	"templateUrl" : $scope.formData.templateUrl,
 		    },
-		    data: dataParams
+		    data: $scope.formData.deployPayload
 		})
 		.then(function(result){
 			$scope.formData.statusMesgs.push("Deployment Started...");
@@ -318,58 +434,5 @@ angular.module('formApp', ['ngAnimate', 'ui.router'])
 
 }]);  // end FormDeployController
 
+
 })();
-
-
-// (function () {
-
-// var app = angular.module('azureDeploy', ['ngRoute', 'controllers']);
-
-// app.config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
-// 	$routeProvider
-//     .when('/setup', {
-//         templateUrl: 'ng/views/Setup.html',
-//         controller: 'SetupCtrl',
-//         caseInsensitiveMatch: true
-//     })
-//     .when('/deploy', {
-//         templateUrl: 'ng/views/Deploy.html',
-//         controller: 'DeployCtrl',
-//         caseInsensitiveMatch: true
-//     })
-//     .otherwise({
-//         // redirectTo: '/'
-//         controller: 'SetupCtrl',
-//         templateUrl: 'ng/views/setup.html'
-//     });
-
-// 	$locationProvider.html5Mode(true);
-
-// }]);
-
-// app.controller('MainController', ['$scope', '$location', function ($scope, $location) {
-// 	$scope.clickNext = function(){
-// 		window.location.href = 'https://localhost:44300/deploy';
-// 	}
-
-// 	function initialize(){
-// 		globals.repositoryUrl = getQueryVariable("repository");
-// 		// $location.url("/");
-// 	}
-
-// 	function getQueryVariable(variable) {
-// 	    var query = window.location.search.substring(1);
-// 	    var vars = query.split('&');
-// 	    for (var i = 0; i < vars.length; i++) {
-// 	        var pair = vars[i].split('=');
-// 	        if (decodeURIComponent(pair[0]) == variable) {
-// 	            return decodeURIComponent(pair[1]);
-// 	        }
-// 	    }
-// 	}
-
-
-// 	initialize();
-// }]);
-
-// })();

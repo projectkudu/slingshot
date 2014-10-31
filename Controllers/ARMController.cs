@@ -1,4 +1,5 @@
-﻿using AzureDeployButton.Helpers;
+﻿using AzureDeployButton.Abstract;
+using AzureDeployButton.Helpers;
 using AzureDeployButton.Models;
 using Microsoft.Azure.Management.Resources;
 using Microsoft.Azure.Management.Resources.Models;
@@ -8,6 +9,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -21,11 +23,27 @@ namespace AzureDeployButton.Controllers
 {
     public class ARMController : ApiController
     {
-        private const string EmptySiteTemplateUrl = "https://dl.dropboxusercontent.com/u/2209341/EmptySite.json";
+        private static Dictionary<string, string> sm_providerMap;
+
+        private const string EmptySiteTemplateUrl = "https://raw.githubusercontent.com/Tuesdaysgreen/HelloWorld/master/siteWithRepository.json";
 
         static ARMController()
         {
             ServicePointManager.ServerCertificateValidationCallback = delegate { return true; };
+
+            Dictionary<string, string> providerMap = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
+            {
+                {"Microsoft.Web", "Website"},
+                {"Microsoft.cache", "Redis Cache"},
+                {"Microsoft.DocumentDb", "DocumentDB"},
+                {"Microsoft.Insights", "Application Insights"},
+                {"Microsoft.Search", "Search"},
+                {"SuccessBricks.ClearDB", "ClearDB"},
+                {"Microsoft.BizTalkServices","Biz Talk Services"},
+                {"Microsoft.Sql","SQL Azure"},
+            };
+
+            sm_providerMap = providerMap;
         }
 
         public HttpResponseMessage GetToken()
@@ -47,6 +65,78 @@ namespace AzureDeployButton.Controllers
         }
 
         [Authorize]
+        public async Task<HttpResponseMessage> Get()
+        {
+            IHttpRouteData routeData = Request.GetRouteData();
+            string path = routeData.Values["path"] as string;
+            if (String.IsNullOrEmpty(path))
+            {
+                var response = Request.CreateResponse(HttpStatusCode.Redirect);
+                response.Headers.Location = new Uri(Path.Combine(Request.RequestUri.AbsoluteUri, "subscriptions"));
+                return response;
+            }
+
+            if (path.StartsWith("tenants", StringComparison.OrdinalIgnoreCase))
+            {
+                return await GetTenants(path);
+            }
+
+            using (var client = GetClient(Utils.GetCSMUrl(Request.RequestUri.Host)))
+            {
+                return await Utils.Execute(client.GetAsync(path + "?api-version=2014-04-01"));
+            }
+        }
+
+        [Authorize]
+        [HttpPost]
+        public async Task<HttpResponseMessage> Preview([FromBody] JObject parameters, string subscriptionId, string templateUrl)
+        {
+            JObject responseObj = new JObject();
+            List<string> providers = new List<string>(32);
+            HttpResponseMessage response = null;
+
+            using (var client = GetRMClient(subscriptionId))
+            {
+                // etodo: What if there aren't any resource groups that exist?  Should we create one here even though
+                // we're only previewing work?
+                var rgs = client.ResourceGroups.List(null);
+                var rg = rgs.ResourceGroups.FirstOrDefault();
+                
+                // For now we just default to East US for the resource group location.
+                var basicDeployment = new BasicDeployment
+                {
+                    Parameters = parameters.ToString(),
+                    TemplateLink = new TemplateLink(new Uri(templateUrl))
+                };
+
+                var deploymentResult = await client.Deployments.ValidateAsync(rg.Name, rg.Name, basicDeployment);
+                if (deploymentResult.StatusCode == HttpStatusCode.OK)
+                {
+                    foreach (var p in deploymentResult.Properties.Providers)
+                    {
+                        if (sm_providerMap.ContainsKey(p.Namespace))
+                        {
+                            providers.Add(sm_providerMap[p.Namespace]);
+                        }
+                        else
+                        {
+                            providers.Add(p.Namespace);
+                        }
+                    }
+
+                    responseObj["providers"] = JArray.FromObject(providers);
+                    response = Request.CreateResponse(HttpStatusCode.OK, responseObj);
+                }
+                else
+                {
+                    response = Request.CreateResponse(deploymentResult.StatusCode);
+                }
+            }
+
+            return response;
+        }
+
+        [Authorize]
         [HttpPost]
         public async Task<HttpResponseMessage> Deploy([FromBody] JObject parameters, string subscriptionId, string templateUrl)
         {
@@ -55,8 +145,6 @@ namespace AzureDeployButton.Controllers
 
             try
             {
-                // etodo: what should we do about this?
-                //var resourceGroupName = "ehrg01";
                 var resourceGroupName = GetParamOrDefault(parameters, "siteName", "mySite");
 
                 using (var client = GetRMClient(subscriptionId))
@@ -131,49 +219,20 @@ namespace AzureDeployButton.Controllers
 
         [Authorize]
         [HttpGet]
-        public async Task<HttpResponseMessage> GetTemplate()
-        {
-            // etodo: is there a way to get the route to match with an empty repositoryUrl so that I don't need this extra method?
-            return await GetTemplate(null);
-        }
-
-        [Authorize]
-        [HttpGet]
         public async Task<HttpResponseMessage> GetTemplate(string repositoryUrl)
         {
             HttpResponseMessage response = null;
-            JObject template = null;
-            string templateUrl = null;
+            string templateUrl = EmptySiteTemplateUrl;
+            JObject template = await DownloadTemplate(templateUrl);
+            string branch = null;
 
-            if (string.IsNullOrEmpty(repositoryUrl))
-            {
-                templateUrl = EmptySiteTemplateUrl;
-                template = await DownloadTemplate(templateUrl);
-            }
-            else
-            {
-                Uri repositoryUri = new Uri(repositoryUrl);
-                if (repositoryUri.Segments.Length >= 3)
-                {
-                    string user = repositoryUri.Segments[1].Trim(new char[] { '/' });
-                    string repo = repositoryUri.Segments[2].Trim(new char[] { '/' });
-                    templateUrl = string.Format("https://raw.githubusercontent.com/{0}/{1}/master/azuredeploy.json", user, repo);
-                    template = await DownloadTemplate(templateUrl);
+            Repository repo = Repository.CreateRepositoryObj(repositoryUrl);
+            repositoryUrl = repo.RepositoryUrl;
 
-                    // If a user opens the README.md file, and then clicks on the button, the referrer address will look something
-                    // like this:  https://github.com/user/repo/blob/master/README.md
-                    if (repositoryUri.Segments.Length > 3)
-                    {
-                        repositoryUrl = string.Format("https://github.com/{0}/{1}", user, repo);
-                    }
-                }
-                
-                if (template == null)
-                {
-                    templateUrl = EmptySiteTemplateUrl;
-                    template = await DownloadTemplate(templateUrl);
-                }
-            }
+            // BUG: There's an Antares Bug that prevents us from, being able to deploy any branch other than
+            // master so we'll hard-code it for now.
+            //branch = repo.Branch;
+            branch = "master";
 
             if (template != null)
             {
@@ -181,6 +240,8 @@ namespace AzureDeployButton.Controllers
 
                 var subscriptions = (await TokenUtils.GetSubscriptionsAsync(TokenUtils.AzureEnvs.Prod, token))
                                     .Where(s => s.state == "Enabled").ToArray();
+
+                var tenants = await GetTenantsArray();
 
                 if (subscriptions.Length >= 1)
                 {
@@ -190,22 +251,169 @@ namespace AzureDeployButton.Controllers
                     returnObj["template"] = template;
                     returnObj["templateUrl"] = templateUrl;
                     returnObj["repositoryUrl"] = repositoryUrl;
+                    returnObj["branch"] = branch;
                     returnObj["siteLocations"] = JArray.FromObject(locations);
                     returnObj["subscriptions"] = JArray.FromObject(subscriptions);
+                    returnObj["tenants"] = tenants;
                     response = Request.CreateResponse(HttpStatusCode.OK, returnObj);
                 }
                 else
                 {
-                    response = Request.CreateResponse(HttpStatusCode.InternalServerError, "No available active subscriptions");
+                    response = Request.CreateResponse(
+                        HttpStatusCode.InternalServerError,
+                        "No available active subscriptions");
                 }
             }
             else
             {
-                response = Request.CreateResponse(HttpStatusCode.NotFound);
+                response = Request.CreateResponse(
+                    HttpStatusCode.NotFound,
+                    string.Format("Could not find the Azure RM Template '{0}'", repositoryUrl));
             }
 
 
             return response;
+        }
+
+        private async Task<JArray> GetTenantsArray()
+        {
+
+            if (!Request.RequestUri.IsLoopback)
+            {
+                using (var client = GetClient(Request.RequestUri.GetLeftPart(UriPartial.Authority)))
+                {
+                    var response = await Utils.Execute(client.GetAsync("tenantdetails"));
+                    if (!response.IsSuccessStatusCode)
+                    {
+                        return null;
+                    }
+
+                    var tenants = await response.Content.ReadAsAsync<JArray>();
+                    tenants = SetCurrentTenant(tenants);
+                    return tenants;
+                    //response = Transfer(response);
+                    //response.Content = new StringContent(tenants.ToString(), Encoding.UTF8, "application/json");
+                    //return response;
+                }
+            }
+            else
+            {
+                using (var client = GetClient(Utils.GetCSMUrl(Request.RequestUri.Host)))
+                {
+                    var response = await Utils.Execute(client.GetAsync("tenants" + "?api-version=2014-04-01"));
+                    if (!response.IsSuccessStatusCode)
+                    {
+                        return null;
+                    }
+
+                    var tenants = (JArray)(await response.Content.ReadAsAsync<JObject>())["value"];
+                    tenants = SetCurrentTenant(ToTenantDetails(tenants));
+                    //response = Transfer(response);
+                    //response.Content = new StringContent(tenants.ToString(), Encoding.UTF8, "application/json");
+                    //return response;
+                    return tenants;
+                }
+            }
+        }
+
+        private async Task<HttpResponseMessage> GetTenants(string path)
+        {
+            var parts = path.Split(new[] { '/' }, StringSplitOptions.RemoveEmptyEntries);
+            if (parts.Length == 1)
+            {
+                if (!Request.RequestUri.IsLoopback)
+                {
+                    using (var client = GetClient(Request.RequestUri.GetLeftPart(UriPartial.Authority)))
+                    {
+                        var response = await Utils.Execute(client.GetAsync("tenantdetails"));
+                        if (!response.IsSuccessStatusCode)
+                        {
+                            return response;
+                        }
+
+                        var tenants = await response.Content.ReadAsAsync<JArray>();
+                        tenants = SetCurrentTenant(tenants);
+                        response = Transfer(response);
+                        response.Content = new StringContent(tenants.ToString(), Encoding.UTF8, "application/json");
+                        return response;
+                    }
+                }
+                else
+                {
+                    using (var client = GetClient(Utils.GetCSMUrl(Request.RequestUri.Host)))
+                    {
+                        var response = await Utils.Execute(client.GetAsync(path + "?api-version=2014-04-01"));
+                        if (!response.IsSuccessStatusCode)
+                        {
+                            return response;
+                        }
+
+                        var tenants = (JArray)(await response.Content.ReadAsAsync<JObject>())["value"];
+                        tenants = SetCurrentTenant(ToTenantDetails(tenants));
+                        response = Transfer(response);
+                        response.Content = new StringContent(tenants.ToString(), Encoding.UTF8, "application/json");
+                        return response;
+                    }
+                }
+            }
+            else
+            {
+                // switch tenant
+                var tenantId = Guid.Parse(parts[1]);
+                var uri = Request.RequestUri.AbsoluteUri;
+                var response = Request.CreateResponse(HttpStatusCode.Redirect);
+                response.Headers.Add("Set-Cookie", String.Format("OAuthTenant={0}; path=/; secure; HttpOnly", tenantId));
+                response.Headers.Location = new Uri(uri.Substring(0, uri.IndexOf("/api/" + parts[0], StringComparison.OrdinalIgnoreCase)));
+                return response;
+            }
+        }
+
+        private JArray ToTenantDetails(JArray tenants)
+        {
+            var result = new JArray();
+            foreach (var tenant in tenants)
+            {
+                var value = new JObject();
+                value["DisplayName"] = tenant["tenantId"];
+                value["DomainName"] = tenant["tenantId"];
+                value["TenantId"] = tenant["tenantId"];
+                result.Add(value);
+            }
+            return result;
+        }
+
+        private HttpResponseMessage Transfer(HttpResponseMessage response)
+        {
+            var ellapsed = response.Headers.GetValues(Utils.X_MS_Ellapsed).First();
+            response = Request.CreateResponse(response.StatusCode);
+            response.Headers.Add(Utils.X_MS_Ellapsed, ellapsed);
+            return response;
+        }
+
+        private JArray SetCurrentTenant(JArray tenants)
+        {
+            var tid = (string)GetClaims()["tid"];
+            foreach (var tenant in tenants)
+            {
+                tenant["Current"] = (string)tenant["TenantId"] == tid;
+            }
+            return tenants;
+        }
+
+        private JObject GetClaims()
+        {
+            var jwtToken = Request.Headers.GetValues(Utils.X_MS_OAUTH_TOKEN).FirstOrDefault();
+            var base64 = jwtToken.Split('.')[1];
+
+            // fixup
+            int mod4 = base64.Length % 4;
+            if (mod4 > 0)
+            {
+                base64 += new string('=', 4 - mod4);
+            }
+
+            var json = Encoding.UTF8.GetString(Convert.FromBase64String(base64));
+            return JObject.Parse(json);
         }
 
         private async Task<IList<string>> GetSiteLocations(string token, SubscriptionInfo[] subscriptions)
