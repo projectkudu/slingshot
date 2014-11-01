@@ -87,7 +87,8 @@ namespace AzureDeployButton.Modules
                     throw new InvalidOperationException("Missing tenantid claim");
                 }
 
-                var redirect_uri = request.Url.GetLeftPart(UriPartial.Authority);
+                //var redirect_uri = request.Url.GetLeftPart(UriPartial.Authority);
+                var redirect_uri = request.Url.ToString();
                 var token = AADOAuth2AccessToken.GetAccessTokenByCode(tenantIdClaim.Value, code, redirect_uri);
                 WriteOAuthTokenCookie(application, token);
                 response.Redirect(redirect_uri + state, endResponse: true);
@@ -129,7 +130,8 @@ namespace AzureDeployButton.Modules
             var request = application.Context.Request;
             var response_type = "id_token code";
             var issuerAddress = config.GetAuthorizationEndpoint(tenantId);
-            var redirect_uri = request.Url.GetLeftPart(UriPartial.Authority);
+            //var redirect_uri = request.Url.GetLeftPart(UriPartial.Authority);
+            var redirect_uri = request.Url.ToString();
             var client_id = AADClientId;
             var nonce = GenerateNonce();
             var response_mode = "form_post";
@@ -144,7 +146,8 @@ namespace AzureDeployButton.Modules
             strb.AppendFormat("&nonce={0}", WebUtility.UrlEncode(nonce));
             strb.AppendFormat("&site_id={0}", WebUtility.UrlEncode(site_id));
             strb.AppendFormat("&response_mode={0}", WebUtility.UrlEncode(response_mode));
-            strb.AppendFormat("&state={0}", WebUtility.UrlEncode(state ?? request.Url.PathAndQuery));
+            //strb.AppendFormat("&state={0}", WebUtility.UrlEncode(state ?? request.Url.PathAndQuery));
+            strb.AppendFormat("&state={0}", WebUtility.UrlEncode(state ?? request.Url.Query));
 
             return strb.ToString();
         }

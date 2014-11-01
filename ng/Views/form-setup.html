@@ -16,7 +16,7 @@
 	<div ng-show="formData.params">
 		<div class="form-group col-md-6">
 		    <label for="tenants">Directory</label>
-		    <select class="form-control" ng-model="formData.tenant" ng-options="tenant.DisplayName for tenant in formData.tenants">
+		    <select class="form-control" ng-model="formData.tenant" ng-change="changeTenant()" ng-options="tenant.DisplayName for tenant in formData.tenants">
 		    </select>
 		</div>
 

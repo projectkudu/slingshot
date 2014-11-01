@@ -52,7 +52,7 @@ angular.module('formApp', ['ngAnimate', 'ui.router'])
 		// route to show our basic form (/form)
 		.state('form', {
 			url: '/form',
-			templateUrl: '/ng/views/form.html',
+			templateUrl: 'ng/views/form.html',
 			controller: 'FormController'
 		})
 		
@@ -61,7 +61,7 @@ angular.module('formApp', ['ngAnimate', 'ui.router'])
 		// url will be nested (/form/setup)
 		.state('form.setup', {
 			url: '/setup',
-			templateUrl: '/ng/views/form-setup.html',
+			templateUrl: 'ng/views/form-setup.html',
 			controller: 'FormSetupController'
 
 		})
@@ -69,7 +69,7 @@ angular.module('formApp', ['ngAnimate', 'ui.router'])
 		// /form/preview
 		.state('form.preview', {
 			url: '/preview',
-			templateUrl: '/ng/views/form-preview.html',
+			templateUrl: 'ng/views/form-preview.html',
 			controller: 'FormPreviewController'
 
 		})
@@ -77,14 +77,14 @@ angular.module('formApp', ['ngAnimate', 'ui.router'])
 		// /form/deploy
 		.state('form.deploy', {
 			url: '/deploy',
-			templateUrl: '/ng/views/form-deploy.html',
+			templateUrl: 'ng/views/form-deploy.html',
 			controller: 'FormDeployController'
 		})
 		
 		// /form/payment
 		.state('form.payment', {
 			url: '/payment',
-			templateUrl: '/ng/views/form-payment.html'
+			templateUrl: 'ng/views/form-payment.html'
 		});
 		
 	// catch all route
@@ -113,12 +113,33 @@ angular.module('formApp', ['ngAnimate', 'ui.router'])
 
 	function initialize(){
 		$scope.formData.repositoryUrl = getQueryVariable("repository");
-		if(!$scope.formData.repositoryUrl || $scope.formData.repositoryUrl.length ==0){
-			$scope.formData.repositoryUrl = document.referrer;
 
-			if(!$scope.formData.repositoryUrl || $scope.formData.repositoryUrl.length ==0){
-				$scope.formData.error = "No repository detected.  The repository must be passed as either a referrer header or as a query string.";
+		// if(!repositoryUrl || repositoryUrl.length === 0){
+			// repositoryUrl = document.referrer;
+			// if(!repositoryUrl || repositoryUrl.length === 0){
+				// $scope.formData.error = "No repository detected.  The repository must be passed as either a referrer header or as a query string.";
+			// }
+		// }
+
+		// When a user switches directories, we need to redirect to a different URL to update our token.
+		// That will mess up the referrer header, so we check to make sure we don't set the repositoryUrl
+		// to our own domain path.
+		// var repository = parseURL(repositoryUrl);
+		// if(repository.hostname !== location.hostname){
+		// 	sessionStorage.repositoryUrl = repositoryUrl;
+		// }
+
+		if(!$scope.formData.repositoryUrl || $scope.formData.repositoryUrl.length === 0){
+			if(sessionStorage.repositoryUrl){
+				$scope.formData.repositoryUrl = sessionStorage.repositoryUrl;
 			}
+			else{
+				$scope.formData.error = "No repository detected.  The repository must be passed as either a referrer header or as a query string.";				
+			}
+		}
+
+		if($scope.formData.repositoryUrl){
+			sessionStorage.repositoryUrl = $scope.formData.repositoryUrl;
 		}
 
 		$location.url("/");
@@ -133,6 +154,35 @@ angular.module('formApp', ['ngAnimate', 'ui.router'])
 	            return decodeURIComponent(pair[1]);
 	        }
 	    }
+
+	    return null;
+	}
+
+	function parseURL(url) {
+	    var parser = document.createElement('a'),
+	        searchObject = {},
+	        queries, split, i;
+	    
+	    // Let the browser do the work
+	    parser.href = url;
+	    
+	    // Convert query string to object
+	    queries = parser.search.replace(/^\?/, '').split('&');
+	    for( i = 0; i < queries.length; i++ ) {
+	        split = queries[i].split('=');
+	        searchObject[split[0]] = split[1];
+	    }
+
+	    return {
+	        protocol: parser.protocol,
+	        host: parser.host,
+	        hostname: parser.hostname,
+	        port: parser.port,
+	        pathname: parser.pathname,
+	        search: parser.search,
+	        searchObject: searchObject,
+	        hash: parser.hash
+	    };
 	}
 
 	initialize();
@@ -153,7 +203,7 @@ angular.module('formApp', ['ngAnimate', 'ui.router'])
 	function initialize($scope, $http){
 		// If we don't have the repository url, then don't init.  Also
 		// if the user hit "back" from the next page, we don't re-init.
-		if(!$scope.formData.repositoryUrl || $scope.formData.subscriptions){
+		if(!$scope.formData.repositoryUrl || $scope.formData.repositoryUrl.length === 0 || $scope.formData.subscriptions){
 			return;
 		}
 
@@ -170,20 +220,28 @@ angular.module('formApp', ['ngAnimate', 'ui.router'])
 			$scope.formData.subscriptions = result.data.subscriptions;
 			$scope.formData.siteLocations = result.data.siteLocations;
 			$scope.formData.templateUrl = result.data.templateUrl;
-			$scope.formData.repositoryUrl = result.data.repositoryUrl;
 			$scope.formData.branch = result.data.branch;
 			$scope.formData.tenants = result.data.tenants;
+			$scope.formData.repositoryUrl = result.data.repositoryUrl;
 
 			// Select current tenant
 			var tenants = $scope.formData.tenants;
+
+			// For testing directory changes
+			// var tenantCopy = {};
+			// angular.copy(tenants[0], tenantCopy);
+			// tenantCopy.DisplayName = "foo";
+			// tenants.push(tenantCopy);
+
 			for(var i = 0; i < tenants.length; i++){
-				if(tenants[i].Current === true){
+				if(tenants[i].Current){
 					$scope.formData.tenant = tenants[i];
 				}
 			}
 
 			// Pull out template parameters to show on UI
 			$scope.formData.params = [];
+			var repoParamFound = false;
 			var parameters = $scope.formData.template.parameters;
 			for(var name in parameters){
 				var parameter = parameters[name];
@@ -195,11 +253,29 @@ angular.module('formApp', ['ngAnimate', 'ui.router'])
 				param.defaultValue = parameter.defaultValue;
 
 				$scope.formData.params.push(param);
+
+				if(param.name.toLowerCase() === "repourl"){
+					repoParamFound = true;
+				}
 			}
+
+			if(!repoParamFound){
+				$scope.formData.error = "Could not find a 'repoUrl' parameter in the template file."
+			}
+
 		},
 		function(error){
 			alert(error.statusText)
 		});
+	}
+
+	// $scope.getRepositoryUrl = function(){
+	// 	return sessionStorage.repositoryUrl;
+	// }
+
+	$scope.changeTenant = function(){
+		var tenantUrl = window.location.origin + window.location.pathname + "api/tenants/" + $scope.formData.tenant.TenantId;
+		window.location = tenantUrl;
 	}
 
 	$scope.showParam = function(param){
@@ -233,8 +309,8 @@ angular.module('formApp', ['ngAnimate', 'ui.router'])
 
 			var skuParam = getParamByName($scope.formData.params, 'sku');
 			if(skuParam &&
-				skuParam.value === 'Free' ||
-			    skuParam.value === 'Shared'){
+				(skuParam.value === 'Free' ||
+			    skuParam.value === 'Shared')){
 					param.value = 'Small';
 					return false;
 			}
@@ -371,7 +447,6 @@ angular.module('formApp', ['ngAnimate', 'ui.router'])
 
 .controller('FormDeployController', ['$scope', '$http', function($scope, $http){
 	$scope.formData.statusMesgs = [];
-	$scope.formData.statusId = null;
 
 	$scope.showError = function(){
 		$('#errorModal').modal('show');
@@ -391,8 +466,7 @@ angular.module('formApp', ['ngAnimate', 'ui.router'])
 		})
 		.then(function(result){
 			$scope.formData.statusMesgs.push("Deployment Started...");
-
-			$scope.formData.statusId = window.setTimeout(getStatus, 5000, $scope, $http, result.data.deploymentUrl);
+			window.setTimeout(getStatus, 10000, $scope, $http);
 		},
 		function(result){
 			$scope.formData.errorMesg = result.data.error;
@@ -415,19 +489,49 @@ angular.module('formApp', ['ngAnimate', 'ui.router'])
 			else if(result.data.provisioningState === "Succeeded"){
 				// $scope.formData.statusMesgs.push("Deployment Complete.");
 				$scope.formData.siteUrl = result.data.siteUrl;
+				window.setTimeout(getGitStatus, 1000, $scope, $http);
+
 			}
 			else{
 				if(!$scope.formData.waitingForDeployment){
-					$scope.formData.statusMesgs.push("Working...");	
+					$scope.formData.statusMesgs.push("Creating Azure Resources...");	
 					$scope.formData.waitingForDeployment = true;
 				}
-				$scope.formData.statusId = window.setTimeout(getStatus, 1000, $scope, $http, deploymentUrl);
-
+				window.setTimeout(getStatus, 1000, $scope, $http);
 			}
 		},
 		function(result){
-			$scope.formdata.errorMesg = result.data.error;
+			$scope.formData.errorMesg = result.data.error;
 		});
+	}
+
+	function getGitStatus($scope, $http){
+		var subscriptionId = $scope.formData.subscription.subscriptionId;
+		var siteName = $scope.formData.siteName;
+
+		$http({
+		    method: "get",
+		    url: "api/deployments/"+subscriptionId+"/sites/"+siteName+"/git"
+ 		})
+		.then(function(result){
+			var formData = $scope.formData;
+			if(result.data.status === 4){
+				formData.deploymentSucceeded = true;
+			}
+			else if(result.data.status === 3){
+				formData.errorMesg = "Git deployment failed";	
+			}
+			else{
+				if(formData.statusMesgs[formData.statusMesgs.length-1] !== result.data.status_text){
+					formData.statusMesgs.push(result.data.status_text);
+				}
+				window.setTimeout(getGitStatus, 1000, $scope, $http);
+			}
+		},
+		function(result){
+			$scope.formData.errorMesg = result.data.error;
+		});
+
 	}
 
 	initialize($scope, $http);

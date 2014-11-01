@@ -25,8 +25,6 @@ namespace AzureDeployButton.Controllers
     {
         private static Dictionary<string, string> sm_providerMap;
 
-        private const string EmptySiteTemplateUrl = "https://raw.githubusercontent.com/Tuesdaysgreen/HelloWorld/master/siteWithRepository.json";
-
         static ARMController()
         {
             ServicePointManager.ServerCertificateValidationCallback = delegate { return true; };
@@ -97,39 +95,49 @@ namespace AzureDeployButton.Controllers
 
             using (var client = GetRMClient(subscriptionId))
             {
-                // etodo: What if there aren't any resource groups that exist?  Should we create one here even though
-                // we're only previewing work?
-                var rgs = client.ResourceGroups.List(null);
-                var rg = rgs.ResourceGroups.FirstOrDefault();
-                
-                // For now we just default to East US for the resource group location.
-                var basicDeployment = new BasicDeployment
-                {
-                    Parameters = parameters.ToString(),
-                    TemplateLink = new TemplateLink(new Uri(templateUrl))
-                };
+                ResourceGroupCreateOrUpdateResult resourceResult = null;
+                string tempRGName = Guid.NewGuid().ToString();
 
-                var deploymentResult = await client.Deployments.ValidateAsync(rg.Name, rg.Name, basicDeployment);
-                if (deploymentResult.StatusCode == HttpStatusCode.OK)
+                try
                 {
-                    foreach (var p in deploymentResult.Properties.Providers)
+                    resourceResult = await client.ResourceGroups.CreateOrUpdateAsync(tempRGName, new BasicResourceGroup { Location = "East US" });
+
+                    // For now we just default to East US for the resource group location.
+                    var basicDeployment = new BasicDeployment
                     {
-                        if (sm_providerMap.ContainsKey(p.Namespace))
-                        {
-                            providers.Add(sm_providerMap[p.Namespace]);
-                        }
-                        else
-                        {
-                            providers.Add(p.Namespace);
-                        }
-                    }
+                        Parameters = parameters.ToString(),
+                        TemplateLink = new TemplateLink(new Uri(templateUrl))
+                    };
 
-                    responseObj["providers"] = JArray.FromObject(providers);
-                    response = Request.CreateResponse(HttpStatusCode.OK, responseObj);
+                    var deploymentResult = await client.Deployments.ValidateAsync(tempRGName, tempRGName, basicDeployment);
+                    if (deploymentResult.StatusCode == HttpStatusCode.OK)
+                    {
+                        foreach (var p in deploymentResult.Properties.Providers)
+                        {
+                            if (sm_providerMap.ContainsKey(p.Namespace))
+                            {
+                                providers.Add(sm_providerMap[p.Namespace]);
+                            }
+                            else
+                            {
+                                providers.Add(p.Namespace);
+                            }
+                        }
+
+                        responseObj["providers"] = JArray.FromObject(providers);
+                        response = Request.CreateResponse(HttpStatusCode.OK, responseObj);
+                    }
+                    else
+                    {
+                        response = Request.CreateResponse(deploymentResult.StatusCode);
+                    }
                 }
-                else
+                finally
                 {
-                    response = Request.CreateResponse(deploymentResult.StatusCode);
+                    if (resourceResult != null && resourceResult.StatusCode == HttpStatusCode.OK)
+                    {
+                        client.ResourceGroups.Delete(tempRGName);
+                    }
                 }
             }
 
@@ -172,7 +180,6 @@ namespace AzureDeployButton.Controllers
             return response;
         }
 
-
         [Authorize]
         [HttpGet]
         public async Task<HttpResponseMessage> GetDeploymentStatus(string subscriptionId, string siteName)
@@ -203,6 +210,38 @@ namespace AzureDeployButton.Controllers
 
         [Authorize]
         [HttpGet]
+        public async Task<HttpResponseMessage> GetGitDeploymentStatus(string subscriptionId, string siteName)
+        {
+            HttpResponseMessage response = null;
+            using (var client = GetClient())
+            {
+                var statusResponse = await client.GetAsync(
+                    string.Format(Constants.CSMUrls.GitDeploymentStatusFormat, subscriptionId, siteName));
+
+                if (statusResponse.IsSuccessStatusCode)
+                {
+                    var resultObj = JObject.Parse(await statusResponse.Content.ReadAsStringAsync());
+                    var deployments = resultObj["properties"];
+                    if (deployments.Count() > 0)
+                    {
+                        response = Request.CreateResponse(HttpStatusCode.OK, deployments.First());
+                    }
+                    else
+                    {
+                        response = Request.CreateResponse(HttpStatusCode.NotFound, new { error = "Could not find any git deployments" });
+                    }
+                }
+                else
+                {
+                    response = statusResponse;
+                }
+            }
+
+            return response;
+        }
+
+        [Authorize]
+        [HttpGet]
         public async Task<HttpResponseMessage> IsSiteNameAvailable(string subscriptionId, string siteName)
         {
             string token = GetTokenFromHeader();
@@ -222,12 +261,13 @@ namespace AzureDeployButton.Controllers
         public async Task<HttpResponseMessage> GetTemplate(string repositoryUrl)
         {
             HttpResponseMessage response = null;
-            string templateUrl = EmptySiteTemplateUrl;
-            JObject template = await DownloadTemplate(templateUrl);
             string branch = null;
 
             Repository repo = Repository.CreateRepositoryObj(repositoryUrl);
             repositoryUrl = repo.RepositoryUrl;
+
+            string templateUrl = await repo.GetTemplateUrlAsync();
+            JObject template = await repo.DownloadTemplateAsync();
 
             // BUG: There's an Antares Bug that prevents us from, being able to deploy any branch other than
             // master so we'll hard-code it for now.
@@ -425,27 +465,21 @@ namespace AzureDeployButton.Controllers
             }
         }
 
-        private async Task<JObject> DownloadTemplate(string templateUrl)
-        {
-            JObject template = null;
-            using (HttpClient client = new HttpClient())
-            {
-                var templateResponse = await client.GetAsync(templateUrl);
-                if (templateResponse.IsSuccessStatusCode)
-                {
-                    template = JObject.Parse(templateResponse.Content.ReadAsStringAsync().Result);
-                }
-            }
-
-            return template;
-        }
-
         private HttpClient GetClient(string baseUri)
         {
             var client = new HttpClient();
-            client.BaseAddress = new Uri(baseUri);
+            if (baseUri != null)
+            {
+                client.BaseAddress = new Uri(baseUri);
+            }
+
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Request.Headers.GetValues("X-MS-OAUTH-TOKEN").FirstOrDefault());
             return client;
+        }
+
+        private HttpClient GetClient()
+        {
+            return GetClient(null);
         }
 
         private ResourceManagementClient GetRMClient(string subscriptionId)
