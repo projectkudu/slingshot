@@ -134,14 +134,31 @@ namespace AzureDeployButton.Controllers
                 }
                 finally
                 {
-                    if (resourceResult != null && resourceResult.StatusCode == HttpStatusCode.OK)
+                    if (resourceResult != null &&
+                        (resourceResult.StatusCode == HttpStatusCode.Created || resourceResult.StatusCode == HttpStatusCode.OK))
                     {
-                        client.ResourceGroups.Delete(tempRGName);
+                        string token = GetTokenFromHeader();
+                        Task.Run(() => { DeleteResourceGroup(subscriptionId, token, tempRGName); });
                     }
                 }
             }
 
             return response;
+        }
+
+        // Called from a threadpool thread
+        private void DeleteResourceGroup(string subscriptionId, string token, string rgName)
+        {
+            try
+            {
+                using (var client = GetRMClient(token, subscriptionId))
+                {
+                    var delResult = client.ResourceGroups.Delete(rgName);
+                }
+            }
+            catch
+            {
+            }
         }
 
         [Authorize]
@@ -282,6 +299,8 @@ namespace AzureDeployButton.Controllers
                                     .Where(s => s.state == "Enabled").ToArray();
 
                 var tenants = await GetTenantsArray();
+                var email = GetHeaderValue("X-MS-CLIENT-PRINCIPAL-NAME");
+                var userDisplayName = GetHeaderValue("X-MS-CLIENT-DISPLAY-NAME") ?? email;
 
                 if (subscriptions.Length >= 1)
                 {
@@ -295,6 +314,7 @@ namespace AzureDeployButton.Controllers
                     returnObj["siteLocations"] = JArray.FromObject(locations);
                     returnObj["subscriptions"] = JArray.FromObject(subscriptions);
                     returnObj["tenants"] = tenants;
+                    returnObj["userDisplayName"] = userDisplayName;
                     response = Request.CreateResponse(HttpStatusCode.OK, returnObj);
                 }
                 else
@@ -311,8 +331,18 @@ namespace AzureDeployButton.Controllers
                     string.Format("Could not find the Azure RM Template '{0}'", repositoryUrl));
             }
 
-
             return response;
+        }
+
+        private string GetHeaderValue(string name)
+        {
+            IEnumerable<string> values = null;
+            if(Request.Headers.TryGetValues(name, out values))
+            {
+                return values.FirstOrDefault();
+            }
+
+            return null;
         }
 
         private async Task<JArray> GetTenantsArray()

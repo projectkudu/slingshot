@@ -216,6 +216,8 @@ angular.module('formApp', ['ngAnimate', 'ui.router'])
 		})
 		.then(function(result){
 
+			$scope.formData.userDisplayName = result.data.userDisplayName;
+
 			$scope.formData.template = result.data.template;
 			$scope.formData.subscriptions = result.data.subscriptions;
 			$scope.formData.siteLocations = result.data.siteLocations;
