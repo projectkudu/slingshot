@@ -1,5 +1,5 @@
-﻿using AzureDeployButton.Concrete;
-using AzureDeployButton.Helpers;
+﻿using Slingshot.Concrete;
+using Slingshot.Helpers;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
@@ -8,7 +8,7 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AzureDeployButton.Abstract
+namespace Slingshot.Abstract
 {
     public abstract class Repository
     {

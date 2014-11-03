@@ -7,7 +7,7 @@ using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using System.Web;
 
-namespace AzureDeployButton.Helpers
+namespace Slingshot.Helpers
 {
     public static class TokenUtils
     {

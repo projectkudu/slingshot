@@ -6,7 +6,7 @@ using System.Runtime.Serialization;
 using System.Runtime.Serialization.Json;
 using System.Security.Cryptography.X509Certificates;
 
-namespace AzureDeployButton.Modules
+namespace Slingshot.Modules
 {
     [DataContract]
     public class OpenIdConfiguration

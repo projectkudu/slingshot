@@ -3,7 +3,7 @@ using System.Diagnostics;
 using System.Net.Http;
 using System.Threading.Tasks;
 
-namespace AzureDeployButton.Helpers
+namespace Slingshot.Helpers
 {
     public class Utils
     {

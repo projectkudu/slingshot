@@ -1,6 +1,6 @@
-﻿using AzureDeployButton.Abstract;
-using AzureDeployButton.Helpers;
-using AzureDeployButton.Models;
+﻿using Slingshot.Abstract;
+using Slingshot.Helpers;
+using Slingshot.Models;
 using Microsoft.Azure.Management.Resources;
 using Microsoft.Azure.Management.Resources.Models;
 using Microsoft.Azure.Management.WebSites;
@@ -19,7 +19,7 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Routing;
 
-namespace AzureDeployButton.Controllers
+namespace Slingshot.Controllers
 {
     public class ARMController : ApiController
     {

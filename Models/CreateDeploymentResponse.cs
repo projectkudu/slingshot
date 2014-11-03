@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace AzureDeployButton.Models
+namespace Slingshot.Models
 {
     public class CreateDeploymentResponse
     {

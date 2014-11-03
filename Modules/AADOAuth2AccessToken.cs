@@ -5,7 +5,7 @@ using System.Net.Http;
 using System.Runtime.Serialization.Json;
 using System.Text;
 
-namespace AzureDeployButton.Modules
+namespace Slingshot.Modules
 {
     public class AADOAuth2AccessToken
     {

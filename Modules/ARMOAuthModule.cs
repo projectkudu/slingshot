@@ -1,4 +1,4 @@
-﻿using AzureDeployButton.Modules;
+﻿using Slingshot.Modules;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -11,7 +11,7 @@ using System.Text;
 using System.Threading;
 using System.Web;
 
-namespace AzureDeployButton.Modules
+namespace Slingshot.Modules
 {
     public class ARMOAuthModule : IHttpModule
     {

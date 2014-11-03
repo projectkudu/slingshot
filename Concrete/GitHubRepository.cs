@@ -1,5 +1,5 @@
-﻿using AzureDeployButton.Abstract;
-using AzureDeployButton.Helpers;
+﻿using Slingshot.Abstract;
+using Slingshot.Helpers;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
@@ -8,7 +8,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web;
 
-namespace AzureDeployButton.Concrete
+namespace Slingshot.Concrete
 {
     public class GitHubRepository : Repository
     {
