@@ -211,6 +211,13 @@ namespace AzureDeployButton.Controllers
                 provisioningState = deployment.Properties.ProvisioningState;
             }
 
+            using (var client = GetClient())
+            {
+                string url = string.Format("https://management.azure.com/subscriptions/{0}/resourcegroups/{1}/deployments/{1}/operations?api-version=2014-04-01", subscriptionId, siteName);
+                var getOpResponse = await client.GetAsync(url);
+                responseObj["operations"] = JObject.Parse(getOpResponse.Content.ReadAsStringAsync().Result);
+            }
+
             if (provisioningState == "Succeeded")
             {
                 using (var wsClient = GetWSClient(subscriptionId))

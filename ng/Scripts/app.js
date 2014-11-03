@@ -450,6 +450,12 @@ angular.module('formApp', ['ngAnimate', 'ui.router'])
 .controller('FormDeployController', ['$scope', '$http', function($scope, $http){
 	$scope.formData.statusMesgs = [];
 
+	var statusMap = {};
+	statusMap["Microsoft.Web/sites"] = "Creating Website";
+	statusMap["Microsoft.Web/sites/config"] = "Updating Website Config";
+	statusMap["Microsoft.Web/sites/sourcecontrols"] = "Setting up Source Control";
+	statusMap["Microsoft.Web/serverfarms"] = "Creating Web Hosting Plan";
+
 	$scope.showError = function(){
 		$('#errorModal').modal('show');
 	}
@@ -468,7 +474,7 @@ angular.module('formApp', ['ngAnimate', 'ui.router'])
 		})
 		.then(function(result){
 			$scope.formData.statusMesgs.push("Deployment Started...");
-			window.setTimeout(getStatus, 10000, $scope, $http);
+			window.setTimeout(getStatus, 1000, $scope, $http);
 		},
 		function(result){
 			$scope.formData.errorMesg = result.data.error;
@@ -484,27 +490,57 @@ angular.module('formApp', ['ngAnimate', 'ui.router'])
 		    url: "api/deployments/"+subscriptionId+"/sites/"+siteName
  		})
 		.then(function(result){
+			addStatusMesg($scope, result);
 			if(result.data.provisioningState === "Failed"){
-				// etodo: add better error
-				$scope.formData.errorMesg = "Failed";
+				
+				addErrorMesg($scope, result);
 			}
 			else if(result.data.provisioningState === "Succeeded"){
-				// $scope.formData.statusMesgs.push("Deployment Complete.");
 				$scope.formData.siteUrl = result.data.siteUrl;
 				window.setTimeout(getGitStatus, 1000, $scope, $http);
 
 			}
 			else{
-				if(!$scope.formData.waitingForDeployment){
-					$scope.formData.statusMesgs.push("Creating Azure Resources...");	
-					$scope.formData.waitingForDeployment = true;
-				}
 				window.setTimeout(getStatus, 1000, $scope, $http);
 			}
 		},
+		
 		function(result){
 			$scope.formData.errorMesg = result.data.error;
 		});
+	}
+
+	function addStatusMesg($scope, result){
+		var ops = result.data.operations.value;
+		for(var i=ops.length-1; i>=0; i--){
+			var mesg = ops[i].properties.targetResource.resourceType;
+			if(statusMap[mesg]){
+				mesg = statusMap[mesg];
+			}
+			else{
+				mesg = "Updating " + mesg;
+			}
+
+			if($scope.formData.statusMesgs.indexOf(mesg) < 0){
+				$scope.formData.statusMesgs.push(mesg);
+			}
+		}
+	}
+
+	function addErrorMesg($scope, result){
+		var ops = result.data.operations.value;
+		var mesg = null;
+		for(var i=0; i<ops.length; i++){
+			if(ops[i].properties.provisioningState === "Failed"){
+				mesg = ops[i].properties.statusMessage.Message;
+			}
+		}
+
+		if(!mesg){
+			mesg = "Failed Deployment";
+		}
+
+		$scope.formData.errorMesg = mesg;
 	}
 
 	function getGitStatus($scope, $http){
