@@ -24,6 +24,5 @@ _app/
 nuget.exe
 Kudu.Services.Web/commit.txt
 Areas/*
-Content/*
 Images/*
 Views/*
