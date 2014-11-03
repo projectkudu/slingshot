@@ -1,11 +1,11 @@
 ARMOAuth
 ========
-This demonstrates OAuth workflow where users grant access to their ARM (Azure Resource Management) to third party site.
+This project has dependencies on OAuth authentication.
 
 Instructions
 ============
 1. Clone this repository to your local drive.
-2. Open `ARMOAuth.sln` with VS 2012+ and compile.
+2. Open `slingshot.sln` with VS 2012+ and compile.
 
 Create AAD application
 ======================
@@ -27,7 +27,7 @@ Fix AADClientId and AADClientSecret in codes
 
 Test with localhost
 ===================
-1. On VS, start the `ARMOAuth.sln` in debugger (F5).
+1. On VS, start the `slingshot.sln` in debugger (F5).
 2. On browser, it should redirect to login page.
 3. Enter AAD account and password.  
   Note: try account that is not in the same directly as the application.  
@@ -36,12 +36,12 @@ Test with localhost
 
 Test ARM apis
 =============
-1. `https://localhost:44300/token` - show current token details.
-2. `https://localhost:44300/tenants` - show all tenants (AAD directory) user belongs to.
-3. `https://localhost:44300/tenants/<tenant-id>` - to switch tenant.
-4. `https://localhost:44300/subscriptions` - list subscriptions.
-5. `https://localhost:44300/subscriptions/<sub-id>/resourceGroups` - list resourceGroups for a subscription.
-6. `https://localhost:44300/subscriptions/<sub-id>/resourceGroups/<resource>/providers/Microsoft.Web/sites` - list sites.
+1. `https://localhost:44300/deploy/api/token` - show current token details.
+2. `https://localhost:44300/deploy/api/tenants` - show all tenants (AAD directory) user belongs to.
+3. `https://localhost:44300/deploy/api/tenants/<tenant-id>` - to switch tenant.
+4. `https://localhost:44300/deploy/api/subscriptions` - list subscriptions.
+5. `https://localhost:44300/deploy/api/subscriptions/<sub-id>/resourceGroups` - list resourceGroups for a subscription.
+6. `https://localhost:44300/deploy/api/subscriptions/<sub-id>/resourceGroups/<resource>/providers/Microsoft.Web/sites` - list sites.
 7. and so on.. 
 
 Test with Azure Websites
@@ -50,6 +50,6 @@ Test with Azure Websites
 2. Add the site https url as the reply URL for AAD application
 3. Deploy the website by pushing the repository
 4. Set AADClientID and AADClientSecret appSettings
-5. To test, simply browse to the website
+5. To test, simply browse to the website and append the query string "?repository=<url of your Git repository>"
 
 Any issue, do let me know.
