@@ -79,12 +79,6 @@ angular.module('formApp', ['ngAnimate', 'ui.router'])
 			url: '/deploy',
 			templateUrl: 'ng/views/form-deploy.html',
 			controller: 'FormDeployController'
-		})
-		
-		// /form/payment
-		.state('form.payment', {
-			url: '/payment',
-			templateUrl: 'ng/views/form-payment.html'
 		});
 		
 	// catch all route
