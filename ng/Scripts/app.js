@@ -114,21 +114,6 @@ angular.module('formApp', ['ngAnimate', 'ui.router'])
 	function initialize(){
 		$scope.formData.repositoryUrl = getQueryVariable("repository");
 
-		// if(!repositoryUrl || repositoryUrl.length === 0){
-			// repositoryUrl = document.referrer;
-			// if(!repositoryUrl || repositoryUrl.length === 0){
-				// $scope.formData.error = "No repository detected.  The repository must be passed as either a referrer header or as a query string.";
-			// }
-		// }
-
-		// When a user switches directories, we need to redirect to a different URL to update our token.
-		// That will mess up the referrer header, so we check to make sure we don't set the repositoryUrl
-		// to our own domain path.
-		// var repository = parseURL(repositoryUrl);
-		// if(repository.hostname !== location.hostname){
-		// 	sessionStorage.repositoryUrl = repositoryUrl;
-		// }
-
 		if(!$scope.formData.repositoryUrl || $scope.formData.repositoryUrl.length === 0){
 			if(sessionStorage.repositoryUrl){
 				$scope.formData.repositoryUrl = sessionStorage.repositoryUrl;
@@ -215,9 +200,7 @@ angular.module('formApp', ['ngAnimate', 'ui.router'])
 		    }
 		})
 		.then(function(result){
-
 			$scope.formData.userDisplayName = result.data.userDisplayName;
-
 			$scope.formData.template = result.data.template;
 			$scope.formData.subscriptions = result.data.subscriptions;
 			$scope.formData.siteLocations = result.data.siteLocations;
@@ -225,20 +208,19 @@ angular.module('formApp', ['ngAnimate', 'ui.router'])
 			$scope.formData.branch = result.data.branch;
 			$scope.formData.tenants = result.data.tenants;
 			$scope.formData.repositoryUrl = result.data.repositoryUrl;
+			$scope.formData.siteName = result.data.siteName;
+			$scope.formData.siteNameQuery = result.data.siteName;
 
 			// Select current tenant
 			var tenants = $scope.formData.tenants;
-
-			// For testing directory changes
-			// var tenantCopy = {};
-			// angular.copy(tenants[0], tenantCopy);
-			// tenantCopy.DisplayName = "foo";
-			// tenants.push(tenantCopy);
-
 			for(var i = 0; i < tenants.length; i++){
 				if(tenants[i].Current){
 					$scope.formData.tenant = tenants[i];
 				}
+			}
+
+			if($scope.formData.subscriptions && $scope.formData.subscriptions.length > 0){
+				$scope.formData.subscription = $scope.formData.subscriptions[0];
 			}
 
 			// Pull out template parameters to show on UI
@@ -256,8 +238,13 @@ angular.module('formApp', ['ngAnimate', 'ui.router'])
 
 				$scope.formData.params.push(param);
 
-				if(param.name.toLowerCase() === "repourl"){
+				var paramName = param.name.toLowerCase();
+				if(paramName === "repourl"){
 					repoParamFound = true;
+				}
+				else if(paramName === "sitename"){
+					param.value = result.data.siteName;
+					$scope.formData.siteNameAvailable = true;
 				}
 			}
 
@@ -266,14 +253,10 @@ angular.module('formApp', ['ngAnimate', 'ui.router'])
 			}
 
 		},
-		function(error){
-			alert(error.statusText)
+		function(result){
+			alert(result.data.error)
 		});
 	}
-
-	// $scope.getRepositoryUrl = function(){
-	// 	return sessionStorage.repositoryUrl;
-	// }
 
 	$scope.changeTenant = function(){
 		var tenantUrl = window.location.origin + window.location.pathname + "api/tenants/" + $scope.formData.tenant.TenantId;
@@ -381,7 +364,7 @@ angular.module('formApp', ['ngAnimate', 'ui.router'])
 	function querySiteName($scope, $http, siteName){
 		// Check to make sure we still have the correct site name to query after the delay
 		if($scope.formData.siteNameQuery === siteName){
-			var subscriptionId = $scope.formData.subscriptions[1].subscriptionId
+			var subscriptionId = $scope.formData.subscriptions[0].subscriptionId
 			$http({
 			    method: "get",
 			    url: "api/subscriptions/"+subscriptionId+"/sites/"+siteName
@@ -394,7 +377,7 @@ angular.module('formApp', ['ngAnimate', 'ui.router'])
 					$scope.formData.siteName = result.data.siteName;
 				}
 			},function(result){
-				alert(result.statusText);
+				alert(result.data.error);
 			});
 		}
 	}
@@ -427,6 +410,7 @@ angular.module('formApp', ['ngAnimate', 'ui.router'])
 .controller('FormPreviewController', ['$scope', '$http', function($scope, $http){
 	function initialize($scope, $http){
 		var subscriptionId = $scope.formData.subscription.subscriptionId;
+		$scope.formData.providers = [];
 
 		$http({
 		    method: "post",
@@ -440,7 +424,7 @@ angular.module('formApp', ['ngAnimate', 'ui.router'])
 			$scope.formData.providers = result.data.providers;
 		},
 		function(result){
-			alert("Failed to preview");
+			alert(result.data.error);
 		});
 	}
 
@@ -448,8 +432,6 @@ angular.module('formApp', ['ngAnimate', 'ui.router'])
 }]) // end FormPreviewController
 
 .controller('FormDeployController', ['$scope', '$http', function($scope, $http){
-	$scope.formData.statusMesgs = [];
-
 	var statusMap = {};
 	statusMap["Microsoft.Web/sites"] = "Creating Website";
 	statusMap["Microsoft.Web/sites/config"] = "Updating Website Config";
@@ -460,8 +442,15 @@ angular.module('formApp', ['ngAnimate', 'ui.router'])
 		$('#errorModal').modal('show');
 	}
 
+	$scope.retryDeploy = function(){
+		initialize($scope, $http);
+	}
+
 	function initialize($scope, $http){
 		var subscriptionId = $scope.formData.subscription.subscriptionId;
+		$scope.formData.deploymentSucceeded = false;
+		$scope.formData.errorMesg = null;
+		$scope.formData.statusMesgs = [];
 
 		$scope.formData.statusMesgs.push("Submitting Deployment...");
 		$http({
@@ -491,12 +480,27 @@ angular.module('formApp', ['ngAnimate', 'ui.router'])
  		})
 		.then(function(result){
 			addStatusMesg($scope, result);
-			if(result.data.provisioningState === "Failed"){
-				
+
+			// It seems like in some cases the provisioningState may not indicate that there's a failure
+			// but it will be hidden within the operations object.
+			var ops = result.data.operations;
+			var error = null;
+			for(var i=0; i<ops.value.length; i++){
+				if(ops.value[i].properties.statusMessage &&
+				   ops.value[i].properties.statusMessage.error){
+					error = ops.value[i].properties.statusMessage.error.message;
+				}
+			}
+
+			if(error){
+				$scope.formData.errorMesg = error;
+			}
+			else if(result.data.provisioningState === "Failed"){
 				addErrorMesg($scope, result);
 			}
 			else if(result.data.provisioningState === "Succeeded"){
 				$scope.formData.siteUrl = result.data.siteUrl;
+				$scope.formData.portalUrl = "https://manage.windowsazure.com/"+$scope.formData.tenant.DomainName+"#Workspaces/WebsiteExtension/Website/"+$scope.formData.siteName+"/quickstart";
 				window.setTimeout(getGitStatus, 1000, $scope, $http);
 
 			}
@@ -560,8 +564,8 @@ angular.module('formApp', ['ngAnimate', 'ui.router'])
 				formData.errorMesg = "Git deployment failed";	
 			}
 			else{
-				if(formData.statusMesgs[formData.statusMesgs.length-1] !== result.data.status_text){
-					formData.statusMesgs.push(result.data.status_text);
+				if(formData.statusMesgs[formData.statusMesgs.length-1] !== result.data.progress){
+					formData.statusMesgs.push(result.data.progress);
 				}
 				window.setTimeout(getGitStatus, 1000, $scope, $http);
 			}
@@ -569,12 +573,10 @@ angular.module('formApp', ['ngAnimate', 'ui.router'])
 		function(result){
 			$scope.formData.errorMesg = result.data.error;
 		});
-
 	}
 
 	initialize($scope, $http);
 
 }]);  // end FormDeployController
-
 
 })();

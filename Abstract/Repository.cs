@@ -15,6 +15,7 @@ namespace Slingshot.Abstract
         protected Uri _inputUri;
         protected string _repoUrl;
         protected string _branch;
+        protected string _repositoryName;
         protected string _templateUrl;
         protected JObject _template;
 
@@ -26,6 +27,8 @@ namespace Slingshot.Abstract
         public abstract string RepositoryUrl { get; }
 
         public abstract string Branch { get; }
+
+        public abstract string RepositoryName { get; }
 
         #pragma warning disable 1998
         public async virtual Task<JObject> DownloadTemplateAsync()
@@ -70,7 +73,7 @@ namespace Slingshot.Abstract
             }
             else
             {
-                return null;
+                throw new NotSupportedException("Invalid git repository.  Currently deployments can only be made from github.com repositories");
             }
         }
     }

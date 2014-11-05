@@ -96,5 +96,21 @@ namespace Slingshot.Concrete
                 return _branch;
             }
         }
+
+        public override string RepositoryName
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(_repositoryName))
+                {
+                    if (_inputUri.Segments.Length > 2)
+                    {
+                        _repositoryName = _inputUri.Segments[2].Trim(Constants.Path.SlashChars);
+                    }
+                }
+
+                return _repositoryName;
+            }
+        }
     }
 }

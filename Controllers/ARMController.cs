@@ -18,9 +18,11 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Routing;
+using Slingshot.Concrete;
 
 namespace Slingshot.Controllers
 {
+    [UnhandledExceptionFilter]
     public class ARMController : ApiController
     {
         private static Dictionary<string, string> sm_providerMap;
@@ -44,22 +46,32 @@ namespace Slingshot.Controllers
             sm_providerMap = providerMap;
         }
 
-        public HttpResponseMessage GetToken()
+        public HttpResponseMessage GetToken(bool plainText = false)
         {
             var jwtToken = Request.Headers.GetValues("X-MS-OAUTH-TOKEN").FirstOrDefault();
-            var base64 = jwtToken.Split('.')[1];
 
-            // fixup
-            int mod4 = base64.Length % 4;
-            if (mod4 > 0)
+            if (plainText)
             {
-                base64 += new string('=', 4 - mod4);
+                var response = Request.CreateResponse(HttpStatusCode.OK);
+                response.Content = new StringContent(jwtToken, Encoding.UTF8, "text/plain");
+                return response;
             }
+            else
+            {
+                var base64 = jwtToken.Split('.')[1];
 
-            var json = Encoding.UTF8.GetString(Convert.FromBase64String(base64));
-            var response = Request.CreateResponse(HttpStatusCode.OK);
-            response.Content = new StringContent(json, Encoding.UTF8, "application/json");
-            return response;
+                // fixup
+                int mod4 = base64.Length % 4;
+                if (mod4 > 0)
+                {
+                    base64 += new string('=', 4 - mod4);
+                }
+
+                var json = Encoding.UTF8.GetString(Convert.FromBase64String(base64));
+                var response = Request.CreateResponse(HttpStatusCode.OK);
+                response.Content = new StringContent(json, Encoding.UTF8, "application/json");
+                return response;
+            }
         }
 
         [Authorize]
@@ -87,12 +99,12 @@ namespace Slingshot.Controllers
 
         [Authorize]
         [HttpPost]
+        #pragma warning disable 4014
         public async Task<HttpResponseMessage> Preview([FromBody] JObject parameters, string subscriptionId, string templateUrl)
         {
             JObject responseObj = new JObject();
             List<string> providers = new List<string>(32);
             HttpResponseMessage response = null;
-
             using (var client = GetRMClient(subscriptionId))
             {
                 ResourceGroupCreateOrUpdateResult resourceResult = null;
@@ -213,7 +225,13 @@ namespace Slingshot.Controllers
 
             using (var client = GetClient())
             {
-                string url = string.Format("https://management.azure.com/subscriptions/{0}/resourcegroups/{1}/deployments/{1}/operations?api-version=2014-04-01", subscriptionId, siteName);
+                string url = string.Format(
+                    Constants.CSM.GetDeploymentStatusFormat,
+                    Utils.GetCSMUrl(Request.RequestUri.Host),
+                    subscriptionId,
+                    siteName,
+                    Constants.CSM.ApiVersion);
+
                 var getOpResponse = await client.GetAsync(url);
                 responseObj["operations"] = JObject.Parse(getOpResponse.Content.ReadAsStringAsync().Result);
             }
@@ -239,25 +257,37 @@ namespace Slingshot.Controllers
             HttpResponseMessage response = null;
             using (var client = GetClient())
             {
-                var statusResponse = await client.GetAsync(
-                    string.Format(Constants.CSMUrls.GitDeploymentStatusFormat, subscriptionId, siteName));
+                string url = string.Format(
+                    Constants.CSM.GetGitDeploymentStatusFormat,
+                    Utils.GetCSMUrl(Request.RequestUri.Host),
+                    subscriptionId,
+                    siteName,
+                    Constants.CSM.ApiVersion);
 
-                if (statusResponse.IsSuccessStatusCode)
+                for (int i = 0; i < 5; i++)
                 {
-                    var resultObj = JObject.Parse(await statusResponse.Content.ReadAsStringAsync());
-                    var deployments = resultObj["properties"];
-                    if (deployments.Count() > 0)
+                    var statusResponse = await client.GetAsync(url);
+                    if (statusResponse.IsSuccessStatusCode)
                     {
-                        response = Request.CreateResponse(HttpStatusCode.OK, deployments.First());
+                        var resultObj = JObject.Parse(await statusResponse.Content.ReadAsStringAsync());
+                        var deployments = resultObj["properties"];
+                        if (deployments.Count() > 0)
+                        {
+                            response = Request.CreateResponse(HttpStatusCode.OK, deployments.First());
+                            break;
+                        }
+
+                        await Task.Delay(1000);
                     }
                     else
                     {
-                        response = Request.CreateResponse(HttpStatusCode.NotFound, new { error = "Could not find any git deployments" });
+                        response = statusResponse;
                     }
                 }
-                else
+
+                if (response == null)
                 {
-                    response = statusResponse;
+                    response = Request.CreateResponse(HttpStatusCode.NotFound, new { error = "Could not find any git deployments" });
                 }
             }
 
@@ -286,59 +316,106 @@ namespace Slingshot.Controllers
         {
             HttpResponseMessage response = null;
             string branch = null;
+            JObject returnObj = new JObject();
 
             Repository repo = Repository.CreateRepositoryObj(repositoryUrl);
             repositoryUrl = repo.RepositoryUrl;
 
             string templateUrl = await repo.GetTemplateUrlAsync();
             JObject template = await repo.DownloadTemplateAsync();
-
-            // BUG: There's an Antares Bug that prevents us from, being able to deploy any branch other than
-            // master so we'll hard-code it for now.
-            //branch = repo.Branch;
-            branch = "master";
+            branch = repo.Branch;
 
             if (template != null)
             {
                 string token = GetTokenFromHeader();
 
-                var subscriptions = (await TokenUtils.GetSubscriptionsAsync(TokenUtils.AzureEnvs.Prod, token))
+                var subscriptions = (await Utils.GetSubscriptionsAsync(Request.RequestUri.Host, token))
                                     .Where(s => s.state == "Enabled").ToArray();
 
                 var tenants = await GetTenantsArray();
-                var email = GetHeaderValue("X-MS-CLIENT-PRINCIPAL-NAME");
-                var userDisplayName = GetHeaderValue("X-MS-CLIENT-DISPLAY-NAME") ?? email;
+                var email = GetHeaderValue(Constants.Headers.X_MS_CLIENT_PRINCIPAL_NAME);
+                var userDisplayName = GetHeaderValue(Constants.Headers.X_MS_CLIENT_DISPLAY_NAME) ?? email;
+                IEnumerable<string> locations = new List<string>();
+                string siteName = null;
 
                 if (subscriptions.Length >= 1)
                 {
-                    var locations = await GetSiteLocations(token, subscriptions);
+                    locations = await GetSiteLocations(token, subscriptions);
 
-                    JObject returnObj = new JObject();
-                    returnObj["template"] = template;
-                    returnObj["templateUrl"] = templateUrl;
-                    returnObj["repositoryUrl"] = repositoryUrl;
-                    returnObj["branch"] = branch;
-                    returnObj["siteLocations"] = JArray.FromObject(locations);
-                    returnObj["subscriptions"] = JArray.FromObject(subscriptions);
-                    returnObj["tenants"] = tenants;
-                    returnObj["userDisplayName"] = userDisplayName;
-                    response = Request.CreateResponse(HttpStatusCode.OK, returnObj);
+                    try
+                    {
+                        siteName = await GenerateSiteName(siteName, token, repo, subscriptions);
+                    }
+                    catch (CloudException e)
+                    {
+                        returnObj["error"] = e.ToString();
+                    }
                 }
-                else
-                {
-                    response = Request.CreateResponse(
-                        HttpStatusCode.InternalServerError,
-                        "No available active subscriptions");
-                }
+
+                returnObj["siteLocations"] = JArray.FromObject(locations);
+                returnObj["subscriptions"] = JArray.FromObject(subscriptions);
+                returnObj["tenants"] = tenants;
+                returnObj["userDisplayName"] = userDisplayName;
+                returnObj["siteName"] = siteName;
+                returnObj["template"] = template;
+                returnObj["templateUrl"] = templateUrl;
+                returnObj["repositoryUrl"] = repositoryUrl;
+                returnObj["branch"] = branch;
+
+                response = Request.CreateResponse(HttpStatusCode.OK, returnObj);
             }
             else
             {
-                response = Request.CreateResponse(
-                    HttpStatusCode.NotFound,
-                    string.Format("Could not find the Azure RM Template '{0}'", repositoryUrl));
+                returnObj["error"] = string.Format("Could not find the Azure RM Template '{0}'", repositoryUrl);
+                response = Request.CreateResponse(HttpStatusCode.NotFound,returnObj);
             }
 
             return response;
+        }
+
+        private async Task<string> GenerateSiteName(string siteName, string token, Repository repo, SubscriptionInfo[] subscriptions)
+        {
+            if (!string.IsNullOrEmpty(repo.RepositoryName))
+            {
+                bool isAvailable = false;
+                var creds = new TokenCloudCredentials(subscriptions.First().subscriptionId, token);
+                var rdfeBaseUri = new Uri(Utils.GetRDFEUrl(Request.RequestUri.Host));
+
+                using (var webSiteMgmtClient = CloudContext.Clients.CreateWebSiteManagementClient(creds, rdfeBaseUri))
+                {
+                    for (int i = 0; i < 3; i++)
+                    {
+                        siteName = GenerateRandomSiteName(repo.RepositoryName);
+                        isAvailable = (await webSiteMgmtClient.WebSites.IsHostnameAvailableAsync(siteName)).IsAvailable;
+
+                        if (isAvailable)
+                        {
+                            break;
+                        }
+                    }
+                }
+
+                if (!isAvailable)
+                {
+                    siteName = null;
+                }
+            }
+
+            return siteName;
+        }
+
+        private string GenerateRandomSiteName(string baseName, int length = 4)
+        {
+            Random random = new Random();
+
+            var strb = new StringBuilder(baseName.Length + length);
+            strb.Append(baseName);
+            for (int i = 0; i < length; ++i)
+            {
+                strb.Append(Constants.Path.HexChars[random.Next(Constants.Path.HexChars.Length)]);
+            }
+
+            return strb.ToString();
         }
 
         private string GetHeaderValue(string name)
@@ -368,9 +445,6 @@ namespace Slingshot.Controllers
                     var tenants = await response.Content.ReadAsAsync<JArray>();
                     tenants = SetCurrentTenant(tenants);
                     return tenants;
-                    //response = Transfer(response);
-                    //response.Content = new StringContent(tenants.ToString(), Encoding.UTF8, "application/json");
-                    //return response;
                 }
             }
             else
@@ -385,9 +459,6 @@ namespace Slingshot.Controllers
 
                     var tenants = (JArray)(await response.Content.ReadAsAsync<JObject>())["value"];
                     tenants = SetCurrentTenant(ToTenantDetails(tenants));
-                    //response = Transfer(response);
-                    //response.Content = new StringContent(tenants.ToString(), Encoding.UTF8, "application/json");
-                    //return response;
                     return tenants;
                 }
             }
@@ -461,9 +532,9 @@ namespace Slingshot.Controllers
 
         private HttpResponseMessage Transfer(HttpResponseMessage response)
         {
-            var ellapsed = response.Headers.GetValues(Utils.X_MS_Ellapsed).First();
+            var ellapsed = response.Headers.GetValues(Constants.Headers.X_MS_Ellapsed).First();
             response = Request.CreateResponse(response.StatusCode);
-            response.Headers.Add(Utils.X_MS_Ellapsed, ellapsed);
+            response.Headers.Add(Constants.Headers.X_MS_Ellapsed, ellapsed);
             return response;
         }
 
@@ -479,7 +550,7 @@ namespace Slingshot.Controllers
 
         private JObject GetClaims()
         {
-            var jwtToken = Request.Headers.GetValues(Utils.X_MS_OAUTH_TOKEN).FirstOrDefault();
+            var jwtToken = Request.Headers.GetValues(Constants.Headers.X_MS_OAUTH_TOKEN).FirstOrDefault();
             var base64 = jwtToken.Split('.')[1];
 
             // fixup
@@ -493,12 +564,13 @@ namespace Slingshot.Controllers
             return JObject.Parse(json);
         }
 
-        private async Task<IList<string>> GetSiteLocations(string token, SubscriptionInfo[] subscriptions)
+        private async Task<IEnumerable<string>> GetSiteLocations(string token, SubscriptionInfo[] subscriptions)
         {
             using (var client = GetRMClient(token, subscriptions.FirstOrDefault().subscriptionId))
             {
                 var websites = (await client.Providers.GetAsync("Microsoft.Web")).Provider;
-                return websites.ResourceTypes.FirstOrDefault(rt => rt.Name == "sites").Locations;
+                return websites.ResourceTypes.FirstOrDefault(rt => rt.Name == "sites").Locations
+                       .Where(location => location.IndexOf("MSFT", StringComparison.OrdinalIgnoreCase) < 0);
             }
         }
 
@@ -529,13 +601,13 @@ namespace Slingshot.Controllers
         {
             var token = Request.Headers.GetValues("X-MS-OAUTH-TOKEN").FirstOrDefault();
             var creds = new TokenCloudCredentials(subscriptionId, token);
-            return new WebSiteManagementClient(creds);
+            return new WebSiteManagementClient(creds, new Uri(Utils.GetCSMUrl(Request.RequestUri.Host)));
         }
 
         private ResourceManagementClient GetRMClient(string token, string subscriptionId)
         {
             var creds = new TokenCloudCredentials(subscriptionId, token);
-            return new ResourceManagementClient(creds);
+            return new ResourceManagementClient(creds, new Uri(Utils.GetCSMUrl(Request.RequestUri.Host)));
         }
 
         private string GetTokenFromHeader()

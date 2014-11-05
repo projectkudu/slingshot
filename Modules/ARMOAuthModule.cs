@@ -49,6 +49,14 @@ namespace Slingshot.Modules
             var request = application.Request;
             var response = application.Response;
 
+            if (!request.Url.IsLoopback)
+            {
+                principal = new ClaimsPrincipal(new ClaimsIdentity("SCM"));
+                HttpContext.Current.User = principal;
+                Thread.CurrentPrincipal = principal;
+                return;
+            }
+
             if (request.Url.Scheme != "https")
             {
                 response.Redirect(String.Format("https://{0}{1}", request.Url.Authority, request.Url.PathAndQuery), endResponse: true);

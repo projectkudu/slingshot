@@ -22,7 +22,21 @@
 		<div ng-repeat="mesg in formData.statusMesgs">{{mesg}}</div>
 		<i class="fa fa-spinner fa-spin" ng-show="!formData.errorMesg && !formData.deploymentSucceeded"></i>
 
-		<div ng-show="formData.errorMesg"><span class="text-danger">Deployment Failed</span><a href ng-click="showError()"> (View Error)</a></div>
-		<div ng-show="formData.deploymentSucceeded">Deployment Complete - <a target="_blank" ng-href="{{formData.siteUrl}}">{{formData.siteUrl}}</a></div>
+		<div ng-show="formData.errorMesg">
+      <span class="text-danger">Deployment Failed</span>
+      <a href ng-click="showError()"> (View Error)</a>
+    </div>
+		<div ng-show="formData.deploymentSucceeded">
+      Deployment Complete - 
+      <a target="_blank" ng-href="{{formData.portalUrl}}">Manage</a> /  
+      <a target="_blank" ng-href="{{formData.siteUrl}}">Browse</a></div>
 	</ul>
+</div>
+
+<div class="row" ng-show="formData.errorMesg">
+  <div class="form-group col-xs-6 col-xs-offset-6 text-right">
+      <a ng-click="retryDeploy()" style="margin-right:15px" class="btn btn-info wizard-button">
+      Retry <span class="glyphicon glyphicon-circle-arrow-right"></span>
+      </a>
+  </div>
 </div>
