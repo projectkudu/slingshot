@@ -13,7 +13,7 @@ Create AAD application
 2. Select `Add an application my organization is developing`
 3. Enter any name for application name.
 4. Select `WEB APPLICATION AND/OR WEB API`
-5. Enter `https://localhost:44300/` as `SIGN ON URL` 
+5. Enter `https://localhost:44306/` as `SIGN ON URL` 
 6. Enter `https://<tenant-name>/` as `APP ID URL`.  For instance, `https://mytenant.onmicrosoft.com/`.
 7. Once created, click `CONFIGURE` tab
 8. Select YES for `APPLICATION IS MULTI-TENANT` and save.
@@ -36,12 +36,12 @@ Test with localhost
 
 Test ARM apis
 =============
-1. `https://localhost:44300/deploy/api/token` - show current token details.
-2. `https://localhost:44300/deploy/api/tenants` - show all tenants (AAD directory) user belongs to.
-3. `https://localhost:44300/deploy/api/tenants/<tenant-id>` - to switch tenant.
-4. `https://localhost:44300/deploy/api/subscriptions` - list subscriptions.
-5. `https://localhost:44300/deploy/api/subscriptions/<sub-id>/resourceGroups` - list resourceGroups for a subscription.
-6. `https://localhost:44300/deploy/api/subscriptions/<sub-id>/resourceGroups/<resource>/providers/Microsoft.Web/sites` - list sites.
+1. `https://localhost:44306/deploy/api/token` - show current token details.
+2. `https://localhost:44306/deploy/api/tenants` - show all tenants (AAD directory) user belongs to.
+3. `https://localhost:44306/deploy/api/tenants/<tenant-id>` - to switch tenant.
+4. `https://localhost:44306/deploy/api/subscriptions` - list subscriptions.
+5. `https://localhost:44306/deploy/api/subscriptions/<sub-id>/resourceGroups` - list resourceGroups for a subscription.
+6. `https://localhost:44306/deploy/api/subscriptions/<sub-id>/resourceGroups/<resource>/providers/Microsoft.Web/sites` - list sites.
 7. and so on.. 
 
 Test with Azure Websites
