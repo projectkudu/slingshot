@@ -1,0 +1,42 @@
+﻿<!-- Modal -->
+<div class="modal fade" id="errorModal" tabindex="-1" role="dialog" aria-labelledby="errorModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <h4 class="modal-title" id="errorModalLabel">Deployment Error</h4>
+      </div>
+      <div class="modal-body">
+        {{formData.errorMesg}}
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div style="min-height: 200px;">
+	<ul>
+		<!-- <li ng-repeat="mesg in formData.statusMesgs">{{mesg}}</li> -->
+		<div ng-repeat="mesg in formData.statusMesgs">{{mesg}}</div>
+		<i class="fa fa-spinner fa-spin" ng-show="!formData.errorMesg && !formData.deploymentSucceeded"></i>
+
+		<div ng-show="formData.errorMesg">
+      <span class="text-danger">Deployment Failed</span>
+      <a href ng-click="showError()"> (View Error)</a>
+    </div>
+		<div ng-show="formData.deploymentSucceeded">
+      Deployment Complete - 
+      <a target="_blank" ng-href="{{formData.portalUrl}}">Manage</a> /  
+      <a target="_blank" ng-href="{{formData.siteUrl}}">Browse</a></div>
+	</ul>
+</div>
+
+<div class="row" ng-show="formData.errorMesg">
+  <div class="form-group col-xs-6 col-xs-offset-6 text-right">
+      <a ng-click="retryDeploy()" style="margin-right:15px" class="btn btn-info wizard-button">
+      Retry <span class="glyphicon glyphicon-circle-arrow-right"></span>
+      </a>
+  </div>
+</div>
