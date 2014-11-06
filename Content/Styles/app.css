@@ -19,20 +19,24 @@ pre                             { margin-bottom:20px; }
 #status-buttons a.active span   { background:#00BC8C; }
 
 .form-username{
-	background:#151515; padding:10px; border-top-left-radius:5px; border-top-right-radius:5px;
+    background:#151515; padding:10px; border-top-left-radius:5px; border-top-right-radius:5px;
 }
 
 #repositoryContainer{
-	margin-bottom: 20px;
+    margin-bottom: 20px;
 }
 
 .large-spinner{
-	font-size:  30px;
+    font-size:  30px;
 }
 
 .wizard-button{
-	width:150px;
-	margin-left:5px;
+    width:150px;
+    margin-left:5px;
+}
+
+.result-body{
+    min-height: 200px;
 }
 
 /* ANIMATION STYLINGS
@@ -49,40 +53,40 @@ pre                             { margin-bottom:20px; }
 /* enter animation */
 #form-views.ng-enter            { 
     -webkit-animation:slideInRight 0.5s both ease;
-	-moz-animation:slideInRight 0.5s both ease;
-	animation:slideInRight 0.5s both ease; 
+    -moz-animation:slideInRight 0.5s both ease;
+    animation:slideInRight 0.5s both ease; 
 }
 
 /* leave animation */
 #form-views.ng-leave            { 
     -webkit-animation:slideOutLeft 0.5s both ease;
-	-moz-animation:slideOutLeft 0.5s both ease;
-	animation:slideOutLeft 0.5s both ease;   
+    -moz-animation:slideOutLeft 0.5s both ease;
+    animation:slideOutLeft 0.5s both ease;   
 }
 
 /* ANIMATIONS
 ============================================================================= */
 /* slide out to the left */
 @keyframes slideOutLeft {
-	to 		{ transform: translateX(-200%); }
+    to      { transform: translateX(-200%); }
 }
-@-moz-keyframes slideOutLeft {	
-	to 		{ -moz-transform: translateX(-200%); }
+@-moz-keyframes slideOutLeft {  
+    to      { -moz-transform: translateX(-200%); }
 }
 @-webkit-keyframes slideOutLeft {
-	to 		{ -webkit-transform: translateX(-200%); }
+    to      { -webkit-transform: translateX(-200%); }
 }
 
 /* slide in from the right */
 @keyframes slideInRight {
-	from 	{ transform:translateX(200%); }
-	to 		{ transform: translateX(0); }
+    from    { transform:translateX(200%); }
+    to      { transform: translateX(0); }
 }
 @-moz-keyframes slideInRight {
-	from 	{ -moz-transform:translateX(200%); }
-	to 		{ -moz-transform: translateX(0); }
+    from    { -moz-transform:translateX(200%); }
+    to      { -moz-transform: translateX(0); }
 }
 @-webkit-keyframes slideInRight {
-	from 	{ -webkit-transform:translateX(200%); }
-	to 		{ -webkit-transform: translateX(0); }
+    from    { -webkit-transform:translateX(200%); }
+    to      { -webkit-transform: translateX(0); }
 }

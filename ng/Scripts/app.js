@@ -235,7 +235,7 @@ angular.module('formApp', ['ngAnimate', 'ui.router'])
                 if(paramName === "repourl"){
                     repoParamFound = true;
                 }
-                else if(paramName === "sitename"){
+                else if(paramName === "sitename" && result.data.siteName){
                     param.value = result.data.siteName;
                     $scope.formData.siteNameAvailable = true;
                 }
@@ -311,13 +311,14 @@ angular.module('formApp', ['ngAnimate', 'ui.router'])
         if($scope.formData.tenant &&
            $scope.formData.subscription &&
            $scope.formData.params &&
-           $scope.formData.siteNameAvailable){
+           $scope.formData.siteNameAvailable &&
+           $scope.formData.siteName === $scope.formData.siteNameQuery){
             var params = $scope.formData.params;
             for(var i = 0; i < params.length; i++){
 
                 if(params[i].name === 'hostingPlanName' && $scope.formData.siteName){
                     params[i].value = $scope.formData.siteName;
-                }				
+                }
 
                 if(params[i].value === null){
                     return false;
