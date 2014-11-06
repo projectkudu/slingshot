@@ -26,6 +26,10 @@ pre                             { margin-bottom:20px; }
     margin-bottom: 20px;
 }
 
+#spinnerStatus{
+    margin-left: 10px;
+}
+
 .large-spinner{
     font-size:  30px;
 }

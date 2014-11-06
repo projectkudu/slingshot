@@ -446,7 +446,7 @@ angular.module('formApp', ['ngAnimate', 'ui.router'])
         $scope.formData.errorMesg = null;
         $scope.formData.statusMesgs = [];
 
-        $scope.formData.statusMesgs.push("Submitting Deployment...");
+        $scope.formData.statusMesgs.push("Submitting Deployment");
         $http({
             method: "post",
             url: "api/deployments/"+subscriptionId,
@@ -456,7 +456,7 @@ angular.module('formApp', ['ngAnimate', 'ui.router'])
             data: $scope.formData.deployPayload
         })
         .then(function(result){
-            $scope.formData.statusMesgs.push("Deployment Started...");
+            $scope.formData.statusMesgs.push("Deployment Started");
             window.setTimeout(getStatus, 1000, $scope, $http);
         },
         function(result){

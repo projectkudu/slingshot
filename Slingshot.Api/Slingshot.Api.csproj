@@ -207,7 +207,6 @@
       <DependentUpon>Web.config</DependentUpon>
     </Content>
     <Content Include="Content\Scripts\jquery-1.9.0.min.map" />
-    <Content Include="Content\siteWithRepository.json" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
