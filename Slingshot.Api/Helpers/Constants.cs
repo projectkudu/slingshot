@@ -15,7 +15,7 @@ namespace Slingshot.Helpers
 
         public class Repository
         {
-            public const string EmptySiteTemplateUrl = "https://raw.githubusercontent.com/Tuesdaysgreen/HelloWorld/master/siteWithRepository.json";
+            public const string EmptySiteTemplateUrl = "http://deploytoazure.azurewebsites.net/content/sitewithrepository.json";
             public const string GitCustomTemplateFormat = "https://raw.githubusercontent.com/{0}/{1}/{2}/azuredeploy.json";
         }
 
