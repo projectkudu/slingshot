@@ -36,12 +36,11 @@ namespace Slingshot.Concrete
 
                 if (_inputUri.Segments.Length > 2)
                 {
-                    string user = _inputUri.Segments[1].Trim(Constants.Path.SlashChars);
-                    string repo = _inputUri.Segments[2].Trim(Constants.Path.SlashChars);
+                    string branch = await GetBranch();
                     templateUrl = string.Format(Constants.Repository.GitCustomTemplateFormat,
-                                                        user,
-                                                        repo,
-                                                        Branch);
+                                                        UserName,
+                                                        RepositoryName,
+                                                        branch);
 
                     template = await DownloadTemplate(templateUrl);
                 }
@@ -67,9 +66,7 @@ namespace Slingshot.Concrete
                 {
                     if (_inputUri.Segments.Length > 2)
                     {
-                        string user = _inputUri.Segments[1].Trim(Constants.Path.SlashChars);
-                        string repo = _inputUri.Segments[2].Trim(Constants.Path.SlashChars);
-                        _repoUrl = string.Format("https://{0}/{1}/{2}", _inputUri.Host, user, repo);
+                        _repoUrl = string.Format("https://{0}/{1}/{2}", _inputUri.Host, UserName, RepositoryName);
                     }
                 }
 
@@ -77,25 +74,38 @@ namespace Slingshot.Concrete
             }
         }
 
-        public override string Branch
+        public override async Task<string> GetBranch()
         {
-            get 
+            if (string.IsNullOrEmpty(_branch))
             {
-                if (string.IsNullOrEmpty(_branch))
+                if (_inputUri.Segments.Length >= 4)
                 {
-                    if (_inputUri.Segments.Length >= 4)
-                    {
-                        _branch = _inputUri.Segments[4].Trim(Constants.Path.SlashChars);
-                    }
-                    else
-                    {
-                        _branch = "master";
-                    }
+                    _branch = _inputUri.Segments[4].Trim(Constants.Path.SlashChars);
+                }
+                else
+                {
+                    // If the branch isn't in the URL, then we need to look up the default branch
+                    // by querying the GitHub API.
+                    using (HttpClient client = new HttpClient())
+                    {   
+                        var url = string.Format(Constants.Repository.GitHubApiRepoInfoFormat, UserName, RepositoryName);
+                        client.DefaultRequestHeaders.Add("User-Agent", "AzureDeploy");
 
+                        var content = await client.GetStringAsync(url);
+                        var responseObj = JObject.Parse(content);
+                        var defaultBranch = responseObj["default_branch"];
+                        if (defaultBranch == null)
+                        {
+                            throw new ArgumentException("Could not discover default branch from repository");
+                        }
+
+                        _branch = defaultBranch.Value<string>();
+                    }
                 }
 
-                return _branch;
             }
+
+            return _branch;
         }
 
         public override string RepositoryName
@@ -108,9 +118,33 @@ namespace Slingshot.Concrete
                     {
                         _repositoryName = _inputUri.Segments[2].Trim(Constants.Path.SlashChars);
                     }
+                    else
+                    {
+                        throw new ArgumentException("Could not parse repository name from repository URL");
+                    }
                 }
 
                 return _repositoryName;
+            }
+        }
+
+        public override string UserName
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(_userName))
+                {
+                    if (_inputUri.Segments.Length > 1)
+                    {
+                        _userName = _inputUri.Segments[1].Trim(Constants.Path.SlashChars);
+                    }
+                    else
+                    {
+                        throw new ArgumentException("Could not parse user name from repository URL");
+                    }
+                }
+
+                return _userName;
             }
         }
     }

@@ -16,6 +16,7 @@ namespace Slingshot.Abstract
         protected string _repoUrl;
         protected string _branch;
         protected string _repositoryName;
+        protected string _userName;
         protected string _templateUrl;
         protected JObject _template;
 
@@ -26,9 +27,15 @@ namespace Slingshot.Abstract
 
         public abstract string RepositoryUrl { get; }
 
-        public abstract string Branch { get; }
-
         public abstract string RepositoryName { get; }
+
+        public abstract string UserName { get; }
+
+        #pragma warning disable 1998
+        public async virtual Task<string> GetBranch()
+        {
+            return null;
+        }
 
         #pragma warning disable 1998
         public async virtual Task<JObject> DownloadTemplateAsync()

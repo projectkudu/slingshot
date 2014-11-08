@@ -43,13 +43,28 @@
                 <select class="form-control" ng-model="param.value" ng-options="location for location in formData.siteLocations"></select>
             </div>
 
+            <!-- Special handling for sqlServerLocation form field -->
+            <div ng-switch-when="sqlServerLocation">
+                <label>{{param.name | camelCaseToHuman}}</label>
+                <select class="form-control" ng-model="param.value" ng-options="location for location in formData.sqlServerLocations"></select>
+            </div>
+
+            <!-- Special handling for sqlServerName form field -->
+            <div ng-switch-when="sqlServerName">
+                <label>{{param.name | camelCaseToHuman}}</label>
+                <span class="text-danger" ng-show="myForm.sqlServerName.$error.pattern">  - Invalid Server Name <i id="sqlServerNameTooltip" data-toggle="tooltip" class="text-info glyphicon glyphicon-question-sign" title="A SQL Server Name can only be made up of lowercase letters a-z, the numbers 0-9 and the hyphen. The hyphen may not lead or trail in the name."></i></span>
+                <input type="text" class="form-control" name="sqlServerName" ng-model="param.value" ng-pattern="/^([a-z0-9]+-)*[a-z0-9]+$/" ng-focus="enableTooltip('#sqlServerNameTooltip')">
+            </div>
+
             <!-- All other form fields -->
             <div ng-switch-default >
                 <label>{{param.name | camelCaseToHuman}}</label>
-                
-                <input type="text" ng-if="!param.allowedValues" class="form-control" name="param.name" ng-model="param.value">
 
-                <select class="form-control" ng-if="param.allowedValues" ng-model="param.value" ng-options="value for value in param.allowedValues">
+                <input type="password" ng-if="getFieldType(param) === 'password'" class="form-control" name="param.name" ng-model="param.value">
+
+                <input type="text" ng-if="getFieldType(param) === 'text'" class="form-control" name="param.name" ng-model="param.value">
+
+                <select class="form-control" ng-if="getFieldType(param) === 'select'" ng-model="param.value" ng-options="value for value in param.allowedValues">
             </select>
             </div>
         </div>

@@ -197,6 +197,7 @@ angular.module('formApp', ['ngAnimate', 'ui.router'])
             $scope.formData.template = result.data.template;
             $scope.formData.subscriptions = result.data.subscriptions;
             $scope.formData.siteLocations = result.data.siteLocations;
+            $scope.formData.sqlServerLocations = result.data.sqlServerLocations;
             $scope.formData.templateUrl = result.data.templateUrl;
             $scope.formData.branch = result.data.branch;
             $scope.formData.tenants = result.data.tenants;
@@ -212,9 +213,11 @@ angular.module('formApp', ['ngAnimate', 'ui.router'])
                 }
             }
 
+            // Select first subscription
             if($scope.formData.subscriptions && $scope.formData.subscriptions.length > 0){
                 $scope.formData.subscription = $scope.formData.subscriptions[0];
             }
+
 
             // Pull out template parameters to show on UI
             $scope.formData.params = [];
@@ -239,10 +242,16 @@ angular.module('formApp', ['ngAnimate', 'ui.router'])
                     param.value = result.data.siteName;
                     $scope.formData.siteNameAvailable = true;
                 }
+                else if(paramName === "sitelocation" && $scope.formData.siteLocations && $scope.formData.siteLocations.length > 0 && !param.defaultValue){
+                    param.value = $scope.formData.siteLocations[0];
+                }
+                else if(paramName === "sqlServerLocation" && $scope.formData.sqlServerLocations && $scope.formData.sqlServerLocations.length > 0 && !param.defaultValue){
+                    param.value =   $scope.formData.sqlServerLocations[0];
+                }
             }
 
             if(!repoParamFound){
-                $scope.formData.error = "Could not find a 'repoUrl' parameter in the template file."
+                $scope.formData.error = "Could not find a 'repoUrl' parameter in the Azure Resource Manager template file."
             }
 
         },
@@ -297,6 +306,11 @@ angular.module('formApp', ['ngAnimate', 'ui.router'])
         return true;
     }
 
+    $scope.enableTooltip = function(id){
+        var $tooltip = $(id);
+        $tooltip.tooltip();
+    }
+
     function getParamByName(params, name){
         for(var i = 0; i < params.length; i++){
             if(params[i].name.toLowerCase() === name.toLowerCase()){
@@ -305,6 +319,18 @@ angular.module('formApp', ['ngAnimate', 'ui.router'])
         }
 
         return null;
+    }
+
+    $scope.getFieldType = function(param){
+        if(param.name.toLowerCase().indexOf("password") >= 0){
+            return "password";
+        }
+        if(param.allowedValues){
+            return "select";
+        }
+        else{
+            return "text";
+        }
     }
 
     $scope.canMoveToNextStep = function(){
@@ -320,7 +346,7 @@ angular.module('formApp', ['ngAnimate', 'ui.router'])
                     params[i].value = $scope.formData.siteName;
                 }
 
-                if(params[i].value === null){
+                if(params[i].value === null || params[i].value === undefined){
                     return false;
                 }
             }
@@ -427,10 +453,16 @@ angular.module('formApp', ['ngAnimate', 'ui.router'])
 
 .controller('FormDeployController', ['$scope', '$http', function($scope, $http){
     var statusMap = {};
-    statusMap["Microsoft.Web/sites"] = "Creating Website";
-    statusMap["Microsoft.Web/sites/config"] = "Updating Website Config";
-    statusMap["Microsoft.Web/sites/sourcecontrols"] = "Setting up Source Control";
-    statusMap["Microsoft.Web/serverfarms"] = "Creating Web Hosting Plan";
+    statusMap["microsoft.web/sites"] = "Creating Website";
+    statusMap["microsoft.web/sites/config"] = "Updating Website Config";
+    statusMap["microsoft.web/sites/sourcecontrols"] = "Setting up Source Control";
+    statusMap["microsoft.web/serverfarms"] = "Creating Web Hosting Plan";
+    statusMap["microsoft.insights/alertrules"] = "Adding Insights Alerts";
+    statusMap["microsoft.insights/autoscalesettings"] = "Configuring Insights Auto Scale Settings";
+    statusMap["microsoft.insights/components"] = "Configuring Insights Components";
+    statusMap["microsoft.sql/servers"] = "Adding SQL Server";
+    statusMap["microsoft.sql/servers/firewallrules"] = "Configuring SQL Server Firewall Rules";
+    statusMap["microsoft.sql/servers/databases"] = "Adding SQL Server Database";
 
     $scope.showError = function(){
         $('#errorModal').modal('show');
@@ -475,14 +507,19 @@ angular.module('formApp', ['ngAnimate', 'ui.router'])
         .then(function(result){
             addStatusMesg($scope, result);
 
-            // It seems like in some cases the provisioningState may not indicate that there's a failure
-            // but it will be hidden within the operations object.
+            // In some cases, errors will be hidden within the operations object.
             var ops = result.data.operations;
             var error = null;
             for(var i=0; i<ops.value.length; i++){
-                if(ops.value[i].properties.statusMessage &&
-                   ops.value[i].properties.statusMessage.error){
-                    error = ops.value[i].properties.statusMessage.error.message;
+                var opProperties = ops.value[i].properties;
+                if(opProperties.statusMessage &&
+                   opProperties.statusMessage.error){
+                    error = opProperties.statusMessage.error.message;
+                }
+                else if(opProperties.provisioningState === "Failed" &&
+                    opProperties.statusMessage &&
+                    opProperties.statusMessage.message){
+                        error = opProperties.statusMessage.message;
                 }
             }
 
@@ -512,8 +549,9 @@ angular.module('formApp', ['ngAnimate', 'ui.router'])
         var ops = result.data.operations.value;
         for(var i=ops.length-1; i>=0; i--){
             var mesg = ops[i].properties.targetResource.resourceType;
-            if(statusMap[mesg]){
-                mesg = statusMap[mesg];
+            var key = mesg.toLowerCase();
+            if(statusMap[key]){
+                mesg = statusMap[key];
             }
             else{
                 mesg = "Updating " + mesg;

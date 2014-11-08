@@ -141,7 +141,8 @@ namespace Slingshot.Controllers
                     }
                     else
                     {
-                        response = Request.CreateResponse(deploymentResult.StatusCode);
+                        responseObj["error"] = deploymentResult.Error.Message;
+                        response = Request.CreateResponse(deploymentResult.StatusCode, responseObj);
                     }
                 }
                 finally
@@ -315,7 +316,6 @@ namespace Slingshot.Controllers
         public async Task<HttpResponseMessage> GetTemplate(string repositoryUrl)
         {
             HttpResponseMessage response = null;
-            string branch = null;
             JObject returnObj = new JObject();
 
             Repository repo = Repository.CreateRepositoryObj(repositoryUrl);
@@ -323,7 +323,7 @@ namespace Slingshot.Controllers
 
             string templateUrl = await repo.GetTemplateUrlAsync();
             JObject template = await repo.DownloadTemplateAsync();
-            branch = repo.Branch;
+            string branch = await repo.GetBranch();
 
             if (template != null)
             {
@@ -335,24 +335,15 @@ namespace Slingshot.Controllers
                 var tenants = await GetTenantsArray();
                 var email = GetHeaderValue(Constants.Headers.X_MS_CLIENT_PRINCIPAL_NAME);
                 var userDisplayName = GetHeaderValue(Constants.Headers.X_MS_CLIENT_DISPLAY_NAME) ?? email;
-                IEnumerable<string> locations = new List<string>();
                 string siteName = null;
 
                 if (subscriptions.Length >= 1)
                 {
-                    locations = await GetSiteLocations(token, subscriptions);
-
-                    try
-                    {
-                        siteName = await GenerateSiteName(siteName, token, repo, subscriptions);
-                    }
-                    catch (CloudException e)
-                    {
-                        returnObj["error"] = e.ToString();
-                    }
+                    await GetLocations(template, returnObj, token, subscriptions);
+                    siteName = await GenerateSiteName(siteName, token, repo, subscriptions);
                 }
 
-                returnObj["siteLocations"] = JArray.FromObject(locations);
+                //returnObj["siteLocations"] = JArray.FromObject(locations);
                 returnObj["subscriptions"] = JArray.FromObject(subscriptions);
                 returnObj["tenants"] = tenants;
                 returnObj["userDisplayName"] = userDisplayName;
@@ -564,14 +555,36 @@ namespace Slingshot.Controllers
             return JObject.Parse(json);
         }
 
-        private async Task<IEnumerable<string>> GetSiteLocations(string token, SubscriptionInfo[] subscriptions)
+        private async Task GetLocations(
+            JObject template,
+            JObject returnObj,
+            string token,
+            SubscriptionInfo[] subscriptions)
         {
+            IEnumerable<string> locations = null;
+            IEnumerable<string> dbServerLocations = null;
+
             using (var client = GetRMClient(token, subscriptions.FirstOrDefault().subscriptionId))
             {
                 var websites = (await client.Providers.GetAsync("Microsoft.Web")).Provider;
-                return websites.ResourceTypes.FirstOrDefault(rt => rt.Name == "sites").Locations
+                locations = websites.ResourceTypes.FirstOrDefault(rt => rt.Name == "sites").Locations
                        .Where(location => location.IndexOf("MSFT", StringComparison.OrdinalIgnoreCase) < 0);
+
+                var parameters = template["parameters"];
+                if (parameters != null)
+                {
+                    var dbServerLocation = parameters["sqlServerLocation"];
+                    if (dbServerLocation != null)
+                    {
+                        var sql = (await client.Providers.GetAsync("Microsoft.Sql")).Provider;
+                        dbServerLocations = sql.ResourceTypes.FirstOrDefault(rt => rt.Name == "servers").Locations;
+                    }
+                }
             }
+
+            returnObj["siteLocations"] = JArray.FromObject(locations);
+            returnObj["sqlServerLocation"] = dbServerLocations == null ? null : JArray.FromObject(dbServerLocations);
+            return;
         }
 
         private HttpClient GetClient(string baseUri)
