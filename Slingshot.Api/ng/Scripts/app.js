@@ -245,8 +245,23 @@ angular.module('formApp', ['ngAnimate', 'ui.router'])
                 else if(paramName === "sitelocation" && $scope.formData.siteLocations && $scope.formData.siteLocations.length > 0 && !param.defaultValue){
                     param.value = $scope.formData.siteLocations[0];
                 }
-                else if(paramName === "sqlServerLocation" && $scope.formData.sqlServerLocations && $scope.formData.sqlServerLocations.length > 0 && !param.defaultValue){
+                else if(paramName === "sqlserverLocation" && $scope.formData.sqlServerLocations && $scope.formData.sqlServerLocations.length > 0 && !param.defaultValue){
                     param.value =   $scope.formData.sqlServerLocations[0];
+                }
+                else if(paramName === "sqlservername" && $scope.formData.siteName && $scope.formData.siteName.length > 0 && !param.defaultValue){
+                    var trimBeginExp = /^[^a-z0-9]+/;
+                    var trimEndExp = /[^a-z0-9]+$/;
+                    var badCharsExp = /[^a-z0-9\-]+/g;
+                    var serverName = $scope.formData.siteName.toLowerCase();
+
+                    serverName = serverName.replace(trimBeginExp, "");
+                    serverName = serverName.replace(trimEndExp, "");
+                    serverName = serverName.replace(badCharsExp, "");
+
+                    param.value = serverName + "-server";
+                }
+                else if(paramName === "sqladministratorlogin" && $scope.formData.userDisplayName && $scope.formData.userDisplayName.length > 0 && !param.defaultValue){
+                    param.value = $scope.formData.userDisplayName.toLowerCase().replace(/ /g, "");
                 }
             }
 
@@ -531,7 +546,7 @@ angular.module('formApp', ['ngAnimate', 'ui.router'])
             }
             else if(result.data.provisioningState === "Succeeded"){
                 $scope.formData.siteUrl = result.data.siteUrl;
-                $scope.formData.portalUrl = "https://manage.windowsazure.com/"+$scope.formData.tenant.DomainName+"#Workspaces/WebsiteExtension/Website/"+$scope.formData.siteName+"/quickstart";
+                $scope.formData.portalUrl = "https://manage.windowsazure.com/"+$scope.formData.tenant.DomainName+"#Workspaces/WebsiteExtension/Website/"+$scope.formData.siteName+"/deployments";
                 window.setTimeout(getGitStatus, 1000, $scope, $http);
 
             }

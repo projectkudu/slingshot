@@ -17,7 +17,7 @@ _ReSharper.*/
 packages/*
 App_Data/
 /apps
-/artifacts
+/Slingshot.Api/artifacts
 msbuild.log
 _app/
 *.ncrunchsolution
