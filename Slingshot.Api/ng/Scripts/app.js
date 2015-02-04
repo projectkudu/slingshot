@@ -112,7 +112,7 @@ angular.module('formApp', ['ngAnimate', 'ui.router'])
                 $scope.formData.repositoryUrl = sessionStorage.repositoryUrl;
             }
             else{
-                $scope.formData.error = "No repository detected.  The repository must be passed as either a referrer header or as a query string.";				
+                $scope.formData.error = "The repository must be passed as either a referrer header or as a 'repository' query string parameter.";
             }
         }
 
