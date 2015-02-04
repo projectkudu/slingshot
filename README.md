@@ -9,15 +9,14 @@ Instructions
 
 Create AAD application
 ======================
-1. Goto [Azure Portal](https://manage.windowsazure.com/) and create AAD Application.  You may create an application on existing AAD directory or a new directory altogether.
-2. Select `Add an application my organization is developing`
-3. Enter any name for application name.
-4. Select `WEB APPLICATION AND/OR WEB API`
-5. Enter `https://localhost:44306/` as `SIGN ON URL` 
-6. Enter `https://<tenant-name>/` as `APP ID URL`.  For instance, `https://mytenant.onmicrosoft.com/`.
-7. Once created, click `CONFIGURE` tab
-8. Select YES for `APPLICATION IS MULTI-TENANT` and save.
-10. On `Permission to other applications`, add `Windows Azure Management API` and check `Access Azure Service Management` for `Delegated Permissions` and save.
+1. Go to [Azure Portal](https://manage.windowsazure.com/) while logged in as an Org ID (i.e. not MSA) and create AAD Application. You may create an application on existing AAD directory or a new directory altogether.
+1. Select `Add an application my organization is developing`
+1. Enter any name for application name.
+1. Select `WEB APPLICATION AND/OR WEB API`
+1. Enter `https://localhost:44306/` as `SIGN ON URL` 
+1. For `APP ID URL`, enter something like `https://davidebboslingshot.onmicrosoft.com/`.
+1. Once created, click `CONFIGURE` tab
+1. On `Permission to other applications`, add `Windows Azure Service Management API` and check `Access Azure Service Management` for `Delegated Permissions` and save.
 
 Fix AADClientId and AADClientSecret in codes
 ============================================
