@@ -136,33 +136,6 @@ angular.module('formApp', ['ngAnimate', 'ui.router'])
         return null;
     }
 
-    function parseURL(url) {
-        var parser = document.createElement('a'),
-            searchObject = {},
-            queries, split, i;
-        
-        // Let the browser do the work
-        parser.href = url;
-        
-        // Convert query string to object
-        queries = parser.search.replace(/^\?/, '').split('&');
-        for( i = 0; i < queries.length; i++ ) {
-            split = queries[i].split('=');
-            searchObject[split[0]] = split[1];
-        }
-
-        return {
-            protocol: parser.protocol,
-            host: parser.host,
-            hostname: parser.hostname,
-            port: parser.port,
-            pathname: parser.pathname,
-            search: parser.search,
-            searchObject: searchObject,
-            hash: parser.hash
-        };
-    }
-
     initialize();
 }])
 
@@ -195,6 +168,7 @@ angular.module('formApp', ['ngAnimate', 'ui.router'])
         .then(function(result){
             $scope.formData.userDisplayName = result.data.userDisplayName;
             $scope.formData.template = result.data.template;
+            $scope.formData.resourceGroup = result.data.resourceGroup;
             $scope.formData.subscriptions = result.data.subscriptions;
             $scope.formData.siteLocations = result.data.siteLocations;
             $scope.formData.sqlServerLocations = result.data.sqlServerLocations;
@@ -221,7 +195,7 @@ angular.module('formApp', ['ngAnimate', 'ui.router'])
 
             // Pull out template parameters to show on UI
             $scope.formData.params = [];
-            var repoParamFound = false;
+            $scope.formData.repoParamFound = false;
             var parameters = $scope.formData.template.parameters;
             for(var name in parameters){
                 var parameter = parameters[name];
@@ -236,7 +210,7 @@ angular.module('formApp', ['ngAnimate', 'ui.router'])
 
                 var paramName = param.name.toLowerCase();
                 if(paramName === "repourl"){
-                    repoParamFound = true;
+                    $scope.formData.repoParamFound = true;
                 }
                 else if(paramName === "sitename" && result.data.siteName){
                     param.value = result.data.siteName;
@@ -264,11 +238,6 @@ angular.module('formApp', ['ngAnimate', 'ui.router'])
                     param.value = $scope.formData.userDisplayName.toLowerCase().replace(/ /g, "");
                 }
             }
-
-            if(!repoParamFound){
-                $scope.formData.error = "Could not find a 'repoUrl' parameter in the Azure Resource Manager template file."
-            }
-
         },
         function(result){
             alert(result.data.error)
@@ -349,11 +318,13 @@ angular.module('formApp', ['ngAnimate', 'ui.router'])
     }
 
     $scope.canMoveToNextStep = function(){
-        if($scope.formData.tenant &&
-           $scope.formData.subscription &&
-           $scope.formData.params &&
-           $scope.formData.siteNameAvailable &&
-           $scope.formData.siteName === $scope.formData.siteNameQuery){
+        if (!$scope.formData.tenant || !$scope.formData.subscription || !$scope.formData.params) {
+            return false;
+        }
+
+        if (!$scope.formData.repoParamFound ||
+           ($scope.formData.siteNameAvailable &&
+           $scope.formData.siteName === $scope.formData.siteNameQuery)){
             var params = $scope.formData.params;
             for(var i = 0; i < params.length; i++){
 
@@ -498,7 +469,8 @@ angular.module('formApp', ['ngAnimate', 'ui.router'])
             method: "post",
             url: "api/deployments/"+subscriptionId,
             params:{
-                "templateUrl" : $scope.formData.templateUrl,
+                "templateUrl": $scope.formData.templateUrl,
+                "resourceGroup": $scope.formData.resourceGroup,
             },
             data: $scope.formData.deployPayload
         })
@@ -513,11 +485,19 @@ angular.module('formApp', ['ngAnimate', 'ui.router'])
 
     function getStatus($scope, $http, deploymentUrl){
         var subscriptionId = $scope.formData.subscription.subscriptionId;
-        var siteName = $scope.formData.siteName;
+        var resourceGroup = $scope.formData.resourceGroup;
+
+        var params;
+        if ($scope.formData.repoParamFound) {
+            params = {
+                "siteName": $scope.formData.siteName,
+            };
+        }
 
         $http({
             method: "get",
-            url: "api/deployments/"+subscriptionId+"/sites/"+siteName
+            url: "api/deployments/" + subscriptionId + "/rg/" + resourceGroup,
+            params: params,
         })
         .then(function(result){
             addStatusMesg($scope, result);
@@ -547,7 +527,13 @@ angular.module('formApp', ['ngAnimate', 'ui.router'])
             else if(result.data.provisioningState === "Succeeded"){
                 $scope.formData.siteUrl = result.data.siteUrl;
                 $scope.formData.portalUrl = "https://manage.windowsazure.com/"+$scope.formData.tenant.DomainName+"#Workspaces/WebsiteExtension/Website/"+$scope.formData.siteName+"/deployments";
-                window.setTimeout(getGitStatus, 1000, $scope, $http);
+
+                if ($scope.formData.repoParamFound){
+                    window.setTimeout(getGitStatus, 1000, $scope, $http);
+                }
+                else {
+                    $scope.formData.deploymentSucceeded = true;
+                }
 
             }
             else{
@@ -597,10 +583,12 @@ angular.module('formApp', ['ngAnimate', 'ui.router'])
     function getGitStatus($scope, $http){
         var subscriptionId = $scope.formData.subscription.subscriptionId;
         var siteName = $scope.formData.siteName;
+        var resourceGroup = $scope.formData.resourceGroup;
 
         $http({
             method: "get",
-            url: "api/deployments/"+subscriptionId+"/sites/"+siteName+"/git"
+            url: "api/deployments/" + subscriptionId + "/rg/" + resourceGroup + "/git",
+            params: { siteName: siteName },
         })
         .then(function(result){
             var formData = $scope.formData;

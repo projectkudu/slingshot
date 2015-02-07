@@ -26,6 +26,11 @@
             </select>
         </div>
 
+        <div class="form-group col-md-6">
+            <label for="resourceGroup">Resource group</label>
+            <input type="text" class="form-control" name="resourceGroup" ng-model="formData.resourceGroup">
+        </div>
+
         <div class="form-group col-md-6" ng-repeat="param in formData.params" ng-switch on="param.name" ng-show="showParam(param)">
             <!-- Special handling for siteName form field -->
             <div ng-switch-when="siteName">

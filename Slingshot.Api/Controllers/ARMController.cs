@@ -176,19 +176,17 @@ namespace Slingshot.Controllers
 
         [Authorize]
         [HttpPost]
-        public async Task<HttpResponseMessage> Deploy([FromBody] JObject parameters, string subscriptionId, string templateUrl)
+        public async Task<HttpResponseMessage> Deploy([FromBody] JObject parameters, string subscriptionId, string resourceGroup, string templateUrl)
         {
             CreateDeploymentResponse responseObj = new CreateDeploymentResponse();
             HttpResponseMessage response = null;
 
             try
             {
-                var resourceGroupName = GetParamOrDefault(parameters, "siteName", "mySite");
-
                 using (var client = GetRMClient(subscriptionId))
                 {
                     // For now we just default to East US for the resource group location.
-                    var resourceResult = await client.ResourceGroups.CreateOrUpdateAsync(resourceGroupName, new BasicResourceGroup { Location = "East US" });
+                    var resourceResult = await client.ResourceGroups.CreateOrUpdateAsync(resourceGroup, new BasicResourceGroup { Location = "East US" });
                     var templateParams = parameters.ToString();
                     var basicDeployment = new BasicDeployment
                     {
@@ -196,7 +194,7 @@ namespace Slingshot.Controllers
                         TemplateLink = new TemplateLink(new Uri(templateUrl))
                     };
 
-                    var deploymentResult = await client.Deployments.CreateOrUpdateAsync(resourceGroupName, resourceGroupName, basicDeployment);
+                    var deploymentResult = await client.Deployments.CreateOrUpdateAsync(resourceGroup, resourceGroup, basicDeployment);
                     response = Request.CreateResponse(HttpStatusCode.OK, responseObj);
                 }
             }
@@ -212,7 +210,7 @@ namespace Slingshot.Controllers
 
         [Authorize]
         [HttpGet]
-        public async Task<HttpResponseMessage> GetDeploymentStatus(string subscriptionId, string siteName)
+        public async Task<HttpResponseMessage> GetDeploymentStatus(string subscriptionId, string resourceGroup, string siteName = null)
         {
             string provisioningState = null;
             string hostName = null;
@@ -220,7 +218,7 @@ namespace Slingshot.Controllers
 
             using (var client = GetRMClient(subscriptionId))
             {
-                var deployment = (await client.Deployments.GetAsync(siteName, siteName)).Deployment;
+                var deployment = (await client.Deployments.GetAsync(resourceGroup, resourceGroup)).Deployment;
                 provisioningState = deployment.Properties.ProvisioningState;
             }
 
@@ -230,30 +228,30 @@ namespace Slingshot.Controllers
                     Constants.CSM.GetDeploymentStatusFormat,
                     Utils.GetCSMUrl(Request.RequestUri.Host),
                     subscriptionId,
-                    siteName,
+                    resourceGroup,
                     Constants.CSM.ApiVersion);
 
                 var getOpResponse = await client.GetAsync(url);
                 responseObj["operations"] = JObject.Parse(getOpResponse.Content.ReadAsStringAsync().Result);
             }
 
-            if (provisioningState == "Succeeded")
+            if (provisioningState == "Succeeded" && siteName != null)
             {
                 using (var wsClient = GetWSClient(subscriptionId))
                 {
-                    hostName = (await wsClient.WebSites.GetAsync(siteName, siteName, null, null)).WebSite.Properties.HostNames[0];
+                    hostName = (await wsClient.WebSites.GetAsync(resourceGroup, siteName, null, null)).WebSite.Properties.HostNames[0];
+                    responseObj["siteUrl"] = string.Format("http://{0}", hostName);
                 }
             }
 
             responseObj["provisioningState"] = provisioningState;
-            responseObj["siteUrl"] = string.Format("http://{0}", hostName);
 
             return Request.CreateResponse(HttpStatusCode.OK, responseObj);
         }
 
         [Authorize]
         [HttpGet]
-        public async Task<HttpResponseMessage> GetGitDeploymentStatus(string subscriptionId, string siteName)
+        public async Task<HttpResponseMessage> GetGitDeploymentStatus(string subscriptionId, string resourceGroup, string siteName)
         {
             HttpResponseMessage response = null;
             using (var client = GetClient())
@@ -262,6 +260,7 @@ namespace Slingshot.Controllers
                     Constants.CSM.GetGitDeploymentStatusFormat,
                     Utils.GetCSMUrl(Request.RequestUri.Host),
                     subscriptionId,
+                    resourceGroup,
                     siteName,
                     Constants.CSM.ApiVersion);
 
@@ -347,6 +346,7 @@ namespace Slingshot.Controllers
                 returnObj["subscriptions"] = JArray.FromObject(subscriptions);
                 returnObj["tenants"] = tenants;
                 returnObj["userDisplayName"] = userDisplayName;
+                returnObj["resourceGroup"] = siteName;  // Default the rg to the same as the site name
                 returnObj["siteName"] = siteName;
                 returnObj["template"] = template;
                 returnObj["templateUrl"] = templateUrl;
