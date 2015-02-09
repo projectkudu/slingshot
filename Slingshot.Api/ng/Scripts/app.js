@@ -322,25 +322,26 @@ angular.module('formApp', ['ngAnimate', 'ui.router'])
             return false;
         }
 
-        if (!$scope.formData.repoParamFound ||
-           ($scope.formData.siteNameAvailable &&
-           $scope.formData.siteName === $scope.formData.siteNameQuery)){
-            var params = $scope.formData.params;
-            for(var i = 0; i < params.length; i++){
-
-                if(params[i].name === 'hostingPlanName' && $scope.formData.siteName){
-                    params[i].value = $scope.formData.siteName;
-                }
-
-                if(params[i].value === null || params[i].value === undefined){
-                    return false;
-                }
-            }
-
-            return true;
+        // If we're dealing with a site, and the name is not available, we can't go to next step
+        if ($scope.formData.siteName &&
+            (!$scope.formData.siteNameAvailable || $scope.formData.siteName != $scope.formData.siteNameQuery)) {
+            return false;
         }
 
-        return false;
+        // Go through all the params, making sure none are blank
+        var params = $scope.formData.params;
+        for(var i = 0; i < params.length; i++){
+
+            if(params[i].name === 'hostingPlanName' && $scope.formData.siteName){
+                params[i].value = $scope.formData.siteName;
+            }
+
+            if(params[i].value === null || params[i].value === undefined){
+                return false;
+            }
+        }
+
+        return true;
     }
 
     $scope.checkSiteName = function(siteName){

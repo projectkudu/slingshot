@@ -334,24 +334,30 @@ namespace Slingshot.Controllers
                 var tenants = await GetTenantsArray();
                 var email = GetHeaderValue(Constants.Headers.X_MS_CLIENT_PRINCIPAL_NAME);
                 var userDisplayName = GetHeaderValue(Constants.Headers.X_MS_CLIENT_DISPLAY_NAME) ?? email;
-                string siteName = null;
+
+                string resourceGroupName = null;
 
                 if (subscriptions.Length >= 1)
                 {
                     await GetLocations(template, returnObj, token, subscriptions);
-                    siteName = await GenerateSiteName(siteName, token, repo, subscriptions);
+                    resourceGroupName = await GenerateResourceGroupName(token, repo, subscriptions);
                 }
 
-                //returnObj["siteLocations"] = JArray.FromObject(locations);
                 returnObj["subscriptions"] = JArray.FromObject(subscriptions);
                 returnObj["tenants"] = tenants;
                 returnObj["userDisplayName"] = userDisplayName;
-                returnObj["resourceGroup"] = siteName;  // Default the rg to the same as the site name
-                returnObj["siteName"] = siteName;
+                returnObj["resourceGroup"] = resourceGroupName;
                 returnObj["template"] = template;
                 returnObj["templateUrl"] = templateUrl;
                 returnObj["repositoryUrl"] = repositoryUrl;
                 returnObj["branch"] = branch;
+
+                // Check if the template takes in a Website parameter
+                if (template["parameters"]["siteName"] != null)
+                {
+                    // Set the default site name to the same as the rg name
+                    returnObj["siteName"] = resourceGroupName;
+                }
 
                 response = Request.CreateResponse(HttpStatusCode.OK, returnObj);
             }
@@ -364,7 +370,7 @@ namespace Slingshot.Controllers
             return response;
         }
 
-        private async Task<string> GenerateSiteName(string siteName, string token, Repository repo, SubscriptionInfo[] subscriptions)
+        private async Task<string> GenerateResourceGroupName(string token, Repository repo, SubscriptionInfo[] subscriptions)
         {
             if (!string.IsNullOrEmpty(repo.RepositoryName))
             {
@@ -374,28 +380,24 @@ namespace Slingshot.Controllers
 
                 using (var webSiteMgmtClient = CloudContext.Clients.CreateWebSiteManagementClient(creds, rdfeBaseUri))
                 {
+                    // Make 3 attempts to get a random name (based on the repo name)
                     for (int i = 0; i < 3; i++)
                     {
-                        siteName = GenerateRandomSiteName(repo.RepositoryName);
-                        isAvailable = (await webSiteMgmtClient.WebSites.IsHostnameAvailableAsync(siteName)).IsAvailable;
+                        string resourceGroupName = GenerateRandomResourceGroupName(repo.RepositoryName);
+                        isAvailable = (await webSiteMgmtClient.WebSites.IsHostnameAvailableAsync(resourceGroupName)).IsAvailable;
 
                         if (isAvailable)
                         {
-                            break;
+                            return resourceGroupName;
                         }
                     }
                 }
-
-                if (!isAvailable)
-                {
-                    siteName = null;
-                }
             }
 
-            return siteName;
+            return null;
         }
 
-        private string GenerateRandomSiteName(string baseName, int length = 4)
+        private string GenerateRandomResourceGroupName(string baseName, int length = 4)
         {
             Random random = new Random();
 
