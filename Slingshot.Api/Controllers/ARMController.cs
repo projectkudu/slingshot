@@ -25,6 +25,11 @@ namespace Slingshot.Controllers
     [UnhandledExceptionFilter]
     public class ARMController : ApiController
     {
+        private const char base64Character62 = '+';
+        private const char base64Character63 = '/';
+        private const char base64UrlCharacter62 = '-';
+        private const char base64UrlCharacter63 = '_';
+
         private static Dictionary<string, string> sm_providerMap;
 
         static ARMController()
@@ -46,30 +51,20 @@ namespace Slingshot.Controllers
             sm_providerMap = providerMap;
         }
 
+        [Authorize]
         public HttpResponseMessage GetToken(bool plainText = false)
         {
-            var jwtToken = Request.Headers.GetValues("X-MS-OAUTH-TOKEN").FirstOrDefault();
-
             if (plainText)
             {
+                var jwtToken = Request.Headers.GetValues(Constants.Headers.X_MS_OAUTH_TOKEN).FirstOrDefault();
                 var response = Request.CreateResponse(HttpStatusCode.OK);
                 response.Content = new StringContent(jwtToken, Encoding.UTF8, "text/plain");
                 return response;
             }
             else
             {
-                var base64 = jwtToken.Split('.')[1];
-
-                // fixup
-                int mod4 = base64.Length % 4;
-                if (mod4 > 0)
-                {
-                    base64 += new string('=', 4 - mod4);
-                }
-
-                var json = Encoding.UTF8.GetString(Convert.FromBase64String(base64));
                 var response = Request.CreateResponse(HttpStatusCode.OK);
-                response.Content = new StringContent(json, Encoding.UTF8, "application/json");
+                response.Content = new StringContent(GetClaims().ToString(), Encoding.UTF8, "application/json");
                 return response;
             }
         }
@@ -552,6 +547,10 @@ namespace Slingshot.Controllers
             {
                 base64 += new string('=', 4 - mod4);
             }
+
+            // decode url escape char
+            base64 = base64.Replace(base64UrlCharacter62, base64Character62);
+            base64 = base64.Replace(base64UrlCharacter63, base64Character63);
 
             var json = Encoding.UTF8.GetString(Convert.FromBase64String(base64));
             return JObject.Parse(json);
