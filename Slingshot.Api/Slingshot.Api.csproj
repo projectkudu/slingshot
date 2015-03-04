@@ -198,9 +198,6 @@
     <Content Include="Content\Fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Content\Styles\bootstrap-theme.css.map" />
     <Content Include="Content\Styles\bootstrap.css.map" />
-    <Content Include="applicationHost.xdt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <Content Include="ApplicationInsights.config" />
     <None Include="Content\Scripts\jquery-1.9.0.intellisense.js" />
     <Content Include="Content\Scripts\bootstrap.js" />
@@ -281,7 +278,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>44300</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>https://localhost:44306/deploy</IISUrl>
+          <IISUrl>https://localhost:44306/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

@@ -35,12 +35,12 @@ Test with localhost
 
 Test ARM apis
 =============
-1. `https://localhost:44306/deploy/api/token` - show current token details.
-2. `https://localhost:44306/deploy/api/tenants` - show all tenants (AAD directory) user belongs to.
-3. `https://localhost:44306/deploy/api/tenants/<tenant-id>` - to switch tenant.
-4. `https://localhost:44306/deploy/api/subscriptions` - list subscriptions.
-5. `https://localhost:44306/deploy/api/subscriptions/<sub-id>/resourceGroups` - list resourceGroups for a subscription.
-6. `https://localhost:44306/deploy/api/subscriptions/<sub-id>/resourceGroups/<resource>/providers/Microsoft.Web/sites` - list sites.
+1. `https://localhost:44306/api/token` - show current token details.
+2. `https://localhost:44306/api/tenants` - show all tenants (AAD directory) user belongs to.
+3. `https://localhost:44306/api/tenants/<tenant-id>` - to switch tenant.
+4. `https://localhost:44306/api/subscriptions` - list subscriptions.
+5. `https://localhost:44306/api/subscriptions/<sub-id>/resourceGroups` - list resourceGroups for a subscription.
+6. `https://localhost:44306/api/subscriptions/<sub-id>/resourceGroups/<resource>/providers/Microsoft.Web/sites` - list sites.
 7. and so on.. 
 
 Test with Azure Websites
