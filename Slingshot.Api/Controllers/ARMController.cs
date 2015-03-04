@@ -430,7 +430,8 @@ namespace Slingshot.Controllers
                         return null;
                     }
 
-                    var tenants = await response.Content.ReadAsAsync<JArray>();
+                    var tenantsString = await response.Content.ReadAsStringAsync();
+                    var tenants = JArray.Parse(tenantsString);
                     tenants = SetCurrentTenant(tenants);
                     return tenants;
                 }
@@ -445,7 +446,8 @@ namespace Slingshot.Controllers
                         return null;
                     }
 
-                    var tenants = (JArray)(await response.Content.ReadAsAsync<JObject>())["value"];
+                    var tenantsString = await response.Content.ReadAsStringAsync();
+                    var tenants = (JArray)(JObject.Parse(tenantsString))["value"];
                     tenants = SetCurrentTenant(ToTenantDetails(tenants));
                     return tenants;
                 }
