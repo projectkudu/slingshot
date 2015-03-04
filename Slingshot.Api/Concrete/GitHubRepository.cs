@@ -8,6 +8,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web;
 using System.IO;
+using System.Text;
 
 namespace Slingshot.Concrete
 {
@@ -33,15 +34,28 @@ namespace Slingshot.Concrete
             {
                 JObject template = null;
                 string templateUrl = null;
+                StringBuilder builder = null;
 
                 if (_inputUri.Segments.Length > 2)
                 {
                     string branch = await GetBranch();
-                    templateUrl = string.Format(Constants.Repository.GitCustomTemplateFormat,
+                    builder = new StringBuilder(string.Format(Constants.Repository.GitCustomTemplateFolderUrlFormat,
                                                         UserName,
                                                         RepositoryName,
-                                                        branch);
+                                                        branch));
 
+                    for (var i = 5; i < _inputUri.Segments.Length; i++)
+                    {
+                        string segment = _inputUri.Segments[i];
+                        if(segment.EndsWith(".md", StringComparison.OrdinalIgnoreCase))
+                        {
+                            break;
+                        }
+
+                        builder.Append(segment);
+                    }
+
+                    templateUrl = builder.ToString().TrimEnd(Constants.Path.SlashChars) + "/azuredeploy.json";
                     template = await DownloadTemplate(templateUrl);
                 }
 
@@ -69,8 +83,30 @@ namespace Slingshot.Concrete
                         _repoUrl = string.Format("https://{0}/{1}/{2}", _inputUri.Host, UserName, RepositoryName);
                     }
                 }
-
                 return _repoUrl;
+            }
+        }
+
+        public override string RepositoryDisplayUrl
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(_repoDisplayUrl))
+                {
+                    string lastSegment = _inputUri.Segments[_inputUri.Segments.Length - 1];
+                    string url = _inputUri.ToString();
+                    if (lastSegment.EndsWith(".md", StringComparison.OrdinalIgnoreCase))
+                    {
+                        int lastSlashIndex = url.LastIndexOf('/');
+                        _repoDisplayUrl = _inputUri.ToString().Substring(0, lastSlashIndex);
+                    }
+                    else
+                    {
+                        _repoDisplayUrl = url;
+                    }
+                }
+
+                return _repoDisplayUrl;
             }
         }
 
@@ -78,7 +114,7 @@ namespace Slingshot.Concrete
         {
             if (string.IsNullOrEmpty(_branch))
             {
-                if (_inputUri.Segments.Length >= 4)
+                if (_inputUri.Segments.Length > 4)
                 {
                     _branch = _inputUri.Segments[4].Trim(Constants.Path.SlashChars);
                 }

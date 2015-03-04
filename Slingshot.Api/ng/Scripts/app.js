@@ -176,6 +176,7 @@ angular.module('formApp', ['ngAnimate', 'ui.router'])
             $scope.formData.branch = result.data.branch;
             $scope.formData.tenants = result.data.tenants;
             $scope.formData.repositoryUrl = result.data.repositoryUrl;
+            $scope.formData.repositoryDisplayUrl = result.data.repositoryDisplayUrl;
             $scope.formData.siteName = result.data.siteName;
             $scope.formData.siteNameQuery = result.data.siteName;
 

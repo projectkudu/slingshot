@@ -14,6 +14,7 @@ namespace Slingshot.Abstract
     {
         protected Uri _inputUri;
         protected string _repoUrl;
+        protected string _repoDisplayUrl;
         protected string _branch;
         protected string _repositoryName;
         protected string _userName;
@@ -24,6 +25,8 @@ namespace Slingshot.Abstract
         {
             _inputUri = uri;
         }
+
+        public abstract string RepositoryDisplayUrl { get; }
 
         public abstract string RepositoryUrl { get; }
 

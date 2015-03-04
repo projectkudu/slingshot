@@ -313,7 +313,6 @@ namespace Slingshot.Controllers
             JObject returnObj = new JObject();
 
             Repository repo = Repository.CreateRepositoryObj(repositoryUrl);
-            repositoryUrl = repo.RepositoryUrl;
 
             string templateUrl = await repo.GetTemplateUrlAsync();
             JObject template = await repo.DownloadTemplateAsync();
@@ -344,7 +343,8 @@ namespace Slingshot.Controllers
                 returnObj["resourceGroup"] = resourceGroupName;
                 returnObj["template"] = template;
                 returnObj["templateUrl"] = templateUrl;
-                returnObj["repositoryUrl"] = repositoryUrl;
+                returnObj["repositoryUrl"] = repo.RepositoryUrl;
+                returnObj["repositoryDisplayUrl"] = repo.RepositoryDisplayUrl;
                 returnObj["branch"] = branch;
 
                 // Check if the template takes in a Website parameter

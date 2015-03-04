@@ -43,6 +43,12 @@ pre                             { margin-bottom:20px; }
     min-height: 200px;
 }
 
+.header-label{
+    white-space:nowrap;
+    width:670px;
+    overflow: hidden;
+}
+
 /* ANIMATION STYLINGS
 ============================================================================= */
 #signup-form            { position:relative; min-height:300px; overflow:hidden; padding:30px; }

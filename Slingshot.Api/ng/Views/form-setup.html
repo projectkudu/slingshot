@@ -1,11 +1,11 @@
 ﻿<div ng-hide="formData.error">
     <div id="repositoryContainer">
-        <div class="text-primary">
-            Git Repository Url - <span class="text-info">{{formData.repositoryUrl}}</span>
+        <div class="text-primary header-label">
+            Git Repository Url - <span class="text-info" ng-attr-title="{{formData.repositoryDisplayUrl}}">{{formData.repositoryDisplayUrl}}</span>
         </div>
 
-        <div class="text-primary">
-            Branch - <span class="text-info">{{formData.branch}}</span>
+        <div class="text-primary header-label">
+            Branch - <span class="text-info" ng-attr-title="{{formData.branch}}">{{formData.branch}}</span>
         </div>
     </div>
 
