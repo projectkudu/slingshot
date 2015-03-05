@@ -89,8 +89,13 @@ angular.module('formApp', ['ngAnimate', 'ui.router'])
 // =============================================================================
 .filter('camelCaseToHuman', function(){
     return function(input) {
-        return input.charAt(0).toUpperCase() + input.substr(1).replace(/[A-Z]/g, ' $&');
-  }
+        var camelCase = input.name.charAt(0).toUpperCase() + input.name.substr(1).replace(/[A-Z]/g, ' $&');
+        if(input.defaultValue === ""){
+            return camelCase + " (Optional)";
+        }
+
+        return camelCase;
+    }
 })
 
 // our controller for the form
