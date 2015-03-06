@@ -35,6 +35,19 @@ if (document.all && !window.setInterval.isPolyfill) {
     window.setInterval.isPolyfill = true;
 }
 
+// First, checks if it isn't implemented yet.
+if (!String.prototype.format) {
+  String.prototype.format = function() {
+    var args = arguments;
+    return this.replace(/{(\d+)}/g, function(match, number) { 
+      return typeof args[number] != 'undefined'
+        ? args[number]
+        : match
+      ;
+    });
+  };
+}
+
 (function () {
 
 // app.js
@@ -489,6 +502,9 @@ angular.module('formApp', ['ngAnimate', 'ui.router'])
     statusMap["microsoft.sql/servers/firewallrules"] = "Configuring SQL Server Firewall Rules";
     statusMap["microsoft.sql/servers/databases"] = "Adding SQL Server Database";
 
+    var portalWebSiteFormat = "https://portal.azure.com#resource/subscriptions/{0}/resourceGroups/{1}/providers/Microsoft.Web/sites/{2}";
+    var portalRGFormat = "https://portal.azure.com/#asset/HubsExtension/ResourceGroups//subscriptions/{0}/resourceGroups/{1}";
+
     $scope.showError = function(){
         $('#errorModal').modal('show');
     }
@@ -565,13 +581,20 @@ angular.module('formApp', ['ngAnimate', 'ui.router'])
             }
             else if(result.data.provisioningState === "Succeeded"){
                 $scope.formData.siteUrl = result.data.siteUrl;
-                $scope.formData.portalUrl = "https://manage.windowsazure.com/"+$scope.formData.tenant.DomainName+"#Workspaces/WebsiteExtension/Website/"+$scope.formData.siteName+"/deployments";
 
                 if ($scope.formData.repoParamFound){
+                    $scope.formData.portalUrl = portalWebSiteFormat.format(
+                        $scope.formData.subscription.subscriptionId,
+                        $scope.formData.resourceGroup,
+                        $scope.formData.siteName);
+
                     window.setTimeout(getGitStatus, 1000, $scope, $http);
                 }
                 else {
                     $scope.formData.deploymentSucceeded = true;
+                    $scope.formData.portalUrl =  portalRGFormat.format(
+                        $scope.formData.subscription.subscriptionId,
+                        $scope.formData.resourceGroup);
                 }
 
             }

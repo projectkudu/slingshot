@@ -29,8 +29,11 @@
     <div ng-show="formData.deploymentSucceeded">
       <div>Deployment Complete</div>
       <div>
-        <a target="_blank" ng-href="{{formData.portalUrl}}">Manage</a> your site / Browse to 
-        <a target="_blank" ng-href="{{formData.siteUrl}}">{{formData.siteUrl}}</a>
+        <a target="_blank" ng-href="{{formData.portalUrl}}">Manage</a> your 
+        <span ng-show="formData.repoParamFound">site / Browse to 
+          <a target="_blank" ng-href="{{formData.siteUrl}}">{{formData.siteUrl}}</a>
+        </span>
+        <span ng-show="!formData.repoParamFound">resources</span>
       </div>
     </div>
   </ul>
