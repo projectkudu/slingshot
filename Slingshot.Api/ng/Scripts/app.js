@@ -246,7 +246,9 @@ angular.module('formApp', ['ngAnimate', 'ui.router'])
             }
         },
         function(result){
-            alert(result.data.error)
+            if(result.data){
+                alert(result.data.error)
+            }
         });
     }
 
@@ -390,7 +392,9 @@ angular.module('formApp', ['ngAnimate', 'ui.router'])
                     $scope.formData.siteName = result.data.siteName;
                 }
             },function(result){
-                alert(result.data.error);
+                if(result.data){
+                    alert(result.data.error);
+                }
             });
         }
     }
@@ -437,7 +441,9 @@ angular.module('formApp', ['ngAnimate', 'ui.router'])
             $scope.formData.providers = result.data.providers;
         },
         function(result){
-            alert(result.data.error);
+            if(result.data){
+                alert(result.data.error);
+            }
         });
     }
 
