@@ -159,13 +159,16 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\deploybuttondark.png" />
     <Content Include="Content\Scripts\ie10-viewport-bug-workaround.js" />
+    <Content Include="Content\skinnyDeploy.png" />
     <Content Include="Content\Styles\app.css" />
     <Content Include="Content\Styles\bootstrap-theme.css" />
     <Content Include="Content\Styles\bootstrap-theme.min.css" />
     <Content Include="Content\Styles\bootstrap.css" />
     <Content Include="Content\Styles\bootstrap.min.css" />
     <Content Include="Content\Fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Content\templateSnippet.png" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="index.html" />
@@ -206,6 +209,9 @@
     <Content Include="Content\Scripts\jquery-1.9.0.min.js" />
     <Content Include="ng\Scripts\controllers.js" />
     <Content Include="ng\Views\form-deploy.html" />
+    <Content Include="ng\Views\form-infohome.html" />
+    <Content Include="ng\Views\form-infobutton.html" />
+    <Content Include="ng\Views\form-infotemplates.html" />
     <Content Include="ng\Views\form-preview.html" />
     <Content Include="ng\Views\form-setup.html" />
     <Content Include="ng\Views\form.html" />

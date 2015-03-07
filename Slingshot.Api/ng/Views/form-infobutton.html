@@ -1,0 +1,35 @@
+﻿<div class="result-body">
+    <h1 class="text-primary" style="line-height:0px;">The <i >Button</i></h1>
+    <img src="/content/deploybuttondark.png" style="margin-top: 30px"/>
+    <p style="margin: 15px 0px 15px 0px;">
+        Application owners can add a "Deploy to Azure" button (or any other image or link) to their GitHub repository by inserting it to their README.md file using standard markdown or html.
+    </p>
+    
+    <h4 class="text-primary">Markdown Notation</h4>
+    <p>
+    <pre><code class="code">[![Deploy to Azure](http://azuredeploy.net/deploybutton.png)](https://azuredeploy.net/)</code></pre></p>
+
+    <h4 class="text-primary">HTML</h4>
+    <p>
+    <pre><code class="code">&lt;a <span class="code-attrName">href</span>=&#34;<span class="code-attrValue">https:&#47;&#47;azuredeploy.net&#47;&#34;</span> <span class="code-attrName">target</span>=&#34;<span class="code-attrValue">_blank</span>&#34;&gt;
+    &lt;img <span class="code-attrName">src</span>=&#34;<span class="code-attrValue">http:&#47;&#47;azuredeploy.net&#47;deploybutton.png</span>&#34;&#47;&gt;
+&lt;&#47;a&gt;</code></pre>
+    </p>
+
+    <h2 class="text-primary">How it works</h2>
+    <p>
+    When a user clicks on the button, a “referrer” header is sent to azuredeploy.net which contains the location of the Git repository to deploy from. If you would like to host the button somewhere outside of your Git repository, you can specify a query string in the target URL like so:
+    </p>
+    <p>
+    <pre><code class="code">&lt;a <span class="code-attrName">href</span>=&#34;<span class="code-attrValue">https:&#47;&#47;azuredeploy.net&#47;?repository=https:&#47;&#47;github.com&#47;user&#47;repo&#34;</span> <span class="code-attrName">target</span>=&#34;<span class="code-attrValue">_blank</span>&#34;&gt;
+    &lt;img <span class="code-attrName">src</span>=&#34;<span class="code-attrValue">http:&#47;&#47;azuredeploy.net&#47;deploybutton.png</span>&#34;&#47;&gt;
+&lt;&#47;a&gt;</code></pre>
+    </p>
+</div>
+
+<div class="row">
+    <div class="col-xs-6 col-xs-offset-6 text-right">
+        <a ui-sref="form.infohome" class="btn btn-info wizard-button">Home <span class="glyphicon glyphicon-circle-arrow-left"></span></a>
+        <a ui-sref="form.infotemplates" class="btn btn-info wizard-button">Templates <span class="glyphicon glyphicon-circle-arrow-right"></span></a>
+    </div>
+ </div>

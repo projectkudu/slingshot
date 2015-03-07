@@ -78,6 +78,27 @@ angular.module('formApp', ['ngAnimate', 'ui.router'])
             url: '/deploy',
             templateUrl: 'ng/views/form-deploy.html',
             controller: 'FormDeployController'
+        })
+
+        // /form/infohome
+        .state('form.infohome', {
+            url: '/infohome',
+            templateUrl: 'ng/views/form-infohome.html',
+            controller: 'FormInfoHome'
+        })
+
+        // /form/infobutton
+        .state('form.infobutton', {
+            url: '/infobutton',
+            templateUrl: 'ng/views/form-infobutton.html',
+            controller: 'FormInfoButton'
+        })
+
+        // /form/infotemplates
+        .state('form.infotemplates', {
+            url: '/infotemplates',
+            templateUrl: 'ng/views/form-infotemplates.html',
+            controller: 'FormInfoTemplates'
         });
 
     // catch all route
@@ -98,6 +119,10 @@ angular.module('formApp', ['ngAnimate', 'ui.router'])
     }
 })
 
+.controller('FormInfoHome', ['$scope', '$location', function($scope, $location) {}])
+.controller('FormInfoButton', ['$scope', '$location', function($scope, $location) {}])
+.controller('FormInfoTemplates', ['$scope', '$location', function($scope, $location) {}])
+
 // our controller for the form
 // =============================================================================
 .controller('FormController', ['$scope', '$location', function($scope, $location) {
@@ -117,7 +142,8 @@ angular.module('formApp', ['ngAnimate', 'ui.router'])
                 $scope.formData.repositoryUrl = sessionStorage.repositoryUrl;
             }
             else{
-                $scope.formData.error = "The repository must be passed as either a referrer header or as a 'repository' query string parameter.";
+                $location.url("/form/infohome");
+                return;
             }
         }
 

@@ -1,5 +1,5 @@
 ﻿<div class="row">
-<div class="col-sm-8 col-sm-offset-2">
+<div class="col-sm-10 col-sm-offset-1">
 
   <div id="form-container">
       <div class="text-right form-username">{{formData.userDisplayName}}</div>
@@ -10,25 +10,26 @@
           <!-- the links to our nested states using relative paths -->
           <!-- add the active class if the state matches our ui-sref -->
           <div id="status-buttons" class="text-center">
-              <a ui-sref-active="active" ui-sref=".setup"><span>1</span> Setup</a>
-              <a ui-sref-active="active" ui-sref=".preview"><span>2</span> Preview</a>
-
-              <a ui-sref-active="active" ui-sref=".deploy"><span>3</span> Deploy</a>
+              <div ng-show="formData.repositoryUrl">
+                <a ui-sref-active="active" ui-sref=".setup"><span>1</span> Setup</a>
+                <a ui-sref-active="active" ui-sref=".preview"><span>2</span> Preview</a>
+                <a ui-sref-active="active" ui-sref=".deploy"><span>3</span> Deploy</a>
+              </div>
+              <div ng-show="!formData.repositoryUrl">
+                <a ui-sref-active="active" ui-sref=".infohome"><span>1</span> Home</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <a ui-sref-active="active" ui-sref=".infobutton"><span>2</span> Button</a>
+                <a ui-sref-active="active" ui-sref=".infotemplates" style="margin-right:0px"><span>3</span> Templates</a>
+              </div>
           </div>
       </div>
       
       <!-- use ng-submit to catch the form submission and use our Angular function -->
-      <form id="signup-form" name="myForm">
+      <form id="deploy-form" name="myForm">
           <!-- our nested state views will be injected here -->
           <div id="form-views" ui-view></div>
       </form>
   
   </div>
-  
-  <!-- show our formData as it is being typed -->
-<!--   <pre>
-    {{ formData }}
-  </pre>
- -->
+
 </div>
 </div>

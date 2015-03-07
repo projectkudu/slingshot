@@ -49,9 +49,14 @@ pre                             { margin-bottom:20px; }
     overflow: hidden;
 }
 
+.code {font-size:12px; }
+
+.code-attrName{color:#ff0000;}
+.code-attrValue{color:#0000ff;}
+
 /* ANIMATION STYLINGS
 ============================================================================= */
-#signup-form            { position:relative; min-height:300px; overflow:hidden; padding:30px; }
+#deploy-form            { position:relative; min-height:300px; overflow:hidden; padding:30px; }
 
 /* basic styling for entering and leaving */
 /* left and right added to ensure full width */
