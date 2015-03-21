@@ -13,6 +13,7 @@ namespace Slingshot.Concrete
     {
         public override void OnException(HttpActionExecutedContext context)
         {
+            Telemetry.LogException(context.Exception);
             JObject responseObj = new JObject();
             responseObj["error"] = context.Exception.Message;
             responseObj["exception"] = context.Exception.ToString();

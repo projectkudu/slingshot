@@ -48,6 +48,29 @@ if (!String.prototype.format) {
   };
 }
 
+var telemetryObj = function(){
+    var that = {};
+    that.logGetTemplate = function(repoUrl){
+        appInsights.trackEvent("GetTemplate", { repoUrl: repoUrl });
+    }
+
+    that.logDeploy = function(repoUrl){
+        appInsights.trackEvent("Deploy", { repoUrl: repoUrl });
+    }
+
+    that.logDeploySucceeded = function(repoUrl){
+        appInsights.trackEvent("DeploySucceeded", { repoUrl: repoUrl });
+    }
+
+    that.logDeployFailed = function(repoUrl){
+        appInsights.trackEvent("DeployFailed", { repoUrl: repoUrl });
+    }
+
+    return that;
+};
+
+var telemetry = telemetryObj();
+
 (function () {
 
 // app.js
@@ -162,6 +185,7 @@ angular.module('formApp', ['ngAnimate', 'ui.router'])
 
         if($scope.formData.repositoryUrl){
             sessionStorage.repositoryUrl = $scope.formData.repositoryUrl;
+            telemetry.logGetTemplate($scope.formData.repositoryUrl);
         }
 
         $location.url("/");
@@ -518,6 +542,7 @@ angular.module('formApp', ['ngAnimate', 'ui.router'])
         $scope.formData.deploymentSucceeded = false;
         $scope.formData.errorMesg = null;
         $scope.formData.statusMesgs = [];
+        telemetry.logDeploy($scope.formData.repositoryUrl);
 
         $scope.formData.statusMesgs.push("Submitting Deployment");
         $http({
@@ -595,6 +620,7 @@ angular.module('formApp', ['ngAnimate', 'ui.router'])
                     $scope.formData.portalUrl =  portalRGFormat.format(
                         $scope.formData.subscription.subscriptionId,
                         $scope.formData.resourceGroup);
+                    telemetry.logDeploySucceeded($scope.formData.repositoryUrl);
                 }
 
             }
@@ -639,6 +665,7 @@ angular.module('formApp', ['ngAnimate', 'ui.router'])
             mesg = "Failed Deployment";
         }
 
+        telemetry.logDeployFailed($scope.formData.repositoryUrl);
         $scope.formData.errorMesg = mesg;
     }
 
@@ -656,9 +683,11 @@ angular.module('formApp', ['ngAnimate', 'ui.router'])
             var formData = $scope.formData;
             if(result.data.status === 4){
                 formData.deploymentSucceeded = true;
+                telemetry.logDeploySucceeded(formData.repositoryUrl);
             }
             else if(result.data.status === 3){
-                formData.errorMesg = "Git deployment failed";	
+                formData.errorMesg = "Git deployment failed";
+                telemetry.logDeployFailed(formData.repositoryUrl);
             }
             else{
                 if(formData.statusMesgs[formData.statusMesgs.length-1] !== result.data.progress){

@@ -145,6 +145,7 @@
     <Compile Include="Abstract\Repository.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Concrete\GitHubRepository.cs" />
+    <Compile Include="Concrete\Telemetry.cs" />
     <Compile Include="Concrete\UnhandledExceptionFilter.cs" />
     <Compile Include="Controllers\ARMController.cs" />
     <Compile Include="Global.asax.cs">
