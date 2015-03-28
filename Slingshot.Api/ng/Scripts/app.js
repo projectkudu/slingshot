@@ -216,6 +216,7 @@ angular.module('formApp', ['ngAnimate', 'ui.router'])
         that.aliasValues = null;
         that.defaultValue = null;
         that.value = null;
+        that.validationError = null;
         return that;
     };
 
@@ -306,6 +307,11 @@ angular.module('formApp', ['ngAnimate', 'ui.router'])
                 else if(paramName === "sqladministratorlogin" && $scope.formData.userDisplayName && $scope.formData.userDisplayName.length > 0 && !param.defaultValue){
                     param.value = $scope.formData.userDisplayName.toLowerCase().replace(/ /g, "");
                 }
+
+                if(!param.value){
+                    param.value = param.defaultValue;
+                }
+
             }
         },
         function(result){
@@ -321,10 +327,6 @@ angular.module('formApp', ['ngAnimate', 'ui.router'])
     }
 
     $scope.showParam = function(param){
-        if(!param.value){
-            param.value = param.defaultValue;
-        }
-
         var name = param.name.toLowerCase();
         if(name === 'repourl' && $scope.formData.repositoryUrl){
             param.value = $scope.formData.repositoryUrl;
@@ -389,39 +391,59 @@ angular.module('formApp', ['ngAnimate', 'ui.router'])
     }
 
     $scope.canMoveToNextStep = function(){
+        var isValid = true;
+
         if (!$scope.formData.tenant || !$scope.formData.subscription || !$scope.formData.params) {
             return false;
         }
 
         // If we're dealing with a site, and the name is not available, we can't go to next step
-        if ($scope.formData.siteName &&
-            (!$scope.formData.siteNameAvailable || $scope.formData.siteName != $scope.formData.siteNameQuery)) {
-            return false;
+        if (!$scope.formData.siteName ||
+            ($scope.formData.siteName &&
+                (!$scope.formData.siteNameAvailable || $scope.formData.siteName != $scope.formData.siteNameQuery))) {
+            isValid = false;
         }
 
         // Go through all the params, making sure none are blank
         var params = $scope.formData.params;
         for(var i = 0; i < params.length; i++){
+            var param = params[i];
 
-            if(params[i].name === 'hostingPlanName' && $scope.formData.siteName){
-                params[i].value = $scope.formData.siteName;
+            if(param.name === 'hostingPlanName' && $scope.formData.siteName){
+                param.value = $scope.formData.siteName;
             }
 
-            if(params[i].value === null || params[i].value === undefined){
-                return false;
+            if(param.type.toLowerCase() === 'int'){
+                if(param.value && isNaN(param.value)){
+                    param.validationError = "Must be a number";
+                    isValid = false;
+                }
+                else{
+                    param.validationError = null;
+                    if(!param.value){
+                        isValid = false;
+                    }
+                }
+            }
+
+            if(param.value === null || param.value === undefined){
+                isValid = false;
+            }
+            else if(param.value === "" && param.defaultValue !== ""){
+                isValid = false;
             }
         }
 
-        return true;
+        return isValid;
     }
 
     $scope.checkSiteName = function(siteName){
+        $scope.formData.siteNameAvailable = false;
         if(siteName){
             $scope.formData.siteNameQuery = siteName;
             window.setTimeout(querySiteName, 250, $scope, $http, siteName);
         }
         else{
-            $scope.formData.siteNameAvailable = false;
             $scope.formData.siteName = '';
         }
     }
@@ -475,6 +497,9 @@ angular.module('formApp', ['ngAnimate', 'ui.router'])
             // JavaScript may convert string representations of numbers incorrectly
             if(typeof param.value === "number" && param.type.toLowerCase() === 'string'){
                 param.value = param.value.toString();
+            }
+            else if(typeof param.value === "string" && param.type.toLowerCase() === "int"){
+                param.value = parseInt(param.value);
             }
 
             dataParams[param.name] = {value : param.value};

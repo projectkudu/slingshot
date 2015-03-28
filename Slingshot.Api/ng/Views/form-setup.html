@@ -63,6 +63,7 @@
         <!-- All other form fields -->
         <div ng-switch-default >
             <label>{{param | camelCaseToHuman}}</label>
+            <span ng-show="param.validationError !== null" class="text-danger"> - {{param.validationError}}</span>
 
             <input type="password" ng-if="getFieldType(param) === 'password'" class="form-control" name="param.name" ng-model="param.value">
 
@@ -81,6 +82,3 @@
         </div>
     </div>
 </div>
-<!-- <div ng-show="formData.error" class="text-danger">
-    {{formData.error}}
-</div> -->
