@@ -397,8 +397,9 @@ angular.module('formApp', ['ngAnimate', 'ui.router'])
             return false;
         }
 
-        // If we're dealing with a site, and the name is not available, we can't go to next step
-        if (!$scope.formData.siteName ||
+        // If we're dealing with a site, and the name is not available, we can't go to next step.
+        // In the case of non-site template, siteName will be undefined.
+        if ($scope.formData.siteName === "" ||
             ($scope.formData.siteName &&
                 (!$scope.formData.siteNameAvailable || $scope.formData.siteName != $scope.formData.siteNameQuery))) {
             isValid = false;
