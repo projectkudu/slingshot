@@ -586,7 +586,7 @@ namespace Slingshot.Controllers
             }
 
             returnObj["siteLocations"] = JArray.FromObject(locations);
-            returnObj["sqlServerLocation"] = dbServerLocations == null ? null : JArray.FromObject(dbServerLocations);
+            returnObj["sqlServerLocations"] = dbServerLocations == null ? null : JArray.FromObject(dbServerLocations);
             return;
         }
 

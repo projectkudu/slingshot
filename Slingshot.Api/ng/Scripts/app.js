@@ -289,7 +289,7 @@ angular.module('formApp', ['ngAnimate', 'ui.router'])
                 else if(paramName === "sitelocation" && $scope.formData.siteLocations && $scope.formData.siteLocations.length > 0 && !param.defaultValue){
                     param.value = $scope.formData.siteLocations[0];
                 }
-                else if(paramName === "sqlserverLocation" && $scope.formData.sqlServerLocations && $scope.formData.sqlServerLocations.length > 0 && !param.defaultValue){
+                else if(paramName === "sqlserverlocation" && $scope.formData.sqlServerLocations && $scope.formData.sqlServerLocations.length > 0 && !param.defaultValue){
                     param.value =   $scope.formData.sqlServerLocations[0];
                 }
                 else if(paramName === "sqlservername" && $scope.formData.siteName && $scope.formData.siteName.length > 0 && !param.defaultValue){
