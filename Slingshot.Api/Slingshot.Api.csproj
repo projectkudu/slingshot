@@ -154,6 +154,8 @@
     <Compile Include="Helpers\Constants.cs" />
     <Compile Include="Helpers\Utils.cs" />
     <Compile Include="Models\CreateDeploymentResponse.cs" />
+    <Compile Include="Models\Inputs.cs" />
+    <Compile Include="Models\Subscriptions.cs" />
     <Compile Include="Modules\AADOAuth2AccessToken.cs" />
     <Compile Include="Modules\ARMOAuthModule.cs" />
     <Compile Include="Modules\OpenIdConfiguration.cs" />

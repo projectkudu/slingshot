@@ -69,7 +69,24 @@ var telemetryObj = function(){
     return that;
 };
 
+var contantsObj = function(){
+    var that = {};
+    var paramsObj = function(){
+        var that = {};
+        that.siteLocation = "siteLocation";
+        that.siteLocationLower = that.siteLocation.toLowerCase();
+        that.sqlServerLocation = "sqlServerLocation";
+        that.sqlServerLocationLower = that.sqlServerLocation.toLowerCase();
+        return that;
+    }
+
+    that.params = paramsObj();
+
+    return that;
+}
+
 var telemetry = telemetryObj();
+var constants = contantsObj();
 
 (function () {
 
@@ -237,7 +254,6 @@ angular.module('formApp', ['ngAnimate', 'ui.router'])
         .then(function(result){
             $scope.formData.userDisplayName = result.data.userDisplayName;
             $scope.formData.template = result.data.template;
-            $scope.formData.resourceGroup = result.data.resourceGroup;
             $scope.formData.subscriptions = result.data.subscriptions;
             $scope.formData.siteLocations = result.data.siteLocations;
             $scope.formData.sqlServerLocations = result.data.sqlServerLocations;
@@ -248,6 +264,10 @@ angular.module('formApp', ['ngAnimate', 'ui.router'])
             $scope.formData.repositoryDisplayUrl = result.data.repositoryDisplayUrl;
             $scope.formData.siteName = result.data.siteName;
             $scope.formData.siteNameQuery = result.data.siteName;
+            $scope.formData.newResourceGroup = {
+                name: result.data.resourceGroupName,
+                location: ""
+            };
 
             // Select current tenant
             var tenants = $scope.formData.tenants;
@@ -259,9 +279,10 @@ angular.module('formApp', ['ngAnimate', 'ui.router'])
 
             // Select first subscription
             if($scope.formData.subscriptions && $scope.formData.subscriptions.length > 0){
-                $scope.formData.subscription = $scope.formData.subscriptions[0];
+                var sub = $scope.formData.subscriptions[0];
+                $scope.formData.subscription = sub;
+                setDefaultRg(sub);
             }
-
 
             // Pull out template parameters to show on UI
             $scope.formData.params = [];
@@ -286,10 +307,10 @@ angular.module('formApp', ['ngAnimate', 'ui.router'])
                     param.value = result.data.siteName;
                     $scope.formData.siteNameAvailable = true;
                 }
-                else if(paramName === "sitelocation" && $scope.formData.siteLocations && $scope.formData.siteLocations.length > 0 && !param.defaultValue){
+                else if(paramName === constants.params.siteLocationLower && $scope.formData.siteLocations && $scope.formData.siteLocations.length > 0 && !param.defaultValue){
                     param.value = $scope.formData.siteLocations[0];
                 }
-                else if(paramName === "sqlserverlocation" && $scope.formData.sqlServerLocations && $scope.formData.sqlServerLocations.length > 0 && !param.defaultValue){
+                else if(paramName === constants.params.sqlServerLocationLower && $scope.formData.sqlServerLocations && $scope.formData.sqlServerLocations.length > 0 && !param.defaultValue){
                     param.value =   $scope.formData.sqlServerLocations[0];
                 }
                 else if(paramName === "sqlservername" && $scope.formData.siteName && $scope.formData.siteName.length > 0 && !param.defaultValue){
@@ -311,7 +332,6 @@ angular.module('formApp', ['ngAnimate', 'ui.router'])
                 if(!param.value){
                     param.value = param.defaultValue;
                 }
-
             }
         },
         function(result){
@@ -321,9 +341,64 @@ angular.module('formApp', ['ngAnimate', 'ui.router'])
         });
     }
 
+    function setDefaultRg(sub){
+        var curRg = null;
+
+        var rgs = sub.resourceGroups;
+        if(rgs.length === 0 || (rgs.length > 0 && rgs[0].location)){
+            curRg = {
+                name: "Create New",
+                location: ""
+            };
+
+            sub.resourceGroups.unshift(curRg);
+        }
+        else{
+            curRg = rgs[0];
+        }
+
+        $scope.formData.existingResourceGroup = curRg;
+    }
+
+    function creatingNewRg(){
+        return !$scope.formData.existingResourceGroup.location;
+    }
+
     $scope.changeTenant = function(){
         var tenantUrl = window.location.origin + window.location.pathname + "api/tenants/" + $scope.formData.tenant.TenantId;
         window.location = tenantUrl;
+    }
+
+    $scope.changeSubscription = function(){
+        setDefaultRg($scope.formData.subscription);
+    }
+
+    $scope.changeResourceGroup = function(){
+        if(creatingNewRg()){
+            return;
+        }
+
+        $scope.formData.params.forEach(function(param){
+            var name = param.name.toLowerCase();
+            var locations = null;
+
+            if(name === constants.params.siteLocationLower){
+                locations = $scope.formData.siteLocations;
+            }
+            else if(name === constants.params.sqlServerLocationLower){
+                locations = $scope.formData.sqlServerLocations;
+            }
+
+            if(locations){
+                for(var i = 0; i < locations.length; i++){
+                    // Site/SQL locations have spaces in them
+                    if(locations[i].replace(/ /g, "").toLowerCase() === $scope.formData.existingResourceGroup.location){
+                        param.value = locations[i];
+                        break;
+                    }
+                }
+            }
+        });
     }
 
     $scope.showParam = function(param){
@@ -393,8 +468,37 @@ angular.module('formApp', ['ngAnimate', 'ui.router'])
     $scope.canMoveToNextStep = function(){
         var isValid = true;
 
-        if (!$scope.formData.tenant || !$scope.formData.subscription || !$scope.formData.params) {
+        if (!$scope.formData.tenant
+            || !$scope.formData.subscription
+            || !$scope.formData.params
+            || (creatingNewRg() && !$scope.formData.existingResourceGroup.name)) {
             return false;
+        }
+
+        var rgs = $scope.formData.subscription.resourceGroups;
+        if(creatingNewRg()){
+
+            var regex = new RegExp("^[0-9a-zA-Z\\()._-]+[0-9a-zA-Z()_-]$");
+            if(!regex.test($scope.formData.newResourceGroup.name)){
+                $scope.formData.resourceGroupError = "Invalid Resource Group Name";
+                isValid = false;
+            }
+            else{
+                for(var i = 0; i < rgs.length; i++){
+                    if($scope.formData.newResourceGroup.name.toLowerCase() === rgs[i].name.toLowerCase()){
+                        
+                        $scope.formData.resourceGroupError = "Resource Group Exists";
+                        isValid = false;
+                    }
+                }
+            }
+
+            if(isValid){
+                $scope.formData.resourceGroupError = null;
+            }
+        }
+        else{
+            $scope.formData.resourceGroupError = null;
         }
 
         // If we're dealing with a site, and the name is not available, we can't go to next step.
@@ -487,6 +591,9 @@ angular.module('formApp', ['ngAnimate', 'ui.router'])
 
     function getDeployPayload(params){
         var dataParams = {}
+        var rg = creatingNewRg() ? $scope.formData.newResourceGroup : $scope.formData.existingResourceGroup;
+        $scope.formData.finalResourceGroup = rg;
+
         for(var i = 0; i < params.length; i++){
             var param = params[i];
 
@@ -494,7 +601,7 @@ angular.module('formApp', ['ngAnimate', 'ui.router'])
             if(param.name.toLowerCase() === "workersize"){
                 param.value = param.allowedValues.indexOf(param.value).toString();
             }
-            
+
             // JavaScript may convert string representations of numbers incorrectly
             if(typeof param.value === "number" && param.type.toLowerCase() === 'string'){
                 param.value = param.value.toString();
@@ -503,10 +610,27 @@ angular.module('formApp', ['ngAnimate', 'ui.router'])
                 param.value = parseInt(param.value);
             }
 
+            if(creatingNewRg() && param.name.toLowerCase() === constants.params.siteLocationLower){
+                rg.location = param.value;
+            }
+            else if(creatingNewRg() && param.name.toLowerCase() === constants.params.sqlServerLocationLower){
+                rg.location = param.value;
+            }
+
             dataParams[param.name] = {value : param.value};
         }
 
-        return dataParams;
+        if(!rg.location){
+            rg.location = "East US";
+        }
+
+        // return dataParams;
+        return {
+            parameters: dataParams,
+            subscriptionId: $scope.formData.subscription.subscriptionId,
+            resourceGroup: rg,
+            templateUrl: $scope.formData.templateUrl
+        };
     }
 
     initialize($scope, $http);
@@ -521,9 +645,6 @@ angular.module('formApp', ['ngAnimate', 'ui.router'])
         $http({
             method: "post",
             url: "api/preview/"+subscriptionId,
-            params:{
-                "templateUrl" : $scope.formData.templateUrl,
-            },
             data: $scope.formData.deployPayload
         })
         .then(function(result){
@@ -574,10 +695,6 @@ angular.module('formApp', ['ngAnimate', 'ui.router'])
         $http({
             method: "post",
             url: "api/deployments/"+subscriptionId,
-            params:{
-                "templateUrl": $scope.formData.templateUrl,
-                "resourceGroup": $scope.formData.resourceGroup,
-            },
             data: $scope.formData.deployPayload
         })
         .then(function(result){
@@ -591,7 +708,7 @@ angular.module('formApp', ['ngAnimate', 'ui.router'])
 
     function getStatus($scope, $http, deploymentUrl){
         var subscriptionId = $scope.formData.subscription.subscriptionId;
-        var resourceGroup = $scope.formData.resourceGroup;
+        var resourceGroup =  $scope.formData.finalResourceGroup;
 
         var params;
         if ($scope.formData.repoParamFound) {
@@ -602,7 +719,7 @@ angular.module('formApp', ['ngAnimate', 'ui.router'])
 
         $http({
             method: "get",
-            url: "api/deployments/" + subscriptionId + "/rg/" + resourceGroup,
+            url: "api/deployments/" + subscriptionId + "/rg/" + resourceGroup.name,
             params: params,
         })
         .then(function(result){
@@ -636,7 +753,7 @@ angular.module('formApp', ['ngAnimate', 'ui.router'])
                 if ($scope.formData.repoParamFound){
                     $scope.formData.portalUrl = portalWebSiteFormat.format(
                         $scope.formData.subscription.subscriptionId,
-                        $scope.formData.resourceGroup,
+                        $scope.formData.finalResourceGroup.name,
                         $scope.formData.siteName);
 
                     window.setTimeout(getGitStatus, 1000, $scope, $http);
@@ -645,7 +762,7 @@ angular.module('formApp', ['ngAnimate', 'ui.router'])
                     $scope.formData.deploymentSucceeded = true;
                     $scope.formData.portalUrl =  portalRGFormat.format(
                         $scope.formData.subscription.subscriptionId,
-                        $scope.formData.resourceGroup);
+                        $scope.formData.finalResourceGroup.name);
                     telemetry.logDeploySucceeded($scope.formData.repositoryUrl);
                 }
 
@@ -698,7 +815,7 @@ angular.module('formApp', ['ngAnimate', 'ui.router'])
     function getGitStatus($scope, $http){
         var subscriptionId = $scope.formData.subscription.subscriptionId;
         var siteName = $scope.formData.siteName;
-        var resourceGroup = $scope.formData.resourceGroup;
+        var resourceGroup = $scope.formData.finalResourceGroup.name;
 
         $http({
             method: "get",
