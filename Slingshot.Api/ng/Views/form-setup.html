@@ -21,13 +21,20 @@
 
     <div class="form-group col-md-6">
         <label for="subscription">Subscription</label>
-        <select class="form-control" ng-model="formData.subscription" ng-options="subscription.displayName for subscription in formData.subscriptions">
+        <select class="form-control" ng-model="formData.subscription" ng-options="subscription.displayName for subscription in formData.subscriptions" ng-change="changeSubscription()">
         </select>
     </div>
 
     <div class="form-group col-md-6">
-        <label for="resourceGroup">Resource group</label>
-        <input type="text" class="form-control" name="resourceGroup" ng-model="formData.resourceGroup">
+        <label for="resourceGroup">Resource Group</label>
+        <select class="form-control" ng-model="formData.existingResourceGroup" ng-options="resourceGroup.name for resourceGroup in formData.subscription.resourceGroups" ng-change="changeResourceGroup()">
+        </select>
+     </div>
+
+    <div class="form-group col-md-6" >
+        <label for="resourceGroupName">Resource Group Name</label>
+        <span ng-show="formData.resourceGroupError" class="text-danger"> - {{formData.resourceGroupError}}</span>
+        <input type="text" class="form-control" name="param.name" ng-disabled="!!formData.existingResourceGroup.location" ng-model="formData.newResourceGroup.name">
     </div>
 
     <div class="form-group col-md-6" ng-repeat="param in formData.params" ng-switch on="param.name" ng-show="showParam(param)">

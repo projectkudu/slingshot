@@ -95,25 +95,27 @@ namespace Slingshot.Controllers
         [Authorize]
         [HttpPost]
         #pragma warning disable 4014
-        public async Task<HttpResponseMessage> Preview([FromBody] JObject parameters, string subscriptionId, string templateUrl)
+        public async Task<HttpResponseMessage> Preview(DeployInputs inputs)
         {
             JObject responseObj = new JObject();
             List<string> providers = new List<string>(32);
             HttpResponseMessage response = null;
-            using (var client = GetRMClient(subscriptionId))
+            using (var client = GetRMClient(inputs.subscriptionId))
             {
                 ResourceGroupCreateOrUpdateResult resourceResult = null;
                 string tempRGName = Guid.NewGuid().ToString();
 
                 try
                 {
-                    resourceResult = await client.ResourceGroups.CreateOrUpdateAsync(tempRGName, new BasicResourceGroup { Location = "East US" });
+                    resourceResult = await client.ResourceGroups.CreateOrUpdateAsync(
+                        tempRGName,
+                        new BasicResourceGroup { Location = inputs.resourceGroup.location });
 
                     // For now we just default to East US for the resource group location.
                     var basicDeployment = new BasicDeployment
                     {
-                        Parameters = parameters.ToString(),
-                        TemplateLink = new TemplateLink(new Uri(templateUrl))
+                        Parameters = inputs.parameters.ToString(),
+                        TemplateLink = new TemplateLink(new Uri(inputs.templateUrl))
                     };
 
                     var deploymentResult = await client.Deployments.ValidateAsync(tempRGName, tempRGName, basicDeployment);
@@ -146,7 +148,7 @@ namespace Slingshot.Controllers
                         (resourceResult.StatusCode == HttpStatusCode.Created || resourceResult.StatusCode == HttpStatusCode.OK))
                     {
                         string token = GetTokenFromHeader();
-                        Task.Run(() => { DeleteResourceGroup(subscriptionId, token, tempRGName); });
+                        Task.Run(() => { DeleteResourceGroup(inputs.subscriptionId, token, tempRGName); });
                     }
                 }
             }
@@ -171,25 +173,32 @@ namespace Slingshot.Controllers
 
         [Authorize]
         [HttpPost]
-        public async Task<HttpResponseMessage> Deploy([FromBody] JObject parameters, string subscriptionId, string resourceGroup, string templateUrl)
+        public async Task<HttpResponseMessage> Deploy(DeployInputs inputs)
         {
             CreateDeploymentResponse responseObj = new CreateDeploymentResponse();
             HttpResponseMessage response = null;
 
             try
             {
-                using (var client = GetRMClient(subscriptionId))
+                using (var client = GetRMClient(inputs.subscriptionId))
                 {
                     // For now we just default to East US for the resource group location.
-                    var resourceResult = await client.ResourceGroups.CreateOrUpdateAsync(resourceGroup, new BasicResourceGroup { Location = "East US" });
-                    var templateParams = parameters.ToString();
+                    var resourceResult = await client.ResourceGroups.CreateOrUpdateAsync(
+                        inputs.resourceGroup.name,
+                        new BasicResourceGroup { Location = inputs.resourceGroup.location });
+
+                    var templateParams = inputs.parameters.ToString();
                     var basicDeployment = new BasicDeployment
                     {
                         Parameters = templateParams,
-                        TemplateLink = new TemplateLink(new Uri(templateUrl))
+                        TemplateLink = new TemplateLink(new Uri(inputs.templateUrl))
                     };
 
-                    var deploymentResult = await client.Deployments.CreateOrUpdateAsync(resourceGroup, resourceGroup, basicDeployment);
+                    var deploymentResult = await client.Deployments.CreateOrUpdateAsync(
+                        inputs.resourceGroup.name,
+                        inputs.resourceGroup.name,
+                        basicDeployment);
+
                     response = Request.CreateResponse(HttpStatusCode.OK, responseObj);
                 }
             }
@@ -340,7 +349,7 @@ namespace Slingshot.Controllers
                 returnObj["subscriptions"] = JArray.FromObject(subscriptions);
                 returnObj["tenants"] = tenants;
                 returnObj["userDisplayName"] = userDisplayName;
-                returnObj["resourceGroup"] = resourceGroupName;
+                returnObj["resourceGroupName"] = resourceGroupName;
                 returnObj["template"] = template;
                 returnObj["templateUrl"] = templateUrl;
                 returnObj["repositoryUrl"] = repo.RepositoryUrl;

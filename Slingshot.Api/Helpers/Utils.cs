@@ -4,17 +4,11 @@ using System.Diagnostics;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
+using System.Collections.Generic;
+using Slingshot.Models;
 
 namespace Slingshot.Helpers
 {
-    public class SubscriptionInfo
-    {
-        public string id { get; set; }
-        public string subscriptionId { get; set; }
-        public string displayName { get; set; }
-        public string state { get; set; }
-    }
-
     public class Utils
     {
         public class ResultOf<T>
@@ -41,8 +35,21 @@ namespace Slingshot.Helpers
                 {
                     if (response.IsSuccessStatusCode)
                     {
-                        var result = await response.Content.ReadAsAsync<ResultOf<SubscriptionInfo>>();
-                        return result.value;
+                        var subs = (await response.Content.ReadAsAsync<ResultOf<SubscriptionInfo>>()).value;
+
+                        var getRgTasks = new List<Task<ResourceGroupInfo[]>>();
+                        foreach (var sub in subs)
+                        {
+                            getRgTasks.Add(GetResourceGroups(client, host, sub.subscriptionId));
+                        }
+
+                        var rgsForAllSubs = await Task.WhenAll(getRgTasks.ToArray());
+                        for(int i = 0; i < rgsForAllSubs.Length; i ++)
+                        {
+                            subs[i].resourceGroups = rgsForAllSubs[i];
+                        }
+
+                        return subs;
                     }
 
                     var content = await response.Content.ReadAsStringAsync();
@@ -57,6 +64,39 @@ namespace Slingshot.Helpers
 
                     throw new InvalidOperationException(String.Format("GetSubscriptions {0}, {1}", response.StatusCode, await response.Content.ReadAsStringAsync()));
                 }
+            }
+        }
+
+        private static async Task<ResourceGroupInfo[]> GetResourceGroups(
+            HttpClient client,
+            string host,
+            string subscriptionId)
+        {
+            string url = string.Format(
+                "{0}/subscriptions/{1}/resourceGroups?api-version={2}",
+                Utils.GetCSMUrl(host),
+                subscriptionId,
+                Constants.CSM.ApiVersion);
+
+            using (var response = await client.GetAsync(url))
+            {
+                if (response.IsSuccessStatusCode)
+                {
+                    return (await response.Content.ReadAsAsync<ResultOf<ResourceGroupInfo>>()).value;
+                }
+
+                var content = await response.Content.ReadAsStringAsync();
+                if (content.StartsWith("{"))
+                {
+                    var error = (JObject)JObject.Parse(content)["error"];
+                    if (error != null)
+                    {
+                        throw new InvalidOperationException(String.Format("GetResourceGroups {0}, {1}", response.StatusCode, error.Value<string>("message")));
+                    }
+                }
+
+                throw new InvalidOperationException(String.Format("GetResourceGroups {0}, {1}", response.StatusCode, await response.Content.ReadAsStringAsync()));
+
             }
         }
 

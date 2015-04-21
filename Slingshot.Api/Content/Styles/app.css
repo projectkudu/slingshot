@@ -48,6 +48,10 @@ pre                             { margin-bottom:20px; }
     overflow: hidden;
 }
 
+input[type="text"]:disabled{
+    background-color: #969393;
+}
+
 .code {font-size:12px; }
 
 .code-attrName{color:#ff0000;}
