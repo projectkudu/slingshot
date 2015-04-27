@@ -284,6 +284,16 @@ angular.module('formApp', ['ngAnimate', 'ui.router'])
                 setDefaultRg(sub);
             }
 
+            // Pull out EULA metadata if available. Require http* and sanitize
+            $scope.formData.eula = null;
+            var metadata = result.data.template.metadata;
+            if (metadata && metadata["eula"]) {
+                var eula = encodeURI(metadata["eula"].trim());
+                if (eula.indexOf('http') === 0) {
+                    $scope.formData.eula = eula;
+                }
+            }
+
             // Pull out template parameters to show on UI
             $scope.formData.params = [];
             $scope.formData.repoParamFound = false;
