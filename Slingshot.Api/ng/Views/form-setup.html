@@ -6,6 +6,10 @@
     <div class="text-primary header-label">
         Branch - <span class="text-info" ng-attr-title="{{formData.branch}}">{{formData.branch}}</span>
     </div>
+
+    <div ng-show="formData.eula" class="text-primary header-label">
+        EULA - <span class="text-info" ng-attr-title="{{formData.eula}}"><a href="{{formData.eula}}" target="_blank">{{formData.eula}}</a></span>
+    </div>
 </div>
 
 <div ng-show="!formData.params">
