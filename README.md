@@ -20,18 +20,19 @@ Create AAD application
 
 Fix AADClientId and AADClientSecret in codes
 ============================================
-1. Copy `CLIENT ID` and paste it in [this line](https://github.com/suwatch/ARMOAuth/blob/master/Modules/ARMOAuthModule.cs#L26).
-2. On `Keys` section, create a client secret. Copy the key and paste it in [this line](https://github.com/suwatch/ARMOAuth/blob/master/Modules/ARMOAuthModule.cs#L31).
+1. Copy `CLIENT ID` and paste it in [this line](https://github.com/suwatch/ARMOAuth/blob/master/Modules/ARMOAuthModule.cs), replacing `Environment.GetEnvironmentVariable("AADClientId")`.
+2. On `Keys` section, create a client secret. Copy the key and paste it in the same file, replacing `Environment.GetEnvironmentVariable("AADClientSecret")`.
 
 
 Test with localhost
 ===================
-1. On VS, start the `slingshot.sln` in debugger (F5).
-2. On browser, it should redirect to login page.
-3. Enter AAD account and password.  
-  Note: try account that is not in the same directly as the application.  
+1. In VS, make Slingshot.Api the starter project. The RedirectionSite project can be ignored.
+1. Starting running it in the debugger (F5).
+1. In browser, it should redirect to login page.
+1. Enter AAD account and password.
+  Note: try account that is not in the same directly as the application.
   Note: currently this does not work with MSA account.
-4. You should be prompt with OAuth allow/deny page, do accept it.
+1. You should be prompt with OAuth allow/deny page, do accept it.
 
 Test ARM apis
 =============
