@@ -285,7 +285,6 @@ angular.module('formApp', ['ngAnimate', 'ui.router'])
             }
 
             // Pull out EULA metadata if available. Require http* and sanitize
-
             $scope.formData.eula = null;
             var metadata = result.data.template.metadata;
             if (metadata && metadata["eula"]) {
