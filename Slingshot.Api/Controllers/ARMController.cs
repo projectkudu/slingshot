@@ -308,7 +308,7 @@ namespace Slingshot.Controllers
             using (var webSiteMgmtClient =
                 CloudContext.Clients.CreateWebSiteManagementClient(new TokenCloudCredentials(subscriptionId, token)))
             {
-                isAvailable = (await webSiteMgmtClient.WebSites.IsHostnameAvailableAsync(siteName)).IsAvailable;
+                isAvailable = await IsSiteNameAvailable(webSiteMgmtClient, siteName);
             }
 
             return Request.CreateResponse(HttpStatusCode.OK, new { siteName = siteName, isAvailable = isAvailable });
@@ -388,7 +388,7 @@ namespace Slingshot.Controllers
                     for (int i = 0; i < 3; i++)
                     {
                         string resourceGroupName = GenerateRandomResourceGroupName(repo.RepositoryName);
-                        isAvailable = (await webSiteMgmtClient.WebSites.IsHostnameAvailableAsync(resourceGroupName)).IsAvailable;
+                        isAvailable = await IsSiteNameAvailable(webSiteMgmtClient, resourceGroupName);
 
                         if (isAvailable)
                         {
@@ -399,6 +399,20 @@ namespace Slingshot.Controllers
             }
 
             return null;
+        }
+
+        private static async Task<bool> IsSiteNameAvailable(Microsoft.WindowsAzure.Management.WebSites.WebSiteManagementClient webSiteMgmtClient, string siteName)
+        {
+            try
+            {
+                return (await webSiteMgmtClient.WebSites.IsHostnameAvailableAsync(siteName)).IsAvailable;
+            }
+            catch (CloudException)
+            {
+                // For Dreamspark subscriptions, RDFE is not available so we can't make this call.
+                // For now, just return true. The better thing to do is to switch to an ARM friendly call
+                return true;
+            }
         }
 
         private string GenerateRandomResourceGroupName(string baseName, int length = 4)
