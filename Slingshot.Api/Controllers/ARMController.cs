@@ -407,16 +407,25 @@ namespace Slingshot.Controllers
             {
                 return (await webSiteMgmtClient.WebSites.IsHostnameAvailableAsync(siteName)).IsAvailable;
             }
-            catch (CloudException)
+            catch (CloudException e)
             {
                 // For Dreamspark subscriptions, RDFE is not available so we can't make this call.
                 // For now, just return true. The better thing to do is to switch to an ARM friendly call
-                return true;
+                if (e.ErrorCode == "ForbiddenError")
+                {
+                    return true;
+                }
+
+                // For other cases, rethrow
+                throw;
             }
         }
 
         private string GenerateRandomResourceGroupName(string baseName, int length = 4)
         {
+            // Underscores are not valid in site names, so use dashes instead
+            baseName = baseName.Replace('_', '-');
+
             Random random = new Random();
 
             var strb = new StringBuilder(baseName.Length + length);
