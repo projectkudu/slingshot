@@ -31,6 +31,7 @@ namespace Slingshot.Helpers
         public class CSM
         {
             public const string ApiVersion = "2014-04-01";
+            public const string WebsitesApiVersion = "2014-11-01";
             public const string GetGitDeploymentStatusFormat = "{0}/subscriptions/{1}/resourceGroups/{2}/providers/Microsoft.Web/sites/{3}/deployments?api-version={4}";
             public const string GetDeploymentStatusFormat = "{0}/subscriptions/{1}/resourcegroups/{2}/deployments/{2}/operations?api-version={3}";
         }

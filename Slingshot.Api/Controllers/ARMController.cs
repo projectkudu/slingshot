@@ -266,7 +266,7 @@ namespace Slingshot.Controllers
                     subscriptionId,
                     resourceGroup,
                     siteName,
-                    Constants.CSM.ApiVersion);
+                    Constants.CSM.WebsitesApiVersion);
 
                 for (int i = 0; i < 5; i++)
                 {
