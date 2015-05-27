@@ -109,13 +109,16 @@ namespace Slingshot.Controllers
                 {
                     resourceResult = await client.ResourceGroups.CreateOrUpdateAsync(
                         tempRGName,
-                        new BasicResourceGroup { Location = inputs.resourceGroup.location });
+                        new ResourceGroup { Location = inputs.resourceGroup.location });
 
                     // For now we just default to East US for the resource group location.
-                    var basicDeployment = new BasicDeployment
+                    var basicDeployment = new Deployment
                     {
-                        Parameters = inputs.parameters.ToString(),
-                        TemplateLink = new TemplateLink(new Uri(inputs.templateUrl))
+                        Properties = new DeploymentProperties
+                        {
+                            Parameters = inputs.parameters.ToString(),
+                            TemplateLink = new TemplateLink(new Uri(inputs.templateUrl))
+                        }
                     };
 
                     var deploymentResult = await client.Deployments.ValidateAsync(tempRGName, tempRGName, basicDeployment);
@@ -185,13 +188,16 @@ namespace Slingshot.Controllers
                     // For now we just default to East US for the resource group location.
                     var resourceResult = await client.ResourceGroups.CreateOrUpdateAsync(
                         inputs.resourceGroup.name,
-                        new BasicResourceGroup { Location = inputs.resourceGroup.location });
+                        new ResourceGroup { Location = inputs.resourceGroup.location });
 
                     var templateParams = inputs.parameters.ToString();
-                    var basicDeployment = new BasicDeployment
+                    var basicDeployment = new Deployment
                     {
-                        Parameters = templateParams,
-                        TemplateLink = new TemplateLink(new Uri(inputs.templateUrl))
+                        Properties = new DeploymentProperties
+                        {
+                            Parameters = templateParams,
+                            TemplateLink = new TemplateLink(new Uri(inputs.templateUrl))
+                        }
                     };
 
                     var deploymentResult = await client.Deployments.CreateOrUpdateAsync(
@@ -648,13 +654,13 @@ namespace Slingshot.Controllers
         private WebSiteManagementClient GetWSClient(string subscriptionId)
         {
             var token = Request.Headers.GetValues("X-MS-OAUTH-TOKEN").FirstOrDefault();
-            var creds = new TokenCloudCredentials(subscriptionId, token);
+            var creds = new Microsoft.Azure.TokenCloudCredentials(subscriptionId, token);
             return new WebSiteManagementClient(creds, new Uri(Utils.GetCSMUrl(Request.RequestUri.Host)));
         }
 
         private ResourceManagementClient GetRMClient(string token, string subscriptionId)
         {
-            var creds = new TokenCloudCredentials(subscriptionId, token);
+            var creds = new Microsoft.Azure.TokenCloudCredentials(subscriptionId, token);
             return new ResourceManagementClient(creds, new Uri(Utils.GetCSMUrl(Request.RequestUri.Host)));
         }
 
