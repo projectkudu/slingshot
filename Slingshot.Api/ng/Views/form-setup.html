@@ -58,6 +58,11 @@
             <select class="form-control" ng-model="param.value" ng-options="location for location in formData.siteLocations"></select>
         </div>
 
+        <div ng-switch-when="hostingPlanLocation">
+            <label>{{param | camelCaseToHuman}}</label>
+            <select class="form-control" ng-model="param.value" ng-options="location for location in formData.siteLocations"></select>
+        </div>
+
         <!-- Special handling for sqlServerLocation form field -->
         <div ng-switch-when="sqlServerLocation">
             <label>{{param | camelCaseToHuman}}</label>

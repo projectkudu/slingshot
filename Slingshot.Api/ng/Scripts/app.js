@@ -73,10 +73,9 @@ var contantsObj = function(){
     var that = {};
     var paramsObj = function(){
         var that = {};
-        that.siteLocation = "siteLocation";
-        that.siteLocationLower = that.siteLocation.toLowerCase();
-        that.sqlServerLocation = "sqlServerLocation";
-        that.sqlServerLocationLower = that.sqlServerLocation.toLowerCase();
+        that.siteLocationLower = "sitelocation";
+        that.hostingPlanLocationLower = "hostingplanlocation";
+        that.sqlServerLocationLower = "sqlserverlocation";
         return that;
     }
 
@@ -87,6 +86,12 @@ var contantsObj = function(){
 
 var telemetry = telemetryObj();
 var constants = contantsObj();
+
+function IsSiteLocationParam(paramName) {
+    paramName = paramName.toLowerCase();
+
+    return paramName === constants.params.siteLocationLower || paramName === constants.params.hostingPlanLocationLower;
+}
 
 (function () {
 
@@ -317,7 +322,7 @@ angular.module('formApp', ['ngAnimate', 'ui.router'])
                     param.value = result.data.siteName;
                     $scope.formData.siteNameAvailable = true;
                 }
-                else if(paramName === constants.params.siteLocationLower && $scope.formData.siteLocations && $scope.formData.siteLocations.length > 0 && !param.defaultValue){
+                else if (IsSiteLocationParam(paramName) && $scope.formData.siteLocations && $scope.formData.siteLocations.length > 0 && !param.defaultValue) {
                     param.value = $scope.formData.siteLocations[0];
                 }
                 else if(paramName === constants.params.sqlServerLocationLower && $scope.formData.sqlServerLocations && $scope.formData.sqlServerLocations.length > 0 && !param.defaultValue){
@@ -392,7 +397,7 @@ angular.module('formApp', ['ngAnimate', 'ui.router'])
             var name = param.name.toLowerCase();
             var locations = null;
 
-            if(name === constants.params.siteLocationLower){
+            if(IsSiteLocationParam(name)){
                 locations = $scope.formData.siteLocations;
             }
             else if(name === constants.params.sqlServerLocationLower){
@@ -621,7 +626,7 @@ angular.module('formApp', ['ngAnimate', 'ui.router'])
             }
 
             if(creatingNewRg() &&
-                (param.name.toLowerCase() === constants.params.siteLocationLower ||
+                (IsSiteLocationParam(param.name) ||
                  param.name.toLowerCase() === constants.params.sqlServerLocationLower)){
 
                 rg.location = param.value;
