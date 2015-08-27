@@ -18,7 +18,7 @@ namespace Slingshot
             config.Routes.MapHttpRoute("post-preview", "api/preview/{subscriptionId}", new { controller = "ARM", action = "Preview" }, new { verb = new HttpMethodConstraint("POST") });
             config.Routes.MapHttpRoute("post-deployments", "api/deployments/{subscriptionId}", new { controller = "ARM", action = "Deploy" }, new { verb = new HttpMethodConstraint("POST") });
             config.Routes.MapHttpRoute("get-deployments-status", "api/deployments/{subscriptionId}/rg/{resourceGroup}", new { controller = "ARM", action = "GetDeploymentStatus" }, new { verb = new HttpMethodConstraint("GET") });
-            config.Routes.MapHttpRoute("get-gitdeployments-status", "api/deployments/{subscriptionId}/rg/{resourceGroup}/git", new { controller = "ARM", action = "GetGitDeploymentStatus" }, new { verb = new HttpMethodConstraint("GET") });
+            config.Routes.MapHttpRoute("get-scmdeployments-status", "api/deployments/{subscriptionId}/rg/{resourceGroup}/scm", new { controller = "ARM", action = "GetScmDeploymentStatus" }, new { verb = new HttpMethodConstraint("GET") });
 
             config.Routes.MapHttpRoute("get", "api/{*path}", new { controller = "ARM", action = "Get" }, new { verb = new HttpMethodConstraint("GET", "HEAD") });
 

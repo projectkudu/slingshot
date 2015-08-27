@@ -214,13 +214,12 @@ angular.module('formApp', ['ngAnimate', 'ui.router'])
     }
 
     function getQueryVariable(variable) {
-        var query = window.location.search.substring(1);
-        var vars = query.split('&');
-        for (var i = 0; i < vars.length; i++) {
-            var pair = vars[i].split('=');
-            if (decodeURIComponent(pair[0]) == variable) {
-                return decodeURIComponent(pair[1]);
-            }
+        var query = window.location.search,
+            token = variable + "=",
+            startIndex = query.indexOf(token);
+
+        if (startIndex >= 0) {
+            return query.substring(startIndex + token.length);
         }
 
         return null;
@@ -269,6 +268,7 @@ angular.module('formApp', ['ngAnimate', 'ui.router'])
             $scope.formData.repositoryDisplayUrl = result.data.repositoryDisplayUrl;
             $scope.formData.siteName = result.data.siteName;
             $scope.formData.siteNameQuery = result.data.siteName;
+            $scope.formData.scmType = result.data.scmType;
             $scope.formData.newResourceGroup = {
                 name: result.data.resourceGroupName,
                 location: ""
@@ -322,6 +322,9 @@ angular.module('formApp', ['ngAnimate', 'ui.router'])
                     param.value = result.data.siteName;
                     $scope.formData.siteNameAvailable = true;
                 }
+                else if (paramName === "ismercurial" && result.data.siteName) {
+                    param.value = (result.data.scmType === "hg");
+                }
                 else if (IsSiteLocationParam(paramName) && $scope.formData.siteLocations && $scope.formData.siteLocations.length > 0 && !param.defaultValue) {
                     param.value = $scope.formData.siteLocations[0];
                 }
@@ -344,7 +347,7 @@ angular.module('formApp', ['ngAnimate', 'ui.router'])
                     param.value = $scope.formData.userDisplayName.toLowerCase().replace(/ /g, "");
                 }
 
-                if(!param.value){
+                if (param.value === null || typeof param.value === "undefined") {
                     param.value = param.defaultValue;
                 }
             }
@@ -426,7 +429,10 @@ angular.module('formApp', ['ngAnimate', 'ui.router'])
             param.value = $scope.formData.branch;
             return false;
         }
-        else if(name === 'hostingplanname'){
+        else if (name === 'hostingplanname') {
+            return false;
+        }
+        else if (name === 'ismercurial') {
             return false;
         }
         else if(name === 'workersize'){
@@ -678,7 +684,7 @@ angular.module('formApp', ['ngAnimate', 'ui.router'])
     var statusMap = {};
     statusMap["microsoft.web/sites"] = "Creating Website";
     statusMap["microsoft.web/sites/config"] = "Updating Website Config";
-    statusMap["microsoft.web/sites/sourcecontrols"] = "Setting up Source Control";
+    statusMap["microsoft.web/sites/sourcecontrols"] = "Acquiring content from source control repository";
     statusMap["microsoft.web/serverfarms"] = "Creating Web Hosting Plan";
     statusMap["microsoft.insights/alertrules"] = "Adding Insights Alerts";
     statusMap["microsoft.insights/autoscalesettings"] = "Configuring Insights Auto Scale Settings";
@@ -770,7 +776,7 @@ angular.module('formApp', ['ngAnimate', 'ui.router'])
                         $scope.formData.finalResourceGroup.name,
                         $scope.formData.siteName);
 
-                    window.setTimeout(getGitStatus, 1000, $scope, $http);
+                    window.setTimeout(getSourceControlSetupStatus, 1000, $scope, $http);
                 }
                 else {
                     $scope.formData.deploymentSucceeded = true;
@@ -826,14 +832,14 @@ angular.module('formApp', ['ngAnimate', 'ui.router'])
         $scope.formData.errorMesg = mesg;
     }
 
-    function getGitStatus($scope, $http){
+    function getSourceControlSetupStatus($scope, $http){
         var subscriptionId = $scope.formData.subscription.subscriptionId;
         var siteName = $scope.formData.siteName;
         var resourceGroup = $scope.formData.finalResourceGroup.name;
 
         $http({
             method: "get",
-            url: "api/deployments/" + subscriptionId + "/rg/" + resourceGroup + "/git",
+            url: "api/deployments/" + subscriptionId + "/rg/" + resourceGroup + "/scm",
             params: { siteName: siteName },
         })
         .then(function(result){
@@ -843,14 +849,14 @@ angular.module('formApp', ['ngAnimate', 'ui.router'])
                 telemetry.logDeploySucceeded(formData.repositoryUrl);
             }
             else if(result.data.status === 3){
-                formData.errorMesg = "Git deployment failed";
+                formData.errorMesg = "Failed to acquire content from your repository.";
                 telemetry.logDeployFailed(formData.repositoryUrl);
             }
             else{
                 if(formData.statusMesgs[formData.statusMesgs.length-1] !== result.data.progress){
                     formData.statusMesgs.push(result.data.progress);
                 }
-                window.setTimeout(getGitStatus, 1000, $scope, $http);
+                window.setTimeout(getSourceControlSetupStatus, 1000, $scope, $http);
             }
         },
         function(result){
