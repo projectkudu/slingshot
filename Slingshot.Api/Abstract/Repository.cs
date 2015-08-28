@@ -1,12 +1,10 @@
-﻿using Slingshot.Concrete;
-using Slingshot.Helpers;
-using Newtonsoft.Json.Linq;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System;
+using System.Globalization;
 using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
+using Newtonsoft.Json.Linq;
+using Slingshot.Concrete;
+using Slingshot.Helpers;
 
 namespace Slingshot.Abstract
 {
@@ -19,6 +17,7 @@ namespace Slingshot.Abstract
         protected string _repositoryName;
         protected string _userName;
         protected string _templateUrl;
+        protected string _scmType;
         protected JObject _template;
 
         public Repository(Uri uri)
@@ -26,28 +25,107 @@ namespace Slingshot.Abstract
             _inputUri = uri;
         }
 
-        public abstract string RepositoryDisplayUrl { get; }
+        public virtual string RepositoryDisplayUrl
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(_repoDisplayUrl))
+                {
+                    if (_inputUri.Segments.Length > 2)
+                    {
+                        _repoDisplayUrl = string.Format(
+                            CultureInfo.InvariantCulture,
+                            "https://{0}{1}{2}{3}",
+                            _inputUri.Host,
+                            _inputUri.Segments[0],
+                            _inputUri.Segments[1],
+                            _inputUri.Segments[2].Trim(Constants.Path.SlashChars));
+                    }
+                    else
+                    {
+                        throw new ArgumentException("Invalid repository URL");
+                    }
+                }
 
-        public abstract string RepositoryUrl { get; }
+                return _repoDisplayUrl;
+            }
+        }
 
-        public abstract string RepositoryName { get; }
+        public virtual string RepositoryUrl
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(_repoUrl))
+                {
+                    if (_inputUri.Segments.Length > 2)
+                    {
+                        _repoUrl = string.Format(CultureInfo.InvariantCulture, "https://{0}/{1}/{2}", _inputUri.Host, UserName, RepositoryName);
+                    }
+                }
+                return _repoUrl;
+            }
+        }
 
-        public abstract string UserName { get; }
+        public virtual string RepositoryName
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(_repositoryName))
+                {
+                    if (_inputUri.Segments.Length > 2)
+                    {
+                        _repositoryName = _inputUri.Segments[2].Trim(Constants.Path.SlashChars);
+                    }
+                    else
+                    {
+                        throw new ArgumentException("Could not parse repository name from repository URL");
+                    }
+                }
 
-        #pragma warning disable 1998
+                return _repositoryName;
+            }
+        }
+
+        public virtual string UserName
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(_userName))
+                {
+                    if (_inputUri.Segments.Length > 1)
+                    {
+                        _userName = _inputUri.Segments[1].Trim(Constants.Path.SlashChars);
+                    }
+                    else
+                    {
+                        throw new ArgumentException("Could not parse user name from repository URL");
+                    }
+                }
+
+                return _userName;
+            }
+        }
+
+#pragma warning disable 1998
         public async virtual Task<string> GetBranch()
         {
             return null;
         }
 
-        #pragma warning disable 1998
+#pragma warning disable 1998
         public async virtual Task<JObject> DownloadTemplateAsync()
         {
             return null;
         }
 
-        #pragma warning disable 1998
+#pragma warning disable 1998
         public async virtual Task<string> GetTemplateUrlAsync()
+        {
+            return null;
+        }
+
+#pragma warning disable 1998
+        public async virtual Task<string> GetScmType()
         {
             return null;
         }
@@ -81,10 +159,21 @@ namespace Slingshot.Abstract
             {
                 return new GitHubRepository(repositoryUri);
             }
+            else if (string.Equals(repositoryUri.Host, "bitbucket.org", StringComparison.OrdinalIgnoreCase))
+            {
+                return new BitbucketRepository(repositoryUri);
+            }
             else
             {
                 throw new NotSupportedException("Invalid git repository.  Currently deployments can only be made from github.com repositories");
             }
+        }
+
+        protected static HttpClient CreateHttpClient()
+        {
+            var client = new HttpClient();
+            client.DefaultRequestHeaders.Add("User-Agent", "AzureDeploy");
+            return client;
         }
     }
 }

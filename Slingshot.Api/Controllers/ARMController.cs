@@ -1,13 +1,4 @@
-﻿using Slingshot.Abstract;
-using Slingshot.Helpers;
-using Slingshot.Models;
-using Microsoft.Azure.Management.Resources;
-using Microsoft.Azure.Management.Resources.Models;
-using Microsoft.Azure.Management.WebSites;
-using Microsoft.WindowsAzure;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -18,7 +9,15 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Routing;
+using Microsoft.Azure.Management.Resources;
+using Microsoft.Azure.Management.Resources.Models;
+using Microsoft.Azure.Management.WebSites;
+using Microsoft.WindowsAzure;
+using Newtonsoft.Json.Linq;
+using Slingshot.Abstract;
 using Slingshot.Concrete;
+using Slingshot.Helpers;
+using Slingshot.Models;
 
 namespace Slingshot.Controllers
 {
@@ -94,7 +93,7 @@ namespace Slingshot.Controllers
 
         [Authorize]
         [HttpPost]
-        #pragma warning disable 4014
+#pragma warning disable 4014
         public async Task<HttpResponseMessage> Preview(DeployInputs inputs)
         {
             JObject responseObj = new JObject();
@@ -261,13 +260,13 @@ namespace Slingshot.Controllers
 
         [Authorize]
         [HttpGet]
-        public async Task<HttpResponseMessage> GetGitDeploymentStatus(string subscriptionId, string resourceGroup, string siteName)
+        public async Task<HttpResponseMessage> GetScmDeploymentStatus(string subscriptionId, string resourceGroup, string siteName)
         {
             HttpResponseMessage response = null;
             using (var client = GetClient())
             {
                 string url = string.Format(
-                    Constants.CSM.GetGitDeploymentStatusFormat,
+                    Constants.CSM.GetScmDeploymentStatusFormat,
                     Utils.GetCSMUrl(Request.RequestUri.Host),
                     subscriptionId,
                     resourceGroup,
@@ -297,7 +296,7 @@ namespace Slingshot.Controllers
 
                 if (response == null)
                 {
-                    response = Request.CreateResponse(HttpStatusCode.NotFound, new { error = "Could not find any git deployments" });
+                    response = Request.CreateResponse(HttpStatusCode.NotFound, new { error = "Could not find any source control deployments" });
                 }
             }
 
@@ -332,6 +331,7 @@ namespace Slingshot.Controllers
             string templateUrl = await repo.GetTemplateUrlAsync();
             JObject template = await repo.DownloadTemplateAsync();
             string branch = await repo.GetBranch();
+            string scmType = await repo.GetScmType();
 
             if (template != null)
             {
@@ -361,6 +361,7 @@ namespace Slingshot.Controllers
                 returnObj["repositoryUrl"] = repo.RepositoryUrl;
                 returnObj["repositoryDisplayUrl"] = repo.RepositoryDisplayUrl;
                 returnObj["branch"] = branch;
+                returnObj["scmType"] = scmType;
 
                 // Check if the template takes in a Website parameter
                 if (template["parameters"]["siteName"] != null)
@@ -374,7 +375,7 @@ namespace Slingshot.Controllers
             else
             {
                 returnObj["error"] = string.Format("Could not find the Azure RM Template '{0}'", repositoryUrl);
-                response = Request.CreateResponse(HttpStatusCode.NotFound,returnObj);
+                response = Request.CreateResponse(HttpStatusCode.NotFound, returnObj);
             }
 
             return response;
@@ -447,7 +448,7 @@ namespace Slingshot.Controllers
         private string GetHeaderValue(string name)
         {
             IEnumerable<string> values = null;
-            if(Request.Headers.TryGetValues(name, out values))
+            if (Request.Headers.TryGetValues(name, out values))
             {
                 return values.FirstOrDefault();
             }

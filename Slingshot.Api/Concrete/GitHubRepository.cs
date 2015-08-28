@@ -1,20 +1,17 @@
-﻿using Slingshot.Abstract;
-using Slingshot.Helpers;
-using Newtonsoft.Json.Linq;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System;
 using System.Net.Http;
-using System.Threading.Tasks;
-using System.Web;
-using System.IO;
 using System.Text;
+using System.Threading.Tasks;
+using Newtonsoft.Json.Linq;
+using Slingshot.Abstract;
+using Slingshot.Helpers;
 
 namespace Slingshot.Concrete
 {
     public class GitHubRepository : Repository
     {
-        public GitHubRepository(Uri uri) : base(uri)
+        public GitHubRepository(Uri uri)
+            : base(uri)
         {
         }
 
@@ -47,7 +44,7 @@ namespace Slingshot.Concrete
                     for (var i = 5; i < _inputUri.Segments.Length; i++)
                     {
                         string segment = _inputUri.Segments[i];
-                        if(segment.EndsWith(".md", StringComparison.OrdinalIgnoreCase))
+                        if (segment.EndsWith(".md", StringComparison.OrdinalIgnoreCase))
                         {
                             break;
                         }
@@ -72,44 +69,6 @@ namespace Slingshot.Concrete
             return _templateUrl;
         }
 
-        public override string RepositoryUrl
-        {
-            get
-            {
-                if (string.IsNullOrEmpty(_repoUrl))
-                {
-                    if (_inputUri.Segments.Length > 2)
-                    {
-                        _repoUrl = string.Format("https://{0}/{1}/{2}", _inputUri.Host, UserName, RepositoryName);
-                    }
-                }
-                return _repoUrl;
-            }
-        }
-
-        public override string RepositoryDisplayUrl
-        {
-            get
-            {
-                if (string.IsNullOrEmpty(_repoDisplayUrl))
-                {
-                    string lastSegment = _inputUri.Segments[_inputUri.Segments.Length - 1];
-                    string url = _inputUri.ToString();
-                    if (lastSegment.EndsWith(".md", StringComparison.OrdinalIgnoreCase))
-                    {
-                        int lastSlashIndex = url.LastIndexOf('/');
-                        _repoDisplayUrl = _inputUri.ToString().Substring(0, lastSlashIndex);
-                    }
-                    else
-                    {
-                        _repoDisplayUrl = url;
-                    }
-                }
-
-                return _repoDisplayUrl;
-            }
-        }
-
         public override async Task<string> GetBranch()
         {
             if (string.IsNullOrEmpty(_branch))
@@ -122,10 +81,9 @@ namespace Slingshot.Concrete
                 {
                     // If the branch isn't in the URL, then we need to look up the default branch
                     // by querying the GitHub API.
-                    using (HttpClient client = new HttpClient())
-                    {   
+                    using (HttpClient client = CreateHttpClient())
+                    {
                         var url = string.Format(Constants.Repository.GitHubApiRepoInfoFormat, UserName, RepositoryName);
-                        client.DefaultRequestHeaders.Add("User-Agent", "AzureDeploy");
 
                         var content = await client.GetStringAsync(url);
                         var responseObj = JObject.Parse(content);
@@ -144,44 +102,15 @@ namespace Slingshot.Concrete
             return _branch;
         }
 
-        public override string RepositoryName
+#pragma warning disable 1998
+        public override async Task<string> GetScmType()
         {
-            get
+            if (string.IsNullOrWhiteSpace(_scmType))
             {
-                if (string.IsNullOrEmpty(_repositoryName))
-                {
-                    if (_inputUri.Segments.Length > 2)
-                    {
-                        _repositoryName = _inputUri.Segments[2].Trim(Constants.Path.SlashChars);
-                    }
-                    else
-                    {
-                        throw new ArgumentException("Could not parse repository name from repository URL");
-                    }
-                }
-
-                return _repositoryName;
+                _scmType = "git";
             }
-        }
 
-        public override string UserName
-        {
-            get
-            {
-                if (string.IsNullOrEmpty(_userName))
-                {
-                    if (_inputUri.Segments.Length > 1)
-                    {
-                        _userName = _inputUri.Segments[1].Trim(Constants.Path.SlashChars);
-                    }
-                    else
-                    {
-                        throw new ArgumentException("Could not parse user name from repository URL");
-                    }
-                }
-
-                return _userName;
-            }
+            return _scmType;
         }
     }
 }
