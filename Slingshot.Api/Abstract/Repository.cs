@@ -19,6 +19,7 @@ namespace Slingshot.Abstract
         protected string _templateUrl;
         protected string _scmType;
         protected JObject _template;
+        protected bool? _isPrivate;
 
         public Repository(Uri uri)
         {
@@ -129,6 +130,15 @@ namespace Slingshot.Abstract
         {
             return null;
         }
+
+#pragma warning disable 1998
+        public async virtual Task<bool> IsPrivate()
+        {
+            // Default we assume repo is public repo
+            _isPrivate = false;
+            return false;
+        }
+
 
         protected virtual async Task<JObject> DownloadTemplate(string templateUrl)
         {

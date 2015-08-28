@@ -34,8 +34,16 @@
     "repoUrl": {
       "type": "string"
     },
-    "branch":{
+    "branch": {
       "type": "string"
+    },
+    "isManualIntegration": {
+        "type": "bool",
+        "defaultValue": true
+    },
+    "isMercurial":{
+      "type": "bool",
+      "defaultValue":false
     }
   },
   "resources": [
@@ -77,7 +85,8 @@
           "properties": {
             "RepoUrl": "[parameters('repoUrl')]",
             "branch": "[parameters('branch')]",
-            "IsManualIntegration": true
+            "IsManualIntegration": "[parameters('isManualIntegration')]",
+            "IsMercurial": "[parameters('isMercurial')]"
           }
         }
       ]
