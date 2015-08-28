@@ -325,6 +325,9 @@ angular.module('formApp', ['ngAnimate', 'ui.router'])
                 else if (paramName === "ismercurial" && result.data.siteName) {
                     param.value = (result.data.scmType === "hg");
                 }
+                else if (paramName === "ismanualintegration" && result.data.siteName) {
+                    param.value = result.data.isPrivate !== true;
+                }
                 else if (IsSiteLocationParam(paramName) && $scope.formData.siteLocations && $scope.formData.siteLocations.length > 0 && !param.defaultValue) {
                     param.value = $scope.formData.siteLocations[0];
                 }
@@ -433,6 +436,9 @@ angular.module('formApp', ['ngAnimate', 'ui.router'])
             return false;
         }
         else if (name === 'ismercurial') {
+            return false;
+        }
+        else if (name === 'ismanualintegration') {
             return false;
         }
         else if(name === 'workersize'){

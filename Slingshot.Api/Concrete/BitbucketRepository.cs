@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Globalization;
+using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web;
@@ -30,6 +31,12 @@ namespace Slingshot.Concrete
         {
             if (string.IsNullOrEmpty(_templateUrl))
             {
+                if (await this.IsPrivate())
+                {
+                    _templateUrl = Constants.Repository.EmptySiteTemplateUrl;
+                    return _templateUrl;
+                }
+
                 string branch = await GetBranch();
 
                 using (HttpClient client = CreateHttpClient())
@@ -64,6 +71,13 @@ namespace Slingshot.Concrete
                     }
                 }
 
+                if (await this.IsPrivate())
+                {
+                    // if it is private repo, default to "master" branch, and assume it is git repo
+                    _branch = "master";
+                    return _branch;
+                }
+
                 using (HttpClient client = CreateHttpClient())
                 {
                     var mainBranchUrl = string.Format(CultureInfo.InvariantCulture, Constants.Repository.BitbucketApiMainBranchInfoFormat, UserName, RepositoryName);
@@ -81,6 +95,13 @@ namespace Slingshot.Concrete
         {
             if (string.IsNullOrWhiteSpace(_scmType))
             {
+                if (await this.IsPrivate())
+                {
+                    // assume it is git repo for now
+                    _scmType = "git";
+                    return _scmType;
+                }
+
                 using (HttpClient client = CreateHttpClient())
                 {
                     var repoInfoUrl = string.Format(CultureInfo.InvariantCulture, Constants.Repository.BitbucketApiRepoInfoFormat, UserName, RepositoryName);
@@ -97,6 +118,21 @@ namespace Slingshot.Concrete
             }
 
             return _scmType;
+        }
+
+        public override async Task<bool> IsPrivate()
+        {
+            if (!_isPrivate.HasValue)
+            {
+                var repoInfoUrl = string.Format(CultureInfo.InvariantCulture, Constants.Repository.BitbucketApiRepoInfoFormat, UserName, RepositoryName);
+                using (HttpClient client = CreateHttpClient())
+                using (HttpResponseMessage response = await client.GetAsync(repoInfoUrl))
+                {
+                    _isPrivate = response.StatusCode == HttpStatusCode.Forbidden;
+                }
+            }
+
+            return _isPrivate.Value;
         }
     }
 }

@@ -332,6 +332,7 @@ namespace Slingshot.Controllers
             JObject template = await repo.DownloadTemplateAsync();
             string branch = await repo.GetBranch();
             string scmType = await repo.GetScmType();
+            bool isPrivate = await repo.IsPrivate();
 
             if (template != null)
             {
@@ -362,6 +363,7 @@ namespace Slingshot.Controllers
                 returnObj["repositoryDisplayUrl"] = repo.RepositoryDisplayUrl;
                 returnObj["branch"] = branch;
                 returnObj["scmType"] = scmType;
+                returnObj["isPrivate"] = isPrivate;
 
                 // Check if the template takes in a Website parameter
                 if (template["parameters"]["siteName"] != null)
