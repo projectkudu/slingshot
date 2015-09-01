@@ -138,7 +138,6 @@ namespace Slingshot.Abstract
             return false;
         }
 
-
         protected virtual async Task<JObject> DownloadTemplate(string templateUrl)
         {
             JObject template = null;
@@ -178,9 +177,9 @@ namespace Slingshot.Abstract
             }
         }
 
-        protected static HttpClient CreateHttpClient()
+        protected static HttpClient CreateHttpClient(HttpClientHandler handler = null)
         {
-            var client = new HttpClient();
+            var client = handler == null ? new HttpClient() : new HttpClient(handler);
             client.DefaultRequestHeaders.Add("User-Agent", "AzureDeploy");
             return client;
         }

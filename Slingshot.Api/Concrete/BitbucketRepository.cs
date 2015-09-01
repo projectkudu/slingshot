@@ -124,11 +124,12 @@ namespace Slingshot.Concrete
         {
             if (!_isPrivate.HasValue)
             {
-                var repoInfoUrl = string.Format(CultureInfo.InvariantCulture, Constants.Repository.BitbucketApiRepoInfoFormat, UserName, RepositoryName);
-                using (HttpClient client = CreateHttpClient())
+                var repoInfoUrl = string.Format(CultureInfo.InvariantCulture, Constants.Repository.BitbucketWebRepoInfoFormat, UserName, RepositoryName);
+                var handler = new HttpClientHandler() { AllowAutoRedirect = false };
+                using (HttpClient client = CreateHttpClient(handler: handler))
                 using (HttpResponseMessage response = await client.GetAsync(repoInfoUrl))
                 {
-                    _isPrivate = response.StatusCode == HttpStatusCode.Forbidden;
+                    _isPrivate = response.StatusCode != HttpStatusCode.OK;
                 }
             }
 

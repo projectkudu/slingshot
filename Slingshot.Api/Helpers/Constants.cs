@@ -13,6 +13,7 @@
             public const string EmptySiteTemplateUrl = "http://deployredirector.azurewebsites.net/sitewithrepositoryv3.json";
             public const string GitCustomTemplateFolderUrlFormat = "https://raw.githubusercontent.com/{0}/{1}/{2}/";
             public const string GitHubApiRepoInfoFormat = "https://api.github.com/repos/{0}/{1}";
+            public const string BitbucketWebRepoInfoFormat = "https://bitbucket.org/{0}/{1}";
             public const string BitbucketApiRepoInfoFormat = "https://api.bitbucket.org/2.0/repositories/{0}/{1}";
             public const string BitBucketApiCommitsInfoFormat = "https://api.bitbucket.org/2.0/repositories/{0}/{1}/commits/{2}";
 
