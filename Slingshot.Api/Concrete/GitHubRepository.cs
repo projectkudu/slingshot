@@ -10,8 +10,13 @@ namespace Slingshot.Concrete
 {
     public class GitHubRepository : Repository
     {
+        public override string ProviderName
+        {
+            get { return "Github"; }
+        }
+
         public GitHubRepository(Uri uri)
-            : base(uri)
+            : base(uri, null, null)
         {
         }
 

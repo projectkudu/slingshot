@@ -12,5 +12,6 @@ namespace Slingshot.Models
         public string subscriptionId { get; set; }
         public ResourceGroupInfo resourceGroup { get; set; }
         public string templateUrl { get; set; }
+        public string repoUrl { get; set; }
     }
 }

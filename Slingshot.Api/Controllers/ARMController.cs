@@ -110,15 +110,7 @@ namespace Slingshot.Controllers
                         tempRGName,
                         new ResourceGroup { Location = inputs.resourceGroup.location });
 
-                    // For now we just default to East US for the resource group location.
-                    var basicDeployment = new Deployment
-                    {
-                        Properties = new DeploymentProperties
-                        {
-                            Parameters = inputs.parameters.ToString(),
-                            TemplateLink = new TemplateLink(new Uri(inputs.templateUrl))
-                        }
-                    };
+                    Deployment basicDeployment = await this.GetDeploymentPayload(inputs);
 
                     var deploymentResult = await client.Deployments.ValidateAsync(tempRGName, tempRGName, basicDeployment);
                     if (deploymentResult.StatusCode == HttpStatusCode.OK)
@@ -190,14 +182,7 @@ namespace Slingshot.Controllers
                         new ResourceGroup { Location = inputs.resourceGroup.location });
 
                     var templateParams = inputs.parameters.ToString();
-                    var basicDeployment = new Deployment
-                    {
-                        Properties = new DeploymentProperties
-                        {
-                            Parameters = templateParams,
-                            TemplateLink = new TemplateLink(new Uri(inputs.templateUrl))
-                        }
-                    };
+                    Deployment basicDeployment = await this.GetDeploymentPayload(inputs);
 
                     var deploymentResult = await client.Deployments.CreateOrUpdateAsync(
                         inputs.resourceGroup.name,
@@ -325,45 +310,61 @@ namespace Slingshot.Controllers
         {
             HttpResponseMessage response = null;
             JObject returnObj = new JObject();
+            string token = GetTokenFromHeader();
 
-            Repository repo = Repository.CreateRepositoryObj(repositoryUrl);
+            Task<SubscriptionInfo[]> subscriptionTask = Utils.GetSubscriptionsAsync(Request.RequestUri.Host, token);
+            Task<JArray> tenantTask = GetTenantsArray();
+            await Task.WhenAll(subscriptionTask, tenantTask);
 
-            string templateUrl = await repo.GetTemplateUrlAsync();
-            JObject template = await repo.DownloadTemplateAsync();
-            string branch = await repo.GetBranch();
-            string scmType = await repo.GetScmType();
-            bool isPrivate = await repo.IsPrivate();
+            var subscriptions = subscriptionTask.Result.Where(s => s.state == "Enabled").ToArray();
+            var email = GetHeaderValue(Constants.Headers.X_MS_CLIENT_PRINCIPAL_NAME);
+            var userDisplayName = GetHeaderValue(Constants.Headers.X_MS_CLIENT_DISPLAY_NAME) ?? email;
 
+            returnObj["subscriptions"] = JArray.FromObject(subscriptions);
+            returnObj["tenants"] = tenantTask.Result;
+            returnObj["userDisplayName"] = userDisplayName;
+
+            Repository repo = Repository.CreateRepositoryObj(repositoryUrl, Request.RequestUri.Host, token);
+            Task<bool> hasRepoAccessTask = repo.HasAccess();
+            Task<bool> isPrivateTask = repo.IsPrivate();
+            Task<bool> hasScmInfoTask = repo.HasScmInfo();
+            await Task.WhenAll(hasRepoAccessTask, isPrivateTask, hasScmInfoTask);
+
+            returnObj["scmProvider"] = repo.ProviderName;
+            returnObj["isPrivate"] = hasRepoAccessTask.Result;
+            returnObj["hasAccessToken"] = hasScmInfoTask.Result;
+            returnObj["hasRepoAccess"] = hasRepoAccessTask.Result;
+            returnObj["repositoryUrl"] = repo.RepositoryUrl;
+            returnObj["repositoryDisplayUrl"] = repo.RepositoryDisplayUrl;
+
+            if (!hasRepoAccessTask.Result)
+            {
+                // if use doesn`t have access to repo, return earlier to ask user for SSO
+                return response = Request.CreateResponse(HttpStatusCode.OK, returnObj);
+            }
+            // after this point, either repo is public repo, or use has access token that can visit repo
+
+            Task<string> getBranchTask = repo.GetBranch();
+            Task<string> getTemplateUrlTask = repo.GetTemplateUrlAsync();
+            Task<string> getScmTypeTask = repo.GetScmType();
+            Task<JObject> getTemplateTask = repo.DownloadTemplateAsync();
+            await Task.WhenAll(getBranchTask, getTemplateUrlTask, getScmTypeTask, getTemplateTask);
+
+            JObject template = getTemplateTask.Result;
             if (template != null)
             {
-                string token = GetTokenFromHeader();
-
-                var subscriptions = (await Utils.GetSubscriptionsAsync(Request.RequestUri.Host, token))
-                                    .Where(s => s.state == "Enabled").ToArray();
-
-                var tenants = await GetTenantsArray();
-                var email = GetHeaderValue(Constants.Headers.X_MS_CLIENT_PRINCIPAL_NAME);
-                var userDisplayName = GetHeaderValue(Constants.Headers.X_MS_CLIENT_DISPLAY_NAME) ?? email;
-
                 string resourceGroupName = null;
-
                 if (subscriptions.Length >= 1)
                 {
                     await GetLocations(template, returnObj, token, subscriptions);
                     resourceGroupName = await GenerateResourceGroupName(token, repo, subscriptions);
                 }
 
-                returnObj["subscriptions"] = JArray.FromObject(subscriptions);
-                returnObj["tenants"] = tenants;
-                returnObj["userDisplayName"] = userDisplayName;
+                returnObj["branch"] = await repo.GetBranch();
                 returnObj["resourceGroupName"] = resourceGroupName;
                 returnObj["template"] = template;
-                returnObj["templateUrl"] = templateUrl;
-                returnObj["repositoryUrl"] = repo.RepositoryUrl;
-                returnObj["repositoryDisplayUrl"] = repo.RepositoryDisplayUrl;
-                returnObj["branch"] = branch;
-                returnObj["scmType"] = scmType;
-                returnObj["isPrivate"] = isPrivate;
+                returnObj["templateUrl"] = getTemplateUrlTask.Result;
+                returnObj["scmType"] = getScmTypeTask.Result;
 
                 // Check if the template takes in a Website parameter
                 if (template["parameters"]["siteName"] != null)
@@ -682,6 +683,32 @@ namespace Slingshot.Controllers
             }
 
             return paramValue;
+        }
+
+        private async Task<Deployment> GetDeploymentPayload(DeployInputs inputs)
+        {
+            var basicDeployment = new Deployment();
+            if (string.Equals(Constants.Repository.CustomTemplateFileName, inputs.templateUrl))
+            {
+                // it is private repo, we should pass over the content instead of a link to template
+                string token = GetTokenFromHeader();
+                Repository repo = Repository.CreateRepositoryObj(inputs.repoUrl, Request.RequestUri.Host, token);
+                basicDeployment.Properties = new DeploymentProperties
+                {
+                    Parameters = inputs.parameters.ToString(),
+                    Template = (await repo.DownloadTemplateAsync()).ToString()
+                };
+            }
+            else
+            {
+                basicDeployment.Properties = new DeploymentProperties
+                {
+                    Parameters = inputs.parameters.ToString(),
+                    TemplateLink = new TemplateLink(new Uri(inputs.templateUrl))
+                };
+            }
+
+            return basicDeployment;
         }
     }
 }

@@ -123,6 +123,7 @@
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Abstractions" />
@@ -169,6 +170,7 @@
     <Compile Include="Helpers\Utils.cs" />
     <Compile Include="Models\CreateDeploymentResponse.cs" />
     <Compile Include="Models\Inputs.cs" />
+    <Compile Include="Models\SourceControlInfo.cs" />
     <Compile Include="Models\Subscriptions.cs" />
     <Compile Include="Modules\AADOAuth2AccessToken.cs" />
     <Compile Include="Modules\ARMOAuthModule.cs" />
@@ -282,7 +284,6 @@
   <ItemGroup>
     <Content Include="Content\Scripts\angular.min.js.map" />
   </ItemGroup>
-  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

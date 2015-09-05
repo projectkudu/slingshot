@@ -1,10 +1,11 @@
-﻿using Newtonsoft.Json.Linq;
-using System;
+﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
-using System.Collections.Generic;
+using Newtonsoft.Json.Linq;
 using Slingshot.Models;
 
 namespace Slingshot.Helpers
@@ -16,6 +17,18 @@ namespace Slingshot.Helpers
             public T[] value { get; set; }
         }
 
+        public class ArmResource<T>
+        {
+            public string id { get; set; }
+            public string name { get; set; }
+            public string type { get; set; }
+            public string kind { get; set; }
+            public string location { get; set; }
+            public object tags { get; set; }
+            public string plan { get; set; }
+            public T properties { get; set; }
+        }
+
         public enum AzureEnvs
         {
             Next = 0,
@@ -24,79 +37,38 @@ namespace Slingshot.Helpers
             Prod = 3
         }
 
-        public static async Task<SubscriptionInfo[]> GetSubscriptionsAsync(string host, string token)
+        public static async Task<SourceControlInfo> GetSourceControlAsync(string host, string token, string scm)
         {
-            using (var client = new HttpClient())
+            var url = string.Format("{0}/providers/Microsoft.Web/sourceControls/{1}?api-version={2}", Utils.GetCSMUrl(host), scm, Constants.CSM.ApiVersion);
+            using (var client = CreateHttpClient(token))
+            using (var response = await client.GetAsync(url))
             {
-                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-
-                var url = string.Format("{0}/subscriptions?api-version={1}", Utils.GetCSMUrl(host), Constants.CSM.ApiVersion);
-                using (var response = await client.GetAsync(url))
-                {
-                    if (response.IsSuccessStatusCode)
-                    {
-                        var subs = (await response.Content.ReadAsAsync<ResultOf<SubscriptionInfo>>()).value;
-
-                        var getRgTasks = new List<Task<ResourceGroupInfo[]>>();
-                        foreach (var sub in subs)
-                        {
-                            getRgTasks.Add(GetResourceGroups(client, host, sub.subscriptionId));
-                        }
-
-                        var rgsForAllSubs = await Task.WhenAll(getRgTasks.ToArray());
-                        for(int i = 0; i < rgsForAllSubs.Length; i ++)
-                        {
-                            subs[i].resourceGroups = rgsForAllSubs[i];
-                        }
-
-                        return subs;
-                    }
-
-                    var content = await response.Content.ReadAsStringAsync();
-                    if (content.StartsWith("{"))
-                    {
-                        var error = (JObject)JObject.Parse(content)["error"];
-                        if (error != null)
-                        {
-                            throw new InvalidOperationException(String.Format("GetSubscriptions {0}, {1}", response.StatusCode, error.Value<string>("message")));
-                        }
-                    }
-
-                    throw new InvalidOperationException(String.Format("GetSubscriptions {0}, {1}", response.StatusCode, await response.Content.ReadAsStringAsync()));
-                }
+                return (await ProcessResponse<ArmResource<SourceControlInfo>>("GetSourceControlAsync", response)).properties;
             }
         }
 
-        private static async Task<ResourceGroupInfo[]> GetResourceGroups(
-            HttpClient client,
-            string host,
-            string subscriptionId)
+        public static async Task<SubscriptionInfo[]> GetSubscriptionsAsync(string host, string token)
         {
-            string url = string.Format(
-                "{0}/subscriptions/{1}/resourceGroups?api-version={2}",
-                Utils.GetCSMUrl(host),
-                subscriptionId,
-                Constants.CSM.ApiVersion);
-
+            var url = string.Format("{0}/subscriptions?api-version={1}", Utils.GetCSMUrl(host), Constants.CSM.ApiVersion);
+            using (var client = CreateHttpClient(token))
             using (var response = await client.GetAsync(url))
             {
-                if (response.IsSuccessStatusCode)
+                ResultOf<SubscriptionInfo> result = await ProcessResponse<ResultOf<SubscriptionInfo>>("GetSubscriptionsAsync", response);
+                var subs = result.value;
+
+                var getRgTasks = new List<Task<ResourceGroupInfo[]>>();
+                foreach (var sub in subs)
                 {
-                    return (await response.Content.ReadAsAsync<ResultOf<ResourceGroupInfo>>()).value;
+                    getRgTasks.Add(GetResourceGroups(client, host, sub.subscriptionId));
                 }
 
-                var content = await response.Content.ReadAsStringAsync();
-                if (content.StartsWith("{"))
+                var rgsForAllSubs = await Task.WhenAll(getRgTasks.ToArray());
+                for (int i = 0; i < rgsForAllSubs.Length; i++)
                 {
-                    var error = (JObject)JObject.Parse(content)["error"];
-                    if (error != null)
-                    {
-                        throw new InvalidOperationException(String.Format("GetResourceGroups {0}, {1}", response.StatusCode, error.Value<string>("message")));
-                    }
+                    subs[i].resourceGroups = rgsForAllSubs[i];
                 }
 
-                throw new InvalidOperationException(String.Format("GetResourceGroups {0}, {1}", response.StatusCode, await response.Content.ReadAsStringAsync()));
-
+                return subs;
             }
         }
 
@@ -144,6 +116,70 @@ namespace Slingshot.Helpers
             }
 
             return "https://management.core.windows.net";
+        }
+
+        private static async Task<ResourceGroupInfo[]> GetResourceGroups(
+            HttpClient client,
+            string host,
+            string subscriptionId)
+        {
+            string url = string.Format(
+                "{0}/subscriptions/{1}/resourceGroups?api-version={2}",
+                Utils.GetCSMUrl(host),
+                subscriptionId,
+                Constants.CSM.ApiVersion);
+
+            using (var response = await client.GetAsync(url))
+            {
+                if (response.IsSuccessStatusCode)
+                {
+                    return (await response.Content.ReadAsAsync<ResultOf<ResourceGroupInfo>>()).value;
+                }
+
+                var content = await response.Content.ReadAsStringAsync();
+                if (content.StartsWith("{"))
+                {
+                    var error = (JObject)JObject.Parse(content)["error"];
+                    if (error != null)
+                    {
+                        throw new InvalidOperationException(String.Format("GetResourceGroups {0}, {1}", response.StatusCode, error.Value<string>("message")));
+                    }
+                }
+
+                throw new InvalidOperationException(String.Format("GetResourceGroups {0}, {1}", response.StatusCode, await response.Content.ReadAsStringAsync()));
+
+            }
+        }
+
+        private static HttpClient CreateHttpClient(string token)
+        {
+            var client = new HttpClient();
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+            return client;
+        }
+
+        private static async Task<T> ProcessResponse<T>(string operation, HttpResponseMessage response)
+        {
+            if (response.IsSuccessStatusCode)
+            {
+                return await response.Content.ReadAsAsync<T>();
+            }
+
+            var content = await response.Content.ReadAsStringAsync();
+            if (content.StartsWith("{"))
+            {
+                var error = (JObject)JObject.Parse(content)["error"];
+                if (error != null)
+                {
+                    throw new InvalidOperationException(string.Format(
+                        CultureInfo.InvariantCulture,
+                        "{0} {1}, {2}", operation, response.StatusCode, error.Value<string>("message")));
+                }
+            }
+
+            throw new InvalidOperationException(string.Format(
+                CultureInfo.InvariantCulture,
+                "{0} {1}, {2}", operation, response.StatusCode, content));
         }
     }
 }

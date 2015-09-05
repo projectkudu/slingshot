@@ -12,30 +12,38 @@
     </div>
 </div>
 
-<div ng-show="!formData.params">
+<div ng-show="formData.requireOAuth">
+    <div class="row">
+        <p class="text-center">Azure needs your permission to access your repository.</p>
+        <div class="form-group text-center">
+            <a style="width: 250px;" class="btn btn-info wizard-button" ng-click="performOAuth()">
+                Click to grant permision <span class="glyphicon glyphicon-circle-arrow-right"></span>
+            </a>
+        </div>
+    </div>
+</div>
+
+<div ng-show="!formData.params && !formData.requireOAuth">
     <p class="text-center"><i class="fa fa-spinner fa-spin large-spinner"></i></p>
 </div>
 
 <div ng-show="formData.params">
     <div class="form-group col-md-6">
         <label for="tenants">Directory</label>
-        <select class="form-control" ng-model="formData.tenant" ng-change="changeTenant()" ng-options="tenant.DisplayName for tenant in formData.tenants">
-        </select>
+        <select class="form-control" ng-model="formData.tenant" ng-change="changeTenant()" ng-options="tenant.DisplayName for tenant in formData.tenants"></select>
     </div>
 
     <div class="form-group col-md-6">
         <label for="subscription">Subscription</label>
-        <select class="form-control" ng-model="formData.subscription" ng-options="subscription.displayName for subscription in formData.subscriptions" ng-change="changeSubscription()">
-        </select>
+        <select class="form-control" ng-model="formData.subscription" ng-options="subscription.displayName for subscription in formData.subscriptions" ng-change="changeSubscription()"></select>
     </div>
 
     <div class="form-group col-md-6">
         <label for="resourceGroup">Resource Group</label>
-        <select class="form-control" ng-model="formData.existingResourceGroup" ng-options="resourceGroup.name for resourceGroup in formData.subscription.resourceGroups" ng-change="changeResourceGroup()">
-        </select>
-     </div>
+        <select class="form-control" ng-model="formData.existingResourceGroup" ng-options="resourceGroup.name for resourceGroup in formData.subscription.resourceGroups" ng-change="changeResourceGroup()"></select>
+    </div>
 
-    <div class="form-group col-md-6" >
+    <div class="form-group col-md-6">
         <label for="resourceGroupName">Resource Group Name</label>
         <span ng-show="formData.resourceGroupError" class="text-danger"> - {{formData.resourceGroupError}}</span>
         <input type="text" class="form-control" name="param.name" ng-disabled="!!formData.existingResourceGroup.location" ng-model="formData.newResourceGroup.name">
@@ -45,9 +53,11 @@
         <!-- Special handling for siteName form field -->
         <div ng-switch-when="siteName">
             <label>{{param | camelCaseToHuman}}</label>
-            <span ng-show="showSiteNameAvailableMesg()" class="text-success" ng-if="formData.siteNameAvailable"> - Name is available
+            <span ng-show="showSiteNameAvailableMesg()" class="text-success" ng-if="formData.siteNameAvailable">
+                - Name is available
             </span>
-            <span ng-show="showSiteNameAvailableMesg()" class="text-danger" ng-if="!formData.siteNameAvailable"> - Name is not available
+            <span ng-show="showSiteNameAvailableMesg()" class="text-danger" ng-if="!formData.siteNameAvailable">
+                - Name is not available
             </span>
             <input type="text" class="form-control" name="param.name" ng-model="param.value" ng-change="checkSiteName(param.value)">
         </div>
@@ -61,6 +71,12 @@
         <div ng-switch-when="hostingPlanLocation">
             <label>{{param | camelCaseToHuman}}</label>
             <select class="form-control" ng-model="param.value" ng-options="location for location in formData.siteLocations"></select>
+        </div>
+
+        <div ng-switch-when="isManualIntegration">
+            <label>Deployment Type</label>
+            <select class="form-control" ng-model="param.value" ng-change="isManualIntegrationChanged(param.value)"
+                    ng-options="(item?'Manual Integration':'Continuous Deployment') for item in [true, false]"></select>
         </div>
 
         <!-- Special handling for sqlServerLocation form field -->
@@ -77,7 +93,7 @@
         </div>
 
         <!-- All other form fields -->
-        <div ng-switch-default >
+        <div ng-switch-default>
             <label>{{param | camelCaseToHuman}}</label>
             <span ng-show="param.validationError !== null" class="text-danger"> - {{param.validationError}}</span>
 
@@ -85,15 +101,14 @@
 
             <input type="text" ng-if="getFieldType(param) === 'text'" class="form-control" name="param.name" ng-model="param.value">
 
-            <select class="form-control" ng-if="getFieldType(param) === 'select'" ng-model="param.value" ng-options="value for value in param.allowedValues">
-        </select>
+            <select class="form-control" ng-if="getFieldType(param) === 'select'" ng-model="param.value" ng-options="value for value in param.allowedValues"></select>
         </div>
     </div>
 
     <div class="row">
         <div class="form-group col-xs-6 col-xs-offset-6 text-right">
             <a ui-sref="form.preview" ng-disabled="!canMoveToNextStep()" style="margin-right:15px" class="btn btn-info wizard-button" ng-click="nextStep()">
-            Next <span class="glyphicon glyphicon-circle-arrow-right"></span>
+                Next <span class="glyphicon glyphicon-circle-arrow-right"></span>
             </a>
         </div>
     </div>

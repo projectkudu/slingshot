@@ -1,15 +1,20 @@
 ﻿using System;
 using System.Globalization;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
 using Slingshot.Concrete;
 using Slingshot.Helpers;
+using Slingshot.Models;
 
 namespace Slingshot.Abstract
 {
     public abstract class Repository
     {
+        protected string _host;
+        protected string _token;
+
         protected Uri _inputUri;
         protected string _repoUrl;
         protected string _repoDisplayUrl;
@@ -20,11 +25,16 @@ namespace Slingshot.Abstract
         protected string _scmType;
         protected JObject _template;
         protected bool? _isPrivate;
+        protected SourceControlInfo _scmInfo;
 
-        public Repository(Uri uri)
+        public Repository(Uri uri, string host, string token)
         {
             _inputUri = uri;
+            _host = host;
+            _token = token;
         }
+
+        public abstract string ProviderName { get; }
 
         public virtual string RepositoryDisplayUrl
         {
@@ -134,8 +144,30 @@ namespace Slingshot.Abstract
 #pragma warning disable 1998
         public async virtual Task<bool> IsPrivate()
         {
-            // Default we assume repo is public repo
             return false;
+        }
+
+#pragma warning disable 1998
+        public async virtual Task<SourceControlInfo> GetScmInfo()
+        {
+            return null;
+        }
+
+#pragma warning disable 1998
+        public async virtual Task<bool> HasScmInfo()
+        {
+            return false;
+        }
+
+        /// <summary>
+        /// <para>Pubic repo should always return true, private repo and use`s access token has access to the repo, return true</para>
+        /// <para>All other case return false, e.g:</para>
+        /// <para>Private repo and use`s access token is not able to access repo, return false</para>
+        /// </summary>
+#pragma warning disable 1998
+        public async virtual Task<bool> HasAccess()
+        {
+            return true;
         }
 
         protected virtual async Task<JObject> DownloadTemplate(string templateUrl)
@@ -153,7 +185,7 @@ namespace Slingshot.Abstract
             return template;
         }
 
-        public static Repository CreateRepositoryObj(string url)
+        public static Repository CreateRepositoryObj(string url, string host, string token)
         {
             Uri repositoryUri = null;
             if (string.IsNullOrEmpty(url))
@@ -169,7 +201,7 @@ namespace Slingshot.Abstract
             }
             else if (string.Equals(repositoryUri.Host, "bitbucket.org", StringComparison.OrdinalIgnoreCase))
             {
-                return new BitbucketRepository(repositoryUri);
+                return new BitbucketRepository(repositoryUri, host, token);
             }
             else
             {
@@ -177,10 +209,16 @@ namespace Slingshot.Abstract
             }
         }
 
-        protected static HttpClient CreateHttpClient(HttpClientHandler handler = null)
+        protected static HttpClient CreateHttpClient(string accessToken = null, HttpClientHandler handler = null)
         {
             var client = handler == null ? new HttpClient() : new HttpClient(handler);
+            client.MaxResponseContentBufferSize = 1024 * 1024 * 10;
+            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
             client.DefaultRequestHeaders.Add("User-Agent", "AzureDeploy");
+            if (!String.IsNullOrEmpty(accessToken))
+            {
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
+            }
             return client;
         }
     }
