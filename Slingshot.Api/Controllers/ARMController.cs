@@ -319,7 +319,7 @@ namespace Slingshot.Controllers
             Task<JArray> tenantTask = GetTenantsArray();
             await Task.WhenAll(subscriptionTask, tenantTask);
 
-            var subscriptions = subscriptionTask.Result.Where(s => s.state == "Enabled").ToArray();
+            var subscriptions = subscriptionTask.Result.Where(s => s.state == "Enabled").OrderBy(s => s.displayName).ToArray();
             var email = GetHeaderValue(Constants.Headers.X_MS_CLIENT_PRINCIPAL_NAME);
             var userDisplayName = GetHeaderValue(Constants.Headers.X_MS_CLIENT_DISPLAY_NAME) ?? email;
 
