@@ -117,46 +117,27 @@ namespace Slingshot.Abstract
             }
         }
 
-#pragma warning disable 1998
-        public async virtual Task<string> GetBranch()
+        public abstract Task<string> GetBranch();
+
+        public abstract Task<JObject> DownloadTemplateAsync();
+
+        public abstract Task<string> GetTemplateUrlAsync();
+
+        public abstract Task<string> GetScmType();
+
+        public virtual Task<bool> IsPrivate()
         {
-            return null;
+            return Task.FromResult(false);
         }
 
-#pragma warning disable 1998
-        public async virtual Task<JObject> DownloadTemplateAsync()
+        public virtual Task<SourceControlInfo> GetScmInfo()
         {
-            return null;
+            return Task.FromResult(default(SourceControlInfo));
         }
 
-#pragma warning disable 1998
-        public async virtual Task<string> GetTemplateUrlAsync()
+        public virtual Task<bool> HasScmInfo()
         {
-            return null;
-        }
-
-#pragma warning disable 1998
-        public async virtual Task<string> GetScmType()
-        {
-            return null;
-        }
-
-#pragma warning disable 1998
-        public async virtual Task<bool> IsPrivate()
-        {
-            return false;
-        }
-
-#pragma warning disable 1998
-        public async virtual Task<SourceControlInfo> GetScmInfo()
-        {
-            return null;
-        }
-
-#pragma warning disable 1998
-        public async virtual Task<bool> HasScmInfo()
-        {
-            return false;
+            return Task.FromResult(false);
         }
 
         /// <summary>
@@ -164,10 +145,9 @@ namespace Slingshot.Abstract
         /// <para>All other case return false, e.g:</para>
         /// <para>Private repo and use`s access token is not able to access repo, return false</para>
         /// </summary>
-#pragma warning disable 1998
-        public async virtual Task<bool> HasAccess()
+        public virtual Task<bool> HasAccess()
         {
-            return true;
+            return Task.FromResult(true);
         }
 
         protected virtual async Task<JObject> DownloadTemplate(string templateUrl)
