@@ -18,6 +18,7 @@ using Slingshot.Abstract;
 using Slingshot.Concrete;
 using Slingshot.Helpers;
 using Slingshot.Models;
+using System.Web;
 
 namespace Slingshot.Controllers
 {
@@ -308,6 +309,8 @@ namespace Slingshot.Controllers
         [HttpGet]
         public async Task<HttpResponseMessage> GetTemplate(string repositoryUrl)
         {
+            repositoryUrl = HttpUtility.UrlDecode(repositoryUrl);
+
             HttpResponseMessage response = null;
             JObject returnObj = new JObject();
             string token = GetTokenFromHeader();
