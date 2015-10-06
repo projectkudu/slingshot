@@ -339,6 +339,14 @@ namespace Slingshot.Controllers
             returnObj["hasRepoAccess"] = hasRepoAccessTask.Result;
             returnObj["repositoryUrl"] = repo.RepositoryUrl;
             returnObj["repositoryDisplayUrl"] = repo.RepositoryDisplayUrl;
+            returnObj["isManualIntegration"] = true;
+
+            var queryStrings = HttpUtility.ParseQueryString(repositoryUrl);
+            bool isManualIntegration = true;
+            if (bool.TryParse(queryStrings["manual"], out isManualIntegration))
+            {
+                returnObj["isManualIntegration"] = isManualIntegration;
+            }
 
             if (!hasRepoAccessTask.Result)
             {

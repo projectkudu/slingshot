@@ -85,7 +85,13 @@ namespace Slingshot.Abstract
                 {
                     if (_inputUri.Segments.Length > 2)
                     {
-                        _repositoryName = _inputUri.Segments[2].Trim(Constants.Path.SlashChars);
+                        // remove query string and slash at the end or extra path
+                        // e.g https://bitbucket.org/account/myrepo/src?at=mybranch&manual=false
+                        //  or https://bitbucket.org/account/myrepo/src/?at=mybranch&manual=false
+                        //  or https://github.com/account/myrepo/tree/mybranch
+                        //  or https://bitbucket.org/account/myrepo?at=mybranch&manual=false
+                        // expecting: myrepo
+                        _repositoryName = _inputUri.Segments[2].Split(new char[] { '/', '?' })[0];
                     }
                     else
                     {

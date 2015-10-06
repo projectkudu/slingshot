@@ -265,8 +265,9 @@ function IsSiteLocationParam(paramName) {
                 $scope.formData.isPrivate = result.data.isPrivate;
                 $scope.formData.hasAccessToken = result.data.hasAccessToken;
                 $scope.formData.scmProvider = result.data.scmProvider;
-                $scope.formData.isManualIntegration = true;
+                $scope.formData.isManualIntegration = result.data.isManualIntegration;
                 $scope.formData.requireOAuth = isRequireOAuth();
+
                 $scope.performOAuth = function () {
                     var encodedRepoUrl = encodeURIComponent(sessionStorage.repositoryUrl)
                     // FOR TESTING:
@@ -348,8 +349,9 @@ function IsSiteLocationParam(paramName) {
                         param.value = (result.data.scmType === "hg");
                     }
                     else if (paramName === "ismanualintegration") {
-                        if (result.data.scmProvider === "Bitbucket" && param.defaultValue !== null && typeof param.defaultValue !== "undefined") {
-                            param.value = param.defaultValue;
+                        if (result.data.scmProvider === "Bitbucket") {
+                            // we honor the value from query string only for bitbucket
+                            param.value = $scope.formData.isManualIntegration;
                         } else {
                             param.value = true;
                         }
