@@ -892,6 +892,17 @@ function IsSiteLocationParam(paramName) {
                 if (result.data.status === 4) {
                     formData.deploymentSucceeded = true;
                     telemetry.logDeploySucceeded(formData.repositoryUrl);
+
+                    // once deployment is successfully done
+                    // make a "fire and forget" request to see if there is any post deployment action need to be done
+                    $http({
+                        method: "post",
+                        url: "api/deploymentsnotification",
+                        data: {
+                            siteUrl: $scope.formData.siteUrl,
+                            deployInputs: $scope.formData.deployPayload
+                        }
+                    });
                 }
                 else if (result.data.status === 3) {
                     formData.errorMesg = "Failed to acquire content from your repository.";

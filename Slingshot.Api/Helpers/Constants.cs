@@ -19,6 +19,7 @@
             public const string BitbucketApiRepoInfoFormat = "https://api.bitbucket.org/2.0/repositories/{0}/{1}";
             public const string BitbucketRawFileWebFormat = "https://bitbucket.org/{0}/{1}/raw/{2}/{3}";
             public const string BitbucketApiMainBranchInfoFormat = "https://bitbucket.org/api/1.0/repositories/{0}/{1}/main-branch";
+            public const string BitbucketApiPullRequestCommentsFormat = "https://bitbucket.org/api/1.0/repositories/{0}/{1}/pullrequests/{2}/comments";
             public const string BitbucketApiRawFile = "https://bitbucket.org/api/1.0/repositories/{0}/{1}/raw/{2}/{3}";
         }
 

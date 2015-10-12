@@ -146,6 +146,11 @@ namespace Slingshot.Abstract
             return Task.FromResult(false);
         }
 
+        public virtual Task WritePullRequestComment(string prId, string comment)
+        {
+            return Task.FromResult(new object());
+        }
+
         /// <summary>
         /// <para>Pubic repo should always return true, private repo and use`s access token has access to the repo, return true</para>
         /// <para>All other case return false, e.g:</para>

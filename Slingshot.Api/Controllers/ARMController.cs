@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -7,6 +8,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 using System.Web.Http;
 using System.Web.Http.Routing;
 using Microsoft.Azure.Management.Resources;
@@ -18,7 +20,6 @@ using Slingshot.Abstract;
 using Slingshot.Concrete;
 using Slingshot.Helpers;
 using Slingshot.Models;
-using System.Web;
 
 namespace Slingshot.Controllers
 {
@@ -393,6 +394,35 @@ namespace Slingshot.Controllers
             }
 
             return response;
+        }
+
+        [Authorize]
+        [HttpPost]
+        public async Task DeploymentNotification(DeploymentNotificationInputs inputs)
+        {
+            string repositoryUrl = HttpUtility.UrlDecode(inputs.deployInputs.repoUrl);
+            string token = GetTokenFromHeader();
+            Repository repo = Repository.CreateRepositoryObj(repositoryUrl, Request.RequestUri.Host, token);
+            var queryStrings = HttpUtility.ParseQueryString(repositoryUrl);
+            if (queryStrings["pr"] != null)
+            {
+                // if deployment is come from a pull request, post a comment back to the pull request.
+                string siteUrl = inputs.siteUrl;
+                StringBuilder pullRequestComment = new StringBuilder();
+                pullRequestComment.AppendFormat(CultureInfo.InvariantCulture, "A [website]({0}) has been deployed to Azure from this pull request", siteUrl);
+
+                bool isManualIntegration = true;
+                if (inputs.deployInputs.parameters["isManualIntegration"] != null &&
+                    inputs.deployInputs.parameters["isManualIntegration"]["value"] != null &&
+                    bool.TryParse(inputs.deployInputs.parameters["isManualIntegration"]["value"].ToString(), out isManualIntegration) &&
+                    !isManualIntegration)
+                {
+                    pullRequestComment.Append(" with continuous deployment enabled");
+                }
+
+                pullRequestComment.AppendFormat(". {0}", siteUrl);
+                await repo.WritePullRequestComment(queryStrings["pr"], pullRequestComment.ToString());
+            }
         }
 
         private async Task<string> GenerateResourceGroupName(string token, Repository repo, SubscriptionInfo[] subscriptions)

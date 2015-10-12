@@ -175,6 +175,7 @@
     <Compile Include="Helpers\Constants.cs" />
     <Compile Include="Helpers\Utils.cs" />
     <Compile Include="Models\CreateDeploymentResponse.cs" />
+    <Compile Include="Models\DeploymentNotificationInputs.cs" />
     <Compile Include="Models\Inputs.cs" />
     <Compile Include="Models\SourceControlInfo.cs" />
     <Compile Include="Models\Subscriptions.cs" />

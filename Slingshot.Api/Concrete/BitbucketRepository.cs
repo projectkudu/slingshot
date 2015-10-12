@@ -2,8 +2,6 @@
 using System.Globalization;
 using System.Net;
 using System.Net.Http;
-using System.Net.Http.Headers;
-using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 using Newtonsoft.Json.Linq;
@@ -210,6 +208,30 @@ namespace Slingshot.Concrete
             }
 
             return false;
+        }
+
+        public override async Task WritePullRequestComment(string prId, string comment)
+        {
+            if (await this.HasScmInfo() == false)
+            {
+                throw new InvalidOperationException("User credential is required to post any comments for a Pull Requests.");
+            }
+            
+            try
+            {
+                SourceControlInfo info = await this.GetScmInfo();
+                string repoToken = info.token;
+
+                using (HttpClient client = CreateHttpClient(accessToken: repoToken))
+                {
+                    var repoInfoUrl = string.Format(CultureInfo.InvariantCulture, Constants.Repository.BitbucketApiPullRequestCommentsFormat, UserName, RepositoryName, prId);
+                    await client.PostAsJsonAsync(repoInfoUrl, new { content = comment });
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new InvalidOperationException(string.Format("Failed to create comment on Pull Request: {0}. {1}", prId, ex.Message));
+            }
         }
 
         /// <summary>
