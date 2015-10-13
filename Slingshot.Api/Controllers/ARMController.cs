@@ -403,7 +403,9 @@ namespace Slingshot.Controllers
             string repositoryUrl = HttpUtility.UrlDecode(inputs.deployInputs.repoUrl);
             string token = GetTokenFromHeader();
             Repository repo = Repository.CreateRepositoryObj(repositoryUrl, Request.RequestUri.Host, token);
-            var queryStrings = HttpUtility.ParseQueryString(repositoryUrl);
+
+            Uri repoUri = new Uri(repositoryUrl);
+            var queryStrings = HttpUtility.ParseQueryString(repoUri.Query);
             if (queryStrings["pr"] != null)
             {
                 // if deployment is come from a pull request, post a comment back to the pull request.

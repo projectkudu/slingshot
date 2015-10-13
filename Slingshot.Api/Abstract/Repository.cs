@@ -151,6 +151,11 @@ namespace Slingshot.Abstract
             return Task.FromResult(new object());
         }
 
+        public virtual Task<T> GetPullRequest<T>(string prId) where T : IPullRequestInfo
+        {
+            return Task.FromResult<T>(default(T));
+        }
+
         /// <summary>
         /// <para>Pubic repo should always return true, private repo and use`s access token has access to the repo, return true</para>
         /// <para>All other case return false, e.g:</para>

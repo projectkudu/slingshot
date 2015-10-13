@@ -173,10 +173,12 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\Constants.cs" />
+    <Compile Include="Helpers\HttpClientUtils.cs" />
     <Compile Include="Helpers\Utils.cs" />
     <Compile Include="Models\CreateDeploymentResponse.cs" />
     <Compile Include="Models\DeploymentNotificationInputs.cs" />
     <Compile Include="Models\Inputs.cs" />
+    <Compile Include="Models\IPullRequestInfo.cs" />
     <Compile Include="Models\SourceControlInfo.cs" />
     <Compile Include="Models\Subscriptions.cs" />
     <Compile Include="Modules\AADOAuth2AccessToken.cs" />

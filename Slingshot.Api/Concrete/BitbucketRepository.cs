@@ -90,6 +90,14 @@ namespace Slingshot.Concrete
                     _branch = queryStrings["at"];
                     return _branch;
                 }
+
+                if (queryStrings["pr"] != null)
+                {
+                    string pullRequestId = queryStrings["pr"];
+                    var pr = await this.GetPullRequest<BitBucketPullRequest>(pullRequestId);
+                    _branch = pr.SourceBranch;
+                    return _branch;
+                }
             }
 
             // 2) there will be case that people hand craft the link and without branch information
@@ -97,13 +105,7 @@ namespace Slingshot.Concrete
             {
                 // if we have token, try to query from API
                 // and we take the "main" branch as default branch
-                string accessToken = null;
-                if (await this.HasScmInfo())
-                {
-                    accessToken = (await this.GetScmInfo()).token;
-                }
-
-                using (HttpClient client = CreateHttpClient(accessToken))
+                using (HttpClient client = await CreateHttpClient())
                 {
                     var mainBranchUrl = string.Format(CultureInfo.InvariantCulture, Constants.Repository.BitbucketApiMainBranchInfoFormat, UserName, RepositoryName);
                     string content = await client.GetStringAsync(mainBranchUrl);
@@ -123,17 +125,10 @@ namespace Slingshot.Concrete
             if (!string.IsNullOrWhiteSpace(_scmType))
                 return _scmType;
 
-            string repoToken = null;
-            if (await this.HasScmInfo())
-            {
-                SourceControlInfo info = await this.GetScmInfo();
-                repoToken = info.token;
-            }
-
             // try to query API to get scm type regardless it is public or private
             try
             {
-                using (HttpClient client = CreateHttpClient(accessToken: repoToken))
+                using (HttpClient client = await CreateHttpClient())
                 {
                     var repoInfoUrl = string.Format(CultureInfo.InvariantCulture, Constants.Repository.BitbucketApiRepoInfoFormat, UserName, RepositoryName);
                     string content = await client.GetStringAsync(repoInfoUrl);
@@ -199,8 +194,7 @@ namespace Slingshot.Concrete
             if (await this.HasScmInfo())
             {
                 string repoUrl = string.Format(CultureInfo.InvariantCulture, Constants.Repository.BitbucketApiRepoInfoFormat, UserName, RepositoryName);
-                SourceControlInfo info = await this.GetScmInfo();
-                using (HttpClient client = CreateHttpClient(info.token))
+                using (HttpClient client = await CreateHttpClient())
                 using (HttpResponseMessage response = await client.GetAsync(repoUrl))
                 {
                     return response.StatusCode == HttpStatusCode.OK;
@@ -216,21 +210,34 @@ namespace Slingshot.Concrete
             {
                 throw new InvalidOperationException("User credential is required to post any comments for a Pull Requests.");
             }
-            
+
             try
             {
-                SourceControlInfo info = await this.GetScmInfo();
-                string repoToken = info.token;
-
-                using (HttpClient client = CreateHttpClient(accessToken: repoToken))
+                using (HttpClient client = await CreateHttpClient())
                 {
-                    var repoInfoUrl = string.Format(CultureInfo.InvariantCulture, Constants.Repository.BitbucketApiPullRequestCommentsFormat, UserName, RepositoryName, prId);
-                    await client.PostAsJsonAsync(repoInfoUrl, new { content = comment });
+                    var requestUrl = string.Format(CultureInfo.InvariantCulture, Constants.Repository.BitbucketApiPullRequestCommentsFormat, UserName, RepositoryName, prId);
+                    await client.PostAsJsonAsync(requestUrl, new { content = comment });
                 }
             }
             catch (Exception ex)
             {
                 throw new InvalidOperationException(string.Format("Failed to create comment on Pull Request: {0}. {1}", prId, ex.Message));
+            }
+        }
+
+        public override async Task<BitBucketPullRequest> GetPullRequest<BitBucketPullRequest>(string prId)
+        {
+            try
+            {
+                using (HttpClient client = await CreateHttpClient())
+                {
+                    var requestUrl = string.Format(CultureInfo.InvariantCulture, Constants.Repository.BitbucketApiPullRequestInfoFormat, UserName, RepositoryName, prId);
+                    return await client.GetJsonAsync<BitBucketPullRequest>(requestUrl);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new InvalidOperationException(string.Format("Failed to retrieve information for Pull Request: {0}. {1}", prId, ex.Message));
             }
         }
 
@@ -302,14 +309,35 @@ namespace Slingshot.Concrete
             }
         }
 
-        public class OAuthInfo
+        /// <summary>
+        /// Partial object, full reponse please reference
+        /// https://confluence.atlassian.com/bitbucket/pullrequests-resource-423626332.html#pullrequestsResource-GETaspecificpullrequest
+        /// </summary>
+        public class BitBucketPullRequest : IPullRequestInfo
         {
-            public string access_token { get; set; }
-            public string scopes { get; set; }
-            public int expires_in { get; set; }
-            public string refresh_token { get; set; }
-            public string token_type { get; set; }
-            public DateTime expires_at { get; set; }
+            public dynamic source { get; set; }
+
+            public string SourceBranch
+            {
+                get
+                {
+                    try
+                    {
+                        return source.branch.name;
+                    }
+                    catch (Exception ex)
+                    {
+                        throw new InvalidOperationException("Failed to read source branch name from pull request. " + ex.Message);
+                    }
+                }
+            }
+        }
+
+        private async Task<HttpClient> CreateHttpClient()
+        {
+            SourceControlInfo scmInfo = await this.GetScmInfo();
+            // if use doesn`t have a token, "scmInfo.token" will be null. In this case HttpClient will be created without token
+            return CreateHttpClient(accessToken: scmInfo.token);
         }
     }
 }
