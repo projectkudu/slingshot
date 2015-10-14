@@ -145,7 +145,7 @@ namespace Slingshot.Abstract
         {
             return Task.FromResult(false);
         }
-        
+
         public virtual Task<IPullRequestInfo> GetPullRequest(string prId)
         {
             return Task.FromResult<IPullRequestInfo>((IPullRequestInfo)new object());
@@ -169,7 +169,7 @@ namespace Slingshot.Abstract
         protected virtual async Task<JObject> DownloadTemplate(string templateUrl)
         {
             JObject template = null;
-            using (HttpClient client = new HttpClient())
+            using (HttpClient client = Helpers.HttpClientFactory.CreateClient())
             {
                 var templateResponse = await client.GetAsync(templateUrl);
                 if (templateResponse.IsSuccessStatusCode)
@@ -207,7 +207,7 @@ namespace Slingshot.Abstract
 
         protected static HttpClient CreateHttpClient(string accessToken = null, HttpClientHandler handler = null)
         {
-            var client = handler == null ? new HttpClient() : new HttpClient(handler);
+            var client = Helpers.HttpClientFactory.CreateClient(handler);
             client.MaxResponseContentBufferSize = 1024 * 1024 * 10;
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
             client.DefaultRequestHeaders.Add("User-Agent", "AzureDeploy");
