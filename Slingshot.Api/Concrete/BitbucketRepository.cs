@@ -49,7 +49,7 @@ namespace Slingshot.Concrete
             // try to check if user has custom tempate, if they do use it, otherwise use default template
             //
             // * if user has token, we will use token to read repo regardless user has Admin access or not 
-            //   if use doesn`t has admin access and try to setup CI, we will let Azure to fail
+            //   if user doesn`t has admin access and try to setup CI, we will let Azure to fail
             //
             // * if it is a public repo, we can access repo thru api regardless user has token or not
             try
@@ -94,7 +94,7 @@ namespace Slingshot.Concrete
                 if (queryStrings["pr"] != null)
                 {
                     string pullRequestId = queryStrings["pr"];
-                    var pr = await this.GetPullRequest<BitBucketPullRequest>(pullRequestId);
+                    var pr = await this.GetPullRequest(pullRequestId);
                     _branch = pr.SourceBranch;
                     return _branch;
                 }
@@ -204,40 +204,36 @@ namespace Slingshot.Concrete
             return false;
         }
 
-        public override async Task WritePullRequestComment(string prId, string comment)
-        {
-            if (await this.HasScmInfo() == false)
-            {
-                throw new InvalidOperationException("User credential is required to post any comments for a Pull Requests.");
-            }
-
-            try
-            {
-                using (HttpClient client = await CreateHttpClient())
-                {
-                    var requestUrl = string.Format(CultureInfo.InvariantCulture, Constants.Repository.BitbucketApiPullRequestCommentsFormat, UserName, RepositoryName, prId);
-                    await client.PostAsJsonAsync(requestUrl, new { content = comment });
-                }
-            }
-            catch (Exception ex)
-            {
-                throw new InvalidOperationException(string.Format("Failed to create comment on Pull Request: {0}. {1}", prId, ex.Message));
-            }
-        }
-
-        public override async Task<BitBucketPullRequest> GetPullRequest<BitBucketPullRequest>(string prId)
+        public override async Task<IPullRequestInfo> GetPullRequest(string prId)
         {
             try
             {
                 using (HttpClient client = await CreateHttpClient())
                 {
                     var requestUrl = string.Format(CultureInfo.InvariantCulture, Constants.Repository.BitbucketApiPullRequestInfoFormat, UserName, RepositoryName, prId);
-                    return await client.GetJsonAsync<BitBucketPullRequest>(requestUrl);
+                    dynamic rawObj = await client.GetJsonAsync<dynamic>(requestUrl);
+                    return new BitBucketPullRequest(rawObj);
                 }
             }
             catch (Exception ex)
             {
                 throw new InvalidOperationException(string.Format("Failed to retrieve information for Pull Request: {0}. {1}", prId, ex.Message));
+            }
+        }
+
+        public override async Task UpdatePullRequest(string prId, dynamic content)
+        {
+            try
+            {
+                using (HttpClient client = await CreateHttpClient())
+                {
+                    var requestUrl = string.Format(CultureInfo.InvariantCulture, Constants.Repository.BitbucketApiPullRequestInfoFormat, UserName, RepositoryName, prId);
+                    await client.PutAsJsonAsync<object>(requestUrl, (object)content);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new InvalidOperationException(string.Format("Failed to update Pull Request: {0}. {1}", prId, ex.Message));
             }
         }
 
@@ -309,35 +305,60 @@ namespace Slingshot.Concrete
             }
         }
 
-        /// <summary>
-        /// Partial object, full reponse please reference
-        /// https://confluence.atlassian.com/bitbucket/pullrequests-resource-423626332.html#pullrequestsResource-GETaspecificpullrequest
-        /// </summary>
-        public class BitBucketPullRequest : IPullRequestInfo
+        private async Task<HttpClient> CreateHttpClient()
         {
-            public dynamic source { get; set; }
+            SourceControlInfo scmInfo = await this.GetScmInfo();
+            // if user doesn`t have a token, "scmInfo.token" will be null. In this case HttpClient will be created without token
+            return CreateHttpClient(accessToken: scmInfo.token);
+        }
+    }
 
-            public string SourceBranch
+    /// <summary>
+    /// Partial object, full reponse please reference
+    /// https://confluence.atlassian.com/bitbucket/pullrequests-resource-423626332.html#pullrequestsResource-GETaspecificpullrequest
+    /// </summary>
+    public class BitBucketPullRequest : IPullRequestInfo
+    {
+        private dynamic _rawContent { get; set; }
+
+        public BitBucketPullRequest(dynamic rawContent)
+        {
+            _rawContent = rawContent;
+        }
+
+        public string SourceBranch
+        {
+            get
             {
-                get
+                try
                 {
-                    try
-                    {
-                        return source.branch.name;
-                    }
-                    catch (Exception ex)
-                    {
-                        throw new InvalidOperationException("Failed to read source branch name from pull request. " + ex.Message);
-                    }
+                    return _rawContent.source.branch.name;
+                }
+                catch (Exception ex)
+                {
+                    throw new InvalidOperationException("Failed to read source branch name from pull request. " + ex.Message);
                 }
             }
         }
 
-        private async Task<HttpClient> CreateHttpClient()
+        public dynamic RawContent
         {
-            SourceControlInfo scmInfo = await this.GetScmInfo();
-            // if use doesn`t have a token, "scmInfo.token" will be null. In this case HttpClient will be created without token
-            return CreateHttpClient(accessToken: scmInfo.token);
+            get { return _rawContent; }
+        }
+
+        public void AppendNewLineToDescription(string text)
+        {
+            try
+            {
+                string content = _rawContent.description;
+                content = content.TrimEnd();
+                // double new line is the "new line" markup in Bitbucket
+                _rawContent.description = string.Format(CultureInfo.InvariantCulture, "{0}\n\n{1}\n\n", content, text);
+            }
+            catch (Exception ex)
+            {
+                throw new InvalidOperationException("Failed to update description of a pull request. " + ex.Message);
+            }
         }
     }
 }

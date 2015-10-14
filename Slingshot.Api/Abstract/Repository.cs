@@ -145,15 +145,15 @@ namespace Slingshot.Abstract
         {
             return Task.FromResult(false);
         }
-
-        public virtual Task WritePullRequestComment(string prId, string comment)
+        
+        public virtual Task<IPullRequestInfo> GetPullRequest(string prId)
         {
-            return Task.FromResult(new object());
+            return Task.FromResult<IPullRequestInfo>((IPullRequestInfo)new object());
         }
 
-        public virtual Task<T> GetPullRequest<T>(string prId) where T : IPullRequestInfo
+        public virtual Task UpdatePullRequest(string prId, dynamic content)
         {
-            return Task.FromResult<T>(default(T));
+            return Task.FromResult(new object());
         }
 
         /// <summary>
