@@ -410,8 +410,8 @@ namespace Slingshot.Controllers
             {
                 // if deployment is come from a pull request, post a comment back to the pull request.
                 string siteUrl = inputs.siteUrl;
-                StringBuilder pullRequestComment = new StringBuilder();
-                pullRequestComment.AppendFormat(CultureInfo.InvariantCulture, "A [website]({0}) has been deployed to Azure from this pull request", siteUrl);
+                StringBuilder prMsg = new StringBuilder();
+                prMsg.Append("A website has been deployed to Azure from this pull request");
 
                 bool isManualIntegration = true;
                 if (inputs.deployInputs.parameters["isManualIntegration"] != null &&
@@ -419,11 +419,15 @@ namespace Slingshot.Controllers
                     bool.TryParse(inputs.deployInputs.parameters["isManualIntegration"]["value"].ToString(), out isManualIntegration) &&
                     !isManualIntegration)
                 {
-                    pullRequestComment.Append(" with continuous deployment enabled");
+                    prMsg.Append(" with continuous deployment enabled");
                 }
 
-                pullRequestComment.AppendFormat(". {0}", siteUrl);
-                await repo.WritePullRequestComment(queryStrings["pr"], pullRequestComment.ToString());
+                prMsg.AppendFormat(". {0}", siteUrl);
+
+                string prId = queryStrings["pr"];
+                IPullRequestInfo prInfo = await repo.GetPullRequest(prId);
+                prInfo.AppendNewLineToDescription(prMsg.ToString());
+                await repo.UpdatePullRequest(prId, prInfo);
             }
         }
 
