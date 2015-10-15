@@ -57,6 +57,9 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="AzureLogo.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="siteWithRepositoryv3.json" />
     <Content Include="siteWithRepositoryv2.json" />
     <None Include="Web.Debug.config">

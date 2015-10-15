@@ -411,7 +411,7 @@ namespace Slingshot.Controllers
                 // if deployment is come from a pull request, post a comment back to the pull request.
                 string siteUrl = inputs.siteUrl;
                 StringBuilder prMsg = new StringBuilder();
-                prMsg.Append("A website has been deployed to Azure from this pull request");
+                prMsg.Append("***\n[![Azure App Service](http://deployredirector.azurewebsites.net/AzureLogo.png)](https://azure.microsoft.com/en-us/services/app-service) A web app has been deployed to Azure App Service from this pull request");
 
                 bool isManualIntegration = true;
                 if (inputs.deployInputs.parameters["isManualIntegration"] != null &&
@@ -422,7 +422,7 @@ namespace Slingshot.Controllers
                     prMsg.Append(" with continuous deployment enabled");
                 }
 
-                prMsg.AppendFormat(". {0}", siteUrl);
+                prMsg.AppendFormat(": {0}.", siteUrl);
 
                 string prId = queryStrings["pr"];
                 IPullRequestInfo prInfo = await repo.GetPullRequest(prId);
