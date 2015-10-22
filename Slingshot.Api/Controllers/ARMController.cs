@@ -7,6 +7,7 @@ using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
@@ -481,7 +482,11 @@ namespace Slingshot.Controllers
         private string GenerateRandomResourceGroupName(string baseName, int length = 4)
         {
             // Underscores are not valid in site names, so use dashes instead
-            baseName = baseName.Replace('_', '-');
+            // only keep letters, number and -
+            // e.g "ab.cde@##$ghijk341234kjk-" --> "ab-cde----ghijk341234kjk-"
+            baseName = Regex.Replace(baseName, "[^a-zA-Z0-9-]", "-", RegexOptions.CultureInvariant);
+            // e.g "ab-cde----ghijk341234kjk-" --> "ab-cde-ghijk341234kjk-"
+            baseName = Regex.Replace(baseName, "[-]{2,}", "-", RegexOptions.CultureInvariant);
 
             Random random = new Random();
 
