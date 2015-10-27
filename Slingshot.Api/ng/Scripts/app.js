@@ -52,12 +52,22 @@ var telemetryObj = function () {
     var that = {};
     that.logGetTemplate = function (repoUrl) {
         appInsights.trackEvent("GetTemplate", { repoUrl: repoUrl });
+
+        // log request invoke from Bitbucket, they are from "Deploy to Azure" button
+        if (document && document.referrer && document.referrer.toLowerCase().indexOf("bitbucket.org") > 0) {
+            appInsights.trackEvent("BitbucketInvoke", { repoUrl: repoUrl });
+        }
     }
 
     that.logDeploy = function (repoUrl) {
         appInsights.trackEvent("Deploy", { repoUrl: repoUrl });
-    }
 
+        // number of app deploy from bitbucket
+        if (repoUrl && repoUrl.toLowerCase().indexOf("bitbucket.org") > 0) {
+            appInsights.trackEvent("BitbucketDeploy", { repoUrl: repoUrl });
+        }
+    }
+        
     that.logDeploySucceeded = function (repoUrl) {
         appInsights.trackEvent("DeploySucceeded", { repoUrl: repoUrl });
     }
