@@ -86,6 +86,7 @@ var contantsObj = function () {
         that.siteLocationLower = "sitelocation";
         that.hostingPlanLocationLower = "hostingplanlocation";
         that.sqlServerLocationLower = "sqlserverlocation";
+        that.pollingInterval = 3000;
         return that;
     }
 
@@ -774,7 +775,7 @@ function IsSiteLocationParam(paramName) {
             })
             .then(function (result) {
                 $scope.formData.statusMesgs.push("Deployment Started");
-                window.setTimeout(getStatus, 1000, $scope, $http);
+                window.setTimeout(getStatus, constants.params.pollingInterval, $scope, $http);
             },
             function (result) {
                 $scope.formData.errorMesg = result.data.error;
@@ -831,7 +832,7 @@ function IsSiteLocationParam(paramName) {
                             $scope.formData.finalResourceGroup.name,
                             $scope.formData.siteName);
 
-                        window.setTimeout(getSourceControlSetupStatus, 1000, $scope, $http);
+                        window.setTimeout(getSourceControlSetupStatus, constants.params.pollingInterval, $scope, $http);
                     }
                     else {
                         $scope.formData.deploymentSucceeded = true;
@@ -843,7 +844,7 @@ function IsSiteLocationParam(paramName) {
 
                 }
                 else {
-                    window.setTimeout(getStatus, 1000, $scope, $http);
+                    window.setTimeout(getStatus, constants.params.pollingInterval, $scope, $http);
                 }
             },
 
@@ -922,7 +923,7 @@ function IsSiteLocationParam(paramName) {
                     if (formData.statusMesgs[formData.statusMesgs.length - 1] !== result.data.progress) {
                         formData.statusMesgs.push(result.data.progress);
                     }
-                    window.setTimeout(getSourceControlSetupStatus, 1000, $scope, $http);
+                    window.setTimeout(getSourceControlSetupStatus, constants.params.pollingInterval, $scope, $http);
                 }
             },
             function (result) {
