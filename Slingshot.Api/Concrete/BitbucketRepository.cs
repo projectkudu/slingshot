@@ -30,11 +30,29 @@ namespace Slingshot.Concrete
                 string templateUrl = await this.GetTemplateUrlAsync();
                 if (string.Equals(Constants.Repository.EmptySiteTemplateUrl, templateUrl))
                 {
-                    _template = await this.DownloadTemplate(await GetTemplateUrlAsync());
+                    _template = await this.DownloadJson(await GetTemplateUrlAsync());
                 }
                 else
                 {
                     _template = JObject.Parse(await this.DownloadFile(templateUrl));
+
+                    string paramTemplatePath = this.GetParameterTemplatePath();
+                    if (_template != null && paramTemplatePath != null)
+                    {
+                        JObject paramTemplateJson = null;
+                        if (paramTemplatePath.StartsWith("http", StringComparison.OrdinalIgnoreCase))
+                        {
+                            // if it is a URL, assume it is public, otherwise let it failed
+                            paramTemplateJson = await this.DownloadJson(paramTemplatePath);
+                        }
+                        else
+                        {
+                            // if it is a relative path, download use API
+                            paramTemplateJson = JObject.Parse(await this.DownloadFile(paramTemplatePath));
+                        }
+
+                        MergeParametersIntoTemplate(_template, paramTemplateJson);
+                    }
                 }
             }
 
@@ -287,7 +305,13 @@ namespace Slingshot.Concrete
         {
             string branch = await this.GetBranch();
             // use web link, assume it is public by default to avoid calling API too often (would get block)
-            string fileUrl = string.Format(CultureInfo.InvariantCulture, Constants.Repository.BitbucketRawFileWebFormat, UserName, RepositoryName, branch, path);
+            string fileUrl = string.Format(
+                CultureInfo.InvariantCulture, 
+                Constants.Repository.BitbucketRawFileWebFormat,
+                UserName, 
+                RepositoryName, 
+                branch, 
+                path.Trim(Constants.Path.SlashChars));  // trim slash to remove slash at the begining
             string token = null;
 
             // if it is public, try to use repo access token thru API

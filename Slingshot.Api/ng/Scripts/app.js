@@ -294,10 +294,10 @@ function IsSiteLocationParam(paramName) {
                 $scope.formData.template = result.data.template;
                 $scope.formData.siteLocations = result.data.siteLocations;
                 $scope.formData.sqlServerLocations = result.data.sqlServerLocations;
-                $scope.formData.templateUrl = result.data.templateUrl;
-                $scope.formData.repositoryDisplayUrl = result.data.repositoryDisplayUrl;
                 $scope.formData.siteName = result.data.siteName;
                 $scope.formData.siteNameQuery = result.data.siteName;
+                $scope.formData.templateUrl = result.data.templateUrl;
+                $scope.formData.repositoryDisplayUrl = result.data.repositoryDisplayUrl;
                 $scope.formData.scmType = result.data.scmType;
                 $scope.formData.newResourceGroup = {
                     name: result.data.resourceGroupName,
@@ -344,6 +344,7 @@ function IsSiteLocationParam(paramName) {
                     param.type = parameter.type;
                     param.allowedValues = parameter.allowedValues;
                     param.defaultValue = parameter.defaultValue;
+                    param.defaultValueComeFirst = parameter.defaultValueComeFirst;
 
                     $scope.formData.params.push(param);
 
@@ -351,11 +352,16 @@ function IsSiteLocationParam(paramName) {
                     if (paramName === "repourl") {
                         $scope.formData.repoParamFound = true;
                     }
-                    else if (paramName === "sitename" && result.data.siteName) {
+                    else if (paramName === "sitename") {
                         param.value = result.data.siteName;
                         $scope.formData.siteNameAvailable = true;
+
+                        if (param.defaultValueComeFirst) {
+                            $scope.formData.siteName = param.defaultValue;
+                            $scope.formData.siteNameQuery = param.defaultValue;
+                        }
                     }
-                    else if (paramName === "ismercurial" && result.data.siteName) {
+                    else if (paramName === "ismercurial") {
                         param.value = (result.data.scmType === "hg");
                     }
                     else if (paramName === "ismanualintegration") {
@@ -388,7 +394,7 @@ function IsSiteLocationParam(paramName) {
                         param.value = $scope.formData.userDisplayName.toLowerCase().replace(/ /g, "");
                     }
 
-                    if (param.value === null || typeof param.value === "undefined") {
+                    if (param.value === null || typeof param.value === "undefined" || param.defaultValueComeFirst) {
                         param.value = param.defaultValue;
                     }
                 }

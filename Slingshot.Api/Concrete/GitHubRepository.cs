@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
@@ -58,13 +59,31 @@ namespace Slingshot.Concrete
                     }
 
                     templateUrl = builder.ToString().TrimEnd(Constants.Path.SlashChars) + "/azuredeploy.json";
-                    template = await DownloadTemplate(templateUrl);
+                    template = await DownloadJson(templateUrl);
+
+                    string paramTemplatePath = this.GetParameterTemplatePath();
+                    if (template != null && paramTemplatePath != null)
+                    {
+                        string paramTemplateFullPath = paramTemplatePath;
+
+                        if (!paramTemplatePath.StartsWith("http", StringComparison.OrdinalIgnoreCase))
+                        {
+                            // it is relative path, construct url to point to raw content
+                            paramTemplateFullPath = string.Format(
+                                CultureInfo.InvariantCulture,
+                                "{0}/{1}", builder.ToString().TrimEnd(Constants.Path.SlashChars),
+                                paramTemplatePath.Trim(Constants.Path.SlashChars));
+                        }
+
+                        JObject paramTemplate = await DownloadJson(paramTemplateFullPath);
+                        MergeParametersIntoTemplate(template, paramTemplate);
+                    }
                 }
 
                 if (template == null)
                 {
                     templateUrl = Constants.Repository.EmptySiteTemplateUrl;
-                    template = await DownloadTemplate(templateUrl);
+                    template = await DownloadJson(templateUrl);
                 }
 
                 _template = template;

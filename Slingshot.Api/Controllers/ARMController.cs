@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -745,10 +744,12 @@ namespace Slingshot.Controllers
                 // it is private repo, we should pass over the content instead of a link to template
                 string token = GetTokenFromHeader();
                 Repository repo = Repository.CreateRepositoryObj(inputs.repoUrl, Request.RequestUri.Host, token);
+                JObject template = await repo.DownloadTemplateAsync();
+                PurgeCustomProperties(template);
                 basicDeployment.Properties = new DeploymentProperties
                 {
                     Parameters = inputs.parameters.ToString(),
-                    Template = (await repo.DownloadTemplateAsync()).ToString()
+                    Template = (template).ToString()
                 };
             }
             else
@@ -761,6 +762,21 @@ namespace Slingshot.Controllers
             }
 
             return basicDeployment;
+        }
+
+        private static void PurgeCustomProperties(JObject template)
+        {
+            JObject paramObjFromTmpl = template.Value<JObject>("parameters");
+            if (paramObjFromTmpl != null)
+            {
+                foreach (var p in paramObjFromTmpl)
+                {
+                    if (paramObjFromTmpl[p.Key] != null && paramObjFromTmpl[p.Key][Constants.CustomTemplateProperties.DefaultValueComeFirst] != null)
+                    {
+                        paramObjFromTmpl[p.Key][Constants.CustomTemplateProperties.DefaultValueComeFirst].Parent.Remove();
+                    }
+                }
+            }
         }
     }
 }

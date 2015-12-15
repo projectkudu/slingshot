@@ -3,6 +3,7 @@ using System.Globalization;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
+using System.Web;
 using Newtonsoft.Json.Linq;
 using Slingshot.Concrete;
 using Slingshot.Helpers;
@@ -166,7 +167,39 @@ namespace Slingshot.Abstract
             return Task.FromResult(true);
         }
 
-        protected virtual async Task<JObject> DownloadTemplate(string templateUrl)
+        /// <summary>
+        /// Path to parameter json file. It can be a relative path from root or a url point to any public acceable file
+        /// </summary>
+        protected string GetParameterTemplatePath()
+        {
+            var queryStrings = HttpUtility.ParseQueryString(_inputUri.Query);
+            if (queryStrings["ptmpl"] != null)
+            {
+                return queryStrings["ptmpl"];
+            }
+
+            return null;
+        }
+
+        protected static void MergeParametersIntoTemplate(JObject template, JObject parameters)
+        {
+            JObject paramObj = parameters.Value<JObject>("parameters");
+            JObject paramObjFromTmpl = template.Value<JObject>("parameters");
+
+            if (paramObj != null && paramObjFromTmpl != null)
+            {
+                foreach (var p in paramObj)
+                {
+                    if (paramObjFromTmpl[p.Key] != null)
+                    {
+                        paramObjFromTmpl[p.Key]["defaultValue"] = p.Value.Value<string>("value");
+                        paramObjFromTmpl[p.Key][Constants.CustomTemplateProperties.DefaultValueComeFirst] = true;
+                    }
+                }
+            }
+        }
+
+        protected virtual async Task<JObject> DownloadJson(string templateUrl)
         {
             JObject template = null;
             using (HttpClient client = new HttpClient())
