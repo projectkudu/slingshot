@@ -236,7 +236,7 @@ namespace Slingshot.Controllers
                 using (var wsClient = GetWSClient(subscriptionId))
                 {
                     hostName = (await wsClient.WebSites.GetAsync(resourceGroup, siteName, null, null)).WebSite.Properties.HostNames[0];
-                    responseObj["siteUrl"] = string.Format("http://{0}", hostName);
+                    responseObj["siteUrl"] = string.Format("https://{0}", hostName);
                 }
             }
 
