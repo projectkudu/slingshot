@@ -739,7 +739,10 @@ namespace Slingshot.Controllers
         private async Task<Deployment> GetDeploymentPayload(DeployInputs inputs)
         {
             var basicDeployment = new Deployment();
-            if (string.Equals(Constants.Repository.CustomTemplateFileName, inputs.templateUrl))
+            // template usl is like https://github.com/DRediske/Contoso-Security-Demo/blob/PerfTest/azuredeploy.json
+            // while Constants.Repository.CustomTemplateFileName is "azuredeploy.json"
+            // should do end with comparison
+            if (!string.IsNullOrWhiteSpace(inputs.templateUrl) && inputs.templateUrl.EndsWith(Constants.Repository.CustomTemplateFileName, StringComparison.OrdinalIgnoreCase))
             {
                 // it is private repo, we should pass over the content instead of a link to template
                 string token = GetTokenFromHeader();
