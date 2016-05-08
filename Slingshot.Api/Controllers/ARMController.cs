@@ -14,6 +14,7 @@ using System.Web.Http.Routing;
 using Microsoft.Azure.Management.Resources;
 using Microsoft.Azure.Management.Resources.Models;
 using Microsoft.Azure.Management.WebSites;
+using Microsoft.Rest;
 using Microsoft.WindowsAzure;
 using Newtonsoft.Json.Linq;
 using Slingshot.Abstract;
@@ -235,7 +236,7 @@ namespace Slingshot.Controllers
             {
                 using (var wsClient = GetWSClient(subscriptionId))
                 {
-                    hostName = (await wsClient.WebSites.GetAsync(resourceGroup, siteName, null, null)).WebSite.Properties.HostNames[0];
+                    hostName = (await wsClient.Sites.GetSiteAsync(resourceGroup, siteName, null)).HostNames[0];
                     responseObj["siteUrl"] = string.Format("https://{0}", hostName);
                 }
             }
@@ -709,8 +710,10 @@ namespace Slingshot.Controllers
         private WebSiteManagementClient GetWSClient(string subscriptionId)
         {
             var token = Request.Headers.GetValues("X-MS-OAUTH-TOKEN").FirstOrDefault();
-            var creds = new Microsoft.Azure.TokenCloudCredentials(subscriptionId, token);
-            return new WebSiteManagementClient(creds, new Uri(Utils.GetCSMUrl(Request.RequestUri.Host)));
+            var tokenCreds = new TokenCredentials(token);
+            var client = new WebSiteManagementClient(new Uri(Utils.GetCSMUrl(Request.RequestUri.Host)), tokenCreds);
+            client.SubscriptionId = subscriptionId;
+            return client;
         }
 
         private ResourceManagementClient GetRMClient(string token, string subscriptionId)
