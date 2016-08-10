@@ -205,6 +205,15 @@ function IsSiteLocationParam(paramName) {
 
         function initialize() {
             $scope.formData.repositoryUrl = getQueryVariable("repository");
+            var extraParams = getQueryVariable("extras");
+            if (extraParams) {
+                sessionStorage.extraParams = extraParams;
+            } else {
+                extraParams = sessionStorage.extraParams;
+            }
+            if (extraParams) {
+                $scope.formData.queryParams = JSON.parse(extraParams);
+            }
 
             if (!$scope.formData.repositoryUrl || $scope.formData.repositoryUrl.length === 0) {
                 if (sessionStorage.repositoryUrl) {
@@ -225,15 +234,21 @@ function IsSiteLocationParam(paramName) {
         }
 
         function getQueryVariable(variable) {
-            var query = window.location.search,
-                token = variable + "=",
-                startIndex = query.indexOf(token);
+            return parseQuery()[variable] || null;
+        }
 
-            if (startIndex >= 0) {
-                return query.substring(startIndex + token.length);
+        function parseQuery() {
+            var query = window.location.search;
+            if (query && query.length > 1) {
+                var pairs = query.substr(1).split('&');
+                return _.object(_.map(pairs, function (pair) {
+                    return _.map(pair.split('='), function (v, i) {
+                        return i == 0 ? v : decodeURIComponent(v);
+                    });
+                }));
+            } else {
+                return {};
             }
-
-            return null;
         }
 
         initialize();
@@ -262,7 +277,7 @@ function IsSiteLocationParam(paramName) {
             $http({
                 method: "get",
                 url: "api/template",
-                params: {
+                params:  {
                     "repositoryUrl": $scope.formData.repositoryUrl
                 }
             })
@@ -345,6 +360,12 @@ function IsSiteLocationParam(paramName) {
                     param.allowedValues = parameter.allowedValues;
                     param.defaultValue = parameter.defaultValue;
                     param.defaultValueComeFirst = parameter.defaultValueComeFirst;
+
+                    if ($scope.formData.queryParams[name]) {
+                        param.value = $scope.formData.queryParams[name];
+                        param.defaultValue = param.value;
+                        param.defaultValueComeFirst = true;
+                    }
 
                     $scope.formData.params.push(param);
 
@@ -476,6 +497,10 @@ function IsSiteLocationParam(paramName) {
 
         $scope.showParam = function (param) {
             var name = param.name.toLowerCase();
+            if ($scope.formData.queryParams[name]) {
+                param.value = $scope.formData.queryParams[name];
+                return false;
+            }
             if (name === 'repourl' && $scope.formData.repositoryUrl) {
                 param.value = $scope.formData.repositoryUrl;
                 return false;
