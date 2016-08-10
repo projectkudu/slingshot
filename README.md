@@ -97,6 +97,8 @@ Fix AADClientId and AADClientSecret in codes
 1. Copy `CLIENT ID` and paste it in [this line](https://github.com/suwatch/ARMOAuth/blob/master/Modules/ARMOAuthModule.cs), replacing `Environment.GetEnvironmentVariable("AADClientId")`.
 2. On `Keys` section, create a client secret. Copy the key and paste it in the same file, replacing `Environment.GetEnvironmentVariable("AADClientSecret")`.
 
+Or as a cleaner alternative, you can set the `AADClientId` and `AADClientSecret` environment variables on your machine so that the code picks it up without having to modify it.
+
 
 Test with localhost
 ===================
