@@ -196,6 +196,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\deploybutton.svg" />
     <Content Include="Content\deploybuttondark.png" />
     <Content Include="Content\Scripts\ie10-viewport-bug-workaround.js" />
     <Content Include="Content\skinnyDeploy.png" />
