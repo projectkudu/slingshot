@@ -99,7 +99,9 @@ namespace Slingshot.Concrete
             {
                 if (_inputUri.Segments.Length > 4)
                 {
-                    _branch = _inputUri.Segments[4].Trim(Constants.Path.SlashChars);
+                    // The path can look like /myorg/myrepo/tree/foo/bar. We want everything after skipping 4 segments
+                    _branch = String.Join("", _inputUri.Segments, 4, _inputUri.Segments.Length - 4);
+                    _branch = _branch.Trim(Constants.Path.SlashChars);
                 }
                 else
                 {
