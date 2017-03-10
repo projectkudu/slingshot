@@ -1,0 +1,68 @@
+﻿<div id="repositoryContainer">
+    <div class="text-primary header-label">
+        Repository Url - <span class="text-info" ng-attr-title="{{formData.repositoryDisplayUrl}}">{{formData.repositoryDisplayUrl}}</span>
+    </div>
+
+    <div ng-show="formData.eula" class="text-primary header-label">
+        EULA - <span class="text-info" ng-attr-title="{{formData.eula}}"><a href="{{formData.eula}}" target="_blank">{{formData.eula}}</a></span>
+    </div>
+</div>
+
+<div ng-show="!formData.params && !formData.requireOAuth">
+    <p class="text-center"><i class="fa fa-spinner fa-spin large-spinner"></i></p>
+</div>
+
+<div ng-show="formData.params">
+    <div class="form-group col-md-6">
+        <label for="subscription">Subscription</label>
+        <select class="form-control" ng-model="formData.subscription" ng-options="subscription.displayName for subscription in formData.subscriptions" ng-change="changeSubscription()"></select>
+    </div>
+
+<!--    <div class="form-group col-md-6">
+        <label for="resourceGroupName">Resource Group Name</label>
+        <span ng-show="formData.resourceGroupError" class="text-danger"> - {{formData.resourceGroupError}}</span>
+        <input type="text" class="form-control" name="param.name" ng-disabled="!!formData.existingResourceGroup.location" ng-model="formData.newResourceGroup.name">
+    </div>
+    -->
+    <div class="form-group col-md-6" ng-repeat="param in formData.params" ng-switch on="param.name" ng-show="showParam(param)">
+        <!-- Special handling for appServiceName form field -->
+        <div ng-switch-when="appServiceName">
+            <label>{{param | camelCaseToHuman}}</label>
+            <span ng-show="showAppServiceNameAvailableMesg()" class="text-success" ng-if="formData.appServiceNameAvailable">
+                - Name is available
+            </span>
+            <span ng-show="showAppServiceNameAvailableMesg()" class="text-danger" ng-if="!formData.appServiceNameAvailable">
+                - Name is not available
+            </span>
+            <input type="text" class="form-control" name="param.name" ng-model="param.value" ng-change="checkAppServiceName(param.value)">
+        </div>
+
+        <!-- Special handling for appServiceLocation form field -->
+        <div ng-switch-when="appServiceLocation">
+            <label>{{param | camelCaseToHuman}}</label>
+            <select class="form-control" ng-model="param.value" ng-options="location for location in formData.appServiceLocations"></select>
+        </div>
+        <div ng-switch-when="msdeployPackageUrl">
+        </div>
+
+        <!-- All other form fields -->
+        <div ng-switch-default>
+            <label>{{param | camelCaseToHuman}}</label>
+            <span ng-show="param.validationError !== null" class="text-danger"> - {{param.validationError}}</span>
+
+            <input type="password" ng-if="getFieldType(param) === 'password'" class="form-control" name="param.name" ng-model="param.value">
+
+            <input type="text" ng-if="getFieldType(param) === 'text'" class="form-control" name="param.name" ng-model="param.value">
+
+            <select class="form-control" ng-if="getFieldType(param) === 'select'" ng-model="param.value" ng-options="value for value in param.allowedValues"></select>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="form-group col-xs-6 col-xs-offset-6 text-right">
+            <a ui-sref="form.deploy" ng-disabled="!canMoveToNextStep()" style="margin-right:15px" class="btn btn-info wizard-button" ng-click="nextStep()">
+                Deploy <span class="glyphicon glyphicon-circle-arrow-right"></span>
+            </a>
+        </div>
+    </div>
+</div>
