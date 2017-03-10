@@ -5,23 +5,13 @@
         public class Path
         {
             public static char[] SlashChars = new char[] { '/' };
-            public const string HexChars = "0123456789abcdfe";
+            public const string SiteNameChars = "0123456789abcdfeghijklmnopqrstuvwxyz";
         }
 
         public class Repository
         {
             public const string CustomTemplateFileName = "azuredeploy.json";
             public const string EmptySiteTemplateUrl = "http://deployredirector.azurewebsites.net/sitewithrepositoryv3.json";
-            public const string GitCustomTemplateFolderUrlFormat = "https://raw.githubusercontent.com/{0}/{1}/{2}/";
-            public const string GitHubApiRepoInfoFormat = "https://api.github.com/repos/{0}/{1}";
-
-            public const string BitbucketWebRepoInfoFormat = "https://bitbucket.org/{0}/{1}";
-            public const string BitbucketApiRepoInfoFormat = "https://api.bitbucket.org/2.0/repositories/{0}/{1}";
-            public const string BitbucketApiPullRequestInfoFormat = "https://api.bitbucket.org/2.0/repositories/{0}/{1}/pullrequests/{2}";
-            public const string BitbucketRawFileWebFormat = "https://bitbucket.org/{0}/{1}/raw/{2}/{3}";
-            public const string BitbucketApiMainBranchInfoFormat = "https://bitbucket.org/api/1.0/repositories/{0}/{1}/main-branch";
-            public const string BitbucketApiPullRequestCommentsFormat = "https://bitbucket.org/api/1.0/repositories/{0}/{1}/pullrequests/{2}/comments";
-            public const string BitbucketApiRawFile = "https://bitbucket.org/api/1.0/repositories/{0}/{1}/raw/{2}/{3}";
         }
 
         public class Headers

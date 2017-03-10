@@ -343,7 +343,7 @@ namespace Slingshot.Controllers
             }
         }
 
-        private string GenerateRandomResourceGroupName(string baseName, int length = 4)
+        private string GenerateRandomResourceGroupName(string baseName, int length = 6)
         {
             // Underscores are not valid in site names, so use dashes instead
             // only keep letters, number and -
@@ -358,7 +358,7 @@ namespace Slingshot.Controllers
             strb.Append(baseName);
             for (int i = 0; i < length; ++i)
             {
-                strb.Append(Constants.Path.HexChars[random.Next(Constants.Path.HexChars.Length)]);
+                strb.Append(Constants.Path.SiteNameChars[random.Next(Constants.Path.SiteNameChars.Length)]);
             }
 
             return strb.ToString();
@@ -382,7 +382,6 @@ namespace Slingshot.Controllers
             response.Headers.Add(Constants.Headers.X_MS_Ellapsed, ellapsed);
             return response;
         }
-
 
         private JObject GetClaims()
         {
@@ -475,7 +474,6 @@ namespace Slingshot.Controllers
             {
                 paramValue = param["value"].Value<string>() ?? defaultValue;
             }
-
             return paramValue;
         }
 

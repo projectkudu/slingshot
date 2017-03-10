@@ -230,8 +230,6 @@
     <Content Include="Content\Scripts\bootstrap.min.js" />
     <Content Include="Content\Scripts\jquery-1.9.0.js" />
     <Content Include="Content\Scripts\jquery-1.9.0.min.js" />
-    <Content Include="ng\Scripts\controllers.js" />
-    <Content Include="ng\Views\form-deploy.html" />
     <Content Include="ng\Views\form-setup.html" />
     <Content Include="ng\Views\form.html" />
     <Content Include="Web.config">

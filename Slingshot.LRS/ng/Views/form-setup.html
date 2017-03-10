@@ -1,29 +1,9 @@
-﻿<div id="repositoryContainer">
-    <div class="text-primary header-label">
-        Repository Url - <span class="text-info" ng-attr-title="{{formData.repositoryDisplayUrl}}">{{formData.repositoryDisplayUrl}}</span>
-    </div>
-
-    <div ng-show="formData.eula" class="text-primary header-label">
-        EULA - <span class="text-info" ng-attr-title="{{formData.eula}}"><a href="{{formData.eula}}" target="_blank">{{formData.eula}}</a></span>
-    </div>
-</div>
-
-<div ng-show="!formData.params && !formData.requireOAuth">
-    <p class="text-center"><i class="fa fa-spinner fa-spin large-spinner"></i></p>
-</div>
-
+﻿
 <div ng-show="formData.params">
     <div class="form-group col-md-6">
         <label for="subscription">Subscription</label>
         <select class="form-control" ng-model="formData.subscription" ng-options="subscription.displayName for subscription in formData.subscriptions" ng-change="changeSubscription()"></select>
     </div>
-
-<!--    <div class="form-group col-md-6">
-        <label for="resourceGroupName">Resource Group Name</label>
-        <span ng-show="formData.resourceGroupError" class="text-danger"> - {{formData.resourceGroupError}}</span>
-        <input type="text" class="form-control" name="param.name" ng-disabled="!!formData.existingResourceGroup.location" ng-model="formData.newResourceGroup.name">
-    </div>
-    -->
     <div class="form-group col-md-6" ng-repeat="param in formData.params" ng-switch on="param.name" ng-show="showParam(param)">
         <!-- Special handling for appServiceName form field -->
         <div ng-switch-when="appServiceName">
@@ -57,12 +37,52 @@
             <select class="form-control" ng-if="getFieldType(param) === 'select'" ng-model="param.value" ng-options="value for value in param.allowedValues"></select>
         </div>
     </div>
-
-    <div class="row">
-        <div class="form-group col-xs-6 col-xs-offset-6 text-right">
-            <a ui-sref="form.deploy" ng-disabled="!canMoveToNextStep()" style="margin-right:15px" class="btn btn-info wizard-button" ng-click="nextStep()">
-                Deploy <span class="glyphicon glyphicon-circle-arrow-right"></span>
-            </a>
+    <!-- Modal -->
+    <div class="modal fade" id="errorModal" tabindex="-1" role="dialog" aria-labelledby="errorModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <h4 class="modal-title" id="errorModalLabel">Deployment Error</h4>
+                </div>
+                <div class="modal-body">
+                    {{formData.errorMesg}}
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
         </div>
     </div>
+
+    <div class="result-body">
+        <ul>
+            <div ng-repeat="mesg in formData.statusMesgs">
+                {{mesg}}
+                <span id="spinnerStatus" ng-if="$last"><i class="fa fa-spinner fa-spin" ng-show="!formData.errorMesg && !formData.deploymentSucceeded"></i></span>
+            </div>
+            <div ng-show="formData.errorMesg">
+                <span class="text-danger">Deployment Failed</span>
+                <a href ng-click="showError()"> (View Error)</a>
+            </div>
+            <div ng-show="formData.deploymentSucceeded">
+                <div>Deployment Complete</div>
+                <div>
+                    <a target="_blank" ng-href="{{formData.portalUrl}}">Manage</a> your
+                    <span ng-show="formData.repoParamFound">
+                        site / Browse to
+                        <a target="_blank" ng-href="{{formData.siteUrl}}">{{formData.siteUrl}}</a>
+                    </span>
+                    <span ng-show="!formData.repoParamFound">resources</span>
+                </div>
+            </div>
+        </ul>
+    </div>
+
+    <div class="row" ng-show="formData.errorMesg">
+        <div class="form-group col-xs-6 col-xs-offset-6 text-right">
+            <a ng-click="deploy()" class="btn btn-info wizard-button">Retry</a>
+        </div>
+    </div>
+
 </div>

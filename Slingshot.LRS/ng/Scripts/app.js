@@ -53,19 +53,12 @@ var telemetryObj = function () {
     that.logGetTemplate = function (repoUrl) {
         appInsights.trackEvent("GetTemplate", { repoUrl: repoUrl });
 
-        // log request invoke from Bitbucket, they are from "Deploy to Azure" button
-        if (document && document.referrer && document.referrer.toLowerCase().indexOf("bitbucket.org") > 0) {
-            appInsights.trackEvent("BitbucketInvoke", { repoUrl: repoUrl });
-        }
     }
 
     that.logDeploy = function (repoUrl) {
         appInsights.trackEvent("Deploy", { repoUrl: repoUrl });
 
-        // number of app deploy from bitbucket
-        if (repoUrl && repoUrl.toLowerCase().indexOf("bitbucket.org") > 0) {
-            appInsights.trackEvent("BitbucketDeploy", { repoUrl: repoUrl });
-        }
+
     }
         
     that.logDeploySucceeded = function (repoUrl) {
@@ -125,22 +118,15 @@ function IsLocationParam(paramName) {
             // nested states 
             // each of these sections will have their own view
             // url will be nested (/form/setup)
-            //.state('form.setup', {
-            //    url: '/setup',
-            //    templateUrl: 'ng/views/form-setup.html',
-            //    controller: 'FormSetupController'
+            .state('form.setup', {
+                url: '/setup',
+                templateUrl: 'ng/views/form-setup.html',
+                controller: 'FormSetupController'
 
-            //})
-
-            // /form/deploy
-            .state('form.deploy', {
-                url: '/deploy',
-                templateUrl: 'ng/views/form-deploy.html',
-                controller: 'FormDeployController'
             })
 
         // send users to the form page 
-        $urlRouterProvider.otherwise('/form/deploy');
+        $urlRouterProvider.otherwise('/form/setup');
     })
 
     // Custom filters
@@ -185,7 +171,6 @@ function IsLocationParam(paramName) {
                 sessionStorage.templateName = $scope.formData.templateName;
                 telemetry.logGetTemplate($scope.formData.templateName);
             }
-
             $location.url("/");
         }
 
@@ -197,7 +182,6 @@ function IsLocationParam(paramName) {
             if (startIndex >= 0) {
                 return query.substring(startIndex + token.length);
             }
-
             return null;
         }
 
@@ -216,6 +200,17 @@ function IsLocationParam(paramName) {
             that.validationError = null;
             return that;
         };
+        var statusMap = {};
+        statusMap["microsoft.web/sites"] = "Creating Website";
+        statusMap["microsoft.web/sites/config"] = "Updating Website Config";
+        statusMap["microsoft.web/sites/sourcecontrols"] = "Setting up Source Control";
+        statusMap["microsoft.web/serverfarms"] = "Creating Web Hosting Plan";
+        var portalWebSiteFormat = "https://portal.azure.com#resource/subscriptions/{0}/resourceGroups/{1}/providers/Microsoft.Web/sites/{2}";
+        var portalRGFormat = "https://portal.azure.com/#asset/HubsExtension/ResourceGroups//subscriptions/{0}/resourceGroups/{1}";
+
+        $scope.showError = function () {
+            $('#errorModal').toggle();
+        }
 
         function initialize($scope, $http) {
             // If we don't have the repository url, then don't init.  Also
@@ -303,11 +298,35 @@ function IsLocationParam(paramName) {
                         param.value = param.defaultValue;
                     }
                 }
+                this.deploy();
             },
             function (result) {
                 if (result.data) {
-                    alert(result.data.error)
+                    $scope.formData.errorMesg = result.data.error;
                 }
+            });
+        }
+
+        function deploy() {
+            var subscriptionId = $scope.formData.subscription.subscriptionId;
+            $scope.formData.deploymentSucceeded = false;
+            $scope.formData.errorMesg = null;
+            $scope.formData.statusMesgs = [];
+            telemetry.logDeploy($scope.formData.templateName);
+            $scope.formData.deployPayload = getDeployPayload($scope.formData.params);
+
+            $scope.formData.statusMesgs.push("Submitting Deployment");
+            $http({
+                method: "post",
+                url: "api/deployments/" + subscriptionId,
+                data: $scope.formData.deployPayload
+            })
+            .then(function (result) {
+                $scope.formData.statusMesgs.push("Deployment Started");
+                window.setTimeout(getStatus, constants.params.pollingInterval, $scope, $http);
+            },
+            function (result) {
+                $scope.formData.errorMesg = result.data.error;
             });
         }
 
@@ -318,11 +337,6 @@ function IsLocationParam(paramName) {
                 };
             $scope.formData.existingResourceGroup = curRg;
         }
-
-        function creatingNewRg() {
-            return !$scope.formData.existingResourceGroup.location;
-        }
-
         $scope.changeSubscription = function () {
             setDefaultRg($scope.formData.subscription);
         }
@@ -491,6 +505,7 @@ function IsLocationParam(paramName) {
                     if (result.data.appServiceName === $scope.formData.appServiceNameQuery) {
                         $scope.formData.appServiceNameAvailable = result.data.isAvailable;
                         $scope.formData.appServiceName = result.data.appServiceName;
+                        $scope.formData.deployPayload = getDeployPayload($scope.formData.params);
                     }
                 }, function (result) {
                     if (result.data) {
@@ -499,15 +514,10 @@ function IsLocationParam(paramName) {
                 });
             }
         }
-        $scope.nextStep = function () {
-            $scope.formData.deployPayload = getDeployPayload($scope.formData.params);
-        }
-
-
 
         function getDeployPayload(params) {
             var dataParams = {}
-            var rg = creatingNewRg() ? $scope.formData.newResourceGroup : $scope.formData.existingResourceGroup;
+            var rg = $scope.formData.newResourceGroup ;
             $scope.formData.finalResourceGroup = rg;
 
             for (var i = 0; i < params.length; i++) {
@@ -526,17 +536,16 @@ function IsLocationParam(paramName) {
                     param.value = parseInt(param.value);
                 }
 
-                if (creatingNewRg() &&
-                    (IsLocationParam(param.name))){
+                if ((IsLocationParam(param.name))){
 
                     rg.location = param.value;
                 }
 
                 dataParams[param.name] = { value: param.value };
             }
-
+            var location = $scope.formData.appServiceLocations[~~(Math.random() * $scope.formData.appServiceLocations.length)];
             if (!rg.location) {
-                rg.location = "East US";
+                rg.location = location;
             }
 
             return {
@@ -546,52 +555,6 @@ function IsLocationParam(paramName) {
                 templateUrl: $scope.formData.templateNameUrl,
                 repoUrl: sessionStorage.templateName
             };
-        }
-
-        initialize($scope, $http);
-
-    }]) // end FormSetupController
-
-
-    .controller('FormDeployController', ['$scope', '$http', function ($scope, $http) {
-        var statusMap = {};
-        statusMap["microsoft.web/sites"] = "Creating Website";
-        statusMap["microsoft.web/sites/config"] = "Updating Website Config";
-        statusMap["microsoft.web/sites/sourcecontrols"] = "Setting up Source Control";
-        statusMap["microsoft.web/serverfarms"] = "Creating Web Hosting Plan";
-        var portalWebSiteFormat = "https://portal.azure.com#resource/subscriptions/{0}/resourceGroups/{1}/providers/Microsoft.Web/sites/{2}";
-        var portalRGFormat = "https://portal.azure.com/#asset/HubsExtension/ResourceGroups//subscriptions/{0}/resourceGroups/{1}";
-
-        $scope.showError = function () {
-            $('#errorModal').modal('show');
-        }
-
-        $scope.retryDeploy = function () {
-            initialize($scope, $http);
-        }
-
-        function initialize($scope, $http) {
-            var subscriptionId = $scope.formData.subscription.subscriptionId;
-            $scope.formData.deploymentSucceeded = false;
-            $scope.formData.errorMesg = null;
-            $scope.formData.statusMesgs = [];
-            telemetry.logDeploy($scope.formData.templateName);
-
-            $scope.formData.statusMesgs.push("Submitting Deployment");
-            $http({
-                method: "post",
-                url: "api/deployments/" + subscriptionId,
-                data: $scope.formData.deployPayload
-            })
-            .then(function (result) {
-                $scope.formData.statusMesgs.push("Deployment Started");
-                window.setTimeout(getStatus, constants.params.pollingInterval, $scope, $http);
-            },
-            function (result) {
-                $scope.formData.errorMesg = result.data.error;
-            });
-            $scope.formData.deployPayload = getDeployPayload($scope.formData.params);
-
         }
 
         function getStatus($scope, $http, deploymentUrl) {
@@ -638,11 +601,11 @@ function IsLocationParam(paramName) {
                 else if (result.data.provisioningState === "Succeeded") {
                     $scope.formData.siteUrl = result.data.siteUrl;
 
-                        $scope.formData.deploymentSucceeded = true;
-                        $scope.formData.portalUrl = portalRGFormat.format(
-                            $scope.formData.subscription.subscriptionId,
-                            $scope.formData.finalResourceGroup.name);
-                        telemetry.logDeploySucceeded($scope.formData.templateName);
+                    $scope.formData.deploymentSucceeded = true;
+                    $scope.formData.portalUrl = portalRGFormat.format(
+                        $scope.formData.subscription.subscriptionId,
+                        $scope.formData.finalResourceGroup.name);
+                    telemetry.logDeploySucceeded($scope.formData.templateName);
                 }
                 else {
                     window.setTimeout(getStatus, constants.params.pollingInterval, $scope, $http);
@@ -688,51 +651,8 @@ function IsLocationParam(paramName) {
             telemetry.logDeployFailed($scope.formData.templateName);
             $scope.formData.errorMesg = mesg;
         }
-
-        function getDeployPayload(params) {
-            var dataParams = {}
-            var rg =  $scope.formData.newResourceGroup ;
-            $scope.formData.finalResourceGroup = rg;
-
-            for (var i = 0; i < params.length; i++) {
-                var param = params[i];
-
-                // Since we tranformed workersize to pretty values earlier, we need to convert them back
-                if (param.name.toLowerCase() === "workersize") {
-                    param.value = param.allowedValues.indexOf(param.value).toString();
-                }
-
-                // JavaScript may convert string representations of numbers incorrectly
-                if (typeof param.value === "number" && param.type.toLowerCase() === 'string') {
-                    param.value = param.value.toString();
-                }
-                else if (typeof param.value === "string" && param.type.toLowerCase() === "int") {
-                    param.value = parseInt(param.value);
-                }
-
-                if ((IsLocationParam(param.name))) {
-
-                    rg.location = param.value;
-                }
-
-                dataParams[param.name] = { value: param.value };
-            }
-
-            if (!rg.location) {
-                rg.location = "East US";
-            }
-
-            return {
-                parameters: dataParams,
-                subscriptionId: $scope.formData.subscription.subscriptionId,
-                resourceGroup: rg,
-                templateUrl: $scope.formData.templateNameUrl,
-                repoUrl: sessionStorage.templateName
-            };
-        }
-
         initialize($scope, $http);
 
-    }]);  // end FormDeployController
+    }]) // end FormSetupController
 
 })();
