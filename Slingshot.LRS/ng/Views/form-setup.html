@@ -1,10 +1,9 @@
-﻿
-<div ng-show="formData.params">
-    <div class="form-group col-md-6">
+﻿<div ng-show="formData.params">
+    <div ng-show="formData.errorMesg && !formData.deploymentSucceeded" class="form-group col-md-6">
         <label for="subscription">Subscription</label>
         <select class="form-control" ng-model="formData.subscription" ng-options="subscription.displayName for subscription in formData.subscriptions" ng-change="changeSubscription()"></select>
     </div>
-    <div class="form-group col-md-6" ng-repeat="param in formData.params" ng-switch on="param.name" ng-show="showParam(param)">
+    <div class="form-group col-md-6" ng-repeat="param in formData.params" ng-switch on="param.name" ng-show="showParam(param) && formData.errorMesg && !formData.deploymentSucceeded">
         <!-- Special handling for appServiceName form field -->
         <div ng-switch-when="appServiceName">
             <label>{{param | camelCaseToHuman}}</label>
@@ -16,29 +15,9 @@
             </span>
             <input type="text" class="form-control" name="param.name" ng-model="param.value" ng-change="checkAppServiceName(param.value)">
         </div>
-
-        <!-- Special handling for appServiceLocation form field -->
-        <div ng-switch-when="appServiceLocation">
-            <label>{{param | camelCaseToHuman}}</label>
-            <select class="form-control" ng-model="param.value" ng-options="location for location in formData.appServiceLocations"></select>
-        </div>
-        <div ng-switch-when="msdeployPackageUrl">
-        </div>
-
-        <!-- All other form fields -->
-        <div ng-switch-default>
-            <label>{{param | camelCaseToHuman}}</label>
-            <span ng-show="param.validationError !== null" class="text-danger"> - {{param.validationError}}</span>
-
-            <input type="password" ng-if="getFieldType(param) === 'password'" class="form-control" name="param.name" ng-model="param.value">
-
-            <input type="text" ng-if="getFieldType(param) === 'text'" class="form-control" name="param.name" ng-model="param.value">
-
-            <select class="form-control" ng-if="getFieldType(param) === 'select'" ng-model="param.value" ng-options="value for value in param.allowedValues"></select>
-        </div>
     </div>
     <!-- Modal -->
-    <div class="modal fade" id="errorModal" tabindex="-1" role="dialog" aria-labelledby="errorModalLabel" aria-hidden="true">
+    <div class="modal fade" id="errorModal" tabindex="-1" role="dialog" aria-labelledby="errorModalLabel">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -57,7 +36,7 @@
 
     <div class="result-body">
         <ul>
-            <div ng-repeat="mesg in formData.statusMesgs">
+            <div ng-show="!formData.deploymentSucceeded" ng-repeat="mesg in formData.statusMesgs">
                 {{mesg}}
                 <span id="spinnerStatus" ng-if="$last"><i class="fa fa-spinner fa-spin" ng-show="!formData.errorMesg && !formData.deploymentSucceeded"></i></span>
             </div>
@@ -67,6 +46,14 @@
             </div>
             <div ng-show="formData.deploymentSucceeded">
                 <div>Deployment Complete</div>
+                <div class="column small-4 large-2 end">
+                    <div id="select-template" data-slug="mvc-5-with-entity-framework" data-event="tryappservice-clicked-template" data-mixpanel-template="mvc-5-with-entity-framework" data-mixpanel-apptype="web" class="selection product-placement product-placement-same-size">
+                        <a href="/en-us/try/app-service/web/mvc-5-with-entity-framework/?Step=template" data-deploy="/en-us/try/app-service/deploy/?Type=web&amp;Template=mvc-5-with-entity-framework&amp;Step=template" data-status-auth="/en-us/try/app-service/auth/?Type=web&amp;Template=mvc-5-with-entity-framework&amp;Step=template"
+                           class="no-ajax" ms.pgarea="content" ms.cmpgrp="body" ms.cmptyp="link" ms.cmpnm="MVC 5 With Entity Framework" ms.title="" ms.interactiontype="1">
+                            <div class="img-container"> <img class="full-width" src="/images/page/try/app-service/asp-net.png" alt=""> </div> <span class="title sd-equalize" data-set="template" style="height: 37px;">MVC 5 With Entity Framework</span>
+                        </a>
+                    </div>
+                </div>
                 <div>
                     <a target="_blank" ng-href="{{formData.portalUrl}}">Manage</a> your
                     <span ng-show="formData.repoParamFound">
@@ -78,11 +65,9 @@
             </div>
         </ul>
     </div>
-
     <div class="row" ng-show="formData.errorMesg">
         <div class="form-group col-xs-6 col-xs-offset-6 text-right">
-            <a ng-click="deploy()" class="btn btn-info wizard-button">Retry</a>
+            <a ng-click="retryDeploy()" class="btn btn-info wizard-button">Retry</a>
         </div>
     </div>
-
 </div>

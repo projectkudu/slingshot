@@ -76,8 +76,8 @@ var constantsObj = function () {
     var that = {};
     var paramsObj = function () {
         var that = {};
-        that.appServiceLocationLower = "appServiceLocation";
         that.pollingInterval = 3000;
+        that.appServiceLocationLower = "appservicelocation";
         return that;
     }
 
@@ -188,7 +188,7 @@ function IsLocationParam(paramName) {
         initialize();
     }])
 
-    .controller('FormSetupController', ['$scope', '$http', function ($scope, $http) {
+    .controller('FormSetupController', ['$window','$scope', '$http', function ($scope, $http) {
         var paramObject = function () {
             var that = {};
             that.name = null;
@@ -205,11 +205,14 @@ function IsLocationParam(paramName) {
         statusMap["microsoft.web/sites/config"] = "Updating Website Config";
         statusMap["microsoft.web/sites/sourcecontrols"] = "Setting up Source Control";
         statusMap["microsoft.web/serverfarms"] = "Creating Web Hosting Plan";
-        var portalWebSiteFormat = "https://portal.azure.com#resource/subscriptions/{0}/resourceGroups/{1}/providers/Microsoft.Web/sites/{2}";
+        var portalWebSiteFormat = "https://portal.azure.com#resource/subscriptions/{0}/resourceGroups/{1}/providers/Microsoft.Web/sites/{2}/quickstart";
         var portalRGFormat = "https://portal.azure.com/#asset/HubsExtension/ResourceGroups//subscriptions/{0}/resourceGroups/{1}";
 
         $scope.showError = function () {
             $('#errorModal').toggle();
+        }
+        $scope.retryDeploy = function () {
+            deploy();
         }
 
         function initialize($scope, $http) {
@@ -291,14 +294,11 @@ function IsLocationParam(paramName) {
                             $scope.formData.appServiceNameQuery = param.defaultValue;
                         }
                     }
-                    else if (IsLocationParam(paramName) && $scope.formData.appServiceLocations && $scope.formData.appServiceLocations.length > 0 && !param.defaultValue) {
-                        param.value = $scope.formData.appServiceLocations[0];
-                    }
                     if (param.value === null || typeof param.value === "undefined" || param.defaultValueComeFirst) {
                         param.value = param.defaultValue;
                     }
                 }
-                this.deploy();
+                deploy();
             },
             function (result) {
                 if (result.data) {
@@ -537,16 +537,14 @@ function IsLocationParam(paramName) {
                 }
 
                 if ((IsLocationParam(param.name))){
-
-                    rg.location = param.value;
+                    var location = $scope.formData.appServiceLocations[~~(Math.random() * $scope.formData.appServiceLocations.length)];
+                    param.value = location;
+                    rg.location = location;
                 }
 
                 dataParams[param.name] = { value: param.value };
             }
-            var location = $scope.formData.appServiceLocations[~~(Math.random() * $scope.formData.appServiceLocations.length)];
-            if (!rg.location) {
-                rg.location = location;
-            }
+
 
             return {
                 parameters: dataParams,
@@ -606,6 +604,7 @@ function IsLocationParam(paramName) {
                         $scope.formData.subscription.subscriptionId,
                         $scope.formData.finalResourceGroup.name);
                     telemetry.logDeploySucceeded($scope.formData.templateName);
+                    $window. $scope.formData.portalUrl
                 }
                 else {
                     window.setTimeout(getStatus, constants.params.pollingInterval, $scope, $http);

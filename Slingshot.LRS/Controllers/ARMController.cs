@@ -127,7 +127,7 @@ namespace Slingshot.Controllers
 
         [Authorize]
         [HttpGet]
-        public async Task<HttpResponseMessage> GetDeploymentStatus(string subscriptionId, string resourceGroup, string siteName = null)
+        public async Task<HttpResponseMessage> GetDeploymentStatus(string subscriptionId, string resourceGroup, string appServiceName = null)
         {
             string provisioningState = null;
             string hostName = null;
@@ -152,13 +152,9 @@ namespace Slingshot.Controllers
                 responseObj["operations"] = JObject.Parse(getOpResponse.Content.ReadAsStringAsync().Result);
             }
 
-            if (provisioningState == "Succeeded" && siteName != null)
+            if (provisioningState == "Succeeded")
             {
-                using (var wsClient = GetWSClient(subscriptionId))
-                {
-                    hostName = (await wsClient.Sites.GetSiteAsync(resourceGroup, siteName, null)).HostNames[0];
-                    responseObj["siteUrl"] = string.Format("https://{0}", hostName);
-                }
+                    responseObj["siteUrl"] = string.Format("https://{0}.azurewebsites.net", appServiceName);
             }
 
             responseObj["provisioningState"] = provisioningState;
@@ -259,7 +255,7 @@ namespace Slingshot.Controllers
                 returnObj["isManualIntegration"] = isManualIntegration;
             }
 
-            var templateUrl = $"https://trywebsites-next.azurewebsites.net/api/armtemplate/{templateName}";
+            var templateUrl = $"https://tryappservice.azure.com/api/armtemplate/{templateName}";
             Task<JObject> getTemplateTask = HttpClientUtils.DownloadJson(templateUrl);
             await Task.WhenAll(getTemplateTask);
 
