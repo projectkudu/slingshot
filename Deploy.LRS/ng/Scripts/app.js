@@ -74,8 +74,14 @@ var telemetryObj = function () {
 
     that.logPageView = function ()
     {
-        if (typeof (mixpanel) !== 'undefined')
-            mixpanel.track('LRS Deploy Page Viewed', { page: window.location, properties: that.addMixPanelProperties(null), measurements: null});
+        if (typeof (mixpanel) !== 'undefined') {
+            var mixpaneluserid = getQueryVariable("correlationId");
+            if (mixpaneluserid)
+            {
+                mixpanel.identify(mixpaneluserid);
+            }
+            mixpanel.track('LRS Deploy Page Viewed', { page: window.location, properties: that.addMixPanelProperties(null), measurements: null });
+        }
     }
 
     that.addMixPanelProperties = function (properties) {
@@ -111,7 +117,6 @@ var constantsObj = function () {
     var paramsObj = function () {
         var that = {};
         that.pollingInterval = 2000;
-        that.appServiceLocationLower = "appservicelocation";
         return that;
     }
 
@@ -119,18 +124,22 @@ var constantsObj = function () {
 
     return that;
 }
+function getQueryVariable(variable) {
+    var query = window.location.search.substring(1);
+    var vars = query.split("&");
+    for (var i = 0; i < vars.length; i++) {
+        var pair = vars[i].split("=");
+        if (pair[0] == variable) { return pair[1]; }
+    }
+    return (false);
+
+}
 
 var telemetry = telemetryObj();
 var constants = constantsObj();
 
-function IsLocationParam(paramName) {
-    paramName = paramName.toLowerCase();
-
-    return paramName === constants.params.appServiceLocationLower ;
-}
 
 (function () {
-
     // app.js
     // create our angular app and inject ngAnimate and ui-router 
     // =============================================================================
@@ -165,25 +174,9 @@ function IsLocationParam(paramName) {
             return camelCase;
         }
     })
-
-
-
     .controller('FormController', ['$window', '$scope', '$location', '$http', function ($window, $scope, $location, $http) {
         // we will store all of our form data in this object
         $scope.formData = {};
-
-        function getQueryVariable(variable) {
-            var query = window.location.search,
-                token = variable + "=",
-                startIndex = query.indexOf(token);
-
-            if (startIndex >= 0) {
-                return query.substring(startIndex + token.length);
-            }
-            return null;
-        }
-
-
         var paramObject = function () {
             var that = {};
             that.name = null;
