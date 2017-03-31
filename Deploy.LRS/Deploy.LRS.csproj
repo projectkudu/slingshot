@@ -212,6 +212,7 @@
   <ItemGroup>
     <Content Include="Content\Styles\app.css" />
     <Content Include="Content\Fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Content\Styles\app.min.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <None Include="Default.cshtml" />
@@ -222,6 +223,7 @@
     <Content Include="ApplicationInsights.config">
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="ng\Scripts\app.min.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -231,6 +233,7 @@
     <Content Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
+    <Content Include="Default.min.cshtml" />
     <None Include="Properties\PublishProfiles\aa.pubxml" />
     <None Include="Web.Deploy.config" />
   </ItemGroup>

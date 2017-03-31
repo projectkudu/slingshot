@@ -47,7 +47,7 @@ namespace Deploy.Controllers
                 {"Microsoft.Search", "Search"},
                 {"SuccessBricks.ClearDB", "ClearDB"},
                 {"Microsoft.BizTalkServices","Biz Talk Services"},
-                {"Microsoft.Sql","SQL Azure"},
+                {"Microsoft.Sql","SQL Azure"}
             };
 
             sm_providerMap = providerMap;
@@ -370,15 +370,6 @@ namespace Deploy.Controllers
             return GetRMClient(token, subscriptionId);
         }
 
-        private WebSiteManagementClient GetWSClient(string subscriptionId)
-        {
-            var token = Request.Headers.GetValues("X-MS-OAUTH-TOKEN").FirstOrDefault();
-            var tokenCreds = new TokenCredentials(token);
-            var client = new WebSiteManagementClient(new Uri(Utils.GetCSMUrl(Request.RequestUri.Host)), tokenCreds);
-            client.SubscriptionId = subscriptionId;
-            return client;
-        }
-
         private ResourceManagementClient GetRMClient(string token, string subscriptionId)
         {
             var creds = new Microsoft.Azure.TokenCloudCredentials(subscriptionId, token);
@@ -413,19 +404,5 @@ namespace Deploy.Controllers
             return basicDeployment;
         }
 
-        private static void PurgeCustomProperties(JObject template)
-        {
-            JObject paramObjFromTmpl = template.Value<JObject>("parameters");
-            if (paramObjFromTmpl != null)
-            {
-                foreach (var p in paramObjFromTmpl)
-                {
-                    if (paramObjFromTmpl[p.Key] != null && paramObjFromTmpl[p.Key][Constants.CustomTemplateProperties.DefaultValueComeFirst] != null)
-                    {
-                        paramObjFromTmpl[p.Key][Constants.CustomTemplateProperties.DefaultValueComeFirst].Parent.Remove();
-                    }
-                }
-            }
-        }
     }
 }
