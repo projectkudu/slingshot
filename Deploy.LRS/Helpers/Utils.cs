@@ -7,6 +7,8 @@ using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
 using Deploy.Models;
+using System.Net.Sockets;
+using System.Text;
 
 namespace Deploy.Helpers
 {
@@ -69,7 +71,7 @@ namespace Deploy.Helpers
             {
                 return "https://api-current.resources.windows-int.net";
             }
-            else if (host.EndsWith(".ant-intapp.windows-int.net", StringComparison.OrdinalIgnoreCase))
+            else if (host.EndsWith(".waws-int.azure-int.net", StringComparison.OrdinalIgnoreCase))
             {
                 return "https://api-dogfood.resources.windows-int.net";
             }
@@ -87,7 +89,7 @@ namespace Deploy.Helpers
             {
                 return "https://umapi.rdfetest.dnsdemo4.com";
             }
-            else if (host.EndsWith(".ant-intapp.windows-int.net", StringComparison.OrdinalIgnoreCase))
+            else if (host.EndsWith(".waws-int.azure-int.net", StringComparison.OrdinalIgnoreCase))
             {
                 return "https://umapi-preview.core.windows-int.net";
             }
@@ -124,6 +126,24 @@ namespace Deploy.Helpers
             throw new InvalidOperationException(string.Format(
                 CultureInfo.InvariantCulture,
                 "{0} {1}, {2}", operation, response.StatusCode, content));
+        }
+        public static void FireAndForget(string hostName)
+        {
+            try
+            {
+                var httpHeaders = "GET / HTTP/1.0\r\n" +
+                "Host: " + hostName + "\r\n" +
+                "\r\n";
+                using (var tcpClient = new TcpClient(hostName, 80))
+                {
+                    tcpClient.Client.Send(Encoding.ASCII.GetBytes(httpHeaders));
+                    tcpClient.Close();
+                }
+            }
+            catch (Exception)
+            {
+                //ignore any tcp exceptions
+            }
         }
     }
 }

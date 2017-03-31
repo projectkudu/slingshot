@@ -50,23 +50,57 @@ if (!String.prototype.format) {
 
 var telemetryObj = function () {
     var that = {};
-    that.logGetTemplate = function (repoUrl) {
-        appInsights.trackEvent("GetTemplate", { repoUrl: repoUrl });
+    that.logGetTemplate = function (templateName) {
+        var props = { templateName: templateName };
+        appInsights.trackEvent("GetLRSTemplate", props);
 
+    if (typeof (mixpanel) !== 'undefined')
+        mixpanel.track("GetLRSTemplate", { properties: this.addMixPanelProperties(props), measurements: null });
     }
 
-    that.logDeploy = function (repoUrl) {
-        appInsights.trackEvent("Deploy", { repoUrl: repoUrl });
+    that.logAuthenticatedUser = function (authenticatedUserId) {
+        if (authenticatedUserId) {
+            if (typeof (mixpanel) !== 'undefined') {
+                var userDetails = authenticatedUserId.split("#");
+                if (userDetails.length === 2) {
+                    mixpanel.alias(userDetails[1]);
+                } else {
+                    mixpanel.alias(authenticatedUserId);
+                }
+            }
+            appInsights.setAuthenticatedUserContext(authenticatedUserId, '');
+        }
+    }
 
+    that.logPageView = function ()
+    {
+        if (typeof (mixpanel) !== 'undefined')
+            mixpanel.track('LRS Deploy Page Viewed', { page: window.location, properties: that.addMixPanelProperties(null), measurements: null});
+    }
 
+    that.addMixPanelProperties = function (properties) {
+            properties = properties || {};
+            properties['sitename'] = 'functions';
+        }
+    that.logDeploy = function (templateName) {
+        var props = { templateName: templateName };
+        appInsights.trackEvent("LRSDeployStarted", { templateName: templateName });
+        if (typeof (mixpanel) !== 'undefined')
+            mixpanel.track('LRSDeployStarted', { page: window.location, properties: that.addMixPanelProperties(props), measurements: null });
     }
         
-    that.logDeploySucceeded = function (repoUrl) {
-        appInsights.trackEvent("DeploySucceeded", { repoUrl: repoUrl });
+    that.logDeploySucceeded = function (templateName) {
+        var props = { templateName: templateName };
+        appInsights.trackEvent("LRSDeploySucceeded", props);
+        if (typeof (mixpanel) !== 'undefined')
+            mixpanel.track('LRSDeploySucceeded', { page: window.location, properties: that.addMixPanelProperties(props), measurements: null });
     }
 
-    that.logDeployFailed = function (repoUrl) {
-        appInsights.trackEvent("DeployFailed", { repoUrl: repoUrl });
+    that.logDeployFailed = function (templateName) {
+        var props = { templateName: templateName };
+        appInsights.trackEvent("LRSDeployFailed", props);
+        if (typeof (mixpanel) !== 'undefined')
+            mixpanel.track('LRSDeployFailed', { page: window.location, properties: that.addMixPanelProperties(props), measurements: null });
     }
 
     return that;
@@ -138,11 +172,6 @@ function IsLocationParam(paramName) {
         // we will store all of our form data in this object
         $scope.formData = {};
 
-        ////////////////////
-        // Private Methods
-        ////////////////////
-
-
         function getQueryVariable(variable) {
             var query = window.location.search,
                 token = variable + "=",
@@ -171,11 +200,12 @@ function IsLocationParam(paramName) {
         statusMap["microsoft.web/sites/config"] = "Updating Website Config";
         statusMap["microsoft.web/sites/sourcecontrols"] = "Setting up Source Control";
         statusMap["microsoft.web/serverfarms"] = "Creating Web Hosting Plan";
-        var portalWebSiteFormat = "https://portal.azure.com#resource/subscriptions/{0}/resourceGroups/{1}/providers/Microsoft.Web/sites/{2}/quickstart";
-        var portalRGFormat = "https://portal.azure.com/#asset/HubsExtension/ResourceGroups//subscriptions/{0}/resourceGroups/{1}";
-
+        var portalWebSiteFormat = "https://portal.azure.com#resource/subscriptions/{0}/resourceGroups/{1}/providers/Microsoft.Web/sites/{2}/QuickStartSetting";
+        var portalRGFormat = "https://portal.azure.com/#asset/HubsExtension/ResourceGroups/subscriptions/{0}/resourceGroups/{1}";
+        var basePortalUrl= "https://portal.azure.com/";
         function initialize($scope, $http) {
             $scope.formData.templateName = getQueryVariable("templateName");
+            telemetry.logPageView();
 
             if (!$scope.formData.templateName || $scope.formData.templateName.length === 0) {
                 if (sessionStorage.templateName) {
@@ -211,21 +241,16 @@ function IsLocationParam(paramName) {
                 $scope.formData.userDisplayName = result.data.userDisplayName;
                 $scope.formData.subscriptions = result.data.subscriptions;
                 $scope.formData.tenants = result.data.tenants;
-                $scope.formData.branch = result.data.branch;
-                $scope.formData.template = result.data.template;
                 $scope.formData.templateName = result.data.templateName;
-                $scope.formData.templateName = result.data.templateName;
-                $scope.formData.appServiceLocations = result.data.appServiceLocations;
                 $scope.formData.appServiceName = result.data.appServiceName;
-                $scope.formData.appServiceNameQuery = result.data.appServiceName;
+                $scope.formData.appServiceLocation = result.data.appServiceLocation;
                 $scope.formData.templateNameUrl = result.data.templateUrl;
-                $scope.formData.repositoryDisplayUrl = result.data.repositoryDisplayUrl;
-                $scope.formData.scmType = result.data.scmType;
+                $scope.formData.email= result.data.email;
                 $scope.formData.newResourceGroup = {
                     name: result.data.resourceGroupName,
                     location: ""
                 };
-
+                telemetry.logAuthenticatedUser($scope.formData.email);
                 // Select first subscription
                 if ($scope.formData.subscriptions && $scope.formData.subscriptions.length > 0) {
                     var sub = $scope.formData.subscriptions[0];
@@ -233,49 +258,16 @@ function IsLocationParam(paramName) {
                     setDefaultRg(sub);
                 }
 
-                // Pull out EULA metadata if available. Require http* and sanitize
-                $scope.formData.eula = null;
-                var metadata = result.data.template.metadata;
-                if (metadata && metadata["eula"]) {
-                    var eula = encodeURI(metadata["eula"].trim());
-                    if (eula.indexOf('http') === 0) {
-                        $scope.formData.eula = eula;
-                    }
-                }
-
-                // Pull out template parameters to show on UI
                 $scope.formData.params = [];
-                $scope.formData.repoParamFound = false;
-                var parameters = $scope.formData.template.parameters;
-                for (var name in parameters) {
-                    var parameter = parameters[name];
                     var param = paramObject();
 
-                    param.name = name;
-                    param.type = parameter.type;
-                    param.allowedValues = parameter.allowedValues;
-                    param.defaultValue = parameter.defaultValue;
-                    param.defaultValueComeFirst = parameter.defaultValueComeFirst;
+                    param.name = "appserviceName";
+                    param.type = "string";
+                    param.value = result.data.appServiceName;
+                    param.defaultValue = result.data.appServiceName;
 
                     $scope.formData.params.push(param);
-
-                    var paramName = param.name.toLowerCase();
-                    if (paramName === "msdeploypackageurl") {
-                        $scope.formData.repoParamFound = true;
-                    }
-                    else if (paramName === "appservicename") {
-                        param.value = result.data.appServiceName;
-                        $scope.formData.appServiceNameAvailable = true;
-
-                        if (param.defaultValueComeFirst) {
-                            $scope.formData.appServiceName = param.defaultValue;
-                            $scope.formData.appServiceNameQuery = param.defaultValue;
-                        }
-                    }
-                    if (param.value === null || typeof param.value === "undefined" || param.defaultValueComeFirst) {
-                        param.value = param.defaultValue;
-                    }
-                }
+              
                 deploy();
             },
             function (result) {
@@ -284,6 +276,7 @@ function IsLocationParam(paramName) {
                 }
             });
         }
+        
 
         function deploy() {
             var subscriptionId = $scope.formData.subscription.subscriptionId;
@@ -325,46 +318,7 @@ function IsLocationParam(paramName) {
                 param.value = $scope.formData.templateName;
                 return false;
             }
-            else if (name === 'branch') {
-                param.value = $scope.formData.branch;
-                return false;
-            }
-            else if (name === 'hostingplanname') {
-                return false;
-            }
-            else if (name === 'ismercurial') {
-                return false;
-            }
-            else if (name === "ismanualintegration") {
-                return $scope.formData.scmProvider === "Bitbucket";
-            }
-            else if (name === 'workersize') {
-                if (!param.aliased) {
-                    param.aliased = true;
-
-                    // Creating aliases this way means that we need to undo them later.  There should be a better
-                    // way to get this to work with Angular's select box, but I couldn't get it to work so
-                    // for now this will have to do.
-                    param.allowedValues[0] = "Small";
-                    param.allowedValues[1] = "Medium";
-                    param.allowedValues[2] = "Large";
-                }
-
-                var skuParam = getParamByName($scope.formData.params, 'sku');
-                if (skuParam &&
-                    (skuParam.value === 'Free' ||
-                    skuParam.value === 'Shared')) {
-                    param.value = 'Small';
-                    return false;
-                }
-            }
-
             return true;
-        }
-
-        $scope.enableTooltip = function (id) {
-            var $tooltip = $(id);
-            $tooltip.tooltip();
         }
 
         function getParamByName(params, name) {
@@ -373,97 +327,7 @@ function IsLocationParam(paramName) {
                     return params[i];
                 }
             }
-
             return null;
-        }
-
-        $scope.getFieldType = function (param) {
-            if (param.name.toLowerCase().indexOf("password") >= 0) {
-                return "password";
-            }
-            if (param.allowedValues) {
-                return "select";
-            }
-            else {
-                return "text";
-            }
-        }
-
-        $scope.canMoveToNextStep = function () {
-            var isValid = true;
-
-            if (!$scope.formData.subscription
-                || !$scope.formData.params) {
-
-                return false;
-            }
-
-            var rgs = $scope.formData.subscription.resourceGroups;
-                var regex = new RegExp("^[0-9a-zA-Z\\()._-]+[0-9a-zA-Z()_-]$");
-                if (!regex.test($scope.formData.newResourceGroup.name)) {
-                    $scope.formData.resourceGroupError = "Invalid Resource Group Name";
-                    isValid = false;
-
-                if (isValid) {
-                    $scope.formData.resourceGroupError = null;
-                }
-            }
-            else {
-                $scope.formData.resourceGroupError = null;
-            }
-
-            // If we're dealing with a site, and the name is not available, we can't go to next step.
-            // In the case of non-site template, appServiceName will be undefined.
-                if ($scope.formData.appServiceName === "" ||
-                ($scope.formData.appServiceName &&
-                    (!$scope.formData.appServiceNameAvailable || $scope.formData.appServiceName !== $scope.formData.appServiceNameQuery))) {
-                isValid = false;
-            }
-
-            // Go through all the params, making sure none are blank
-            var params = $scope.formData.params;
-            for (var i = 0; i < params.length; i++) {
-                var param = params[i];
-
-                if (param.type.toLowerCase() === 'int') {
-                    if (param.value && isNaN(param.value)) {
-                        param.validationError = "Must be a number";
-                        isValid = false;
-                    }
-                    else {
-                        param.validationError = null;
-                        if (!param.value) {
-                            isValid = false;
-                        }
-                    }
-                }
-
-                if (param.value === null || param.value === undefined) {
-                    isValid = false;
-                }
-                else if (param.value === "" && param.defaultValue !== "") {
-                    isValid = false;
-                }
-            }
-            return isValid;
-        }
-
-        $scope.checkAppServiceName = function (appServiceName) {
-            $scope.formData.appServiceNameAvailable = false;
-            if (appServiceName) {
-                $scope.formData.appServiceNameQuery = appServiceName;
-                window.setTimeout(queryAppServiceName, 250, $scope, $http, appServiceName);
-            }
-            else {
-                $scope.formData.appServiceName = '';
-            }
-        }
-
-        $scope.showAppServiceNameAvailableMesg = function () {
-            if (($scope.formData.appServiceName && $scope.formData.appServiceName.length > 0))  {
-                return true;
-            }
-            return false;
         }
 
         function getDeployPayload(params) {
@@ -471,30 +335,12 @@ function IsLocationParam(paramName) {
             var rg = $scope.formData.newResourceGroup ;
             $scope.formData.finalResourceGroup = rg;
 
-            for (var i = 0; i < params.length; i++) {
-                var param = params[i];
+            var nameParam =  { name: "appServiceName", value: $scope.formData.appServiceName };
+            var locationParam =  { name: "appServiceLocation", value: $scope.formData.appServiceLocation};
 
-                // Since we tranformed workersize to pretty values earlier, we need to convert them back
-                if (param.name.toLowerCase() === "workersize") {
-                    param.value = param.allowedValues.indexOf(param.value).toString();
-                }
-
-                // JavaScript may convert string representations of numbers incorrectly
-                if (typeof param.value === "number" && param.type.toLowerCase() === 'string') {
-                    param.value = param.value.toString();
-                }
-                else if (typeof param.value === "string" && param.type.toLowerCase() === "int") {
-                    param.value = parseInt(param.value);
-                }
-
-                if ((IsLocationParam(param.name))){
-                    var location = $scope.formData.appServiceLocations[~~(Math.random() * $scope.formData.appServiceLocations.length)];
-                    param.value = location;
-                    rg.location = location;
-                }
-
-                dataParams[param.name] = { value: param.value };
-            }
+            dataParams[nameParam.name] = { value: nameParam.value };
+            dataParams[locationParam.name] = { value: locationParam.value };
+            rg.location = locationParam.value;
             return {
                 parameters: dataParams,
                 subscriptionId: $scope.formData.subscription.subscriptionId,
@@ -537,9 +383,7 @@ function IsLocationParam(paramName) {
                     }
                 }
                 if (error || result.data.provisioningState === "Failed" || result.data.provisioningState === "Succeeded") {
-                    addErrorMesg($scope, result);
-                    $window.location.href = $scope.formData.portalUrl;
-                    $scope.formData.siteUrl = result.data.siteUrl;
+                    $scope.formData.portalUrl = basePortalUrl;
 
                     $scope.formData.deploymentSucceeded = (result.data.provisioningState === "Succeeded");
                     if ($scope.formData.deploymentSucceeded)

@@ -24,12 +24,12 @@ namespace Deploy.Modules
 
         public static string AADClientId
         {
-            get { return Environment.GetEnvironmentVariable("AADClientId"); }
+            get { return Settings.AADClientId; }
         }
 
         public static string AADClientSecret
         {
-            get { return Environment.GetEnvironmentVariable("AADClientSecret"); }
+            get { return Settings.AADClientSecret; }
         }
 
 

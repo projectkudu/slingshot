@@ -79,6 +79,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Microsoft.Azure.Management.Resources.2.18.0-preview\lib\net40\Microsoft.Azure.ResourceManager.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform">
+      <HintPath>..\..\AzureDeployPortal\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.3\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.Diagnostics.Tracing.EventSource">
       <HintPath>..\packages\Microsoft.Diagnostics.Tracing.EventSource.Redist.1.0.24\lib\net40\Microsoft.Diagnostics.Tracing.EventSource.dll</HintPath>
@@ -141,6 +144,20 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Razor">
+      <HintPath>..\..\AzureDeployPortal\packages\Microsoft.AspNet.Razor.3.2.3\lib\net45\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\AzureDeployPortal\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\AzureDeployPortal\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor">
+      <HintPath>..\..\AzureDeployPortal\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Abstractions" />
@@ -182,9 +199,9 @@
     </Compile>
     <Compile Include="Helpers\Constants.cs" />
     <Compile Include="Helpers\HttpClientUtils.cs" />
+    <Compile Include="Helpers\Settings.cs" />
     <Compile Include="Helpers\Utils.cs" />
     <Compile Include="Models\CreateDeploymentResponse.cs" />
-    <Compile Include="Models\DeploymentNotificationInputs.cs" />
     <Compile Include="Models\Inputs.cs" />
     <Compile Include="Models\Subscriptions.cs" />
     <Compile Include="Modules\AADOAuth2AccessToken.cs" />
@@ -193,7 +210,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\Scripts\ie10-viewport-bug-workaround.js" />
     <Content Include="Content\Styles\app.css" />
     <Content Include="Content\Fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Content\themes\base\accordion.css" />
@@ -239,42 +255,14 @@
     <Content Include="Content\themes\base\tooltip.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
-    <Content Include="index.html" />
+    <None Include="Default.cshtml" />
     <Content Include="ng\Scripts\app.js" />
-    <Content Include="Content\Scripts\angular-animate.js" />
-    <Content Include="Content\Scripts\angular-animate.min.js" />
-    <Content Include="Content\Scripts\angular-aria.js" />
-    <Content Include="Content\Scripts\angular-aria.min.js" />
-    <Content Include="Content\Scripts\angular-cookies.js" />
-    <Content Include="Content\Scripts\angular-cookies.min.js" />
-    <Content Include="Content\Scripts\angular-csp.css" />
-    <Content Include="Content\Scripts\angular-loader.js" />
-    <Content Include="Content\Scripts\angular-loader.min.js" />
-    <Content Include="Content\Scripts\angular-messages.js" />
-    <Content Include="Content\Scripts\angular-messages.min.js" />
-    <Content Include="Content\Scripts\angular-mocks.js" />
-    <Content Include="Content\Scripts\angular-resource.js" />
-    <Content Include="Content\Scripts\angular-resource.min.js" />
-    <Content Include="Content\Scripts\angular-route.js" />
-    <Content Include="Content\Scripts\angular-route.min.js" />
-    <Content Include="Content\Scripts\angular-sanitize.js" />
-    <Content Include="Content\Scripts\angular-sanitize.min.js" />
-    <Content Include="Content\Scripts\angular-scenario.js" />
-    <Content Include="Content\Scripts\angular-touch.js" />
-    <Content Include="Content\Scripts\angular-touch.min.js" />
-    <Content Include="Content\Scripts\angular.js" />
-    <Content Include="Content\Scripts\angular.min.js" />
     <Content Include="Content\Fonts\glyphicons-halflings-regular.woff" />
     <Content Include="Content\Fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="Content\Fonts\glyphicons-halflings-regular.eot" />
     <Content Include="ApplicationInsights.config">
       <SubType>Designer</SubType>
     </Content>
-    <None Include="Content\Scripts\jquery-1.9.0.intellisense.js" />
-    <Content Include="Content\Scripts\bootstrap.js" />
-    <Content Include="Content\Scripts\bootstrap.min.js" />
-    <Content Include="Content\Scripts\jquery-1.9.0.js" />
-    <Content Include="Content\Scripts\jquery-1.9.0.min.js" />
     <Content Include="ng\Views\form.html" />
     <Content Include="Scripts\angular-animate.js" />
     <Content Include="Scripts\angular-animate.min.js" />
@@ -1058,7 +1046,6 @@
     <Content Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
-    <Content Include="Content\Scripts\jquery-1.9.0.min.map" />
     <Content Include="Scripts\version.json" />
     <Content Include="Scripts\errors.json" />
     <Content Include="Scripts\angular.min.js.map" />
@@ -1078,42 +1065,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Content\Scripts\version.json" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Content\Scripts\errors.json" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Content\Scripts\angular-touch.min.js.map" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Content\Scripts\angular-sanitize.min.js.map" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Content\Scripts\angular-route.min.js.map" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Content\Scripts\angular-resource.min.js.map" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Content\Scripts\angular-messages.min.js.map" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Content\Scripts\angular-loader.min.js.map" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Content\Scripts\angular-cookies.min.js.map" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Content\Scripts\angular-aria.min.js.map" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Content\Scripts\angular-animate.min.js.map" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Content\Scripts\angular.min.js.map" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Abstract\" />
