@@ -119,9 +119,7 @@ var constantsObj = function () {
         that.pollingInterval = 2000;
         return that;
     }
-
     that.params = paramsObj();
-
     return that;
 }
 function getQueryVariable(variable) {
@@ -141,26 +139,9 @@ var constants = constantsObj();
 
 (function () {
     // app.js
-    // create our angular app and inject ngAnimate and ui-router 
+    // create our angular app and ui-router 
     // =============================================================================
-    angular.module('formApp', ['ngAnimate', 'ui.router'])
-
-    // configuring our routes 
-    // =============================================================================
-    .config(function ($stateProvider, $urlRouterProvider) {
-
-        $stateProvider
-
-            // route to show our basic form (/form)
-            .state('form', {
-                url: '/',
-                templateUrl: 'ng/views/form.html',
-                controller: 'FormController'
-            })
-
-        // send users to the form page 
-        $urlRouterProvider.otherwise('/');
-    })
+    angular.module('formApp', [])
 
     // Custom filters
     // =============================================================================
@@ -205,7 +186,7 @@ var constants = constantsObj();
                     $scope.formData.templateName = sessionStorage.templateName;
                 }
                 else {
-                    $location.url("https://azuredeploy.net");
+                    $location.url("https://deploy.azure.com");
                     return;
                 }
             }
@@ -214,11 +195,8 @@ var constants = constantsObj();
                 sessionStorage.templateName = $scope.formData.templateName;
                 telemetry.logGetTemplate($scope.formData.templateName);
             }
-            $location.url("/");
-
             // If we don't have the repository url, then don't init.  Also
             // if the user hit "back" from the next page, we don't re-init.
-
             if (!$scope.formData.templateName || $scope.formData.templateName.length === 0 || $scope.formData.subscriptions) {
                 return;
             }
@@ -424,22 +402,6 @@ var constants = constantsObj();
             }
         }
 
-        function addErrorMesg($scope, result) {
-            var ops = result.data.operations.value;
-            var mesg = null;
-            for (var i = 0; i < ops.length; i++) {
-                if (ops[i].properties.provisioningState === "Failed") {
-                    mesg = ops[i].properties.statusMessage.Message;
-                }
-            }
-
-            if (!mesg) {
-                mesg = "Failed Deployment";
-            }
-
-            telemetry.logDeployFailed($scope.formData.templateName);
-            $scope.formData.errorMesg = mesg;
-        }
         initialize($scope, $http);
 
     }]) // end FormController
