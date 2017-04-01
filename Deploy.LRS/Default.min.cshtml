@@ -5,7 +5,7 @@
 @{var isAzure = !string.IsNullOrEmpty(Environment.GetEnvironmentVariable("WEBSITE_SITE_NAME")); var aiIinstrumentationKey = Deploy.Settings.AppInsightsInstrumentationKey; var mpIinstrumentationKey = Deploy.Settings.MixPanelInstrumentationKey;}
 <head>
     <meta charset="utf-8">
-    <title>Deploy to Azure</title>
+    <title>@Client.Title</title>
     <script type="text/javascript">var Resources={}; @foreach (var p in typeof(Client).GetProperties()){if (p.GetValue(null, null) !=null){@: Resources["@Html.Raw(@p.Name)"]="@Html.Raw(HttpUtility.JavaScriptStringEncode(p.GetValue(null, null).ToString()))";}}var CurrentCulture="@CultureInfo.CurrentCulture.TwoLetterISOLanguageName"; </script>
     <link href="favicon.ico" rel="icon" type="image/x-icon"> @{if (!string.IsNullOrEmpty(aiIinstrumentationKey))
         {

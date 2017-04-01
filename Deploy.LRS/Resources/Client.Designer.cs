@@ -637,7 +637,7 @@ namespace Deploy.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Try Azure App Service.
+        ///   Looks up a localized string similar to Deploy AppService To Azure.
         /// </summary>
         public static string Title {
             get {
