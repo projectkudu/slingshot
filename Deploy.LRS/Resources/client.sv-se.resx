@@ -1,0 +1,513 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Action_AllowContact" xml:space="preserve">
+    <value>Tillåt Microsoft att kontakta mig om denna feedback.</value>
+  </data>
+  <data name="Action_Cancel" xml:space="preserve">
+    <value>Avbryt</value>
+  </data>
+  <data name="Action_CreateAppServiceApp" xml:space="preserve">
+    <value>Skapa din Azure App Service-app</value>
+  </data>
+  <data name="Action_Delete" xml:space="preserve">
+    <value>Ta bort</value>
+  </data>
+  <data name="Action_DownloadAppContent" xml:space="preserve">
+    <value>Hämta {0}-innehåll</value>
+  </data>
+  <data name="Action_DownloadPublishingProfile" xml:space="preserve">
+    <value>Hämta publiceringsprofil</value>
+  </data>
+  <data name="Action_GitClone" xml:space="preserve">
+    <value>Klona eller pusha med git</value>
+  </data>
+  <data name="Action_GoToExistingApp" xml:space="preserve">
+    <value>Gå till befintlig app</value>
+  </data>
+  <data name="Action_ManageInAzurePortal" xml:space="preserve">
+    <value>Hantera i Azure Portal</value>
+  </data>
+  <data name="Action_MobileClients" xml:space="preserve">
+    <value>Hämta och kör din mobila klientapp</value>
+  </data>
+  <data name="Action_Monaco" xml:space="preserve">
+    <value>Redigera koden online</value>
+  </data>
+  <data name="Action_ReportAnIssue" xml:space="preserve">
+    <value>Rapportera ett problem</value>
+  </data>
+  <data name="Action_SelectAppType" xml:space="preserve">
+    <value>Välj apptyp</value>
+  </data>
+  <data name="Action_SelectTemplate" xml:space="preserve">
+    <value>Välj en mall och skapa din {0}</value>
+  </data>
+  <data name="Action_ShareAComment" xml:space="preserve">
+    <value>Dela en kommentar</value>
+  </data>
+  <data name="Action_Submit" xml:space="preserve">
+    <value>Skicka</value>
+  </data>
+  <data name="Action_Yes" xml:space="preserve">
+    <value>Ja</value>
+  </data>
+  <data name="Blog" xml:space="preserve">
+    <value>Blogg</value>
+  </data>
+  <data name="Calculator" xml:space="preserve">
+    <value>Databearbetning</value>
+  </data>
+  <data name="CaseStudies" xml:space="preserve">
+    <value>Fallstudier</value>
+  </data>
+  <data name="Community" xml:space="preserve">
+    <value>Community</value>
+  </data>
+  <data name="Compliance" xml:space="preserve">
+    <value>Överensstämmelse</value>
+  </data>
+  <data name="ContactUs" xml:space="preserve">
+    <value>Kontakta oss</value>
+  </data>
+  <data name="Documentation" xml:space="preserve">
+    <value>Dokumentation</value>
+  </data>
+  <data name="Downloads" xml:space="preserve">
+    <value>Nedladdningar</value>
+  </data>
+  <data name="Error_SubmittingFeedback" xml:space="preserve">
+    <value>Det inträffade ett fel när du skulle skicka din feedback. Försök igen senare.</value>
+  </data>
+  <data name="Events" xml:space="preserve">
+    <value>Evenemang</value>
+  </data>
+  <data name="Facebook" xml:space="preserve">
+    <value>Facebook</value>
+  </data>
+  <data name="Features" xml:space="preserve">
+    <value>Funktioner</value>
+  </data>
+  <data name="Feedback" xml:space="preserve">
+    <value>Feedback</value>
+  </data>
+  <data name="Forums" xml:space="preserve">
+    <value>Forum</value>
+  </data>
+  <data name="FreeAccount" xml:space="preserve">
+    <value>Kostnadsfritt konto</value>
+  </data>
+  <data name="GoSocial" xml:space="preserve">
+    <value>Bli social</value>
+  </data>
+  <data name="Information_APIApp" xml:space="preserve">
+    <value>API-app</value>
+  </data>
+  <data name="Information_AppAlreadyExists" xml:space="preserve">
+    <value>Du har redan skapat en App Service. Vill du ta bort den och skapa en ny?</value>
+  </data>
+  <data name="Information_AppHasBeenCreated" xml:space="preserve">
+    <value>Din {0} har skapats!</value>
+  </data>
+  <data name="Information_AspNetBrandingLine1" xml:space="preserve">
+    <value>Bli värd för 10 ASP.NET-webbplatser kostnadsfritt med Azure App Service</value>
+  </data>
+  <data name="Information_AspNetBrandingLine2" xml:space="preserve">
+    <value>Säkert, tillförlitligt och klart att använda på några sekunder. Börja gratis och bygg ut i takt med att trafiken växer.</value>
+  </data>
+  <data name="Information_ComingSoon" xml:space="preserve">
+    <value>Kommer snart</value>
+  </data>
+  <data name="Information_DownloadClient" xml:space="preserve">
+    <value>Hämta klient</value>
+  </data>
+  <data name="Information_DownloadiOSClient" xml:space="preserve">
+    <value>Hämta iOS-klientappen</value>
+  </data>
+  <data name="Information_DownloadWindowsClient" xml:space="preserve">
+    <value>Hämta Windows-klientappen</value>
+  </data>
+  <data name="Information_DownloadXamarinAndroidClient" xml:space="preserve">
+    <value>Hämta Xamarin Android-klientappen</value>
+  </data>
+  <data name="Information_DownloadXamariniOSClient" xml:space="preserve">
+    <value>Hämta Xamarin iOS-klientappen</value>
+  </data>
+  <data name="Information_ExperienceComingSoon" xml:space="preserve">
+    <value>Utvärderingsversionen av Azure {0} är inte här ännu, men du kan ändå skapa flera {0} genom att registrera dig för en kostnadsfri 30 dagars utvärderingsversion med vilken du kan skapa upp till 10 appar av valfri typ utan någon extra kostnad.</value>
+  </data>
+  <data name="Information_ExperienceNotHereYet" xml:space="preserve">
+    <value>{0}-erfarenheten är inte här ännu.</value>
+  </data>
+  <data name="Information_ExpireMessage" xml:space="preserve">
+    <value>Din kostnadsfria {0} upphör att gälla om:</value>
+  </data>
+  <data name="Information_GenericBrandingLine1" xml:space="preserve">
+    <value>Azure App Service är en molnapptjänst som integrerar allt du behöver för att snabbt och enkelt kunna skapa webb- och mobilappar för alla typer av plattformar och enheter.</value>
+  </data>
+  <data name="Information_GenericBrandingLine2" xml:space="preserve">
+    <value>Var vår gäst i upp till en timma med Azure App Service utan någon Azure-prenumeration, helt kostnadsfritt och utan några åtaganden. Stanna längre med den fullständiga Azure App Service-upplevelsen genom en kostnadsfri Azure-provprenumeration.</value>
+  </data>
+  <data name="Information_GoingBackWillDeleteApp" xml:space="preserve">
+    <value>Om du går tillbaka tas den aktuella appen bort</value>
+  </data>
+  <data name="Information_InstallVisualStudio" xml:space="preserve">
+    <value>Installera Visual Studio Professional 2015 (Uppdatering 2)</value>
+  </data>
+  <data name="Information_InstallXamarinStudio" xml:space="preserve">
+    <value>Installera Xamarin Studio för OS X</value>
+  </data>
+  <data name="Information_InstallXcode" xml:space="preserve">
+    <value>Installera Xcode (v4.4+)</value>
+  </data>
+  <data name="Information_LogicApp" xml:space="preserve">
+    <value>Logikapp</value>
+  </data>
+  <data name="Information_LoginFirst" xml:space="preserve">
+    <value>Logga in först innan du skapar en app</value>
+  </data>
+  <data name="Information_MobileApp" xml:space="preserve">
+    <value>Mobilapp</value>
+  </data>
+  <data name="Information_NativeiOS" xml:space="preserve">
+    <value>Ursprungligt iOS</value>
+  </data>
+  <data name="Information_SelectAppType" xml:space="preserve">
+    <value>Välj apptyp</value>
+  </data>
+  <data name="Information_SelectTemplate" xml:space="preserve">
+    <value>Välj mall</value>
+  </data>
+  <data name="Information_SubmittingFeedback" xml:space="preserve">
+    <value>Skickar feedback...</value>
+  </data>
+  <data name="Information_ThanksForFeedback" xml:space="preserve">
+    <value>Tack för din feedback!</value>
+  </data>
+  <data name="Information_VisitWebClient" xml:space="preserve">
+    <value>Besök den webbaserade klienten</value>
+  </data>
+  <data name="Information_WantMoreQuestionLine1" xml:space="preserve">
+    <value>Vill du få ytterligare saker kostnadsfritt?</value>
+  </data>
+  <data name="Information_WantMoreQuestionLine2" xml:space="preserve">
+    <value>Skapa fler webb- och mobilappar, logiska appar och API-appar. Registrera dig för en 30 dagars utvärderingsversion och skapa upp till 10 appar av valfri typ utan någon kostnad.</value>
+  </data>
+  <data name="Information_WebApp" xml:space="preserve">
+    <value>Webbapp</value>
+  </data>
+  <data name="Information_WebClient" xml:space="preserve">
+    <value>Webbportal</value>
+  </data>
+  <data name="Information_Windows" xml:space="preserve">
+    <value>Universellt Windows 8.1</value>
+  </data>
+  <data name="Information_WorkWithLogicApps" xml:space="preserve">
+    <value>Om du vill arbeta med din app går du till Azure Portal-länken nedan, vilken tar dig vidare till resursbladet för logiska appar.</value>
+  </data>
+  <data name="Information_WorkWithYourApp" xml:space="preserve">
+    <value>Arbeta med din {0} på </value>
+  </data>
+  <data name="Information_XamarinAndroid" xml:space="preserve">
+    <value>Xamarin Android</value>
+  </data>
+  <data name="Information_XamariniOS" xml:space="preserve">
+    <value>Xamarin iOS</value>
+  </data>
+  <data name="Logout" xml:space="preserve">
+    <value>Logga ut</value>
+  </data>
+  <data name="ManagementPortal" xml:space="preserve">
+    <value>Administrationsportal</value>
+  </data>
+  <data name="Marketplace" xml:space="preserve">
+    <value>Marketplace</value>
+  </data>
+  <data name="MicrosoftAzure" xml:space="preserve">
+    <value>Microsoft Azure</value>
+  </data>
+  <data name="Mooncake" xml:space="preserve">
+    <value>Microsoft Azure i Kina</value>
+  </data>
+  <data name="MyAccount" xml:space="preserve">
+    <value>Mitt konto</value>
+  </data>
+  <data name="Newsletter" xml:space="preserve">
+    <value>Nyhetsbrev</value>
+  </data>
+  <data name="Portal" xml:space="preserve">
+    <value>Portal</value>
+  </data>
+  <data name="PreviewFeatures" xml:space="preserve">
+    <value>Förhandsversionsfunktioner</value>
+  </data>
+  <data name="Pricing" xml:space="preserve">
+    <value>Prissättning</value>
+  </data>
+  <data name="Privacy" xml:space="preserve">
+    <value>Sekretess</value>
+  </data>
+  <data name="PrivacyCookies" xml:space="preserve">
+    <value>Sekretess och cookies</value>
+  </data>
+  <data name="Profile" xml:space="preserve">
+    <value>Profil</value>
+  </data>
+  <data name="Regions" xml:space="preserve">
+    <value>Regioner</value>
+  </data>
+  <data name="Rss" xml:space="preserve">
+    <value>Rss</value>
+  </data>
+  <data name="Security" xml:space="preserve">
+    <value>Säkerhet</value>
+  </data>
+  <data name="ServiceDashboard" xml:space="preserve">
+    <value>Instrumentpanel</value>
+  </data>
+  <data name="Services" xml:space="preserve">
+    <value>Tjänster</value>
+  </data>
+  <data name="ServiceUpdates" xml:space="preserve">
+    <value>Tjänstuppdateringar</value>
+  </data>
+  <data name="Subscriptions" xml:space="preserve">
+    <value>Prenumerationer</value>
+  </data>
+  <data name="Support" xml:space="preserve">
+    <value>Support</value>
+  </data>
+  <data name="Title" xml:space="preserve">
+    <value>Testa Azure App Service</value>
+  </data>
+  <data name="Trademarks" xml:space="preserve">
+    <value>Varumärken</value>
+  </data>
+  <data name="TrustCenter" xml:space="preserve">
+    <value>Säkerhetscenter</value>
+  </data>
+  <data name="Twitter" xml:space="preserve">
+    <value>Twitter</value>
+  </data>
+  <data name="Information_LogicAppDescription" xml:space="preserve">
+    <value>Med Azure Logikappar kan utvecklare utforma arbetsflöden som startar med en utlösare och sedan exekverar en följd av steg, som vart och ett anropar en App Service-API-app samtidigt som autentisering och bästa praxis observeras, t.ex. när det gäller kontrollpunkter och beständig exekvering.</value>
+  </data>
+  <data name="Information_LogicAppStep1" xml:space="preserve">
+    <value>1. Gå till sammanfattningslinsen där du hittar information t.ex. om när appen senast kördes och om den var framgångsrik.</value>
+  </data>
+  <data name="Information_LogicAppStep2" xml:space="preserve">
+    <value>2. Öppna logkappsdefinitionen genom att klicka på samma del i sammanfattningslinsen och läsa definitionen. Du kan försöka att utöka logikappen så att den skickar tweets varje gång som ett ping misslyckas.</value>
+  </data>
+  <data name="Templates_PingSiteDescription" xml:space="preserve">
+    <value>Den här logiska appmallen pingar en webbplats enligt ett regelbundet schema.  Du kan utvidga den så att den vidtar åtgärder beroende på pingets resultat.</value>
+  </data>
+  <data name="Action_Dismiss" xml:space="preserve">
+    <value>Stäng</value>
+  </data>
+  <data name="Information_AppHasExpired" xml:space="preserve">
+    <value>Din {0} har upphört att gälla. Du kan försöka skapa en annan apptjänstapp eller registrera dig för ett kostnadsfritt 30-dagars utvärderingskonto.</value>
+  </data>
+  <data name="Information_Prerequisite" xml:space="preserve">
+    <value>Förutsättning</value>
+  </data>
+  <data name="Information_WelcomeFeedback" xml:space="preserve">
+    <value>Vi uppskattar din feedback!</value>
+  </data>
+  <data name="Action_Create" xml:space="preserve">
+    <value>Skapa</value>
+  </data>
+  <data name="Action_GenericWorkWithYourApp" xml:space="preserve">
+    <value>Arbeta med din app</value>
+  </data>
+  <data name="Information_YouCantHaveMoreThanOne" xml:space="preserve">
+    <value>Du kan inte ha mer än en fri resurs åt gången</value>
+  </data>
+  <data name="Next" xml:space="preserve">
+    <value>Nästa</value>
+  </data>
+  <data name="Previous" xml:space="preserve">
+    <value>Föregående</value>
+  </data>
+  <data name="Information_ApiAppDescription" xml:space="preserve">
+    <value>Utvärderingsversionen av Azure API-appen är inte här ännu, men du kan ändå skapa API Apps genom att registrera dig för en kostnadsfri 30 dagars utvärderingsversion med vilken du kan skapa upp till 10 appar av valfri typ utan någon extra kostnad.</value>
+  </data>
+  <data name="Information_MobileAppDescription" xml:space="preserve">
+    <value>Med Azure Mobile Apps är det lätt att lägga till inloggnings-, push- och datasynkronisering till din iOS-, Android- eller Windows-app, skalanpassa globalt och ansluta din app till företagssystem och lokala resurser.</value>
+  </data>
+  <data name="Information_WebAppDescription" xml:space="preserve">
+    <value>Med Azure Web Apps kan utvecklare enkelt distribuera och skalanpassa företagswebbprogram som har skrivits i olika språk och integrerats med flera olika typer av tjänster utan att de behöver bekymra sig över infrastrukturhantering.</value>
+  </data>
+  <data name="Information_LogicAppStep3" xml:space="preserve">
+    <value>3. Kör logikappen igen genom att klicka på kommandot Kör nu överst på bladet.</value>
+  </data>
+  <data name="Information_LogicAppStep4" xml:space="preserve">
+    <value>4. Om du vill veta mer om hur du kan använda logikappar klickar du på Snabbstart som leder dig vidare till dokumentationen.</value>
+  </data>
+  <data name="Information_LogicAppStepsIntro" xml:space="preserve">
+    <value>Från resursbladet Logikapp kan du testa följande:</value>
+  </data>
+  <data name="Information_XamarinBrandingLine1" xml:space="preserve">
+    <value>Bli mobil med Xamarin och Azure App Service</value>
+  </data>
+  <data name="Information_XamarinBrandingLine2" xml:space="preserve">
+    <value>Skriv, synka och pusha på några sekunder från vilken enhet du vill. Börja gratis och bygg ut i takt med din app växer.</value>
+  </data>
+  <data name="Information_ExtendResourceLifeTimeText" xml:space="preserve">
+    <value>Behöver du mer tid? Klicka här om du vill förlänga din utvärdering med 24 timmar.</value>
+  </data>
+  <data name="Information_Android" xml:space="preserve">
+    <value>Android</value>
+  </data>
+  <data name="Information_DownloadAndroidClient" xml:space="preserve">
+    <value>Hämta Android-klientappen</value>
+  </data>
+  <data name="Information_DownloadWUniversalWindowsPlatformClient" xml:space="preserve">
+    <value>Hämta den universella Windows-plattformsklienten (UWP)</value>
+  </data>
+  <data name="Information_DownloadXamarinFormsClient" xml:space="preserve">
+    <value>Hämta Xamarin.Forms-klientappen</value>
+  </data>
+  <data name="Information_UniversalWindowsPlatform" xml:space="preserve">
+    <value>Universell Windows-plattform (UWP)</value>
+  </data>
+  <data name="Information_XamarinForms" xml:space="preserve">
+    <value>Xamarin.Forms</value>
+  </data>
+  <data name="Information_AzurePlatformBrandingLine1" xml:space="preserve">
+    <value>Se hur snabbt du kan skapa en Node.js-app</value>
+  </data>
+  <data name="Information_AzurePlatformBrandingLine2" xml:space="preserve">
+    <value>Azure App Service är den enda molntjänsten som integrerar allt du behöver för att snabbt och lätt kunna skapa webbappar och mobila appar för vilken plattform eller enhet du vill. Hämta data från valfritt ställe och skapa i praktiken vad du vill. Jobba i begränsat läge gratis och utan åtaganden i upp till en timma.</value>
+  </data>
+  <data name="Information_InstallAndroidStudio" xml:space="preserve">
+    <value>Hämta Android Studio</value>
+  </data>
+  <data name="Templates_AzureDevOpsDescription" xml:space="preserve">
+    <value>Den här mallen skapar en Azure Jenkins CI</value>
+  </data>
+  <data name="Information_FunctionApp" xml:space="preserve">
+    <value>Funktionsapp</value>
+  </data>
+  <data name="Information_FunctionAppDescription" xml:space="preserve">
+    <value>Azure Functions är en händelsebaserad funktion utan server som bygger vidare på den befintliga plattformen Azure App Service. De här nanotjänsterna kan skalas på begäran och du betalar bara för de resurser du använder.</value>
+  </data>
+  <data name="TryFunctions" xml:space="preserve">
+    <value>Prova Functions</value>
+  </data>
+</root>

@@ -208,18 +208,30 @@
     <Compile Include="Modules\ARMOAuthModule.cs" />
     <Compile Include="Modules\OpenIdConfiguration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Resources\Client.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Client.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\Server.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Server.resx</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\Fonts\fontawesome-webfont.svg" />
     <Content Include="Content\Styles\app.css" />
-    <Content Include="Content\Fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Content\Styles\app.min.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
+    <Content Include="Content\Fonts\fontawesome-webfont.eot" />
+    <Content Include="Content\Fonts\fontawesome-webfont.ttf" />
+    <Content Include="Content\Fonts\fontawesome-webfont.woff" />
+    <Content Include="Content\Fonts\fontawesome-webfont.woff2" />
+    <Content Include="Content\Fonts\FontAwesome.otf" />
     <None Include="Default.cshtml" />
     <Content Include="ng\Scripts\app.js" />
-    <Content Include="Content\Fonts\glyphicons-halflings-regular.woff" />
-    <Content Include="Content\Fonts\glyphicons-halflings-regular.ttf" />
-    <Content Include="Content\Fonts\glyphicons-halflings-regular.eot" />
     <Content Include="ApplicationInsights.config">
       <SubType>Designer</SubType>
     </Content>
@@ -240,7 +252,54 @@
   <ItemGroup>
     <Content Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\client.cs-cz.resx" />
+    <EmbeddedResource Include="Resources\client.de-de.resx" />
+    <EmbeddedResource Include="Resources\client.en-us.resx" />
+    <EmbeddedResource Include="Resources\client.es-es.resx" />
+    <EmbeddedResource Include="Resources\client.fr-fr.resx" />
+    <EmbeddedResource Include="Resources\client.hu-hu.resx" />
+    <EmbeddedResource Include="Resources\client.it-it.resx" />
+    <EmbeddedResource Include="Resources\client.ja-jp.resx" />
+    <EmbeddedResource Include="Resources\client.ko-kr.resx" />
+    <EmbeddedResource Include="Resources\client.nl-nl.resx" />
+    <EmbeddedResource Include="Resources\client.pl-pl.resx" />
+    <EmbeddedResource Include="Resources\client.pt-br.resx" />
+    <EmbeddedResource Include="Resources\client.pt-pt.resx" />
+    <EmbeddedResource Include="Resources\client.qps-ploc.resx" />
+    <EmbeddedResource Include="Resources\Client.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Client.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\client.ru-ru.resx" />
+    <EmbeddedResource Include="Resources\client.sv-se.resx" />
+    <EmbeddedResource Include="Resources\client.tr-tr.resx" />
+    <EmbeddedResource Include="Resources\client.zh-cn.resx" />
+    <EmbeddedResource Include="Resources\client.zh-tw.resx" />
+    <EmbeddedResource Include="Resources\Server.cs-cz.resx" />
+    <EmbeddedResource Include="Resources\Server.de-de.resx" />
+    <EmbeddedResource Include="Resources\Server.en-us.resx" />
+    <EmbeddedResource Include="Resources\Server.es-es.resx" />
+    <EmbeddedResource Include="Resources\Server.fr-fr.resx" />
+    <EmbeddedResource Include="Resources\Server.hu-hu.resx" />
+    <EmbeddedResource Include="Resources\Server.it-it.resx" />
+    <EmbeddedResource Include="Resources\Server.ja-jp.resx" />
+    <EmbeddedResource Include="Resources\Server.ko-kr.resx" />
+    <EmbeddedResource Include="Resources\Server.nl-nl.resx" />
+    <EmbeddedResource Include="Resources\Server.pl-pl.resx" />
+    <EmbeddedResource Include="Resources\Server.pt-br.resx" />
+    <EmbeddedResource Include="Resources\Server.pt-pt.resx" />
+    <EmbeddedResource Include="Resources\Server.qps-ploc.resx" />
+    <EmbeddedResource Include="Resources\Server.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Server.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Server.ru-ru.resx" />
+    <EmbeddedResource Include="Resources\Server.sv-se.resx" />
+    <EmbeddedResource Include="Resources\Server.tr-tr.resx" />
+    <EmbeddedResource Include="Resources\Server.zh-cn.resx" />
+    <EmbeddedResource Include="Resources\Server.zh-tw.resx" />
+  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Slingshot.Api\Slingshot.Api.csproj">
       <Project>{37603203-843e-469d-9186-137533d4da33}</Project>
@@ -265,7 +324,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>55365</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>https://localhost:44300</IISUrl>
+          <IISUrl>https://localhost:44300/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

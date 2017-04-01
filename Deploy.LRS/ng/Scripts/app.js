@@ -143,7 +143,12 @@ var constants = constantsObj();
             }
         })
         .controller('FormController', [
-            '$window', '$scope', '$location', '$http', function($window, $scope, $location, $http) {
+            '$window', '$scope', '$location', '$http', '$timeout', function ($window, $scope, $location, $http, $timeout) {
+                $scope.timerElapsed = false;
+                $timeout(function () {
+                    $scope.timerElapsed = true;
+                }, 120000);
+
                 // we will store all of our form data in this object
                 $scope.formData = {};
                 var paramObject = function() {
@@ -159,33 +164,26 @@ var constants = constantsObj();
                 statusMap["microsoft.web/sites/config"] = "Updating Website Config";
                 statusMap["microsoft.web/sites/sourcecontrols"] = "Setting up Source Control";
                 statusMap["microsoft.web/serverfarms"] = "Creating Web Hosting Plan";
-                var portalWebSiteFormat = "https://portal.azure.com#resource/subscriptions/{0}/resourceGroups/{1}/providers/Microsoft.Web/sites/{2}/QuickStartSetting";
-                var portalRGFormat = "https://portal.azure.com/#asset/HubsExtension/ResourceGroups/subscriptions/{0}/resourceGroups/{1}/Overview";
+                var portalWebSiteFormat = "https://portal.azure.com/#resource/subscriptions/{0}/resourceGroups/{1}/providers/Microsoft.Web/sites/{2}/QuickStartSetting";
+                var portalRGFormat = "https://portal.azure.com/#resource/subscriptions/{0}/resourceGroups/{1}/overview";
                 var basePortalUrl = "https://portal.azure.com/";
 
-                function deploy() {
-                    var subscriptionId = $scope.formData.subscription.subscriptionId;
-                    $scope.formData.deploymentSucceeded = false;
-                    $scope.formData.errorMesg = null;
-                    $scope.formData.statusMesgs = [];
-                    telemetry.logDeploy($scope.formData.templateName);
-                    $scope.formData.deployPayload = getDeployPayload($scope.formData.params);
+                function addStatusMesg($scope, result) {
+                    var ops = result.data.operations.value;
+                    for (var i = ops.length - 1; i >= 0; i--) {
+                        var mesg = ops[i].properties.targetResource.resourceType;
+                        var key = mesg.toLowerCase();
+                        if (statusMap[key]) {
+                            mesg = statusMap[key];
+                        } else {
+                            mesg = "Updating " + mesg;
+                        }
 
-                    $scope.formData.statusMesgs.push("Submitting Deployment");
-                    $http({
-                            method: "post",
-                            url: "api/lrsdeployments/" + subscriptionId,
-                            data: $scope.formData.deployPayload
-                        })
-                        .then(function(result) {
-                                $scope.formData.statusMesgs.push("Deployment Started");
-                                window.setTimeout(getStatus, constants.params.pollingInterval, $scope, $http);
-                            },
-                            function(result) {
-                                $scope.formData.errorMesg = result.data.error;
-                            });
+                        if ($scope.formData.statusMesgs.indexOf(mesg) < 0) {
+                            $scope.formData.statusMesgs.push(mesg);
+                        }
+                    }
                 }
-
                 function getStatus($scope, $http) {
                     var subscriptionId = $scope.formData.subscription.subscriptionId;
                     var resourceGroup = $scope.formData.finalResourceGroup;
@@ -196,121 +194,51 @@ var constants = constantsObj();
                         };
                     }
                     $http({
-                            method: "get",
-                            url: "api/lrsdeployments/" + subscriptionId + "/rg/" + resourceGroup.name,
-                            params: params,
-                        })
-                        .then(function(result) {
-                                addStatusMesg($scope, result);
+                        method: "get",
+                        url: "api/lrsdeployments/" + subscriptionId + "/rg/" + resourceGroup.name,
+                        params: params
+                    })
+                        .then(function (result) {
+                            addStatusMesg($scope, result);
 
-                                // In some cases, errors will be hidden within the operations object.
-                                var ops = result.data.operations;
-                                var error = null;
-                                for (var i = 0; i < ops.value.length; i++) {
-                                    var opProperties = ops.value[i].properties;
-                                    if (opProperties.statusMessage &&
-                                        opProperties.statusMessage.error) {
-                                        error = opProperties.statusMessage.error.message;
-                                    } else if (opProperties.provisioningState === "Failed" &&
-                                        opProperties.statusMessage &&
-                                        opProperties.statusMessage.message) {
-                                        error = opProperties.statusMessage.message;
-                                    }
+                            // In some cases, errors will be hidden within the operations object.
+                            var ops = result.data.operations;
+                            var error = null;
+                            for (var i = 0; i < ops.value.length; i++) {
+                                var opProperties = ops.value[i].properties;
+                                if (opProperties.statusMessage &&
+                                    opProperties.statusMessage.error) {
+                                    error = opProperties.statusMessage.error.message;
+                                } else if (opProperties.provisioningState === "Failed" &&
+                                    opProperties.statusMessage &&
+                                    opProperties.statusMessage.message) {
+                                    error = opProperties.statusMessage.message;
                                 }
-                                if (error || result.data.provisioningState === "Failed" || result.data.provisioningState === "Succeeded") {
-                                    $scope.formData.portalUrl = basePortalUrl;
-
-                                    $scope.formData.deploymentSucceeded = (result.data.provisioningState === "Succeeded");
-                                    if ($scope.formData.deploymentSucceeded) {
-                                        $scope.formData.portalUrl = portalWebSiteFormat.format(
-                                            $scope.formData.subscription.subscriptionId,
-                                            $scope.formData.finalResourceGroup.name,
-                                            $scope.formData.appServiceName);
-                                        telemetry.logDeploySucceeded($scope.formData.templateName);
-                                    } else {
-                                        $scope.formData.portalUrl = portalRGFormat.format(
-                                            $scope.formData.subscription.subscriptionId,
-                                            $scope.formData.finalResourceGroup.name,
-                                            $scope.formData.appServiceName);
-                                        telemetry.logDeployFailed($scope.formData.templateName);
-                                    }
-                                    $window.location.href = $scope.formData.portalUrl;
-                                } else {
-                                    window.setTimeout(getStatus, constants.params.pollingInterval, $scope, $http);
-                                }
-                            },
-                            function(result) {
-                                $scope.formData.errorMesg = result.data.error;
-                            });
-                }
-
-                function initialize($scope, $http) {
-                    $scope.formData.templateName = getQueryVariable("templateName");
-                    telemetry.logPageView();
-
-                    if (!$scope.formData.templateName || $scope.formData.templateName.length === 0) {
-                        if (sessionStorage.templateName) {
-                            $scope.formData.templateName = sessionStorage.templateName;
-                        } else {
-                            $location.url("https://deploy.azure.com");
-                            return;
-                        }
-                    }
-
-                    if ($scope.formData.templateName) {
-                        sessionStorage.templateName = $scope.formData.templateName;
-                        telemetry.logGetTemplate($scope.formData.templateName);
-                    }
-                    // If we don't have the repository url, then don't init.  Also
-                    // if the user hit "back" from the next page, we don't re-init.
-                    if (!$scope.formData.templateName || $scope.formData.templateName.length === 0 || $scope.formData.subscriptions) {
-                        return;
-                    }
-
-                    $http({
-                            method: "get",
-                            url: "api/lrstemplate",
-                            params: {
-                                "templateName": $scope.formData.templateName
                             }
-                        })
-                        .then(function(result) {
-                                $scope.formData.userDisplayName = result.data.userDisplayName;
-                                $scope.formData.subscriptions = result.data.subscriptions;
-                                $scope.formData.tenants = result.data.tenants;
-                                $scope.formData.templateName = result.data.templateName;
-                                $scope.formData.appServiceName = result.data.appServiceName;
-                                $scope.formData.appServiceLocation = result.data.appServiceLocation;
-                                $scope.formData.templateNameUrl = result.data.templateUrl;
-                                $scope.formData.email = result.data.email;
-                                $scope.formData.newResourceGroup = {
-                                    name: result.data.resourceGroupName,
-                                    location: ""
-                                };
-                                telemetry.logAuthenticatedUser($scope.formData.email);
-                                // Select first subscription
-                                if ($scope.formData.subscriptions && $scope.formData.subscriptions.length > 0) {
-                                    var sub = $scope.formData.subscriptions[0];
-                                    $scope.formData.subscription = sub;
+                            if (error || result.data.provisioningState === "Failed" || result.data.provisioningState === "Succeeded") {
+                                $scope.formData.portalUrl = basePortalUrl;
 
+                                $scope.formData.deploymentSucceeded = (result.data.provisioningState === "Succeeded");
+                                if ($scope.formData.deploymentSucceeded) {
+                                    $scope.formData.portalUrl = portalWebSiteFormat.format(
+                                        $scope.formData.subscription.subscriptionId,
+                                        $scope.formData.finalResourceGroup.name,
+                                        $scope.formData.appServiceName);
+                                    telemetry.logDeploySucceeded($scope.formData.templateName);
+                                } else {
+                                    $scope.formData.portalUrl = portalRGFormat.format(
+                                        $scope.formData.subscription.subscriptionId,
+                                        $scope.formData.finalResourceGroup.name,
+                                        $scope.formData.appServiceName);
+                                    telemetry.logDeployFailed($scope.formData.templateName);
                                 }
-
-                                $scope.formData.params = [];
-                                var param = paramObject();
-
-                                param.name = "appserviceName";
-                                param.type = "string";
-                                param.value = result.data.appServiceName;
-                                param.defaultValue = result.data.appServiceName;
-
-                                $scope.formData.params.push(param);
-
-                                deploy();
-                            },
-                            function(result) {
-                                if (result.data) {
-                                    $scope.formData.errorMesg = result.data.error;
-                                }
+                                $window.location.href = $scope.formData.portalUrl;
+                            } else {
+                                window.setTimeout(getStatus, constants.params.pollingInterval, $scope, $http);
+                            }
+                        },
+                            function (result) {
+                                $scope.formData.errorMesg = result.data.error;
                             });
                 }
 
@@ -334,22 +262,95 @@ var constants = constantsObj();
                     };
                 }
 
-                function addStatusMesg($scope, result) {
-                    var ops = result.data.operations.value;
-                    for (var i = ops.length - 1; i >= 0; i--) {
-                        var mesg = ops[i].properties.targetResource.resourceType;
-                        var key = mesg.toLowerCase();
-                        if (statusMap[key]) {
-                            mesg = statusMap[key];
-                        } else {
-                            mesg = "Updating " + mesg;
-                        }
+                function deploy() {
+                    var subscriptionId = $scope.formData.subscription.subscriptionId;
+                    $scope.formData.deploymentSucceeded = false;
+                    telemetry.logDeploy($scope.formData.templateName);
+                    $scope.formData.deployPayload = getDeployPayload($scope.formData.params);
 
-                        if ($scope.formData.statusMesgs.indexOf(mesg) < 0) {
-                            $scope.formData.statusMesgs.push(mesg);
+                    $http({
+                            method: "post",
+                            url: "api/lrsdeployments/" + subscriptionId,
+                            data: $scope.formData.deployPayload
+                        })
+                        .then(function(result) {
+                                $scope.formData.statusMesgs.push("Deployment Started");
+                                window.setTimeout(getStatus, constants.params.pollingInterval, $scope, $http);
+                            },
+                            function(result) {
+                                $scope.formData.errorMesg = result.data.error;
+                            });
+                }
+
+
+                function initialize($scope, $http) {
+                    $scope.formData.templateName = getQueryVariable("templateName");
+                    telemetry.logPageView();
+
+                    if (!$scope.formData.templateName || $scope.formData.templateName.length === 0) {
+                        if (sessionStorage.templateName) {
+                            $scope.formData.templateName = sessionStorage.templateName;
+                        } else {
+                            $window.location.href ="https://deploy.azure.com";
+                            return;
                         }
                     }
+
+                    if ($scope.formData.templateName) {
+                        sessionStorage.templateName = $scope.formData.templateName;
+                        telemetry.logGetTemplate($scope.formData.templateName);
+                    }
+                    // If we don't have the repository url, then don't init.  Also
+                    // if the user hit "back" from the next page, we don't re-init.
+                    if (!$scope.formData.templateName || $scope.formData.templateName.length === 0 || $scope.formData.subscriptions) {
+                        return;
+                    }
+                    $scope.formData.statusMesgs = [];
+                    $scope.formData.statusMesgs.push("Submitting Deployment");
+
+
+                    $http({
+                            method: "get",
+                            url: "api/lrstemplate",
+                            params: {
+                                "templateName": $scope.formData.templateName
+                            }
+                        })
+                        .then(function(result) {
+                                $scope.formData.userDisplayName = result.data.userDisplayName;
+                                $scope.formData.subscription = result.data.subscription;
+                                $scope.formData.tenants = result.data.tenants;
+                                $scope.formData.templateName = result.data.templateName;
+                                $scope.formData.appServiceName = result.data.appServiceName;
+                                $scope.formData.appServiceLocation = result.data.appServiceLocation;
+                                $scope.formData.templateNameUrl = result.data.templateUrl;
+                                $scope.formData.email = result.data.email;
+                                $scope.formData.newResourceGroup = {
+                                    name: result.data.resourceGroupName,
+                                    location: ""
+                                };
+                                telemetry.logAuthenticatedUser($scope.formData.email);
+
+                                $scope.formData.params = [];
+                                var param = paramObject();
+
+                                param.name = "appserviceName";
+                                param.type = "string";
+                                param.value = result.data.appServiceName;
+                                param.defaultValue = result.data.appServiceName;
+
+                                $scope.formData.params.push(param);
+
+                                deploy();
+                            },
+                            function(result) {
+                                if (result.data) {
+                                    $scope.formData.errorMesg = result.data.error;
+                                }
+                            });
                 }
+
+
                 initialize($scope, $http);
             }
         ]); // end FormController

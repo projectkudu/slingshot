@@ -102,14 +102,13 @@ namespace Deploy.Controllers
                 {
                     await client.Providers.RegisterAsync("Microsoft.Web");
                     await client.Providers.RegisterAsync("Microsoft.AppService");
-                    var resourceResult = await client.ResourceGroups.CreateOrUpdateAsync(
+                    await client.ResourceGroups.CreateOrUpdateAsync(
                         inputs.resourceGroup.name,
                         new ResourceGroup { Location = inputs.resourceGroup.location });
 
-                    var templateParams = inputs.parameters.ToString();
                     Deployment basicDeployment = await this.GetDeploymentPayload(inputs);
 
-                    var deploymentResult = await client.Deployments.CreateOrUpdateAsync(
+                    await client.Deployments.CreateOrUpdateAsync(
                         inputs.resourceGroup.name,
                         inputs.resourceGroup.name,
                         basicDeployment);
@@ -181,31 +180,21 @@ namespace Deploy.Controllers
 
             await Task.WhenAll(subscriptionTask);
 
-            var subscriptions = subscriptionTask.Result.Where(s => s.state == "Enabled").OrderBy(s => s.displayName).ToArray();
+            var subscription = subscriptionTask.Result.Where(s => s.state == "Enabled").OrderBy(s => s.displayName).ToArray().FirstOrDefault();
             var email = GetHeaderValue(Constants.Headers.X_MS_CLIENT_PRINCIPAL_NAME);
             var userDisplayName = GetHeaderValue(Constants.Headers.X_MS_CLIENT_DISPLAY_NAME) ?? email;
             returnObj["email"] = email;
-            returnObj["subscriptions"] = JArray.FromObject(subscriptions);
+            returnObj["subscription"] = JObject.FromObject(subscription);
             returnObj["userDisplayName"] = userDisplayName;
 
             returnObj["repositoryUrl"] = templateName;
 
-            returnObj["isManualIntegration"] = true;
-
-            var queryStrings = HttpUtility.ParseQueryString(templateName);
-            bool isManualIntegration = true;
-            if (bool.TryParse(queryStrings["manual"], out isManualIntegration))
-            {
-                returnObj["isManualIntegration"] = isManualIntegration;
-            }
-
             var templateUrl = $"https://tryappservice.azure.com/api/armtemplate/{templateName}";
             returnObj["templateUrl"] = templateUrl;
             string resourceGroupName = null;
-                if (subscriptions.Length >= 1)
+                if (!string.IsNullOrEmpty(subscription.subscriptionId))
                 {
-                    //await GetLocations(returnObj, token, subscriptions);
-                    resourceGroupName = await GenerateResourceGroupName(token, templateName, subscriptions);
+                    resourceGroupName = await GenerateResourceGroupName(token, templateName, subscription);
                 }
                 returnObj["appServiceLocation"] = GetRandomLocation();
                 returnObj["resourceGroupName"] = resourceGroupName;
@@ -217,12 +206,12 @@ namespace Deploy.Controllers
             return response;
         }
 
-        private async Task<string> GenerateResourceGroupName(string token, string repoName, SubscriptionInfo[] subscriptions)
+        private async Task<string> GenerateResourceGroupName(string token, string repoName, SubscriptionInfo subscription)
         {
             if (!string.IsNullOrEmpty(repoName))
             {
                 bool isAvailable = false;
-                var creds = new TokenCloudCredentials(subscriptions.First().subscriptionId, token);
+                var creds = new TokenCloudCredentials(subscription.subscriptionId, token);
                 var rdfeBaseUri = new Uri(Utils.GetRDFEUrl(Request.RequestUri.Host));
 
                 using (var webSiteMgmtClient = CloudContext.Clients.CreateWebSiteManagementClient(creds, rdfeBaseUri))
@@ -272,6 +261,7 @@ namespace Deploy.Controllers
             baseName = Regex.Replace(baseName, "[^a-zA-Z0-9-]", "-", RegexOptions.CultureInvariant);
             // e.g "ab-cde----ghijk341234kjk-" --> "ab-cde-ghijk341234kjk-"
             baseName = Regex.Replace(baseName, "[-]{2,}", "-", RegexOptions.CultureInvariant);
+            baseName += "-";
 
             Random random = new Random();
 
@@ -380,18 +370,7 @@ namespace Deploy.Controllers
         {
             return Request.Headers.GetValues("X-MS-OAUTH-TOKEN").FirstOrDefault();
         }
-
-        private static string GetParamOrDefault(JObject parameters, string paramName, string defaultValue)
-        {
-            string paramValue = null;
-            var param = parameters[paramName];
-            if (param != null)
-            {
-                paramValue = param["value"].Value<string>() ?? defaultValue;
-            }
-            return paramValue;
-        }
-
+        
         private async Task<Deployment> GetDeploymentPayload(DeployInputs inputs)
         {
             var basicDeployment = new Deployment();

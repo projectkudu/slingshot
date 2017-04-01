@@ -1,0 +1,513 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Action_AllowContact" xml:space="preserve">
+    <value>Permitir que a Microsoft entre em contato comigo sobre esse comentário.</value>
+  </data>
+  <data name="Action_Cancel" xml:space="preserve">
+    <value>Cancelar</value>
+  </data>
+  <data name="Action_CreateAppServiceApp" xml:space="preserve">
+    <value>Criar seu aplicativo do Serviço de Aplicativo Azure</value>
+  </data>
+  <data name="Action_Delete" xml:space="preserve">
+    <value>Excluir</value>
+  </data>
+  <data name="Action_DownloadAppContent" xml:space="preserve">
+    <value>Baixar conteúdo {0}</value>
+  </data>
+  <data name="Action_DownloadPublishingProfile" xml:space="preserve">
+    <value>Baixar perfil de publicação</value>
+  </data>
+  <data name="Action_GitClone" xml:space="preserve">
+    <value>Clonar ou enviar por push com git</value>
+  </data>
+  <data name="Action_GoToExistingApp" xml:space="preserve">
+    <value>Ir ao aplicativo existente</value>
+  </data>
+  <data name="Action_ManageInAzurePortal" xml:space="preserve">
+    <value>Gerenciar no Portal do Azure</value>
+  </data>
+  <data name="Action_MobileClients" xml:space="preserve">
+    <value>Baixar e executar seu aplicativo cliente móvel</value>
+  </data>
+  <data name="Action_Monaco" xml:space="preserve">
+    <value>Editar seu código online</value>
+  </data>
+  <data name="Action_ReportAnIssue" xml:space="preserve">
+    <value>Relatar um problema</value>
+  </data>
+  <data name="Action_SelectAppType" xml:space="preserve">
+    <value>Selecionar tipo de aplicativo</value>
+  </data>
+  <data name="Action_SelectTemplate" xml:space="preserve">
+    <value>Selecionar um modelo e criar seu {0}</value>
+  </data>
+  <data name="Action_ShareAComment" xml:space="preserve">
+    <value>Compartilhar um comentário</value>
+  </data>
+  <data name="Action_Submit" xml:space="preserve">
+    <value>Enviar</value>
+  </data>
+  <data name="Action_Yes" xml:space="preserve">
+    <value>Sim</value>
+  </data>
+  <data name="Blog" xml:space="preserve">
+    <value>Blog</value>
+  </data>
+  <data name="Calculator" xml:space="preserve">
+    <value>Calculadora</value>
+  </data>
+  <data name="CaseStudies" xml:space="preserve">
+    <value>Estudos de Caso</value>
+  </data>
+  <data name="Community" xml:space="preserve">
+    <value>Comunidade</value>
+  </data>
+  <data name="Compliance" xml:space="preserve">
+    <value>Conformidade</value>
+  </data>
+  <data name="ContactUs" xml:space="preserve">
+    <value>Entre em contato</value>
+  </data>
+  <data name="Documentation" xml:space="preserve">
+    <value>Documentação</value>
+  </data>
+  <data name="Downloads" xml:space="preserve">
+    <value>Downloads</value>
+  </data>
+  <data name="Error_SubmittingFeedback" xml:space="preserve">
+    <value>Ocorreu um erro ao enviar seu comentário. Tente novamente mais tarde.</value>
+  </data>
+  <data name="Events" xml:space="preserve">
+    <value>Eventos</value>
+  </data>
+  <data name="Facebook" xml:space="preserve">
+    <value>Facebook</value>
+  </data>
+  <data name="Features" xml:space="preserve">
+    <value>Recursos</value>
+  </data>
+  <data name="Feedback" xml:space="preserve">
+    <value>Comentários</value>
+  </data>
+  <data name="Forums" xml:space="preserve">
+    <value>Fóruns</value>
+  </data>
+  <data name="FreeAccount" xml:space="preserve">
+    <value>Conta Gratuita</value>
+  </data>
+  <data name="GoSocial" xml:space="preserve">
+    <value>Go Social</value>
+  </data>
+  <data name="Information_APIApp" xml:space="preserve">
+    <value>Aplicativo de API</value>
+  </data>
+  <data name="Information_AppAlreadyExists" xml:space="preserve">
+    <value>Você já tem um Serviço de Aplicativo criado. Você deseja excluí-lo e criar um novo?</value>
+  </data>
+  <data name="Information_AppHasBeenCreated" xml:space="preserve">
+    <value>Seu {0} foi criado!</value>
+  </data>
+  <data name="Information_AspNetBrandingLine1" xml:space="preserve">
+    <value>Hospede 10 sites ASP.NET gratuitamente com o Serviço de Aplicativo do Azure</value>
+  </data>
+  <data name="Information_AspNetBrandingLine2" xml:space="preserve">
+    <value>Seguro, confiável e pronto para os negócios em segundos. Inicie gratuitamente e dimensione conforme seu tráfego cresce.</value>
+  </data>
+  <data name="Information_ComingSoon" xml:space="preserve">
+    <value>Em breve</value>
+  </data>
+  <data name="Information_DownloadClient" xml:space="preserve">
+    <value>Download do cliente</value>
+  </data>
+  <data name="Information_DownloadiOSClient" xml:space="preserve">
+    <value>Baixe o aplicativo cliente para iOS</value>
+  </data>
+  <data name="Information_DownloadWindowsClient" xml:space="preserve">
+    <value>Baixe o aplicativo cliente para Windows</value>
+  </data>
+  <data name="Information_DownloadXamarinAndroidClient" xml:space="preserve">
+    <value>Baixe o aplicativo cliente para Xamarin Android</value>
+  </data>
+  <data name="Information_DownloadXamariniOSClient" xml:space="preserve">
+    <value>Baixe o aplicativo cliente para Xamarin iOS</value>
+  </data>
+  <data name="Information_ExperienceComingSoon" xml:space="preserve">
+    <value>A experiência de avaliação do Azure {0} ainda não chegou, mas você ainda pode criar {0}s inscrevendo-se para uma avaliação gratuita de 30 dias que permite a criação de até 10 aplicativos de qualquer tipo grátis</value>
+  </data>
+  <data name="Information_ExperienceNotHereYet" xml:space="preserve">
+    <value>A experiência de {0} ainda não chegou.</value>
+  </data>
+  <data name="Information_ExpireMessage" xml:space="preserve">
+    <value>Seu {0} gratuito expirará em:</value>
+  </data>
+  <data name="Information_GenericBrandingLine1" xml:space="preserve">
+    <value>O Serviço de Aplicativo do Azure é um serviço de aplicativo em nuvem que integra tudo o que você precisa para criar com rapidez e facilidade aplicativos Web e móveis para qualquer plataforma ou dispositivo.</value>
+  </data>
+  <data name="Information_GenericBrandingLine2" xml:space="preserve">
+    <value>Seja nosso convidado por até uma hora para a experiência do Serviço de Aplicativo do Azure sem assinatura do Azure, gratuitamente e sem compromisso. Fique mais tempo para ter a experiência completa do Serviço de Aplicativo do Azure com uma assinatura de avaliação gratuita do Azure.</value>
+  </data>
+  <data name="Information_GoingBackWillDeleteApp" xml:space="preserve">
+    <value>Voltar excluirá o aplicativo atual</value>
+  </data>
+  <data name="Information_InstallVisualStudio" xml:space="preserve">
+    <value>Instalar o Visual Studio Professional 2015 (Atualização 2)</value>
+  </data>
+  <data name="Information_InstallXamarinStudio" xml:space="preserve">
+    <value>Instalar o Xamarin Studio para OS X</value>
+  </data>
+  <data name="Information_InstallXcode" xml:space="preserve">
+    <value>Instalar o Xcode (v4.4+)</value>
+  </data>
+  <data name="Information_LogicApp" xml:space="preserve">
+    <value>Aplicativo Lógico</value>
+  </data>
+  <data name="Information_LoginFirst" xml:space="preserve">
+    <value>Faça logon primeiro para criar um aplicativo</value>
+  </data>
+  <data name="Information_MobileApp" xml:space="preserve">
+    <value>Aplicativo Móvel</value>
+  </data>
+  <data name="Information_NativeiOS" xml:space="preserve">
+    <value>iOS nativo</value>
+  </data>
+  <data name="Information_SelectAppType" xml:space="preserve">
+    <value>Selecionar tipo de aplicativo</value>
+  </data>
+  <data name="Information_SelectTemplate" xml:space="preserve">
+    <value>Selecionar modelo</value>
+  </data>
+  <data name="Information_SubmittingFeedback" xml:space="preserve">
+    <value>Enviando comentário...</value>
+  </data>
+  <data name="Information_ThanksForFeedback" xml:space="preserve">
+    <value>Obrigado pelo comentário!</value>
+  </data>
+  <data name="Information_VisitWebClient" xml:space="preserve">
+    <value>Visite o cliente baseado na Web</value>
+  </data>
+  <data name="Information_WantMoreQuestionLine1" xml:space="preserve">
+    <value>Gostaria de obter mais gratuitamente?</value>
+  </data>
+  <data name="Information_WantMoreQuestionLine2" xml:space="preserve">
+    <value>Crie mais aplicativos de API, da Web, móveis e lógicos. Inscreva-se para uma avaliação gratuita de 30 dias e crie até 10 aplicativos de qualquer tipo grátis.</value>
+  </data>
+  <data name="Information_WebApp" xml:space="preserve">
+    <value>Aplicativo Web</value>
+  </data>
+  <data name="Information_WebClient" xml:space="preserve">
+    <value>Portal da Web</value>
+  </data>
+  <data name="Information_Windows" xml:space="preserve">
+    <value>Windows 8.1 Universal</value>
+  </data>
+  <data name="Information_WorkWithLogicApps" xml:space="preserve">
+    <value>Para trabalhar com seu aplicativo, vá para o link do Portal do Azure abaixo, que o levará até a folha de recursos do Aplicativo Lógico.</value>
+  </data>
+  <data name="Information_WorkWithYourApp" xml:space="preserve">
+    <value>Trabalhe com seu {0} em </value>
+  </data>
+  <data name="Information_XamarinAndroid" xml:space="preserve">
+    <value>Xamarin Android</value>
+  </data>
+  <data name="Information_XamariniOS" xml:space="preserve">
+    <value>Xamarin iOS</value>
+  </data>
+  <data name="Logout" xml:space="preserve">
+    <value>Fazer logoff</value>
+  </data>
+  <data name="ManagementPortal" xml:space="preserve">
+    <value>Portal de Gerenciamento</value>
+  </data>
+  <data name="Marketplace" xml:space="preserve">
+    <value>Marketplace</value>
+  </data>
+  <data name="MicrosoftAzure" xml:space="preserve">
+    <value>Microsoft Azure</value>
+  </data>
+  <data name="Mooncake" xml:space="preserve">
+    <value>Microsoft Azure na China</value>
+  </data>
+  <data name="MyAccount" xml:space="preserve">
+    <value>Minha Conta</value>
+  </data>
+  <data name="Newsletter" xml:space="preserve">
+    <value>Boletim Informativo</value>
+  </data>
+  <data name="Portal" xml:space="preserve">
+    <value>Portal</value>
+  </data>
+  <data name="PreviewFeatures" xml:space="preserve">
+    <value>Versão Prévia do Recurso</value>
+  </data>
+  <data name="Pricing" xml:space="preserve">
+    <value>Preços</value>
+  </data>
+  <data name="Privacy" xml:space="preserve">
+    <value>Privacidade</value>
+  </data>
+  <data name="PrivacyCookies" xml:space="preserve">
+    <value>Privacidade e Cookies</value>
+  </data>
+  <data name="Profile" xml:space="preserve">
+    <value>Perfil</value>
+  </data>
+  <data name="Regions" xml:space="preserve">
+    <value>Regiões</value>
+  </data>
+  <data name="Rss" xml:space="preserve">
+    <value>Rss</value>
+  </data>
+  <data name="Security" xml:space="preserve">
+    <value>Segurança</value>
+  </data>
+  <data name="ServiceDashboard" xml:space="preserve">
+    <value>Painel de Serviços</value>
+  </data>
+  <data name="Services" xml:space="preserve">
+    <value>Serviços</value>
+  </data>
+  <data name="ServiceUpdates" xml:space="preserve">
+    <value>Atualizações de serviço</value>
+  </data>
+  <data name="Subscriptions" xml:space="preserve">
+    <value>Assinaturas</value>
+  </data>
+  <data name="Support" xml:space="preserve">
+    <value>Suporte</value>
+  </data>
+  <data name="Title" xml:space="preserve">
+    <value>Experimente o Serviço de Aplicativo do Azure</value>
+  </data>
+  <data name="Trademarks" xml:space="preserve">
+    <value>Marcas comerciais</value>
+  </data>
+  <data name="TrustCenter" xml:space="preserve">
+    <value>Central de Confiabilidade</value>
+  </data>
+  <data name="Twitter" xml:space="preserve">
+    <value>Twitter</value>
+  </data>
+  <data name="Information_LogicAppDescription" xml:space="preserve">
+    <value>Os Aplicativos Lógicos do Azure permitem que os desenvolvedores projetem fluxos de trabalho que começam a partir de um gatilho e depois executam uma série de etapas, cada uma invocando um Aplicativo de API de Serviço de Aplicativo enquanto cuida com segurança da autenticação e das melhores práticas, como a definição de ponto de verificação e a execução durável.</value>
+  </data>
+  <data name="Information_LogicAppStep1" xml:space="preserve">
+    <value>1. Olhe na lente Resumo, na qual você encontrará informações como quando foi executado pela última vez e se foi bem-sucedido</value>
+  </data>
+  <data name="Information_LogicAppStep2" xml:space="preserve">
+    <value>2. Abra a definição do Aplicativo Lógico clicando na mesma parte na lente Resumo e olhe para a definição. Você pode tentar estender o Aplicativo Lógico para enviar um tweet sempre que um ping falhar.</value>
+  </data>
+  <data name="Templates_PingSiteDescription" xml:space="preserve">
+    <value>Este modelo de Aplicativo Lógico executará ping em um site em um agendamento recorrente. Você pode estendê-lo para que faça uma ação dependendo do resultado do ping.</value>
+  </data>
+  <data name="Action_Dismiss" xml:space="preserve">
+    <value>Ignorar</value>
+  </data>
+  <data name="Information_AppHasExpired" xml:space="preserve">
+    <value>Seu {0} expirou. Você pode tentar criar outro aplicativo de serviço de aplicativo ou se inscrever para uma conta de avaliação de 30 dias grátis.</value>
+  </data>
+  <data name="Information_Prerequisite" xml:space="preserve">
+    <value>Pré-requisito</value>
+  </data>
+  <data name="Information_WelcomeFeedback" xml:space="preserve">
+    <value>Agradecemos seu comentário!</value>
+  </data>
+  <data name="Action_Create" xml:space="preserve">
+    <value>Criar</value>
+  </data>
+  <data name="Action_GenericWorkWithYourApp" xml:space="preserve">
+    <value>Trabalhar com seu aplicativo</value>
+  </data>
+  <data name="Information_YouCantHaveMoreThanOne" xml:space="preserve">
+    <value>Você não pode ter mais de 1 recurso livre por vez</value>
+  </data>
+  <data name="Next" xml:space="preserve">
+    <value>Próximo</value>
+  </data>
+  <data name="Previous" xml:space="preserve">
+    <value>Anterior</value>
+  </data>
+  <data name="Information_ApiAppDescription" xml:space="preserve">
+    <value>A experiência de avaliação do aplicativo de API do Azure ainda não chegou, mas você ainda pode criar aplicativos de API se inscrevendo para uma avaliação gratuita de 30 dias que permite a criação de até 10 aplicativos de qualquer tipo grátis.</value>
+  </data>
+  <data name="Information_MobileAppDescription" xml:space="preserve">
+    <value>Os Aplicativos Móveis do Azure facilitam a adição de logon, o envio por push e a sincronização de dados para seu aplicativo para iOS, Android ou Windows, o dimensionamento global e a conexão de seu aplicativo a recursos locais e sistemas corporativos.</value>
+  </data>
+  <data name="Information_WebAppDescription" xml:space="preserve">
+    <value>Os Aplicativos Web do Azure permitem que os desenvolvedores implementem e dimensionem com facilidade aplicativos da Web de classe empresarial escritos em uma variedade de idiomas e integrados com um mutltitude de serviços, sem nunca se preocupar com o gerenciamento da infraestrutura.</value>
+  </data>
+  <data name="Information_LogicAppStep3" xml:space="preserve">
+    <value>3. Execute o Aplicativo Lógico novamente clicando no comando Executar Agora na parte superior da folha.</value>
+  </data>
+  <data name="Information_LogicAppStep4" xml:space="preserve">
+    <value>4. Para saber mais sobre como usar Aplicativos Lógicos, clique em Início Rápido, que fornecerá indicações para a documentação.</value>
+  </data>
+  <data name="Information_LogicAppStepsIntro" xml:space="preserve">
+    <value>Na folha de recursos Aplicativo Lógico, é possível tentar o seguinte:</value>
+  </data>
+  <data name="Information_XamarinBrandingLine1" xml:space="preserve">
+    <value>Passe a móvel com o serviço de aplicativo Xamarin e Azure</value>
+  </data>
+  <data name="Information_XamarinBrandingLine2" xml:space="preserve">
+    <value>Auth, Sync, e Push em segundos para qualquer dispositivo. Comece grátis e dimensione conforme seu aplicativo cresce.</value>
+  </data>
+  <data name="Information_ExtendResourceLifeTimeText" xml:space="preserve">
+    <value>Necessita de mais tempo? Clique aqui para prolongar sua versão de avaliação para 24 horas.</value>
+  </data>
+  <data name="Information_Android" xml:space="preserve">
+    <value>Android</value>
+  </data>
+  <data name="Information_DownloadAndroidClient" xml:space="preserve">
+    <value>Baixar o aplicativo cliente para Android</value>
+  </data>
+  <data name="Information_DownloadWUniversalWindowsPlatformClient" xml:space="preserve">
+    <value>Baixar o cliente UWP (Plataforma Universal do Windows)</value>
+  </data>
+  <data name="Information_DownloadXamarinFormsClient" xml:space="preserve">
+    <value>Baixar o aplicativo cliente Xamarin.Forms</value>
+  </data>
+  <data name="Information_UniversalWindowsPlatform" xml:space="preserve">
+    <value>Plataforma Universal do Windows (UWP)</value>
+  </data>
+  <data name="Information_XamarinForms" xml:space="preserve">
+    <value>Xamarin.Forms</value>
+  </data>
+  <data name="Information_AzurePlatformBrandingLine1" xml:space="preserve">
+    <value>Veja como é rápido criar um aplicativo Node.js</value>
+  </data>
+  <data name="Information_AzurePlatformBrandingLine2" xml:space="preserve">
+    <value>O Serviço de Aplicativo do Azure é o único serviço de nuvem que integra tudo o que você precisa para criar com rapidez e velocidade aplicativos Web e móveis para qualquer plataforma ou dispositivo. Extraia dados de qualquer lugar e crie virtualmente qualquer coisa.  Divirta-se por até uma hora gratuitamente e sem compromisso.</value>
+  </data>
+  <data name="Information_InstallAndroidStudio" xml:space="preserve">
+    <value>Baixar o Android Studio</value>
+  </data>
+  <data name="Templates_AzureDevOpsDescription" xml:space="preserve">
+    <value>Este modelo criará um Jenkins CI do Azure</value>
+  </data>
+  <data name="Information_FunctionApp" xml:space="preserve">
+    <value>Aplicativo de Função</value>
+  </data>
+  <data name="Information_FunctionAppDescription" xml:space="preserve">
+    <value>O Azure Functions é uma experiência controlada por evento sem servidor que estende a plataforma do Serviço de Aplicativo do Azure. Esses serviços nano podem ser escalados sob demanda e você paga somente pelos recursos que consumir.</value>
+  </data>
+  <data name="TryFunctions" xml:space="preserve">
+    <value>Experimente o Functions</value>
+  </data>
+</root>

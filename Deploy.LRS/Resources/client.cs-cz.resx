@@ -1,0 +1,513 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Action_AllowContact" xml:space="preserve">
+    <value>Povolit Microsoftu, aby mě v této věci kontaktoval.</value>
+  </data>
+  <data name="Action_Cancel" xml:space="preserve">
+    <value>Zrušit</value>
+  </data>
+  <data name="Action_CreateAppServiceApp" xml:space="preserve">
+    <value>Vytvořit aplikaci Aplikační služby Azure</value>
+  </data>
+  <data name="Action_Delete" xml:space="preserve">
+    <value>Odstranit</value>
+  </data>
+  <data name="Action_DownloadAppContent" xml:space="preserve">
+    <value>Stáhnout obsah {0}</value>
+  </data>
+  <data name="Action_DownloadPublishingProfile" xml:space="preserve">
+    <value>Stáhnout profil publikování</value>
+  </data>
+  <data name="Action_GitClone" xml:space="preserve">
+    <value>Klonovat nebo doručit Gitem</value>
+  </data>
+  <data name="Action_GoToExistingApp" xml:space="preserve">
+    <value>Přejít do stávající aplikace</value>
+  </data>
+  <data name="Action_ManageInAzurePortal" xml:space="preserve">
+    <value>Spravovat na Azure Portal</value>
+  </data>
+  <data name="Action_MobileClients" xml:space="preserve">
+    <value>Stáhnout a spustit mobilní klientskou aplikaci</value>
+  </data>
+  <data name="Action_Monaco" xml:space="preserve">
+    <value>Upravujte kód online</value>
+  </data>
+  <data name="Action_ReportAnIssue" xml:space="preserve">
+    <value>Nahlásit problém</value>
+  </data>
+  <data name="Action_SelectAppType" xml:space="preserve">
+    <value>Vybrat typ aplikace</value>
+  </data>
+  <data name="Action_SelectTemplate" xml:space="preserve">
+    <value>Vyberte šablonu a vytvořte {0}</value>
+  </data>
+  <data name="Action_ShareAComment" xml:space="preserve">
+    <value>Sdílet komentář</value>
+  </data>
+  <data name="Action_Submit" xml:space="preserve">
+    <value>Odeslat</value>
+  </data>
+  <data name="Action_Yes" xml:space="preserve">
+    <value>Ano</value>
+  </data>
+  <data name="Blog" xml:space="preserve">
+    <value>Blog</value>
+  </data>
+  <data name="Calculator" xml:space="preserve">
+    <value>Kalkulačka</value>
+  </data>
+  <data name="CaseStudies" xml:space="preserve">
+    <value>Případové studie</value>
+  </data>
+  <data name="Community" xml:space="preserve">
+    <value>Komunita</value>
+  </data>
+  <data name="Compliance" xml:space="preserve">
+    <value>Dodržování předpisů</value>
+  </data>
+  <data name="ContactUs" xml:space="preserve">
+    <value>Kontaktujte nás</value>
+  </data>
+  <data name="Documentation" xml:space="preserve">
+    <value>Dokumentace</value>
+  </data>
+  <data name="Downloads" xml:space="preserve">
+    <value>Stahování</value>
+  </data>
+  <data name="Error_SubmittingFeedback" xml:space="preserve">
+    <value>Při odesílání vašeho názoru došlo k chybě. Zkuste to prosím znovu později.</value>
+  </data>
+  <data name="Events" xml:space="preserve">
+    <value>Události</value>
+  </data>
+  <data name="Facebook" xml:space="preserve">
+    <value>Facebook</value>
+  </data>
+  <data name="Features" xml:space="preserve">
+    <value>Funkce</value>
+  </data>
+  <data name="Feedback" xml:space="preserve">
+    <value>Zpětná vazba</value>
+  </data>
+  <data name="Forums" xml:space="preserve">
+    <value>Fóra</value>
+  </data>
+  <data name="FreeAccount" xml:space="preserve">
+    <value>Účet zdarma</value>
+  </data>
+  <data name="GoSocial" xml:space="preserve">
+    <value>Sociální sítě</value>
+  </data>
+  <data name="Information_APIApp" xml:space="preserve">
+    <value>Aplikace API</value>
+  </data>
+  <data name="Information_AppAlreadyExists" xml:space="preserve">
+    <value>Aplikační službu už máte vytvořenou. Chcete ji odstranit a vytvořit novou?</value>
+  </data>
+  <data name="Information_AppHasBeenCreated" xml:space="preserve">
+    <value>{0} byla vytvořená.</value>
+  </data>
+  <data name="Information_AspNetBrandingLine1" xml:space="preserve">
+    <value>Bezplatné hostování 10 webů ASP.NET pomocí Azure App Service</value>
+  </data>
+  <data name="Information_AspNetBrandingLine2" xml:space="preserve">
+    <value>Bezpečná a spolehlivá služba, která je připravená za pár sekund. Začněte zadarmo a škálujte podle rozšiřujícího se provozu.</value>
+  </data>
+  <data name="Information_ComingSoon" xml:space="preserve">
+    <value>Připravujeme</value>
+  </data>
+  <data name="Information_DownloadClient" xml:space="preserve">
+    <value>Stáhnout klienta</value>
+  </data>
+  <data name="Information_DownloadiOSClient" xml:space="preserve">
+    <value>Stáhnout klientskou aplikaci pro iOS</value>
+  </data>
+  <data name="Information_DownloadWindowsClient" xml:space="preserve">
+    <value>Stáhnout klientskou aplikaci pro Windows</value>
+  </data>
+  <data name="Information_DownloadXamarinAndroidClient" xml:space="preserve">
+    <value>Stáhnout klientskou aplikaci Xamarin Android</value>
+  </data>
+  <data name="Information_DownloadXamariniOSClient" xml:space="preserve">
+    <value>Stáhnout klientskou aplikaci Xamarin iOS</value>
+  </data>
+  <data name="Information_ExperienceComingSoon" xml:space="preserve">
+    <value>Zkušební verze aplikace Azure {0} ještě není dostupná. I přesto můžete aplikace {0} vytvářet, když si zaregistrujete bezplatnou třicetidenní zkušební verzi, ve které můžete zadarmo vytvořit až 10 aplikací libovolného typu.</value>
+  </data>
+  <data name="Information_ExperienceNotHereYet" xml:space="preserve">
+    <value>Prostředí {0} ještě není dostupné.</value>
+  </data>
+  <data name="Information_ExpireMessage" xml:space="preserve">
+    <value>Platnost zkušební verze {0} vyprší za:</value>
+  </data>
+  <data name="Information_GenericBrandingLine1" xml:space="preserve">
+    <value>Aplikační služba Azure je cloudová aplikační služba, která integruje všechno, co potřebujete k jednoduchému a rychlému vytváření webových a mobilních aplikací pro všechny platformy a zařízení.</value>
+  </data>
+  <data name="Information_GenericBrandingLine2" xml:space="preserve">
+    <value>Staňte se na hodinu naším hostem a vyzkoušejte si prostředí Aplikační služby Azure bez předplatného Azure, úplně zadarmo a bez závazků. Pokud budete chtít Aplikační službu Azure zkoušet delší dobu, použijte zkušební předplatné.</value>
+  </data>
+  <data name="Information_GoingBackWillDeleteApp" xml:space="preserve">
+    <value>Návratem odstraníte aktuální aplikaci</value>
+  </data>
+  <data name="Information_InstallVisualStudio" xml:space="preserve">
+    <value>Nainstalovat Visual Studio Professional 2015 (aktualizace 2)</value>
+  </data>
+  <data name="Information_InstallXamarinStudio" xml:space="preserve">
+    <value>Nainstalovat Xamarin Studio pro OS X</value>
+  </data>
+  <data name="Information_InstallXcode" xml:space="preserve">
+    <value>Nainstalovat Xcode (verze 4.4+)</value>
+  </data>
+  <data name="Information_LogicApp" xml:space="preserve">
+    <value>Aplikace logiky</value>
+  </data>
+  <data name="Information_LoginFirst" xml:space="preserve">
+    <value>Před vytvořením aplikace se přihlaste.</value>
+  </data>
+  <data name="Information_MobileApp" xml:space="preserve">
+    <value>Mobilní aplikace</value>
+  </data>
+  <data name="Information_NativeiOS" xml:space="preserve">
+    <value>Nativní iOS</value>
+  </data>
+  <data name="Information_SelectAppType" xml:space="preserve">
+    <value>Vybrat typ aplikace</value>
+  </data>
+  <data name="Information_SelectTemplate" xml:space="preserve">
+    <value>Vyberte šablonu</value>
+  </data>
+  <data name="Information_SubmittingFeedback" xml:space="preserve">
+    <value>Odesílání vašeho názoru...</value>
+  </data>
+  <data name="Information_ThanksForFeedback" xml:space="preserve">
+    <value>Děkujeme za váš názor.</value>
+  </data>
+  <data name="Information_VisitWebClient" xml:space="preserve">
+    <value>Navštívit webového klienta</value>
+  </data>
+  <data name="Information_WantMoreQuestionLine1" xml:space="preserve">
+    <value>Chcete získat zadarmo víc?</value>
+  </data>
+  <data name="Information_WantMoreQuestionLine2" xml:space="preserve">
+    <value>Vytvářejte víc webových, mobilních a logických aplikací a aplikací API. Zaregistrujte si bezplatnou třicetidenní zkušební verzi a můžete zadarmo vytvořit až 10 aplikací libovolného typu.</value>
+  </data>
+  <data name="Information_WebApp" xml:space="preserve">
+    <value>Webová aplikace</value>
+  </data>
+  <data name="Information_WebClient" xml:space="preserve">
+    <value>Webový portál</value>
+  </data>
+  <data name="Information_Windows" xml:space="preserve">
+    <value>Universal Windows 8.1</value>
+  </data>
+  <data name="Information_WorkWithLogicApps" xml:space="preserve">
+    <value>Pokud chcete s aplikací pracovat, použijte následující odkaz na Azure Portal, který vás nasměruje do okna prostředků Logic App.</value>
+  </data>
+  <data name="Information_WorkWithYourApp" xml:space="preserve">
+    <value>Pracovat s aplikací {0} na</value>
+  </data>
+  <data name="Information_XamarinAndroid" xml:space="preserve">
+    <value>Xamarin Android</value>
+  </data>
+  <data name="Information_XamariniOS" xml:space="preserve">
+    <value>Xamarin iOS</value>
+  </data>
+  <data name="Logout" xml:space="preserve">
+    <value>Odhlášení</value>
+  </data>
+  <data name="ManagementPortal" xml:space="preserve">
+    <value>Portál pro správu</value>
+  </data>
+  <data name="Marketplace" xml:space="preserve">
+    <value>Marketplace</value>
+  </data>
+  <data name="MicrosoftAzure" xml:space="preserve">
+    <value>Microsoft Azure</value>
+  </data>
+  <data name="Mooncake" xml:space="preserve">
+    <value>Microsoft Azure v Číně</value>
+  </data>
+  <data name="MyAccount" xml:space="preserve">
+    <value>Můj účet</value>
+  </data>
+  <data name="Newsletter" xml:space="preserve">
+    <value>Bulletin</value>
+  </data>
+  <data name="Portal" xml:space="preserve">
+    <value>Portál</value>
+  </data>
+  <data name="PreviewFeatures" xml:space="preserve">
+    <value>Funkce předběžné verze</value>
+  </data>
+  <data name="Pricing" xml:space="preserve">
+    <value>Cena</value>
+  </data>
+  <data name="Privacy" xml:space="preserve">
+    <value>Ochrana osobních údajů</value>
+  </data>
+  <data name="PrivacyCookies" xml:space="preserve">
+    <value>Ochrana osobních údajů a soubory cookie</value>
+  </data>
+  <data name="Profile" xml:space="preserve">
+    <value>Profil</value>
+  </data>
+  <data name="Regions" xml:space="preserve">
+    <value>Oblasti</value>
+  </data>
+  <data name="Rss" xml:space="preserve">
+    <value>Rss</value>
+  </data>
+  <data name="Security" xml:space="preserve">
+    <value>Zabezpečení</value>
+  </data>
+  <data name="ServiceDashboard" xml:space="preserve">
+    <value>Řídicí panel služby</value>
+  </data>
+  <data name="Services" xml:space="preserve">
+    <value>Služby</value>
+  </data>
+  <data name="ServiceUpdates" xml:space="preserve">
+    <value>Aktualizace služeb</value>
+  </data>
+  <data name="Subscriptions" xml:space="preserve">
+    <value>Předplatné</value>
+  </data>
+  <data name="Support" xml:space="preserve">
+    <value>Podpora</value>
+  </data>
+  <data name="Title" xml:space="preserve">
+    <value>Vyzkoušet Aplikační službu Azure</value>
+  </data>
+  <data name="Trademarks" xml:space="preserve">
+    <value>Ochranné známky</value>
+  </data>
+  <data name="TrustCenter" xml:space="preserve">
+    <value>Centrum zabezpečení</value>
+  </data>
+  <data name="Twitter" xml:space="preserve">
+    <value>Twitter</value>
+  </data>
+  <data name="Information_LogicAppDescription" xml:space="preserve">
+    <value>Azure Logic Apps umožňují vývojářům navrhovat pracovní postupy, které začínají spouštěčem událostí a provádějí sérii kroků, kdy každý krok volá App Service API App a přitom se bezpečně postará o ověřování a doporučené postupy, jako je vytváření kontrolních bodů a trvanlivé spouštění.</value>
+  </data>
+  <data name="Information_LogicAppStep1" xml:space="preserve">
+    <value>1. Podívejte se na oddíl Souhrn, kde najdete informace třeba o posledním spuštění a o tom, jestli bylo úspěšné.</value>
+  </data>
+  <data name="Information_LogicAppStep2" xml:space="preserve">
+    <value>2. Když kliknete na stejnou část oddílu Souhrn, otevřete definici aplikace logiky, kde se můžete podívat na definici. Aplikaci logiky můžete zkusit rozšířit, aby odeslala tweet při každém selhání příkazu ping.</value>
+  </data>
+  <data name="Templates_PingSiteDescription" xml:space="preserve">
+    <value>Tato šablona aplikace logiky pravidelně odesílá příkaz ping na web. Můžete ji rozšířit, aby na základě výsledku příkazu ping udělala nějakou akci.</value>
+  </data>
+  <data name="Action_Dismiss" xml:space="preserve">
+    <value>Zavřít</value>
+  </data>
+  <data name="Information_AppHasExpired" xml:space="preserve">
+    <value>Platnost aplikace {0} vypršela. Můžete zkusit vytvořit jinou aplikaci Aplikační služby nebo si zaregistrovat bezplatný třicetidenní zkušební účet.</value>
+  </data>
+  <data name="Information_Prerequisite" xml:space="preserve">
+    <value>Požadavek</value>
+  </data>
+  <data name="Information_WelcomeFeedback" xml:space="preserve">
+    <value>Vítáme vaše připomínky a názory.</value>
+  </data>
+  <data name="Action_Create" xml:space="preserve">
+    <value>Vytvořit</value>
+  </data>
+  <data name="Action_GenericWorkWithYourApp" xml:space="preserve">
+    <value>Pracovat s aplikací</value>
+  </data>
+  <data name="Information_YouCantHaveMoreThanOne" xml:space="preserve">
+    <value>Vždycky můžete mít jenom jeden volný prostředek.</value>
+  </data>
+  <data name="Next" xml:space="preserve">
+    <value>Další</value>
+  </data>
+  <data name="Previous" xml:space="preserve">
+    <value>Předchozí</value>
+  </data>
+  <data name="Information_ApiAppDescription" xml:space="preserve">
+    <value>Zkušební verze Azure API App ještě není dostupná. I přesto můžete API Apps vytvářet, když si zaregistrujete bezplatnou třicetidenní zkušební verzi, ve které můžete zadarmo vytvořit až 10 aplikací libovolného typu.</value>
+  </data>
+  <data name="Information_MobileAppDescription" xml:space="preserve">
+    <value>Mobilní aplikace Azure umožňují jednoduše přidávat přihlašovací údaje, nabízená oznámení a data, která se synchronizují s aplikací pro iOS, Android nebo Windows, globálně škálovat a připojovat vaše aplikace k podnikovým systémům a místním zdrojům.</value>
+  </data>
+  <data name="Information_WebAppDescription" xml:space="preserve">
+    <value>Webové aplikace Azure umožňují vývojářům jednoduše zavádět a škálovat podnikové webové aplikace, které jsou napsané v různých jazycích a integrují různé služby, bez starostí o správu infrastruktury.</value>
+  </data>
+  <data name="Information_LogicAppStep3" xml:space="preserve">
+    <value>3. Nahoře v okně klikněte na příkaz Spustit a znovu spusťte aplikaci logiky.</value>
+  </data>
+  <data name="Information_LogicAppStep4" xml:space="preserve">
+    <value>4. Další informace o použití Aplikace logiky získáte kliknutím na představení aplikace, kde najdete ukazatele odkazující na dokumentaci.</value>
+  </data>
+  <data name="Information_LogicAppStepsIntro" xml:space="preserve">
+    <value>V okně prostředků Aplikace logiky můžete vyzkoušet tyto věci:</value>
+  </data>
+  <data name="Information_XamarinBrandingLine1" xml:space="preserve">
+    <value>Buďte mobilní s Xamarinem a službou Azure App Service.</value>
+  </data>
+  <data name="Information_XamarinBrandingLine2" xml:space="preserve">
+    <value>Ověřujte, synchronizujte a posílejte nabízená oznámení během několika sekund z libovolného zařízení. Začněte zdarma a škálujte podle toho, jak se vaše aplikace bude rozšiřovat.</value>
+  </data>
+  <data name="Information_ExtendResourceLifeTimeText" xml:space="preserve">
+    <value>Potřebujete víc času? Klikněte sem a prodlužte si zkušební verzi na 24 hodin.</value>
+  </data>
+  <data name="Information_Android" xml:space="preserve">
+    <value>Android</value>
+  </data>
+  <data name="Information_DownloadAndroidClient" xml:space="preserve">
+    <value>Stáhnout klientskou aplikaci pro Android</value>
+  </data>
+  <data name="Information_DownloadWUniversalWindowsPlatformClient" xml:space="preserve">
+    <value>Stáhnout klienta Univerzální platforma Windows (UWP)</value>
+  </data>
+  <data name="Information_DownloadXamarinFormsClient" xml:space="preserve">
+    <value>Stáhnout klientskou aplikaci Formuláře pro Xamarin</value>
+  </data>
+  <data name="Information_UniversalWindowsPlatform" xml:space="preserve">
+    <value>Univerzální platforma Windows (UWP)</value>
+  </data>
+  <data name="Information_XamarinForms" xml:space="preserve">
+    <value>Xamarin.Forms</value>
+  </data>
+  <data name="Information_AzurePlatformBrandingLine1" xml:space="preserve">
+    <value>Podívejte se, jak rychle se dá vytvořit aplikace Node.js.</value>
+  </data>
+  <data name="Information_AzurePlatformBrandingLine2" xml:space="preserve">
+    <value>Služba Azure App Service je jediná cloudová služba, která integruje všechno, co je potřeba k rychlému a snadnému vytvoření webu a mobilních aplikací pro libovolnou platformu nebo zařízení. Data si můžete vytáhnout odkudkoliv a vytvořit můžete skutečně cokoliv. Pohrajte si v izolovaném prostoru až hodinu bezplatně a bez jakýchkoli závazků.</value>
+  </data>
+  <data name="Information_InstallAndroidStudio" xml:space="preserve">
+    <value>Stáhnout Android Studio</value>
+  </data>
+  <data name="Templates_AzureDevOpsDescription" xml:space="preserve">
+    <value>Tato šablona vytvoří Azure Jenkins CI.</value>
+  </data>
+  <data name="Information_FunctionApp" xml:space="preserve">
+    <value>Aplikace zajišťující funkci</value>
+  </data>
+  <data name="Information_FunctionAppDescription" xml:space="preserve">
+    <value>Azure Functions je prostředí založené na událostech a fungující bez serveru, které rozšiřuje existující platformu Azure App Service. Tyto nanoslužby je možné škálovat na vyžádání, přičemž platíte jen za prostředky, které spotřebováváte.</value>
+  </data>
+  <data name="TryFunctions" xml:space="preserve">
+    <value>Vyzkoušet Functions</value>
+  </data>
+</root>

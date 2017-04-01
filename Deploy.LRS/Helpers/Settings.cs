@@ -19,8 +19,8 @@ namespace Deploy
 
         public static string GeoRegions { get { return config("East US,West US,North Europe,West Europe,South Central US,North Central US,East Asia,Southeast Asia,Japan West,Japan East,Brazil South"); } }
 
-        public static string AppInsightsInstrumentationKey { get { return config("f7b52ae5-8231-45dd-b0a5-c34083ca3e5e"); } }
-        public static string MixPanelInstrumentationKey { get { return config("1d92e3abd14a2d65f748d1314dd24b99"); } }
+        public static string AppInsightsInstrumentationKey { get { return config(); } }
+        public static string MixPanelInstrumentationKey { get { return config(); } }
         public static string AADClientId { get { return config(); } }
         public static string AADClientSecret { get { return config(); } }
     }

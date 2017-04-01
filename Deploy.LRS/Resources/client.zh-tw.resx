@@ -1,0 +1,513 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Action_AllowContact" xml:space="preserve">
+    <value>允許 Microsoft 與我接洽此意見反應的相關事宜。</value>
+  </data>
+  <data name="Action_Cancel" xml:space="preserve">
+    <value>取消</value>
+  </data>
+  <data name="Action_CreateAppServiceApp" xml:space="preserve">
+    <value>建立您的 Azure App Service 應用程式</value>
+  </data>
+  <data name="Action_Delete" xml:space="preserve">
+    <value>刪除</value>
+  </data>
+  <data name="Action_DownloadAppContent" xml:space="preserve">
+    <value>下載 {0} 內容</value>
+  </data>
+  <data name="Action_DownloadPublishingProfile" xml:space="preserve">
+    <value>下載發行設定檔</value>
+  </data>
+  <data name="Action_GitClone" xml:space="preserve">
+    <value>使用 Git 複製或推送</value>
+  </data>
+  <data name="Action_GoToExistingApp" xml:space="preserve">
+    <value>移至現有的應用程式</value>
+  </data>
+  <data name="Action_ManageInAzurePortal" xml:space="preserve">
+    <value>使用 Azure 入口網站管理</value>
+  </data>
+  <data name="Action_MobileClients" xml:space="preserve">
+    <value>下載並執行您的行動用戶端應用程式</value>
+  </data>
+  <data name="Action_Monaco" xml:space="preserve">
+    <value>線上編輯您的程式碼</value>
+  </data>
+  <data name="Action_ReportAnIssue" xml:space="preserve">
+    <value>回報問題</value>
+  </data>
+  <data name="Action_SelectAppType" xml:space="preserve">
+    <value>選取應用程式類型</value>
+  </data>
+  <data name="Action_SelectTemplate" xml:space="preserve">
+    <value>選取範本並建立您的 {0}</value>
+  </data>
+  <data name="Action_ShareAComment" xml:space="preserve">
+    <value>共用註解</value>
+  </data>
+  <data name="Action_Submit" xml:space="preserve">
+    <value>送出</value>
+  </data>
+  <data name="Action_Yes" xml:space="preserve">
+    <value>是</value>
+  </data>
+  <data name="Blog" xml:space="preserve">
+    <value>部落格</value>
+  </data>
+  <data name="Calculator" xml:space="preserve">
+    <value>計算機</value>
+  </data>
+  <data name="CaseStudies" xml:space="preserve">
+    <value>案例研究</value>
+  </data>
+  <data name="Community" xml:space="preserve">
+    <value>社群</value>
+  </data>
+  <data name="Compliance" xml:space="preserve">
+    <value>相容性</value>
+  </data>
+  <data name="ContactUs" xml:space="preserve">
+    <value>與我們連絡</value>
+  </data>
+  <data name="Documentation" xml:space="preserve">
+    <value>文件</value>
+  </data>
+  <data name="Downloads" xml:space="preserve">
+    <value>下載</value>
+  </data>
+  <data name="Error_SubmittingFeedback" xml:space="preserve">
+    <value>送出您的意見反應時發生錯誤。請稍後再試一次。</value>
+  </data>
+  <data name="Events" xml:space="preserve">
+    <value>事件</value>
+  </data>
+  <data name="Facebook" xml:space="preserve">
+    <value>Facebook</value>
+  </data>
+  <data name="Features" xml:space="preserve">
+    <value>功能</value>
+  </data>
+  <data name="Feedback" xml:space="preserve">
+    <value>意見反應</value>
+  </data>
+  <data name="Forums" xml:space="preserve">
+    <value>論壇</value>
+  </data>
+  <data name="FreeAccount" xml:space="preserve">
+    <value>免費帳戶</value>
+  </data>
+  <data name="GoSocial" xml:space="preserve">
+    <value>Go Social</value>
+  </data>
+  <data name="Information_APIApp" xml:space="preserve">
+    <value>API 應用程式</value>
+  </data>
+  <data name="Information_AppAlreadyExists" xml:space="preserve">
+    <value>您已有建立 App Service。要將其刪除再另建一個新的服務嗎?</value>
+  </data>
+  <data name="Information_AppHasBeenCreated" xml:space="preserve">
+    <value>您的 {0} 已建立!</value>
+  </data>
+  <data name="Information_AspNetBrandingLine1" xml:space="preserve">
+    <value>免費使用 Azure App Service 託管 10 個 ASP.NET 網站</value>
+  </data>
+  <data name="Information_AspNetBrandingLine2" xml:space="preserve">
+    <value>安全、可靠，而且只要短短幾秒的時間，就能開始營運。現在就開始免費使用，然後隨您的流量增加而調整其規模。</value>
+  </data>
+  <data name="Information_ComingSoon" xml:space="preserve">
+    <value>即將推出</value>
+  </data>
+  <data name="Information_DownloadClient" xml:space="preserve">
+    <value>下載用戶端</value>
+  </data>
+  <data name="Information_DownloadiOSClient" xml:space="preserve">
+    <value>下載 iOS 用戶端應用程式</value>
+  </data>
+  <data name="Information_DownloadWindowsClient" xml:space="preserve">
+    <value>下載 Windows 用戶端應用程式</value>
+  </data>
+  <data name="Information_DownloadXamarinAndroidClient" xml:space="preserve">
+    <value>下載 Xamarin Android 用戶端應用程式</value>
+  </data>
+  <data name="Information_DownloadXamariniOSClient" xml:space="preserve">
+    <value>下載 Xamarin iOS 用戶端應用程式</value>
+  </data>
+  <data name="Information_ExperienceComingSoon" xml:space="preserve">
+    <value>Azure {0} 試用版尚未推出，但您仍然可以註冊 30 天的免費試用版 (可讓您免費建立最多 10 個各種類型的應用程式) 來建立 {0}。</value>
+  </data>
+  <data name="Information_ExperienceNotHereYet" xml:space="preserve">
+    <value>{0} 尚未推出。</value>
+  </data>
+  <data name="Information_ExpireMessage" xml:space="preserve">
+    <value>您的免費 {0} 到期前剩餘時間:</value>
+  </data>
+  <data name="Information_GenericBrandingLine1" xml:space="preserve">
+    <value>Azure App Service 為雲端應用程式服務，整合您需要的一切，讓您可以快速便利地建置適用於任何平台或裝置的 Web 應用程式及行動應用程式。</value>
+  </data>
+  <data name="Information_GenericBrandingLine2" xml:space="preserve">
+    <value>您可以免費體驗 Azure App Service 最多一個小時，而且完全不需要 Azure 訂用帳戶、付費及綁約。使用免費的 Azure 試用訂用帳戶能夠體驗完整的 Azure App Service 更久。</value>
+  </data>
+  <data name="Information_GoingBackWillDeleteApp" xml:space="preserve">
+    <value>返回將會刪除目前的應用程式</value>
+  </data>
+  <data name="Information_InstallVisualStudio" xml:space="preserve">
+    <value>安裝 Visual Studio Professional 2015 (Update 2)</value>
+  </data>
+  <data name="Information_InstallXamarinStudio" xml:space="preserve">
+    <value>安裝適用於 OS X 的 Xamarin Studio</value>
+  </data>
+  <data name="Information_InstallXcode" xml:space="preserve">
+    <value>安裝 Xcode (4.4 版以上)</value>
+  </data>
+  <data name="Information_LogicApp" xml:space="preserve">
+    <value>邏輯應用程式</value>
+  </data>
+  <data name="Information_LoginFirst" xml:space="preserve">
+    <value>先登入，以建立應用程式</value>
+  </data>
+  <data name="Information_MobileApp" xml:space="preserve">
+    <value>行動應用程式</value>
+  </data>
+  <data name="Information_NativeiOS" xml:space="preserve">
+    <value>原生 iOS</value>
+  </data>
+  <data name="Information_SelectAppType" xml:space="preserve">
+    <value>選取應用程式類型</value>
+  </data>
+  <data name="Information_SelectTemplate" xml:space="preserve">
+    <value>選取範本</value>
+  </data>
+  <data name="Information_SubmittingFeedback" xml:space="preserve">
+    <value>正在送出意見反應...</value>
+  </data>
+  <data name="Information_ThanksForFeedback" xml:space="preserve">
+    <value>感謝您的寶貴意見!</value>
+  </data>
+  <data name="Information_VisitWebClient" xml:space="preserve">
+    <value>前往網頁用戶端</value>
+  </data>
+  <data name="Information_WantMoreQuestionLine1" xml:space="preserve">
+    <value>想要享有更多免費的優惠嗎?</value>
+  </data>
+  <data name="Information_WantMoreQuestionLine2" xml:space="preserve">
+    <value>建立更多 Web 應用程式、行動應用程式、邏輯應用程式及 API 應用程式。註冊 30 天的免費試用版，可以免費建立最多 10 個各種類型的應用程式。</value>
+  </data>
+  <data name="Information_WebApp" xml:space="preserve">
+    <value>Web 應用程式</value>
+  </data>
+  <data name="Information_WebClient" xml:space="preserve">
+    <value>Web 入口網站</value>
+  </data>
+  <data name="Information_Windows" xml:space="preserve">
+    <value>通用 Windows 8.1</value>
+  </data>
+  <data name="Information_WorkWithLogicApps" xml:space="preserve">
+    <value>若要使用您的應用程式，請前往下方的 Azure 入口網站連結，連入邏輯應用程式資源刀鋒視窗。</value>
+  </data>
+  <data name="Information_WorkWithYourApp" xml:space="preserve">
+    <value>使用您的 {0}，位於:</value>
+  </data>
+  <data name="Information_XamarinAndroid" xml:space="preserve">
+    <value>Xamarin Android</value>
+  </data>
+  <data name="Information_XamariniOS" xml:space="preserve">
+    <value>Xamarin iOS</value>
+  </data>
+  <data name="Logout" xml:space="preserve">
+    <value>登出</value>
+  </data>
+  <data name="ManagementPortal" xml:space="preserve">
+    <value>管理入口網站</value>
+  </data>
+  <data name="Marketplace" xml:space="preserve">
+    <value>Marketplace</value>
+  </data>
+  <data name="MicrosoftAzure" xml:space="preserve">
+    <value>Microsoft Azure</value>
+  </data>
+  <data name="Mooncake" xml:space="preserve">
+    <value>中國的 Microsoft Azure</value>
+  </data>
+  <data name="MyAccount" xml:space="preserve">
+    <value>我的帳戶</value>
+  </data>
+  <data name="Newsletter" xml:space="preserve">
+    <value>電子報</value>
+  </data>
+  <data name="Portal" xml:space="preserve">
+    <value>入口網站</value>
+  </data>
+  <data name="PreviewFeatures" xml:space="preserve">
+    <value>預覽版功能</value>
+  </data>
+  <data name="Pricing" xml:space="preserve">
+    <value>定價</value>
+  </data>
+  <data name="Privacy" xml:space="preserve">
+    <value>隱私權</value>
+  </data>
+  <data name="PrivacyCookies" xml:space="preserve">
+    <value>隱私權與 Cookie</value>
+  </data>
+  <data name="Profile" xml:space="preserve">
+    <value>設定檔</value>
+  </data>
+  <data name="Regions" xml:space="preserve">
+    <value>地區</value>
+  </data>
+  <data name="Rss" xml:space="preserve">
+    <value>RSS</value>
+  </data>
+  <data name="Security" xml:space="preserve">
+    <value>安全性</value>
+  </data>
+  <data name="ServiceDashboard" xml:space="preserve">
+    <value>服務儀表板</value>
+  </data>
+  <data name="Services" xml:space="preserve">
+    <value>服務</value>
+  </data>
+  <data name="ServiceUpdates" xml:space="preserve">
+    <value>服務更新</value>
+  </data>
+  <data name="Subscriptions" xml:space="preserve">
+    <value>訂用帳戶</value>
+  </data>
+  <data name="Support" xml:space="preserve">
+    <value>支援</value>
+  </data>
+  <data name="Title" xml:space="preserve">
+    <value>試用 Azure App Service</value>
+  </data>
+  <data name="Trademarks" xml:space="preserve">
+    <value>商標</value>
+  </data>
+  <data name="TrustCenter" xml:space="preserve">
+    <value>信任中心</value>
+  </data>
+  <data name="Twitter" xml:space="preserve">
+    <value>Twitter</value>
+  </data>
+  <data name="Information_LogicAppDescription" xml:space="preserve">
+    <value>Azure 邏輯應用程式可讓開發人員設計從觸發程序開始，到執行一系列步驟 (每個步驟都會叫用 App Service API 應用程式)，乃至於安全處理驗證及最佳實務 (例如檢查點檢查與長時間執行) 的工作流程。</value>
+  </data>
+  <data name="Information_LogicAppStep1" xml:space="preserve">
+    <value>1. 查看 [摘要] 濾鏡，從中找出最後執行的時間及成功與否等資訊</value>
+  </data>
+  <data name="Information_LogicAppStep2" xml:space="preserve">
+    <value>2. 按一下 [摘要] 濾鏡中的同一個區段，以開啟邏輯應用程式定義進行查看。您可以嘗試擴充邏輯應用程式，讓您 Ping 失敗時也能傳送推文。</value>
+  </data>
+  <data name="Templates_PingSiteDescription" xml:space="preserve">
+    <value>此邏輯應用程式範本會依照排程定期 Ping 網站。您可以擴充其功能，依據 Ping 的結果採取動作。</value>
+  </data>
+  <data name="Action_Dismiss" xml:space="preserve">
+    <value>關閉</value>
+  </data>
+  <data name="Information_AppHasExpired" xml:space="preserve">
+    <value>您的 {0} 已到期。您可以嘗試建立其他 App Service 應用程式，或註冊免費使用 30 天的試用帳戶。</value>
+  </data>
+  <data name="Information_Prerequisite" xml:space="preserve">
+    <value>必要條件</value>
+  </data>
+  <data name="Information_WelcomeFeedback" xml:space="preserve">
+    <value>歡迎您提供寶貴的意見!</value>
+  </data>
+  <data name="Action_Create" xml:space="preserve">
+    <value>建立</value>
+  </data>
+  <data name="Action_GenericWorkWithYourApp" xml:space="preserve">
+    <value>使用您的應用程式</value>
+  </data>
+  <data name="Information_YouCantHaveMoreThanOne" xml:space="preserve">
+    <value>您無法同時擁有 1 個以上的免費資源</value>
+  </data>
+  <data name="Next" xml:space="preserve">
+    <value>下一個</value>
+  </data>
+  <data name="Previous" xml:space="preserve">
+    <value>上一個</value>
+  </data>
+  <data name="Information_ApiAppDescription" xml:space="preserve">
+    <value>Azure API 應用程式試用版尚未推出，但您仍可註冊 30 天的免費試用版 (可讓您免費建立最多 10 個各種類型的應用程式) 來建立 API 應用程式。</value>
+  </data>
+  <data name="Information_MobileAppDescription" xml:space="preserve">
+    <value>Azure 行動應用程式讓您很輕鬆就能將登入、推送及資料同步加入您的 iOS、Android 或 Windows 應用程式，而且進行全域調整也非常容易，將您的應用程式連接到企業系統及內部部署資源也十分簡單。</value>
+  </data>
+  <data name="Information_WebAppDescription" xml:space="preserve">
+    <value>Azure Web Apps 可讓開發人員輕鬆部署及調整以各種語言編寫的企業級 Web 應用程式，而且很容易就能與多種服務進行整合，完全無須煩惱基礎結構的管理。</value>
+  </data>
+  <data name="Information_LogicAppStep3" xml:space="preserve">
+    <value>3. 按一下刀鋒視窗最上方的 [立刻執行] 命令，以再次執行邏輯應用程式。</value>
+  </data>
+  <data name="Information_LogicAppStep4" xml:space="preserve">
+    <value>4. 如需更多有關如何使用邏輯應用程式的資訊，請按一下 [快速入門]，其中提供前往各種文件的指標。</value>
+  </data>
+  <data name="Information_LogicAppStepsIntro" xml:space="preserve">
+    <value>您可以在邏輯應用程式資源刀鋒視窗中嘗試執行下列作業:</value>
+  </data>
+  <data name="Information_XamarinBrandingLine1" xml:space="preserve">
+    <value>透過 Xamarin 及 Azure App Service 邁向行動化</value>
+  </data>
+  <data name="Information_XamarinBrandingLine2" xml:space="preserve">
+    <value>任何裝置都能快速地驗證、同步並推送。免費開始使用，並在您的應用程式茁壯時為其調整規模。</value>
+  </data>
+  <data name="Information_ExtendResourceLifeTimeText" xml:space="preserve">
+    <value>需要更多時間嗎? 按一下這裡，即可為您的試用期延長至 24 小時。</value>
+  </data>
+  <data name="Information_Android" xml:space="preserve">
+    <value>Android</value>
+  </data>
+  <data name="Information_DownloadAndroidClient" xml:space="preserve">
+    <value>下載 Android 用戶端應用程式</value>
+  </data>
+  <data name="Information_DownloadWUniversalWindowsPlatformClient" xml:space="preserve">
+    <value>下載通用 Windows 平台 (UWP) 用戶端</value>
+  </data>
+  <data name="Information_DownloadXamarinFormsClient" xml:space="preserve">
+    <value>下載 Xamarin.Forms 用戶端應用程式</value>
+  </data>
+  <data name="Information_UniversalWindowsPlatform" xml:space="preserve">
+    <value>通用 Windows 平台 (UWP)</value>
+  </data>
+  <data name="Information_XamarinForms" xml:space="preserve">
+    <value>Xamarin.Forms</value>
+  </data>
+  <data name="Information_AzurePlatformBrandingLine1" xml:space="preserve">
+    <value>查看您建立 Node.js 應用程式的速度可以多快</value>
+  </data>
+  <data name="Information_AzurePlatformBrandingLine2" xml:space="preserve">
+    <value>Azure App Service 是唯一一項整合了您所需一切的雲端服務，讓您可快速並輕鬆地為任何平台或裝置建立 Web 與行動應用程式。您可隨處提取資料並建置近乎任何項目，並可免費使用沙箱一小時，無須任何承諾用量。</value>
+  </data>
+  <data name="Information_InstallAndroidStudio" xml:space="preserve">
+    <value>下載 Android Studio</value>
+  </data>
+  <data name="Templates_AzureDevOpsDescription" xml:space="preserve">
+    <value>此範本會建立 Azure Jenkins CI</value>
+  </data>
+  <data name="Information_FunctionApp" xml:space="preserve">
+    <value>函數應用程式</value>
+  </data>
+  <data name="Information_FunctionAppDescription" xml:space="preserve">
+    <value>Azure Functions 這項無伺服器事件驅動的體驗可延伸現有的 Azure App Service 平台。這些 nano 服務可以視需求調整規模，且您僅需支付所使用資源的費用。</value>
+  </data>
+  <data name="TryFunctions" xml:space="preserve">
+    <value>試試 Functions</value>
+  </data>
+</root>
