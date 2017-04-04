@@ -44,15 +44,12 @@
             </script>
         <!-- end Mixpanel -->
         }
-    }
-
-    @{
-        if (!isAzure)
+         if (!isAzure)
         {
-            <link rel="stylesheet" href="content/styles/app.css">
+            <link rel="stylesheet" href="../content/styles/app.css">
             <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
             <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.6.2/angular.min.js"></script>
-            <script src="ng/scripts/app.js"></script>
+            <script src="../ng/scripts/app.js"></script>
         }
         else
         {
@@ -74,7 +71,7 @@
                     <svg style="display: none; visibility: hidden;">
                         <defs>
                             <symbol id="microsoft-azure" viewBox="0 0 163.985 19.25">
-                                <title>Microsoft Azure</title>
+                                <title>@Client.MicrosoftAzure</title>
                                 <path d="M18.525,19.893H16.467V8.037q0-1.4.173-3.438H16.59a10.947,10.947,0,0,1-.53,1.713L10.021,19.893H9.011L2.984,6.411A10.592,10.592,0,0,1,2.455,4.6H2.405q.1,1.059.1,3.463V19.893h-2V2.22H3.243L8.666,14.544a15.8,15.8,0,0,1,.813,2.12h.074q.53-1.455.85-2.169L15.937,2.22h2.588Z"
                                       transform="translate(-0.507 -0.939)" fill="#00abec"></path>
                                 <path d="M23.3,4.069a1.282,1.282,0,0,1-.924-.37A1.246,1.246,0,0,1,22,2.763,1.3,1.3,0,0,1,23.3,1.444a1.3,1.3,0,0,1,.942.376,1.253,1.253,0,0,1,.389.942,1.247,1.247,0,0,1-.389.924A1.29,1.29,0,0,1,23.3,4.069Zm.986,15.824H22.269V7.273H24.29Z"
@@ -134,8 +131,8 @@
                     <li><a href="https://azure.microsoft.com/solutions/">@Client.Solutions</a></li>
                     <li id="main-nav-documentation"><a href="https://docs.microsoft.com/azure/">@Client.Documentation</a></li>
                     <li><a href="https://azure.microsoft.com/pricing/">@Client.Pricing</a></li>
-                    <li><a href="https://azure.microsoft.com/partners/">>@Client.Partners</a></li>
-                    <li><a href="https://azure.microsoft.com/blog/">>@Client.Blog</a></li>
+                    <li><a href="https://azure.microsoft.com/partners/">@Client.Partners</a></li>
+                    <li><a href="https://azure.microsoft.com/blog/">@Client.Blog</a></li>
                     <li>
                         <a role="button" href="https://azure.microsoft.com/resources/" id="navigation-resources">@Client.Resources</a>
                     </li>

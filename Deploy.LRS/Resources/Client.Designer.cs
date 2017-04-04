@@ -277,7 +277,7 @@ namespace Deploy.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Deployment Completed.
+        ///   Looks up a localized string similar to App deployment Completed.
         /// </summary>
         public static string Information_DeploymentCompleted {
             get {
@@ -286,7 +286,7 @@ namespace Deploy.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Deployment Failed.
+        ///   Looks up a localized string similar to App deployment Failed.
         /// </summary>
         public static string Information_DeploymentFailed {
             get {
@@ -295,7 +295,7 @@ namespace Deploy.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Redirecting you to portal. If the portal does not open .
+        ///   Looks up a localized string similar to Redirecting you to the Azure Portal. If the Azure Portal does not open .
         /// </summary>
         public static string Information_Redirecting {
             get {
@@ -313,7 +313,7 @@ namespace Deploy.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Just a few more seconds. We&apos;ll be connecting to your portal experience shortly.
+        ///   Looks up a localized string similar to We’ll complete app deployment shortly and guide you to the Azure Portal to explore your new App Service app..
         /// </summary>
         public static string Information_RedirectingShortly {
             get {

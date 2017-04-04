@@ -268,19 +268,19 @@
     <value>Deploying your {0} App Service</value>
   </data>
   <data name="Information_DeploymentCompleted" xml:space="preserve">
-    <value>Deployment Completed</value>
+    <value>App deployment Completed</value>
   </data>
   <data name="Information_DeploymentFailed" xml:space="preserve">
-    <value>Deployment Failed</value>
+    <value>App deployment Failed</value>
   </data>
   <data name="Information_Redirecting" xml:space="preserve">
-    <value>Redirecting you to portal. If the portal does not open </value>
+    <value>Redirecting you to the Azure Portal. If the Azure Portal does not open </value>
   </data>
   <data name="Information_RedirectingClickhere" xml:space="preserve">
     <value>click here</value>
   </data>
   <data name="Information_RedirectingShortly" xml:space="preserve">
-    <value>Just a few more seconds. We'll be connecting to your portal experience shortly</value>
+    <value>We’ll complete app deployment shortly and guide you to the Azure Portal to explore your new App Service app.</value>
   </data>
   <data name="Information_RedirectTakingTooLong" xml:space="preserve">
     <value>Looks like its taking too long. To go to portal anyway </value>

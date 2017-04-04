@@ -290,15 +290,16 @@ var constants = constantsObj();
                     if (!$scope.formData.templateName || $scope.formData.templateName.length === 0) {
                         if (sessionStorage.templateName) {
                             $scope.formData.templateName = sessionStorage.templateName;
-                        } else {
-                            $window.location.href ="https://deploy.azure.com";
-                            return;
-                        }
+                        } 
                     }
 
                     if ($scope.formData.templateName) {
                         sessionStorage.templateName = $scope.formData.templateName;
                         telemetry.logGetTemplate($scope.formData.templateName);
+                    }
+                    else {
+                        $window.location.href = "https://deploy.azure.com";
+                        return;
                     }
                     // If we don't have the repository url, then don't init.  Also
                     // if the user hit "back" from the next page, we don't re-init.

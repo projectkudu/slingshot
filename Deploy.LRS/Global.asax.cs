@@ -17,6 +17,14 @@ namespace Deploy
         {
             WebApiConfig.Register(GlobalConfiguration.Configuration);
             //BundleConfig.RegisterBundles(BundleTable.Bundles);
+
         }
+        protected void Application_BeginRequest(Object sender, EventArgs e)
+        {
+            var context = new HttpContextWrapper(HttpContext.Current);
+            GlobalizationManager.SetCurrentCulture(context);
+
+        }
+
     }
 }
