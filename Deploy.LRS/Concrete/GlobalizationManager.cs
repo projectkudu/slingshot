@@ -82,7 +82,8 @@ namespace Deploy
             culture = null;
             try
             {
-                culture = new CultureInfo(acceptLanguage);
+                var firstAcceptLanguage= acceptLanguage.Split(',')[0].Trim();
+                culture = new CultureInfo(firstAcceptLanguage);
                 return true;
             }
             catch
