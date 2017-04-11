@@ -1,0 +1,171 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Deployment_DeploymentInProgress" xml:space="preserve">
+    <value>Implantação em andamento.</value>
+  </data>
+  <data name="Deployment_GitDeploymentInProgress" xml:space="preserve">
+    <value>Implantação do Git em andamento.</value>
+  </data>
+  <data name="Error_GeneralErrorMessage" xml:space="preserve">
+    <value>Ocorreu um erro. Tente novamente mais tarde.</value>
+  </data>
+  <data name="Error_GettingPublishingProfileStream" xml:space="preserve">
+    <value>Não é possível recuperar o perfil de publicação. Tente novamente mais tarde.</value>
+  </data>
+  <data name="Error_InvalidAppServiceType" xml:space="preserve">
+    <value>O Serviço de Aplicativo tem que ser do tipo "Móvel" para baixar clientes móveis.</value>
+  </data>
+  <data name="Error_InvalidGithubRepo" xml:space="preserve">
+    <value>O URI do repositório Github é inválido ou de uma organização confiável.</value>
+  </data>
+  <data name="Error_InvalidUserIdentity" xml:space="preserve">
+    <value>Usuário inválido.</value>
+  </data>
+  <data name="Error_MoreThanOneFreeResource" xml:space="preserve">
+    <value>Você não pode ter mais de 1 recurso livre por vez.</value>
+  </data>
+  <data name="Error_NoFreeResourcesAvailable" xml:space="preserve">
+    <value>Não há recursos gratuitos disponíveis atualmente. Tente novamente mais tarde.</value>
+  </data>
+  <data name="Error_OrgIdNotSupported" xml:space="preserve">
+    <value>As contas organizacionais não são compatíveis. Use uma conta da Microsoft.</value>
+  </data>
+  <data name="Error_ResourceExpirationTimeAlreadyExtended" xml:space="preserve">
+    <value>O tempo de expiração do recurso já tinha sido prolongado antes. Você pode prolongar o tempo de expiração somente uma vez para cada recurso.</value>
+  </data>
+  <data name="Error_UnsupportedPlatform" xml:space="preserve">
+    <value>Plataforma sem suporte.</value>
+  </data>
+  <data name="Templates_FieldEngineerDescription" xml:space="preserve">
+    <value>Um aplicativo para painel móvel para técnico de empresa por cabo ou qualquer outra força de trabalho móvel, disponível para Xamarin Forms. Amostra completa em &lt;a href="https://github.com/azure/fieldengineer/" target="_blank"&gt;https://github.com/azure/fieldengineer/&lt;/a&gt;.</value>
+  </data>
+  <data name="Templates_JenkinsDescription" xml:space="preserve">
+    <value>Este modelo criará um Jenkins CI do Azure</value>
+  </data>
+  <data name="Templates_PingSiteDescription" xml:space="preserve">
+    <value>Este modelo de Aplicativo Lógico executará ping em um site em um agendamento recorrente. Você pode estendê-lo para que faça uma ação dependendo do resultado do ping.</value>
+  </data>
+  <data name="Templates_TodoListDescription" xml:space="preserve">
+    <value>Esta é um aplicativo de lista de tarefas simples, disponível para iOS, Android, Xamarin, e HTML/JS.</value>
+  </data>
+  <data name="Templates_XamarinCrmDescription" xml:space="preserve">
+    <value>Um aplicativo CRM de painel de vendas móvel, disponível para Xamarin Forms. Amostra completa em &lt;a href="https://github.com/xamarin/app-crm/" target="_blank"&gt;https://github.com/xamarin/app-crm/&lt;/a&gt;.</value>
+  </data>
+</root>

@@ -1,0 +1,513 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Action_AllowContact" xml:space="preserve">
+    <value>A Microsoft megkereshet ezzel a visszajelzéssel kapcsolatban.</value>
+  </data>
+  <data name="Action_Cancel" xml:space="preserve">
+    <value>Mégse</value>
+  </data>
+  <data name="Action_CreateAppServiceApp" xml:space="preserve">
+    <value>Azure App Service-alkalmazás létrehozása</value>
+  </data>
+  <data name="Action_Delete" xml:space="preserve">
+    <value>Törlés</value>
+  </data>
+  <data name="Action_DownloadAppContent" xml:space="preserve">
+    <value>{0}-tartalom letöltése</value>
+  </data>
+  <data name="Action_DownloadPublishingProfile" xml:space="preserve">
+    <value>Közzétételi profil letöltése</value>
+  </data>
+  <data name="Action_GitClone" xml:space="preserve">
+    <value>Klónozás vagy küldés a GIT-tel</value>
+  </data>
+  <data name="Action_GoToExistingApp" xml:space="preserve">
+    <value>Meglévő alkalmazás megnyitása</value>
+  </data>
+  <data name="Action_ManageInAzurePortal" xml:space="preserve">
+    <value>Kezelés az Azure Portal webhelyen</value>
+  </data>
+  <data name="Action_MobileClients" xml:space="preserve">
+    <value>Mobil ügyfélalkalmazás letöltése és futtatása</value>
+  </data>
+  <data name="Action_Monaco" xml:space="preserve">
+    <value>Kód online szerkesztése</value>
+  </data>
+  <data name="Action_ReportAnIssue" xml:space="preserve">
+    <value>Probléma bejelentése</value>
+  </data>
+  <data name="Action_SelectAppType" xml:space="preserve">
+    <value>Alkalmazástípus kiválasztása</value>
+  </data>
+  <data name="Action_SelectTemplate" xml:space="preserve">
+    <value>Sablon kiválasztása és {0} létrehozása</value>
+  </data>
+  <data name="Action_ShareAComment" xml:space="preserve">
+    <value>Hozzászólás megosztása</value>
+  </data>
+  <data name="Action_Submit" xml:space="preserve">
+    <value>Küldés</value>
+  </data>
+  <data name="Action_Yes" xml:space="preserve">
+    <value>Igen</value>
+  </data>
+  <data name="Blog" xml:space="preserve">
+    <value>Blog</value>
+  </data>
+  <data name="Calculator" xml:space="preserve">
+    <value>Számológép</value>
+  </data>
+  <data name="CaseStudies" xml:space="preserve">
+    <value>Esettanulmányok</value>
+  </data>
+  <data name="Community" xml:space="preserve">
+    <value>Közösség</value>
+  </data>
+  <data name="Compliance" xml:space="preserve">
+    <value>Megfelelőség</value>
+  </data>
+  <data name="ContactUs" xml:space="preserve">
+    <value>Kapcsolatfelvétel</value>
+  </data>
+  <data name="Documentation" xml:space="preserve">
+    <value>Dokumentáció</value>
+  </data>
+  <data name="Downloads" xml:space="preserve">
+    <value>Letöltések</value>
+  </data>
+  <data name="Error_SubmittingFeedback" xml:space="preserve">
+    <value>Hiba történt a visszajelzés elküldése közben. Próbálkozzon újra később.</value>
+  </data>
+  <data name="Events" xml:space="preserve">
+    <value>Események</value>
+  </data>
+  <data name="Facebook" xml:space="preserve">
+    <value>Facebook</value>
+  </data>
+  <data name="Features" xml:space="preserve">
+    <value>Funkciók</value>
+  </data>
+  <data name="Feedback" xml:space="preserve">
+    <value>Visszajelzés</value>
+  </data>
+  <data name="Forums" xml:space="preserve">
+    <value>Fórumok</value>
+  </data>
+  <data name="FreeAccount" xml:space="preserve">
+    <value>Ingyenes fiók</value>
+  </data>
+  <data name="GoSocial" xml:space="preserve">
+    <value>Közösségi média</value>
+  </data>
+  <data name="Information_APIApp" xml:space="preserve">
+    <value>API App</value>
+  </data>
+  <data name="Information_AppAlreadyExists" xml:space="preserve">
+    <value>Már létrehozott egy App Service-szolgáltatást. Szeretné törölni és létrehozni egy újat?</value>
+  </data>
+  <data name="Information_AppHasBeenCreated" xml:space="preserve">
+    <value>A(z) {0} elkészült!</value>
+  </data>
+  <data name="Information_AspNetBrandingLine1" xml:space="preserve">
+    <value>10 különböző ASP.NET-alapú webhely ingyenes üzemeltetése az Azure App Service szolgáltatással</value>
+  </data>
+  <data name="Information_AspNetBrandingLine2" xml:space="preserve">
+    <value>Biztonságos, megbízható, üzleti használatra kész portálok másodpercek alatt. A kezdés ingyenes, a méretezés pedig a forgalomhoz igazítható.</value>
+  </data>
+  <data name="Information_ComingSoon" xml:space="preserve">
+    <value>Hamarosan érkezik!</value>
+  </data>
+  <data name="Information_DownloadClient" xml:space="preserve">
+    <value>Ügyfél letöltése</value>
+  </data>
+  <data name="Information_DownloadiOSClient" xml:space="preserve">
+    <value>Az iOS-ügyfélalkalmazás letöltése</value>
+  </data>
+  <data name="Information_DownloadWindowsClient" xml:space="preserve">
+    <value>A Windows-ügyfélalkalmazás letöltése</value>
+  </data>
+  <data name="Information_DownloadXamarinAndroidClient" xml:space="preserve">
+    <value>A Xamarin Android-ügyfélalkalmazás letöltése</value>
+  </data>
+  <data name="Information_DownloadXamariniOSClient" xml:space="preserve">
+    <value>A Xamarin iOS-ügyfélalkalmazás letöltése</value>
+  </data>
+  <data name="Information_ExperienceComingSoon" xml:space="preserve">
+    <value>Az Azure {0} próbaverziója még nem érhető el, de létrehozhat {0}okat, ha regisztrál a 30 napos ingyenes próbaidőszakra, melyben ingyenesen létrehozhat legfeljebb 10 tetszőleges típusú alkalmazást</value>
+  </data>
+  <data name="Information_ExperienceNotHereYet" xml:space="preserve">
+    <value>A(z) {0} szolgáltatás még nem érhető el.</value>
+  </data>
+  <data name="Information_ExpireMessage" xml:space="preserve">
+    <value>Az ingyenes {0} ennyi idő múlva jár le:</value>
+  </data>
+  <data name="Information_GenericBrandingLine1" xml:space="preserve">
+    <value>Az Azure App Service egy felhőalapú alkalmazásszolgáltatás, mely egyesít mindent, amire szüksége lehet ahhoz, hogy gyorsan és könnyen készítsen web- és mobilalkalmazásokat bármilyen platformra vagy eszközre.</value>
+  </data>
+  <data name="Information_GenericBrandingLine2" xml:space="preserve">
+    <value>Ingyenesen kipróbálhatja az Azure App Service szolgáltatást Azure-előfizetés nélkül, díjmentesen és kötelezettségvállalás nélkül. Egy ingyenes Azure-próbaelőfizetéssel hosszabb ideig is igénybe veheti a teljes körű Azure App Service szolgáltatást.</value>
+  </data>
+  <data name="Information_GoingBackWillDeleteApp" xml:space="preserve">
+    <value>Ha visszalép, a jelenlegi alkalmazás törlődik</value>
+  </data>
+  <data name="Information_InstallVisualStudio" xml:space="preserve">
+    <value>A Visual Studio Professional 2015 (Update 2) telepítése</value>
+  </data>
+  <data name="Information_InstallXamarinStudio" xml:space="preserve">
+    <value>Az OS X-hez készült Xamarin Studio telepítése</value>
+  </data>
+  <data name="Information_InstallXcode" xml:space="preserve">
+    <value>Xcode (v4.4+) telepítése</value>
+  </data>
+  <data name="Information_LogicApp" xml:space="preserve">
+    <value>Logic App</value>
+  </data>
+  <data name="Information_LoginFirst" xml:space="preserve">
+    <value>Bejelentkezés egy alkalmazás létrehozásához</value>
+  </data>
+  <data name="Information_MobileApp" xml:space="preserve">
+    <value>Mobile App</value>
+  </data>
+  <data name="Information_NativeiOS" xml:space="preserve">
+    <value>Natív iOS</value>
+  </data>
+  <data name="Information_SelectAppType" xml:space="preserve">
+    <value>Alkalmazástípus kiválasztása</value>
+  </data>
+  <data name="Information_SelectTemplate" xml:space="preserve">
+    <value>Sablon kiválasztása</value>
+  </data>
+  <data name="Information_SubmittingFeedback" xml:space="preserve">
+    <value>Visszajelzés elküldése...</value>
+  </data>
+  <data name="Information_ThanksForFeedback" xml:space="preserve">
+    <value>Köszönjük visszajelzését.</value>
+  </data>
+  <data name="Information_VisitWebClient" xml:space="preserve">
+    <value>A webes ügyfél megnyitása</value>
+  </data>
+  <data name="Information_WantMoreQuestionLine1" xml:space="preserve">
+    <value>További ingyenes lehetőségeket szeretne?</value>
+  </data>
+  <data name="Information_WantMoreQuestionLine2" xml:space="preserve">
+    <value>Még több webes, mobil-, logikai és API-alkalmazást hozhat létre. Ha regisztrál a 30 napos ingyenes próbaidőszakra, ingyenesen létrehozhat legfeljebb 10 tetszőleges típusú alkalmazást.</value>
+  </data>
+  <data name="Information_WebApp" xml:space="preserve">
+    <value>Web App</value>
+  </data>
+  <data name="Information_WebClient" xml:space="preserve">
+    <value>Webportál</value>
+  </data>
+  <data name="Information_Windows" xml:space="preserve">
+    <value>Univerzális Windows 8.1</value>
+  </data>
+  <data name="Information_WorkWithLogicApps" xml:space="preserve">
+    <value>Alkalmazása használatához nyissa meg az Azure Portal alábbi hivatkozását, amely a Logic App erőforráspanelre fogja irányítani.</value>
+  </data>
+  <data name="Information_WorkWithYourApp" xml:space="preserve">
+    <value>A(z) {0} itt használható:</value>
+  </data>
+  <data name="Information_XamarinAndroid" xml:space="preserve">
+    <value>Xamarin Android</value>
+  </data>
+  <data name="Information_XamariniOS" xml:space="preserve">
+    <value>Xamarin iOS</value>
+  </data>
+  <data name="Logout" xml:space="preserve">
+    <value>Kijelentkezés</value>
+  </data>
+  <data name="ManagementPortal" xml:space="preserve">
+    <value>Felügyeleti portál</value>
+  </data>
+  <data name="Marketplace" xml:space="preserve">
+    <value>Piactér</value>
+  </data>
+  <data name="MicrosoftAzure" xml:space="preserve">
+    <value>Microsoft Azure</value>
+  </data>
+  <data name="Mooncake" xml:space="preserve">
+    <value>Microsoft Azure Kínában</value>
+  </data>
+  <data name="MyAccount" xml:space="preserve">
+    <value>Saját fiók</value>
+  </data>
+  <data name="Newsletter" xml:space="preserve">
+    <value>Hírlevél</value>
+  </data>
+  <data name="Portal" xml:space="preserve">
+    <value>Portál</value>
+  </data>
+  <data name="PreviewFeatures" xml:space="preserve">
+    <value>Előzetes verziójú funkciók</value>
+  </data>
+  <data name="Pricing" xml:space="preserve">
+    <value>Díjszabás</value>
+  </data>
+  <data name="Privacy" xml:space="preserve">
+    <value>Adatvédelem</value>
+  </data>
+  <data name="PrivacyCookies" xml:space="preserve">
+    <value>Adatvédelem és cookie-k</value>
+  </data>
+  <data name="Profile" xml:space="preserve">
+    <value>Profil</value>
+  </data>
+  <data name="Regions" xml:space="preserve">
+    <value>Régiók</value>
+  </data>
+  <data name="Rss" xml:space="preserve">
+    <value>RSS</value>
+  </data>
+  <data name="Security" xml:space="preserve">
+    <value>Biztonság</value>
+  </data>
+  <data name="ServiceDashboard" xml:space="preserve">
+    <value>A szolgáltatás irányítópultja</value>
+  </data>
+  <data name="Services" xml:space="preserve">
+    <value>Szolgáltatások</value>
+  </data>
+  <data name="ServiceUpdates" xml:space="preserve">
+    <value>Szolgáltatásfrissítések</value>
+  </data>
+  <data name="Subscriptions" xml:space="preserve">
+    <value>Előfizetések</value>
+  </data>
+  <data name="Support" xml:space="preserve">
+    <value>Támogatás</value>
+  </data>
+  <data name="Title" xml:space="preserve">
+    <value>Az Azure App Service kipróbálása</value>
+  </data>
+  <data name="Trademarks" xml:space="preserve">
+    <value>Védjegyek</value>
+  </data>
+  <data name="TrustCenter" xml:space="preserve">
+    <value>Adatvédelmi központ</value>
+  </data>
+  <data name="Twitter" xml:space="preserve">
+    <value>Twitter</value>
+  </data>
+  <data name="Information_LogicAppDescription" xml:space="preserve">
+    <value>Az Azure Logic Apps szolgáltatással a fejlesztők olyan munkafolyamatokat alakíthatnak ki, melyek egy triggerből kiindulva lépések egy sorozatát hajtják végre, amelyek mindegyike meghív egy App Service API-alkalmazást, miközben biztonságosan gondoskodnak a hitelesítésről és olyan ajánlott eljárásokat alkalmaznak, mint például az ellenőrzőpontok létrehozása és a tartós végrehajtás.</value>
+  </data>
+  <data name="Information_LogicAppStep1" xml:space="preserve">
+    <value>1. Tekintse meg az Összegzés fókuszt, melyben megtalálhatja például a legutóbbi futtatás időpontját, és hogy az sikeres volt-e</value>
+  </data>
+  <data name="Information_LogicAppStep2" xml:space="preserve">
+    <value>2. Nyissa meg a Logic App-definíciót a vonatkozó részre kattintva az Összegzés fókuszban, és tekintse meg a definíciót. Kiterjesztheti a logikai alkalmazást úgy, hogy az mindig küldjön egy tweetet, ha a pingelés nem sikerül.</value>
+  </data>
+  <data name="Templates_PingSiteDescription" xml:space="preserve">
+    <value>A Logic App-sablon ismétlődő ütemezéssel pingel egy webhelyet. Kiterjesztheti úgy, hogy a pingelés eredményétől függően végezzen el műveleteket.</value>
+  </data>
+  <data name="Action_Dismiss" xml:space="preserve">
+    <value>Elvetés</value>
+  </data>
+  <data name="Information_AppHasExpired" xml:space="preserve">
+    <value>A(z) {0} érvényessége lejárt. Próbáljon meg létrehozni egy újabb App Service-alkalmazást, vagy létrehozni egy 30 napos próbafiókot.</value>
+  </data>
+  <data name="Information_Prerequisite" xml:space="preserve">
+    <value>Előfeltétel</value>
+  </data>
+  <data name="Information_WelcomeFeedback" xml:space="preserve">
+    <value>Köszönjük visszajelzését.</value>
+  </data>
+  <data name="Action_Create" xml:space="preserve">
+    <value>Létrehozás</value>
+  </data>
+  <data name="Action_GenericWorkWithYourApp" xml:space="preserve">
+    <value>Alkalmazás használata</value>
+  </data>
+  <data name="Information_YouCantHaveMoreThanOne" xml:space="preserve">
+    <value>Egyszerre csak 1 ingyenes erőforrással rendelkezhet</value>
+  </data>
+  <data name="Next" xml:space="preserve">
+    <value>Következő</value>
+  </data>
+  <data name="Previous" xml:space="preserve">
+    <value>Előző</value>
+  </data>
+  <data name="Information_ApiAppDescription" xml:space="preserve">
+    <value>Az Azure API App próbaverziója még nem érhető el, de létrehozhat API-alkalmazásokat, ha regisztrál a 30 napos ingyenes próbaidőszakra, melyben ingyenesen létrehozhat legfeljebb 10 tetszőleges típusú alkalmazást.</value>
+  </data>
+  <data name="Information_MobileAppDescription" xml:space="preserve">
+    <value>Az Azure Mobile Apps szolgáltatással könnyedén adhat hozzá bejelentkezést, leküldést és adatszinkronizálást iOS-, Android- vagy Windows-alkalmazásához, hogy az globálisan méretezhető legyen, és hogy az alkalmazás kapcsolódni tudjon vállalati rendszerekhez és helyi erőforrásokhoz.</value>
+  </data>
+  <data name="Information_WebAppDescription" xml:space="preserve">
+    <value>Az Azure Web Apps szolgáltatás lehetővé teszi a fejlesztők számára a különböző nyelveken írt és számos szolgáltatással integrált webes alkalmazások egyszerű üzembe helyezését és méretezését anélkül, hogy az infrastruktúra felügyelete miatt kellene aggódniuk.</value>
+  </data>
+  <data name="Information_LogicAppStep3" xml:space="preserve">
+    <value>3. Futtassa újra a logikai alkalmazást a panel tetején található Futtatás parancsra kattintva.</value>
+  </data>
+  <data name="Information_LogicAppStep4" xml:space="preserve">
+    <value>4. Ha szeretne többet megtudni a Logic Apps szolgáltatás használatáról, kattintson az Első lépések lehetőségre, amely mutatókat biztosít a dokumentációhoz.</value>
+  </data>
+  <data name="Information_LogicAppStepsIntro" xml:space="preserve">
+    <value>A következőket teheti a Logic App erőforráspanelen:</value>
+  </data>
+  <data name="Information_XamarinBrandingLine1" xml:space="preserve">
+    <value>Legyen mobil a Xamarinnal és Azure App Service szolgáltatással</value>
+  </data>
+  <data name="Information_XamarinBrandingLine2" xml:space="preserve">
+    <value>Bármely eszközön pillanatok alatt végezhet hitelesítést vagy szinkronizálást, és küldhet rájuk leküldéses értesítéseket. A kezdés ingyenes, a méretezés pedig az alkalmazás forgalmához igazítható.</value>
+  </data>
+  <data name="Information_ExtendResourceLifeTimeText" xml:space="preserve">
+    <value>Több időre van szüksége? Kattintson ide a próbaidőszak 24 órára való bővítéséhez.</value>
+  </data>
+  <data name="Information_Android" xml:space="preserve">
+    <value>Android</value>
+  </data>
+  <data name="Information_DownloadAndroidClient" xml:space="preserve">
+    <value>Az Android-ügyfélalkalmazás letöltése</value>
+  </data>
+  <data name="Information_DownloadWUniversalWindowsPlatformClient" xml:space="preserve">
+    <value>Az Univerzális Windows-platform (UWP) ügyfél letöltése</value>
+  </data>
+  <data name="Information_DownloadXamarinFormsClient" xml:space="preserve">
+    <value>A Xamarin.Forms-ügyfélalkalmazás letöltése</value>
+  </data>
+  <data name="Information_UniversalWindowsPlatform" xml:space="preserve">
+    <value>Univerzális Windows-platform (UWP)</value>
+  </data>
+  <data name="Information_XamarinForms" xml:space="preserve">
+    <value>Xamarin.Forms</value>
+  </data>
+  <data name="Information_AzurePlatformBrandingLine1" xml:space="preserve">
+    <value>Fedezze fel, milyen gyorsan lehet Node.js-alkalmazásokat fejleszteni</value>
+  </data>
+  <data name="Information_AzurePlatformBrandingLine2" xml:space="preserve">
+    <value>Az Azure App Service az egyetlen felhőszolgáltatás, amelyben mindent megtalál, amire a webes és mobilalkalmazások gyors, egyszerű fejlesztéséhez szüksége lehet – platformtól és eszköztől függetlenül. Az adatokat tetszőleges forrásból beolvashatja, és szinte bármilyen alkalmazást elkészíthet. Tesztmódban egy órán át ingyenesen és kötelezettségvállalás nélkül kipróbálhatja a szolgáltatást.</value>
+  </data>
+  <data name="Information_InstallAndroidStudio" xml:space="preserve">
+    <value>Az Android Studio letöltése</value>
+  </data>
+  <data name="Templates_AzureDevOpsDescription" xml:space="preserve">
+    <value>Ez a sablon egy Azure Jenkins CI-t hoz létre</value>
+  </data>
+  <data name="Information_FunctionApp" xml:space="preserve">
+    <value>Függvényalkalmazás</value>
+  </data>
+  <data name="Information_FunctionAppDescription" xml:space="preserve">
+    <value>Az Azure Functions egy kiszolgáló nélküli, eseményvezérelt kezelőfelület,  mely a meglévő Azure App Service platformot terjeszti ki. Ezek a nanoszolgáltatások igény alapján méretezhetőek, és csak a felhasznált erőforrásokért kell fizetnie.</value>
+  </data>
+  <data name="TryFunctions" xml:space="preserve">
+    <value>A Functions kipróbálása</value>
+  </data>
+</root>

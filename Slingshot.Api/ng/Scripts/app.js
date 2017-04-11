@@ -446,6 +446,10 @@ function IsSiteLocationParam(paramName) {
             setDefaultRg($scope.formData.subscription);
         }
 
+        $scope.changeLocation= function () {
+            setDefaultRg($scope.formData.newResourceGroup.location);
+        }
+
         $scope.changeResourceGroup = function () {
             if (creatingNewRg()) {
                 return;
