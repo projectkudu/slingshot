@@ -12,13 +12,13 @@
     <meta charset="utf-8">
     <title>@Client.Title</title>
     <script type="text/javascript">
-            var Resources = {};
-            @foreach (var p in typeof(Client).GetProperties()) {
+        var Resources = {};
+        @foreach (var p in typeof(Client).GetProperties()) {
                 if (p.GetValue(null, null) != null) {
                     @: Resources["@Html.Raw(@p.Name)"] = "@Html.Raw(HttpUtility.JavaScriptStringEncode(p.GetValue(null, null).ToString()))";
-                    }
+                            }
             }
-           var CurrentCulture = "@CultureInfo.CurrentCulture.TwoLetterISOLanguageName";
+        var CurrentCulture = "@CultureInfo.CurrentCulture.TwoLetterISOLanguageName";
     </script>
 
     <link href="favicon.ico" rel="icon" type="image/x-icon">
@@ -44,7 +44,7 @@
             </script>
         <!-- end Mixpanel -->
         }
-         if (!isAzure)
+        if (!isAzure)
         {
             <link rel="stylesheet" href="../content/styles/app.css">
             <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
@@ -67,7 +67,7 @@
     <div ui-view>
         <header class="azure-header">
             <div class="row column">
-                <a target="_blank" href="https://azure.microsoft.com/"class="logo">
+                <a target="_blank" href="https://azure.microsoft.com/" class="logo">
                     <svg style="display: none; visibility: hidden;">
                         <defs>
                             <symbol id="microsoft-azure" viewBox="0 0 163.985 19.25">
@@ -144,7 +144,7 @@
             <div class="nav-end"></div>
         </header>
         <main class="wa-container" id="main">
-            <section class="section section-size2 section-slate03">
+            <section class="section section-size1 section-slate03">
                 <div class="row row-middled-flex">
                     <div class="column medium-8">
                         <h1>@string.Format(Client.Information_DeployingHeader, "{{formData.templateName}}")  </h1>
@@ -200,6 +200,21 @@
                     </form>
                 </div>
             </div>
+            <section class="section section-size3 section-palette06">
+                <div class="row row-middled-flex">
+                    <div class="column medium-2 show-for-medium">
+                        <span class="icon icon-size13"><svg><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#app-service"></use></svg></span> 
+                    </div>
+                    <div class="column medium-10">
+                        <div class="row column">
+                            <h2>@string.Format(Client.AppServiceGallery)</h2>
+                        </div>
+                        <div class="row column row-size1"> <h5>@string.Format(Client.CheckoutTheGallery)</h5>
+                        </div>
+                        <div class="row row-size2 column"> </div>
+                    </div>
+                </div>
+            </section>
         </main>
         <footer data-tag-area="footer" data-tag-group="footer" role="contentinfo">
             <div class="row">

@@ -285,7 +285,7 @@ var constants = constantsObj();
                 function initialize($scope, $http) {
                     $scope.formData.templateName = getQueryVariable("templateName");
                     telemetry.logPageView();
-                    document.getElementById('loadingMessage').style.visibility = "hidden";
+
                     if (!$scope.formData.templateName || $scope.formData.templateName.length === 0) {
                         if (sessionStorage.templateName) {
                             $scope.formData.templateName = sessionStorage.templateName;
@@ -306,6 +306,7 @@ var constants = constantsObj();
                         return;
                     }
                     $scope.formData.statusMesgs = [];
+                    document.getElementById('loadingMessage').style.visibility = "hidden";
                     $scope.formData.statusMesgs.push(document.getElementById('submittingMessage').innerHTML);
 
                     $http({

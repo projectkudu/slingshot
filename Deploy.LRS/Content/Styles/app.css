@@ -1421,7 +1421,13 @@ h6 .arrowLink:after,.text-heading6 .arrowLink:after,h6.arrowLink:after,.text-hea
 .section-slate09 {
   background-color: #f4f4f4;
 }
-
+.section.section-size3 {
+    padding: 20px 0;
+}
+.section-palette06 {
+    color: #fff;
+    background-color: #1b348e;
+}
 body {
   font-size: 15px;
   line-height: 1.5;

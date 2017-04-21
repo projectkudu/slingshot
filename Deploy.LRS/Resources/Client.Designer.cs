@@ -79,6 +79,15 @@ namespace Deploy.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to App Service Market Place.
+        /// </summary>
+        public static string AppServiceGallery {
+            get {
+                return ResourceManager.GetString("AppServiceGallery", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Azure Status Dashboard.
         /// </summary>
         public static string AzureStatusDashboard {
@@ -120,6 +129,15 @@ namespace Deploy.Resources {
         public static string CaseStudies {
             get {
                 return ResourceManager.GetString("CaseStudies", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Once you login to Azure portal, explore the Azure App Service market place for gallery apps like BlogEngine.NET and WordPress.
+        /// </summary>
+        public static string CheckoutTheGallery {
+            get {
+                return ResourceManager.GetString("CheckoutTheGallery", resourceCulture);
             }
         }
         
