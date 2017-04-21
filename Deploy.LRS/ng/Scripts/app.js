@@ -298,7 +298,7 @@ var constants = constantsObj();
                         telemetry.logGetTemplate($scope.formData.templateName);
                     }
                     else {
-                        $window.location.href = "https://deploy.azure.com";
+                        $window.location.href = "https://portal.azure.com";
                         return;
                     }
                     // If we don't have the repository url, then don't init.  Also

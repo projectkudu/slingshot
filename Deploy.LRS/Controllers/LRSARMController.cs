@@ -100,8 +100,7 @@ namespace Deploy.Controllers
             {
                 using (var client = GetRMClient(inputs.subscriptionId))
                 {
-                    await client.Providers.RegisterAsync("Microsoft.Web");
-                    await client.Providers.RegisterAsync("Microsoft.AppService");
+                    await RegisterProviders(client);
                     await client.ResourceGroups.CreateOrUpdateAsync(
                         inputs.resourceGroup.name,
                         new ResourceGroup { Location = inputs.resourceGroup.location });
@@ -124,6 +123,11 @@ namespace Deploy.Controllers
             }
 
             return response;
+        }
+
+        private async Task RegisterProviders(ResourceManagementClient client)
+        {
+            await Task.WhenAll(Settings.ARMProviders.Split(',').Select((provider)=> client.Providers.RegisterAsync(provider)));
         }
 
         [Authorize]
@@ -196,7 +200,7 @@ namespace Deploy.Controllers
                 {
                     resourceGroupName = await GenerateResourceGroupName(token, templateName, subscription);
                 }
-                returnObj["appServiceLocation"] = GetRandomLocation();
+                returnObj["appServiceLocation"] = GetRandomLocationinGeoRegion();
                 returnObj["resourceGroupName"] = resourceGroupName;
                 returnObj["appServiceName"] = resourceGroupName;
                 returnObj["templateName"] = templateName;
@@ -314,9 +318,25 @@ namespace Deploy.Controllers
             return JObject.Parse(json);
         }
 
-        private string GetRandomLocation()
+        private string GetRandomLocationinGeoRegion()
         {
-            var regions = Settings.GeoRegions.Split(',');
+            var regionsList = Settings.BAYGeoRegions;
+            switch (Settings.WEBSITE_SITE_NAME)
+            {
+                case "deploy-blu":
+                    regionsList = Settings.BLUGeoRegions;
+                    break;
+                case "deploy-db3":
+                    regionsList = Settings.DB3GeoRegions;
+                    break;
+                case "deploy-hk1":
+                    regionsList = Settings.HK1GeoRegions;
+                    break;
+                default:
+                    regionsList = Settings.BAYGeoRegions;
+                    break;
+            }
+            var regions = regionsList.Split(',');
             return regions[new Random().Next(0, regions.Length)];
         }
 
