@@ -4,7 +4,7 @@
 <!--http://www.willpeavy.com/minifier/--->>
 <html>
 @{
-    var isAzure = !string.IsNullOrEmpty(Environment.GetEnvironmentVariable("WEBSITE_SITE_NAME"));
+    var isAzure = !string.IsNullOrEmpty(Deploy.Settings.WEBSITE_SITE_NAME);
     var aiIinstrumentationKey = Deploy.Settings.AppInsightsInstrumentationKey;
     var mpIinstrumentationKey = Deploy.Settings.MixPanelInstrumentationKey;
 }
@@ -153,9 +153,12 @@
                 </div>
             </section>
             <div class="row row-middled-flex">
-                <div class="column medium-8">
+                <div class="column medium-12">
                     <form id="deploy-form" name="myForm">
                         <div id="form-views" ui-view>
+                            <div class="form-group col-md-6" id="loadingMessage">
+                                <label>@string.Format(Client.Loading)</label>
+                            </div>
                             <div ng-cloak ng-show="formData.params">
                                 <div class="form-group col-md-6">
                                     <label>@Client.Subscription&nbsp;:&nbsp;{{formData.subscription.displayName}}</label>
