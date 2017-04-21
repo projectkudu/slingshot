@@ -188,6 +188,7 @@ var constants = constantsObj();
                     var subscriptionId = $scope.formData.subscription.subscriptionId;
                     var resourceGroup = $scope.formData.finalResourceGroup;
                     var params;
+                    $scope.formData.portalUrl = basePortalUrl;
                     if ($scope.formData.repoParamFound) {
                         params = {
                             "appServiceName": $scope.formData.appServiceName
@@ -216,7 +217,6 @@ var constants = constantsObj();
                                 }
                             }
                             if (error || result.data.provisioningState === "Failed" || result.data.provisioningState === "Succeeded") {
-                                $scope.formData.portalUrl = basePortalUrl;
 
                                 $scope.formData.deploymentSucceeded = (result.data.provisioningState === "Succeeded");
                                 if ($scope.formData.deploymentSucceeded) {
@@ -274,7 +274,7 @@ var constants = constantsObj();
                             data: $scope.formData.deployPayload
                         })
                         .then(function(result) {
-                                $scope.formData.statusMesgs.push("Deployment Started");
+                                $scope.formData.statusMesgs.push(result.data.message);
                                 window.setTimeout(getStatus, constants.params.pollingInterval, $scope, $http);
                             },
                             function(result) {
@@ -307,7 +307,7 @@ var constants = constantsObj();
                         return;
                     }
                     $scope.formData.statusMesgs = [];
-                    $scope.formData.statusMesgs.push("Submitting Deployment");
+                    $scope.formData.statusMesgs.push(document.getElementById('submittingMessage').innerHTML);
 
 
                     $http({
@@ -317,7 +317,8 @@ var constants = constantsObj();
                                 "templateName": $scope.formData.templateName
                             }
                         })
-                        .then(function(result) {
+                        .then(function (result) {
+                                $scope.formData.statusMesgs.push(result.data.nextStatusMessage);
                                 $scope.formData.userDisplayName = result.data.userDisplayName;
                                 $scope.formData.subscription = result.data.subscription;
                                 $scope.formData.tenants = result.data.tenants;

@@ -610,6 +610,15 @@ namespace Deploy.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Submitting Deployment.
+        /// </summary>
+        public static string SubmittingDeployment {
+            get {
+                return ResourceManager.GetString("SubmittingDeployment", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Subscription.
         /// </summary>
         public static string Subscription {

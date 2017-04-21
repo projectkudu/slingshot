@@ -21,6 +21,7 @@ using Deploy.Concrete;
 using Deploy.Helpers;
 using Deploy.Models;
 using System.Configuration;
+using Deploy.Resources;
 
 namespace Deploy.Controllers
 {
@@ -111,7 +112,7 @@ namespace Deploy.Controllers
                         inputs.resourceGroup.name,
                         inputs.resourceGroup.name,
                         basicDeployment);
-
+                    responseObj.Message = Server.Deployment_DeploymentStarted;
                     response = Request.CreateResponse(HttpStatusCode.OK, responseObj);
                 }
             }
@@ -204,8 +205,9 @@ namespace Deploy.Controllers
                 returnObj["resourceGroupName"] = resourceGroupName;
                 returnObj["appServiceName"] = resourceGroupName;
                 returnObj["templateName"] = templateName;
+                returnObj["nextStatusMessage"] = Server.Deployment_DeploymentStarted;
 
-                response = Request.CreateResponse(HttpStatusCode.OK, returnObj);
+            response = Request.CreateResponse(HttpStatusCode.OK, returnObj);
 
             return response;
         }

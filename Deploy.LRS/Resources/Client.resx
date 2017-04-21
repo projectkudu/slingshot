@@ -330,4 +330,7 @@
   <data name="YouTube" xml:space="preserve">
     <value>YouTube</value>
   </data>
+  <data name="SubmittingDeployment" xml:space="preserve">
+    <value>Submitting Deployment</value>
+  </data>
 </root>
