@@ -133,7 +133,7 @@ namespace Deploy.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Once you login to Azure portal, explore the Azure App Service market place for gallery apps like BlogEngine.NET and WordPress.
+        ///   Looks up a localized string similar to Once you login to the Azure portal, explore the Azure App Service Market Place for more pre-configured apps like BlogEngine.NET and WordPress.
         /// </summary>
         public static string CheckoutTheGallery {
             get {
@@ -331,7 +331,7 @@ namespace Deploy.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to We’ll complete app deployment shortly and guide you to the Azure Portal to explore your new App Service app..
+        ///   Looks up a localized string similar to Just a few more seconds, while we complete the app deployment and guide you in to the Azure Portal to explore your new App Service app..
         /// </summary>
         public static string Information_RedirectingShortly {
             get {
@@ -340,7 +340,7 @@ namespace Deploy.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Looks like its taking too long. To go to portal anyway .
+        ///   Looks up a localized string similar to Looks like its taking too long. To go to the Azure Portal anyway .
         /// </summary>
         public static string Information_RedirectTakingTooLong {
             get {

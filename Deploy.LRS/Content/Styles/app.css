@@ -3128,7 +3128,7 @@ h4 .icon {
 
 @media only screen and (min-width:960px) {
   .wa-container {
-    padding-top: 68px;
+    padding-top: 67px;
   }
 
   .wa-container header {
@@ -3638,7 +3638,7 @@ section#content-container {
 }
 
 .result-body {
-  min-height: 200px;
+  min-height: 100px;
 }
 
 .header-label {
