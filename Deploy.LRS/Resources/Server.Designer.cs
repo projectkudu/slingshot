@@ -79,6 +79,24 @@ namespace Deploy.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Creating Web App.
+        /// </summary>
+        public static string Deployment_CreatingWebApp {
+            get {
+                return ResourceManager.GetString("Deployment_CreatingWebApp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Creating Web Hosting Plan.
+        /// </summary>
+        public static string Deployment_CreatingWebHostingPlan {
+            get {
+                return ResourceManager.GetString("Deployment_CreatingWebHostingPlan", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Deployment in progress..
         /// </summary>
         public static string Deployment_DeploymentInProgress {
@@ -106,11 +124,38 @@ namespace Deploy.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Setting up Source Control.
+        /// </summary>
+        public static string Deployment_SettingupSourceControl {
+            get {
+                return ResourceManager.GetString("Deployment_SettingupSourceControl", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Submitting Deployment.
         /// </summary>
         public static string Deployment_SubmittingDeployment {
             get {
                 return ResourceManager.GetString("Deployment_SubmittingDeployment", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Updating.
+        /// </summary>
+        public static string Deployment_Updating {
+            get {
+                return ResourceManager.GetString("Deployment_Updating", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Updating Web App Config.
+        /// </summary>
+        public static string Deployment_UpdatingWebAppConfig {
+            get {
+                return ResourceManager.GetString("Deployment_UpdatingWebAppConfig", resourceCulture);
             }
         }
         

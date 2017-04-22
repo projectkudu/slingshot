@@ -123,6 +123,12 @@
   <data name="ARMTemplate_MyPrefix" xml:space="preserve">
     <value>My</value>
   </data>
+  <data name="Deployment_CreatingWebApp" xml:space="preserve">
+    <value>Creating Web App</value>
+  </data>
+  <data name="Deployment_CreatingWebHostingPlan" xml:space="preserve">
+    <value>Creating Web Hosting Plan</value>
+  </data>
   <data name="Deployment_DeploymentInProgress" xml:space="preserve">
     <value>Deployment in progress.</value>
   </data>
@@ -132,8 +138,17 @@
   <data name="Deployment_GitDeploymentInProgress" xml:space="preserve">
     <value>Git deployment in progress.</value>
   </data>
+  <data name="Deployment_SettingupSourceControl" xml:space="preserve">
+    <value>Setting up Source Control</value>
+  </data>
   <data name="Deployment_SubmittingDeployment" xml:space="preserve">
     <value>Submitting Deployment</value>
+  </data>
+  <data name="Deployment_Updating" xml:space="preserve">
+    <value>Updating</value>
+  </data>
+  <data name="Deployment_UpdatingWebAppConfig" xml:space="preserve">
+    <value>Updating Web App Config</value>
   </data>
   <data name="Error_GeneralErrorMessage" xml:space="preserve">
     <value>An Error occured. Please try again later.</value>

@@ -159,11 +159,7 @@ var constants = constantsObj();
                     that.value = null;
                     return that;
                 };
-                //var statusMap = {};
-                //statusMap["microsoft.web/sites"] = "Creating Website";
-                //statusMap["microsoft.web/sites/config"] = "Updating Website Config";
-                //statusMap["microsoft.web/sites/sourcecontrols"] = "Setting up Source Control";
-                //statusMap["microsoft.web/serverfarms"] = "Creating Web Hosting Plan";
+
                 var portalWebSiteFormat = "https://portal.azure.com/#resource/subscriptions/{0}/resourceGroups/{1}/providers/Microsoft.Web/sites/{2}/QuickStartSetting";
                 var portalRGFormat = "https://portal.azure.com/#resource/subscriptions/{0}/resourceGroups/{1}/overview";
                 var basePortalUrl = "https://portal.azure.com/";
@@ -179,12 +175,6 @@ var constants = constantsObj();
                         var ops = result.data.operations.value;
                         for (var i = ops.length - 1; i >= 0; i--) {
                             var mesg = ops[i].properties.targetResource.localizedMessage;
-                            //var key = mesg.toLowerCase();
-                            //if (statusMap[key]) {
-                            //    mesg = statusMap[key];
-                            //} else {
-                            //    mesg = "Updating " + mesg;
-                            //}
                             insertMessageIfNotPresent($scope, mesg);
                         }
                     }
@@ -328,7 +318,6 @@ var constants = constantsObj();
                         .then(function (result) {
                                 document.getElementById('loadingMessage').style.display = "none";
                                 insertMessageIfNotPresent($scope, result.data.nextStatusMessage);
-                                $scope.formData.userDisplayName = result.data.userDisplayName;
                                 $scope.formData.subscription = result.data.subscription;
                                 $scope.formData.tenants = result.data.tenants;
                                 $scope.formData.templateName = result.data.templateName;

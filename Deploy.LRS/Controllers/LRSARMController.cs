@@ -41,14 +41,10 @@ namespace Deploy.Controllers
 
             Dictionary<string, string> providerMap = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
             {
-                {"Microsoft.Web", "Website"},
-                {"Microsoft.cache", "Redis Cache"},
-                {"Microsoft.DocumentDb", "DocumentDB"},
-                {"Microsoft.Insights", "Application Insights"},
-                {"Microsoft.Search", "Search"},
-                {"SuccessBricks.ClearDB", "ClearDB"},
-                {"Microsoft.BizTalkServices","Biz Talk Services"},
-                {"Microsoft.Sql","SQL Azure"}
+                {"microsoft.web/sites", Server.Deployment_CreatingWebApp},
+                {"microsoft.web/sites/config", Server.Deployment_UpdatingWebAppConfig},
+                {"microsoft.web/sites/sourcecontrols", Server.Deployment_SettingupSourceControl},
+                {"microsoft.web/serverfarms", Server.Deployment_CreatingWebHostingPlan}
             };
 
             sm_providerMap = providerMap;
@@ -168,27 +164,37 @@ namespace Deploy.Controllers
                         Constants.CSM.ApiVersion);
 
                     var getOpResponse = await client.GetAsync(url);
-                    responseObj["operations"] =
-                        MinifyDeploymentResult(JObject.Parse(getOpResponse.Content.ReadAsStringAsync().Result));
+                    responseObj["operations"] = AddLocalzedDeploymentResult(JObject.Parse(getOpResponse.Content.ReadAsStringAsync().Result));
                 }
             }
             responseObj["provisioningState"] = provisioningState;
             return Request.CreateResponse(HttpStatusCode.OK, responseObj);
         }
 
-        private JToken MinifyDeploymentResult(JObject jObject)
+        private JToken AddLocalzedDeploymentResult(JObject jObject)
         {
-            //var miniDeploymentResult = JObject.FromObject(null);
             if (jObject["value"] != null)
             {
                 foreach (var operation in jObject["value"])
                 {
-                    operation["properties"].Value<JObject>("targetResource").Parent.Add (new JProperty("", "Hello World"));
-                    //miniDeploymentResult.Add(operation.Value["properties"].Value<JObject>("targetResource") ["resourceType"].Value<string>(), new JObject(operation.Value["properties"]["provisioningState"]));
+                    operation["properties"]["targetResource"]["localizedMessage"] = new JValue(GetMappedValue(operation["properties"]["targetResource"]["resourceType"].Value<string>().ToLowerInvariant()));
                 }
             }
             return jObject;
         }
+
+        private string GetMappedValue(string resourceType)
+        {
+            var msg = sm_providerMap[resourceType];
+            if (msg != null)
+            {
+                return msg;
+            }
+            else
+            {
+                return $"{Server.Deployment_Updating}  {resourceType}";
+            }
+        } 
 
         [Authorize]
         [HttpGet]
