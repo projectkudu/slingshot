@@ -121,7 +121,6 @@ function getQueryVariable(variable) {
         if (pair[0] === variable) { return pair[1]; }
     }
     return (false);
-
 }
 
 var telemetry = telemetryObj();
@@ -132,7 +131,6 @@ var constants = constantsObj();
     // create our angular app 
     // =============================================================================
     angular.module('formApp', [])
-
         // Custom filters
         // =============================================================================
         .filter('camelCaseToHuman', function() {
