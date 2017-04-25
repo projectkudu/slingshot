@@ -186,8 +186,8 @@ namespace Deploy.Controllers
 
         private string GetMappedValue(string resourceType)
         {
-            var msg = sm_providerMap[resourceType];
-            if (msg != null)
+            string msg;
+            if (sm_providerMap.TryGetValue(resourceType, out msg))
             {
                 return msg;
             }
