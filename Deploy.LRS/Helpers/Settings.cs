@@ -32,7 +32,7 @@ namespace Deploy
         public static string MixPanelInstrumentationKey { get { return config(); } }
         public static string AADClientId { get { return config(); } }
         public static string AADClientSecret { get { return config(); } }
-
+        public static int SiteNamePostFixLength { get { return Int32.Parse("6"); } }
     }
 }
 

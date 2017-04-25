@@ -249,7 +249,7 @@ namespace Deploy.Controllers
                     // Make 4 attempts to get a random name (based on the repo name)
                     for (int i = 0; i < 4; i++)
                     {
-                        string resourceGroupName = GenerateRandomResourceGroupName(repoName);
+                        string resourceGroupName = GenerateRandomResourceGroupName(repoName, Settings.SiteNamePostFixLength);
                         isAvailable = IsAppServiceNameAvailable(resourceGroupName);
 
                         if (isAvailable)
@@ -300,8 +300,9 @@ namespace Deploy.Controllers
             for (int i = 0; i < length/2; ++i)
             {
                 //use alternate numbers and characters to prevent word formation
-                strb.Append(Constants.Path.SiteNameChars[random.Next(Constants.Path.SiteNameNumbers.Length)]);
                 strb.Append(Constants.Path.SiteNameChars[random.Next(Constants.Path.SiteNameChars.Length)]);
+                strb.Append(Constants.Path.SiteNameNumbers[random.Next(Constants.Path.SiteNameNumbers.Length)]);
+                strb.Append(Constants.Path.SiteNameNumbers[random.Next(Constants.Path.SiteNameNumbers.Length)]);
             }
 
             return strb.ToString();
