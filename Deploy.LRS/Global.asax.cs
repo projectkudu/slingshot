@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Web;
 using System.Web.Http;
 //using System.Web.Optimization;
@@ -16,8 +17,6 @@ namespace Deploy
         protected void Application_Start()
         {
             WebApiConfig.Register(GlobalConfiguration.Configuration);
-            //BundleConfig.RegisterBundles(BundleTable.Bundles);
-
         }
         protected void Application_BeginRequest(Object sender, EventArgs e)
         {

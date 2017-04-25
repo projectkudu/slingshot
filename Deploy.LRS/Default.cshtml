@@ -171,7 +171,7 @@
                                 </div>
                                 <div class="result-body">
                                     <ul>
-                                        <div ng-show="!formData.deploymentSucceeded" ng-repeat="mesg in formData.statusMesgs">
+                                        <div ng-show="!formData.deploymentSucceeded || formData.statusMesgs.Count > 0" ng-repeat="mesg in formData.statusMesgs">
                                             <li>{{mesg}}
                                                 <span id="spinnerStatus" ng-if="!$last"><i class="fa fa-check" style="color: green" ng-show="!formData.errorMesg && !formData.deploymentSucceeded"></i></span>
                                                 <span id="spinnerStatus" ng-if="$last"><i class="fa fa-spinner fa-spin" ng-show="!formData.errorMesg && !formData.deploymentSucceeded"></i></span>
@@ -188,7 +188,9 @@
                                     <div ng-show="timerElapsed">
                                         @string.Format(Client.Information_RedirectTakingTooLong) <a ng-href='{{ formData.portalUrl}}'>@Client.Information_RedirectingClickhere</a>
                                     </div>
-                                    <div style="visibility: hidden" id="submittingMessage">@Client.SubmittingDeployment </div>
+                                <div style="visibility: hidden" id="submittingMessage">@Client.SubmittingDeployment </div>
+                                <div style="visibility: hidden" id="deployingMessage1">@Client.DeployingMessage1</div>
+                                <div style="visibility: hidden" id="deployingMessage2">@Client.DeployingMessage2</div>
                                 
                             </div>
                         </div>

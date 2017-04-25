@@ -342,4 +342,10 @@
   <data name="SubmittingDeployment" xml:space="preserve">
     <value>Submitting Deployment</value>
   </data>
+  <data name="DeployingMessage1" xml:space="preserve">
+    <value>Still working on it ...</value>
+  </data>
+  <data name="DeployingMessage2" xml:space="preserve">
+    <value>Almost there ...</value>
+  </data>
 </root>

@@ -5,7 +5,8 @@
         public class Path
         {
             public static char[] SlashChars = new char[] { '/' };
-            public const string SiteNameChars = "0123456789abcdfeghijklmnopqrstuvwxyz";
+            public const string SiteNameChars = "abcdfeghijklmnopqrstuvwxyz";
+            public const string SiteNameNumbers = "0123456789";
         }
 
         public class Repository

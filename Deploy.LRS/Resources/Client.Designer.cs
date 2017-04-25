@@ -178,6 +178,24 @@ namespace Deploy.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Still working on it ....
+        /// </summary>
+        public static string DeployingMessage1 {
+            get {
+                return ResourceManager.GetString("DeployingMessage1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Almost there ....
+        /// </summary>
+        public static string DeployingMessage2 {
+            get {
+                return ResourceManager.GetString("DeployingMessage2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Documentation.
         /// </summary>
         public static string Documentation {

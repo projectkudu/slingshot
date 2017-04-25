@@ -5,22 +5,21 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Net.Sockets;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
 using System.Web.Http.Routing;
+using System.Xml;
 using Microsoft.Azure.Management.Resources;
 using Microsoft.Azure.Management.Resources.Models;
-using Microsoft.Azure.Management.WebSites;
-using Microsoft.Rest;
 using Microsoft.WindowsAzure;
 using Newtonsoft.Json.Linq;
 using Deploy.Concrete;
 using Deploy.Helpers;
 using Deploy.Models;
-using System.Configuration;
 using Deploy.Resources;
 
 namespace Deploy.Controllers
@@ -132,6 +131,7 @@ namespace Deploy.Controllers
         public async Task<HttpResponseMessage> GetDeploymentStatus(string subscriptionId, string resourceGroup, string appServiceName = null)
         {
             string provisioningState = null;
+            Telemetry.LogEvent("GetDeploymentStatusStart", new Dictionary<string, string>() { { "resourceGroupName", resourceGroup } });
             var responseObj = new JObject();
             using (var client = GetRMClient(subscriptionId))
             {
@@ -164,14 +164,15 @@ namespace Deploy.Controllers
                         Constants.CSM.ApiVersion);
 
                     var getOpResponse = await client.GetAsync(url);
-                    responseObj["operations"] = AddLocalzedDeploymentResult(JObject.Parse(getOpResponse.Content.ReadAsStringAsync().Result));
+                    responseObj["operations"] = AddLocalizedDeploymentResult(JObject.Parse(getOpResponse.Content.ReadAsStringAsync().Result));
                 }
             }
             responseObj["provisioningState"] = provisioningState;
+            Telemetry.LogEvent("GetDeploymentStatusEnd", new Dictionary<string, string>() { { "resourceGroupName", resourceGroup }, { "provisioningState", provisioningState} });
             return Request.CreateResponse(HttpStatusCode.OK, responseObj);
         }
 
-        private JToken AddLocalzedDeploymentResult(JObject jObject)
+        private JToken AddLocalizedDeploymentResult(JObject jObject)
         {
             if (jObject["value"] != null)
             {
@@ -201,7 +202,7 @@ namespace Deploy.Controllers
         public async Task<HttpResponseMessage> GetTemplate(string templateName)
         {
             templateName = HttpUtility.UrlDecode(templateName);
-
+            Telemetry.LogEvent("GetTemplate", new Dictionary<string, string>() { { "templateName", templateName } });
             HttpResponseMessage response = null;
             JObject returnObj = new JObject();
             string token = GetTokenFromHeader();
@@ -224,7 +225,7 @@ namespace Deploy.Controllers
             string resourceGroupName = null;
             if (!string.IsNullOrEmpty(subscription.subscriptionId))
             {
-                resourceGroupName = await GenerateResourceGroupName(token, templateName, subscription);
+                resourceGroupName = GenerateResourceGroupName(templateName);
             }
             returnObj["appServiceLocation"] = GetRandomLocationinGeoRegion();
             returnObj["resourceGroupName"] = resourceGroupName;
@@ -232,56 +233,54 @@ namespace Deploy.Controllers
             returnObj["templateName"] = templateName;
             returnObj["nextStatusMessage"] = Server.Deployment_DeploymentStarted;
 
+            Telemetry.LogEvent("ResourceGroupName", new Dictionary<string, string>() { { "resourceGroupName", resourceGroupName } });
+
             response = Request.CreateResponse(HttpStatusCode.OK, returnObj);
 
             return response;
         }
 
-        private async Task<string> GenerateResourceGroupName(string token, string repoName, SubscriptionInfo subscription)
+        private string GenerateResourceGroupName(string repoName)
         {
             if (!string.IsNullOrEmpty(repoName))
             {
                 bool isAvailable = false;
-                var creds = new TokenCloudCredentials(subscription.subscriptionId, token);
-                var rdfeBaseUri = new Uri(Utils.GetRDFEUrl(Request.RequestUri.Host));
 
-                using (var webSiteMgmtClient = CloudContext.Clients.CreateWebSiteManagementClient(creds, rdfeBaseUri))
-                {
                     // Make 4 attempts to get a random name (based on the repo name)
                     for (int i = 0; i < 4; i++)
                     {
                         string resourceGroupName = GenerateRandomResourceGroupName(repoName);
-                        isAvailable = await IsAppServiceNameAvailable(webSiteMgmtClient, resourceGroupName);
+                        isAvailable = IsAppServiceNameAvailable(resourceGroupName);
 
                         if (isAvailable)
                         {
                             return resourceGroupName;
                         }
-                    }
                 }
             }
-
+            Telemetry.LogEvent("UnabletoFindUniqueName");
             return null;
         }
 
-        private static async Task<bool> IsAppServiceNameAvailable(Microsoft.WindowsAzure.Management.WebSites.WebSiteManagementClient webSiteMgmtClient, string siteName)
+        private static bool IsAppServiceNameAvailable(string siteName)
         {
+            return !DnsEntryExists($"{siteName}.azurewebsites.net");
+        }
+
+        public static bool DnsEntryExists(string hostname)
+        {
+            IPHostEntry host;
             try
             {
-                return (await webSiteMgmtClient.WebSites.IsHostnameAvailableAsync(siteName)).IsAvailable;
+                host = Dns.GetHostEntry(hostname);
+                return host.AddressList.Any();
             }
-            catch (CloudException e)
+            catch (SocketException ex)
             {
-                // For Dreamspark subscriptions, RDFE is not available so we can't make this call.
-                // For now, just return true. The better thing to do is to switch to an ARM friendly call
-                if (e.ErrorCode == "ForbiddenError")
-                {
-                    return true;
-                }
-
-                // For other cases, rethrow
-                throw;
+                if (ex.SocketErrorCode== SocketError.HostNotFound)
+                    return false;
             }
+            return false;
         }
 
         private string GenerateRandomResourceGroupName(string baseName, int length = 6)
@@ -298,8 +297,10 @@ namespace Deploy.Controllers
 
             var strb = new StringBuilder(baseName.Length + length);
             strb.Append(baseName);
-            for (int i = 0; i < length; ++i)
+            for (int i = 0; i < length/2; ++i)
             {
+                //use alternate numbers and characters to prevent word formation
+                strb.Append(Constants.Path.SiteNameChars[random.Next(Constants.Path.SiteNameNumbers.Length)]);
                 strb.Append(Constants.Path.SiteNameChars[random.Next(Constants.Path.SiteNameChars.Length)]);
             }
 
@@ -313,7 +314,6 @@ namespace Deploy.Controllers
             {
                 return values.FirstOrDefault();
             }
-
             return null;
         }
 

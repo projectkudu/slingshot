@@ -104,6 +104,9 @@ var constantsObj = function () {
     var paramsObj = function () {
         var that = {};
         that.pollingInterval = 2000;
+        that.deployMessage1Interval = 30000;
+        that.deployMessage2Interval = 60000;
+        that.deployTimeoutInterval = 75000;
         return that;
     }
     that.params = paramsObj();
@@ -144,10 +147,16 @@ var constants = constantsObj();
         })
         .controller('FormController', [
             '$window', '$scope', '$location', '$http', '$timeout', function ($window, $scope, $location, $http, $timeout) {
-                $scope.timerElapsed = false;
+                $scope.deployTimerElapsed = false;
                 $timeout(function () {
-                    $scope.timerElapsed = true;
-                }, 120000);
+                    $scope.deployTimerElapsed = true;
+                }, constants.params.deployTimeoutInterval);
+                $timeout(function () {
+                    insertMessageIfNotPresent($scope, (document.getElementById('deployingMessage1').innerHTML));
+                }, constants.params.deployMessage1Interval);
+                $timeout(function () {
+                    insertMessageIfNotPresent($scope, (document.getElementById('deployingMessage2').innerHTML));
+                }, constants.params.deployMessage2Interval);
 
                 // we will store all of our form data in this object
                 $scope.formData = {};
@@ -273,16 +282,21 @@ var constants = constantsObj();
                             url: "api/lrsdeployments/" + subscriptionId,
                             data: $scope.formData.deployPayload
                         })
-                        .then(function () {
+                        .then(function (result) {
                                 window.setTimeout(getStatus, constants.params.pollingInterval, $scope, $http);
                             },
-                            function(result) {
-                                $scope.formData.errorMesg = result.data.error;
+                            function (result) {
+                                if (result.data != null && result.data.error != null) {
+                                    $scope.formData.errorMesg = result.data.error;
+                                }
                             });
                 }
 
-                function initialize($scope, $http) {
+                function initialize($scope, $http) { 
                     $scope.formData.templateName = getQueryVariable("templateName");
+                    $scope.formData.statusMesgs = [];
+                    insertMessageIfNotPresent($scope, (document.getElementById('submittingMessage').innerHTML));
+
                     telemetry.logPageView();
 
                     if (!$scope.formData.templateName || $scope.formData.templateName.length === 0) {

@@ -20,5 +20,10 @@ namespace Deploy.Concrete
         {
             sm_client.TrackException(e);
         }
+        public static void LogEvent(string eventName, IDictionary<string, string> properties = null, IDictionary<string, double> metrics = null)
+        {
+            sm_client.TrackEvent(eventName, properties: properties, metrics: metrics);
+        }
+
     }
 }
