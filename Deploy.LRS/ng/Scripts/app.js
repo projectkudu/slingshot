@@ -245,6 +245,7 @@ var constants = constantsObj();
                         },
                             function (result) {
                                 $scope.formData.errorMesg = result.data.error;
+                                telemetry.logDeployFailed('getdeploymentstatus');
                                 $window.location.href = $scope.formData.portalUrl;
                             });
                 }
@@ -284,6 +285,7 @@ var constants = constantsObj();
                                 window.setTimeout(getStatus, constants.params.pollingInterval, $scope, $http);
                             },
                             function (result) {
+                                telemetry.logDeployFailed('postdeployment');
                                 if (result.data != null && result.data.error != null) {
                                     $scope.formData.errorMesg = result.data.error;
                                 }
@@ -308,6 +310,7 @@ var constants = constantsObj();
                         telemetry.logGetTemplate($scope.formData.templateName);
                     }
                     else {
+                        telemetry.logDeployFailed('noTemplateName');
                         $window.location.href = "https://portal.azure.com";
                         return;
                     }
