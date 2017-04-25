@@ -302,7 +302,6 @@ namespace Deploy.Controllers
                 //use alternate numbers and characters to prevent word formation
                 strb.Append(Constants.Path.SiteNameChars[random.Next(Constants.Path.SiteNameChars.Length)]);
                 strb.Append(Constants.Path.SiteNameNumbers[random.Next(Constants.Path.SiteNameNumbers.Length)]);
-                strb.Append(Constants.Path.SiteNameNumbers[random.Next(Constants.Path.SiteNameNumbers.Length)]);
             }
 
             return strb.ToString();
