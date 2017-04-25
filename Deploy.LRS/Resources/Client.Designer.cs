@@ -79,7 +79,7 @@ namespace Deploy.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to App Service Market Place.
+        ///   Looks up a localized string similar to App Service Marketplace.
         /// </summary>
         public static string AppServiceGallery {
             get {
@@ -133,7 +133,7 @@ namespace Deploy.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Once you login to the Azure portal, explore the Azure App Service Market Place for more pre-configured apps like BlogEngine.NET and WordPress.
+        ///   Looks up a localized string similar to Once you login to the Azure portal, explore the Azure App Service Marketplace for more pre-configured apps like BlogEngine.NET and WordPress.
         /// </summary>
         public static string CheckoutTheGallery {
             get {
