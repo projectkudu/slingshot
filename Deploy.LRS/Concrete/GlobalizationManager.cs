@@ -10,7 +10,7 @@ namespace Deploy
     {
         private const string _cultureCookieName = "culture";
         private const string _acceptLanguageHeaderName = "Accept-Language";
-        private static readonly char[] _splitOn = new[] { '/', '?' };
+        private static readonly char[] _splitOn = new[] { '/', '?', '&' };
         public static void SetCurrentCulture(HttpContextWrapper context)
         {
             CultureInfo culture;
@@ -32,9 +32,10 @@ namespace Deploy
             culture = null;
             try
             {
-                var cultureString = context.Request.RawUrl.Split(_splitOn, StringSplitOptions.RemoveEmptyEntries).FirstOrDefault();
-                if (!string.IsNullOrWhiteSpace(cultureString) &&
-                    TryParseCulture(cultureString, out culture))
+                var cultureString = context.Request.RawUrl.Split(_splitOn, StringSplitOptions.RemoveEmptyEntries).FirstOrDefault(a => a.Contains(_cultureCookieName));
+                var cultureStringParts = !string.IsNullOrWhiteSpace(cultureString)?cultureString.Split('=') : null;
+                if (cultureStringParts!=null && cultureStringParts.Length == 2 &&
+                    TryParseCulture(cultureStringParts[1], out culture))
                 {
                     return true;
                 }
@@ -43,8 +44,8 @@ namespace Deploy
                 {
                     return true;
                 }
-                else if (context.Request.Headers["Accept-Language"] != null &&
-                    TryParseCultureLanguage(context.Request.Headers["Accept-Language"], out culture))
+                else if (context.Request.Headers[_acceptLanguageHeaderName] != null &&
+                    TryParseCultureLanguage(context.Request.Headers[_acceptLanguageHeaderName], out culture))
                 {
                     return true;
                 }

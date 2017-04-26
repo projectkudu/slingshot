@@ -260,9 +260,6 @@
     </Content>
     <Content Include="Default.min.cshtml" />
     <None Include="Properties\PublishProfiles\a.pubxml" />
-    <None Include="Web.Deploy.config">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
