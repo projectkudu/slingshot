@@ -79,6 +79,15 @@ namespace Deploy.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to App Service Marketplace.
+        /// </summary>
+        public static string AppServiceGallery {
+            get {
+                return ResourceManager.GetString("AppServiceGallery", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Azure Status Dashboard.
         /// </summary>
         public static string AzureStatusDashboard {
@@ -124,6 +133,15 @@ namespace Deploy.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Once you login to the Azure portal, explore the Azure App Service Marketplace for more pre-configured apps like BlogEngine.NET and WordPress.
+        /// </summary>
+        public static string CheckoutTheGallery {
+            get {
+                return ResourceManager.GetString("CheckoutTheGallery", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Community.
         /// </summary>
         public static string Community {
@@ -156,6 +174,24 @@ namespace Deploy.Resources {
         public static string Datacenters {
             get {
                 return ResourceManager.GetString("Datacenters", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Still working on it ....
+        /// </summary>
+        public static string DeployingMessage1 {
+            get {
+                return ResourceManager.GetString("DeployingMessage1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Almost there ....
+        /// </summary>
+        public static string DeployingMessage2 {
+            get {
+                return ResourceManager.GetString("DeployingMessage2", resourceCulture);
             }
         }
         
@@ -313,7 +349,7 @@ namespace Deploy.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to We’ll complete app deployment shortly and guide you to the Azure Portal to explore your new App Service app..
+        ///   Looks up a localized string similar to Just a few more seconds, while we complete the app deployment and guide you in to the Azure Portal to explore your new App Service app..
         /// </summary>
         public static string Information_RedirectingShortly {
             get {
@@ -322,11 +358,20 @@ namespace Deploy.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Looks like its taking too long. To go to portal anyway .
+        ///   Looks up a localized string similar to Looks like its taking too long. To go to the Azure Portal anyway .
         /// </summary>
         public static string Information_RedirectTakingTooLong {
             get {
                 return ResourceManager.GetString("Information_RedirectTakingTooLong", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Loading ....
+        /// </summary>
+        public static string Loading {
+            get {
+                return ResourceManager.GetString("Loading", resourceCulture);
             }
         }
         
@@ -606,6 +651,15 @@ namespace Deploy.Resources {
         public static string Solutions {
             get {
                 return ResourceManager.GetString("Solutions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Submitting Deployment.
+        /// </summary>
+        public static string SubmittingDeployment {
+            get {
+                return ResourceManager.GetString("SubmittingDeployment", resourceCulture);
             }
         }
         

@@ -104,6 +104,9 @@ var constantsObj = function () {
     var paramsObj = function () {
         var that = {};
         that.pollingInterval = 2000;
+        that.deployMessage1Interval = 30000;
+        that.deployMessage2Interval = 60000;
+        that.deployTimeoutInterval = 75000;
         return that;
     }
     that.params = paramsObj();
@@ -118,7 +121,6 @@ function getQueryVariable(variable) {
         if (pair[0] === variable) { return pair[1]; }
     }
     return (false);
-
 }
 
 var telemetry = telemetryObj();
@@ -129,7 +131,6 @@ var constants = constantsObj();
     // create our angular app 
     // =============================================================================
     angular.module('formApp', [])
-
         // Custom filters
         // =============================================================================
         .filter('camelCaseToHuman', function() {
@@ -144,10 +145,16 @@ var constants = constantsObj();
         })
         .controller('FormController', [
             '$window', '$scope', '$location', '$http', '$timeout', function ($window, $scope, $location, $http, $timeout) {
-                $scope.timerElapsed = false;
+                $scope.deployTimerElapsed = false;
                 $timeout(function () {
-                    $scope.timerElapsed = true;
-                }, 120000);
+                    $scope.deployTimerElapsed = true;
+                }, constants.params.deployTimeoutInterval);
+                $timeout(function () {
+                    insertMessageIfNotPresent($scope, (document.getElementById('deployingMessage1').innerHTML));
+                }, constants.params.deployMessage1Interval);
+                $timeout(function () {
+                    insertMessageIfNotPresent($scope, (document.getElementById('deployingMessage2').innerHTML));
+                }, constants.params.deployMessage2Interval);
 
                 // we will store all of our form data in this object
                 $scope.formData = {};
@@ -159,35 +166,32 @@ var constants = constantsObj();
                     that.value = null;
                     return that;
                 };
-                var statusMap = {};
-                statusMap["microsoft.web/sites"] = "Creating Website";
-                statusMap["microsoft.web/sites/config"] = "Updating Website Config";
-                statusMap["microsoft.web/sites/sourcecontrols"] = "Setting up Source Control";
-                statusMap["microsoft.web/serverfarms"] = "Creating Web Hosting Plan";
+
                 var portalWebSiteFormat = "https://portal.azure.com/#resource/subscriptions/{0}/resourceGroups/{1}/providers/Microsoft.Web/sites/{2}/QuickStartSetting";
                 var portalRGFormat = "https://portal.azure.com/#resource/subscriptions/{0}/resourceGroups/{1}/overview";
                 var basePortalUrl = "https://portal.azure.com/";
 
-                function addStatusMesg($scope, result) {
-                    var ops = result.data.operations.value;
-                    for (var i = ops.length - 1; i >= 0; i--) {
-                        var mesg = ops[i].properties.targetResource.resourceType;
-                        var key = mesg.toLowerCase();
-                        if (statusMap[key]) {
-                            mesg = statusMap[key];
-                        } else {
-                            mesg = "Updating " + mesg;
-                        }
+                function insertMessageIfNotPresent($scope, mesg) {
+                    if ($scope.formData.statusMesgs.indexOf(mesg) < 0) {
+                        $scope.formData.statusMesgs.push(mesg);
+                    }
+                }
 
-                        if ($scope.formData.statusMesgs.indexOf(mesg) < 0) {
-                            $scope.formData.statusMesgs.push(mesg);
+                function addStatusMesg($scope, result) {
+                    if (result.data.operations && result.data.operations && result.data.operations.value) {
+                        var ops = result.data.operations.value;
+                        for (var i = ops.length - 1; i >= 0; i--) {
+                            var mesg = ops[i].properties.targetResource.localizedMessage;
+                            insertMessageIfNotPresent($scope, mesg);
                         }
                     }
                 }
+
                 function getStatus($scope, $http) {
                     var subscriptionId = $scope.formData.subscription.subscriptionId;
                     var resourceGroup = $scope.formData.finalResourceGroup;
                     var params;
+                    $scope.formData.portalUrl = basePortalUrl;
                     if ($scope.formData.repoParamFound) {
                         params = {
                             "appServiceName": $scope.formData.appServiceName
@@ -202,21 +206,23 @@ var constants = constantsObj();
                             addStatusMesg($scope, result);
 
                             // In some cases, errors will be hidden within the operations object.
+
                             var ops = result.data.operations;
                             var error = null;
-                            for (var i = 0; i < ops.value.length; i++) {
-                                var opProperties = ops.value[i].properties;
-                                if (opProperties.statusMessage &&
-                                    opProperties.statusMessage.error) {
-                                    error = opProperties.statusMessage.error.message;
-                                } else if (opProperties.provisioningState === "Failed" &&
-                                    opProperties.statusMessage &&
-                                    opProperties.statusMessage.message) {
-                                    error = opProperties.statusMessage.message;
+                                if (ops && ops.value) {
+                                    for (var i = 0; i < ops.value.length; i++) {
+                                        var opProperties = ops.value[i].properties;
+                                        if (opProperties.statusMessage &&
+                                            opProperties.statusMessage.error) {
+                                            error = opProperties.statusMessage.error.message;
+                                        } else if (opProperties.provisioningState === "Failed" &&
+                                            opProperties.statusMessage &&
+                                            opProperties.statusMessage.message) {
+                                            error = opProperties.statusMessage.message;
+                                        }
+                                    }
                                 }
-                            }
-                            if (error || result.data.provisioningState === "Failed" || result.data.provisioningState === "Succeeded") {
-                                $scope.formData.portalUrl = basePortalUrl;
+                                if (error || result.data.provisioningState === "Failed" || result.data.provisioningState === "Succeeded") {
 
                                 $scope.formData.deploymentSucceeded = (result.data.provisioningState === "Succeeded");
                                 if ($scope.formData.deploymentSucceeded) {
@@ -232,13 +238,15 @@ var constants = constantsObj();
                                         $scope.formData.appServiceName);
                                     telemetry.logDeployFailed($scope.formData.templateName);
                                 }
-                                $window.location.href = $scope.formData.portalUrl;
+                            $window.location.href = $scope.formData.portalUrl;
                             } else {
                                 window.setTimeout(getStatus, constants.params.pollingInterval, $scope, $http);
                             }
                         },
                             function (result) {
                                 $scope.formData.errorMesg = result.data.error;
+                                telemetry.logDeployFailed('getdeploymentstatus');
+                                $window.location.href = $scope.formData.portalUrl;
                             });
                 }
 
@@ -273,18 +281,22 @@ var constants = constantsObj();
                             url: "api/lrsdeployments/" + subscriptionId,
                             data: $scope.formData.deployPayload
                         })
-                        .then(function(result) {
-                                $scope.formData.statusMesgs.push("Deployment Started");
+                        .then(function (result) {
                                 window.setTimeout(getStatus, constants.params.pollingInterval, $scope, $http);
                             },
-                            function(result) {
-                                $scope.formData.errorMesg = result.data.error;
+                            function (result) {
+                                telemetry.logDeployFailed('postdeployment');
+                                if (result.data != null && result.data.error != null) {
+                                    $scope.formData.errorMesg = result.data.error;
+                                }
                             });
                 }
 
-
-                function initialize($scope, $http) {
+                function initialize($scope, $http) { 
                     $scope.formData.templateName = getQueryVariable("templateName");
+                    $scope.formData.statusMesgs = [];
+                    insertMessageIfNotPresent($scope, (document.getElementById('submittingMessage').innerHTML));
+
                     telemetry.logPageView();
 
                     if (!$scope.formData.templateName || $scope.formData.templateName.length === 0) {
@@ -298,7 +310,8 @@ var constants = constantsObj();
                         telemetry.logGetTemplate($scope.formData.templateName);
                     }
                     else {
-                        $window.location.href = "https://deploy.azure.com";
+                        telemetry.logDeployFailed('noTemplateName');
+                        $window.location.href = "https://portal.azure.com";
                         return;
                     }
                     // If we don't have the repository url, then don't init.  Also
@@ -307,8 +320,8 @@ var constants = constantsObj();
                         return;
                     }
                     $scope.formData.statusMesgs = [];
-                    $scope.formData.statusMesgs.push("Submitting Deployment");
 
+                    insertMessageIfNotPresent($scope, (document.getElementById('submittingMessage').innerHTML));
 
                     $http({
                             method: "get",
@@ -317,8 +330,9 @@ var constants = constantsObj();
                                 "templateName": $scope.formData.templateName
                             }
                         })
-                        .then(function(result) {
-                                $scope.formData.userDisplayName = result.data.userDisplayName;
+                        .then(function (result) {
+                                document.getElementById('loadingMessage').style.display = "none";
+                                insertMessageIfNotPresent($scope, result.data.nextStatusMessage);
                                 $scope.formData.subscription = result.data.subscription;
                                 $scope.formData.tenants = result.data.tenants;
                                 $scope.formData.templateName = result.data.templateName;
@@ -350,7 +364,6 @@ var constants = constantsObj();
                                 }
                             });
                 }
-
 
                 initialize($scope, $http);
             }

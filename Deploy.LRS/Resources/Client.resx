@@ -280,10 +280,10 @@
     <value>click here</value>
   </data>
   <data name="Information_RedirectingShortly" xml:space="preserve">
-    <value>We’ll complete app deployment shortly and guide you to the Azure Portal to explore your new App Service app.</value>
+    <value>Just a few more seconds, while we complete the app deployment and guide you in to the Azure Portal to explore your new App Service app.</value>
   </data>
   <data name="Information_RedirectTakingTooLong" xml:space="preserve">
-    <value>Looks like its taking too long. To go to portal anyway </value>
+    <value>Looks like its taking too long. To go to the Azure Portal anyway </value>
   </data>
   <data name="Location" xml:space="preserve">
     <value>Location</value>
@@ -329,5 +329,23 @@
   </data>
   <data name="YouTube" xml:space="preserve">
     <value>YouTube</value>
+  </data>
+  <data name="AppServiceGallery" xml:space="preserve">
+    <value>App Service Marketplace</value>
+  </data>
+  <data name="CheckoutTheGallery" xml:space="preserve">
+    <value>Once you login to the Azure portal, explore the Azure App Service Marketplace for more pre-configured apps like BlogEngine.NET and WordPress</value>
+  </data>
+  <data name="Loading" xml:space="preserve">
+    <value>Loading ...</value>
+  </data>
+  <data name="SubmittingDeployment" xml:space="preserve">
+    <value>Submitting Deployment</value>
+  </data>
+  <data name="DeployingMessage1" xml:space="preserve">
+    <value>Still working on it ...</value>
+  </data>
+  <data name="DeployingMessage2" xml:space="preserve">
+    <value>Almost there ...</value>
   </data>
 </root>

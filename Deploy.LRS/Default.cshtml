@@ -4,7 +4,7 @@
 <!--http://www.willpeavy.com/minifier/--->>
 <html>
 @{
-    var isAzure = !string.IsNullOrEmpty(Environment.GetEnvironmentVariable("WEBSITE_SITE_NAME"));
+    var isAzure = !string.IsNullOrEmpty(Deploy.Settings.WEBSITE_SITE_NAME);
     var aiIinstrumentationKey = Deploy.Settings.AppInsightsInstrumentationKey;
     var mpIinstrumentationKey = Deploy.Settings.MixPanelInstrumentationKey;
 }
@@ -12,13 +12,13 @@
     <meta charset="utf-8">
     <title>@Client.Title</title>
     <script type="text/javascript">
-            var Resources = {};
-            @foreach (var p in typeof(Client).GetProperties()) {
+        var Resources = {};
+        @foreach (var p in typeof(Client).GetProperties()) {
                 if (p.GetValue(null, null) != null) {
                     @: Resources["@Html.Raw(@p.Name)"] = "@Html.Raw(HttpUtility.JavaScriptStringEncode(p.GetValue(null, null).ToString()))";
-                    }
+                            }
             }
-           var CurrentCulture = "@CultureInfo.CurrentCulture.TwoLetterISOLanguageName";
+        var CurrentCulture = "@CultureInfo.CurrentCulture.TwoLetterISOLanguageName";
     </script>
 
     <link href="favicon.ico" rel="icon" type="image/x-icon">
@@ -40,11 +40,12 @@
         {
         <!-- start Mixpanel -->
             <script type="text/javascript">
-                (function (e, b) { if (!b.__SV) { var a, f, i, g; window.mixpanel = b; b._i = []; b.init = function (a, e, d) { function f(b, h) { var a = h.split("."); 2 == a.length && (b = b[a[0]], h = a[1]); b[h] = function () { b.push([h].concat(Array.prototype.slice.call(arguments, 0))) } } var c = b; "undefined" !== typeof d ? c = b[d] = [] : d = "mixpanel"; c.people = c.people || []; c.toString = function (b) { var a = "mixpanel"; "mixpanel" !== d && (a += "." + d); b || (a += " (stub)"); return a }; c.people.toString = function () { return c.toString(1) + ".people (stub)" }; i = "disable time_event track track_pageview track_links track_forms register register_once alias unregister identify name_tag set_config people.set people.set_once people.increment people.append people.union people.track_charge people.clear_charges people.delete_user".split(" "); for (g = 0; g < i.length; g++) f(c, i[g]); b._i.push([a, e, d]) }; b.__SV = 1.2; a = e.createElement("script"); a.type = "text/javascript"; a.async = !0; a.src = "undefined" !== typeof MIXPANEL_CUSTOM_LIB_URL ? MIXPANEL_CUSTOM_LIB_URL : "file:" === e.location.protocol && "//cdn.mxpnl.com/libs/mixpanel-2-latest.min.js".match(/^\/\//) ? "https://cdn.mxpnl.com/libs/mixpanel-2-latest.min.js" : "//cdn.mxpnl.com/libs/mixpanel-2-latest.min.js"; f = e.getElementsByTagName("script")[0]; f.parentNode.insertBefore(a, f) } })(document, window.mixpanel || []); mixpanel.init("@mpIinstrumentationKey", { cross_subdomain_cookie: true });
+                function getQueryParam(param) {param = param.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");var regexS = "[\\?&]" + param + "=([^&#]*)",regex = new RegExp(regexS),results = regex.exec(document.URL);if (results === null || (results && typeof (results[1]) !== 'string' && results[1].length)) {return '';} else {return decodeURIComponent(results[1]).replace(/\+/g, ' ');}};
+                (function (e, b) { if (!b.__SV) { var a, f, i, g; window.mixpanel = b; b._i = []; b.init = function (a, e, d) { function f(b, h) { var a = h.split("."); 2 == a.length && (b = b[a[0]], h = a[1]); b[h] = function () { b.push([h].concat(Array.prototype.slice.call(arguments, 0))) } } var c = b; "undefined" !== typeof d ? c = b[d] = [] : d = "mixpanel"; c.people = c.people || []; c.toString = function (b) { var a = "mixpanel"; "mixpanel" !== d && (a += "." + d); b || (a += " (stub)"); return a }; c.people.toString = function () { return c.toString(1) + ".people (stub)" }; i = "disable time_event track track_pageview track_links track_forms register register_once alias unregister identify name_tag set_config people.set people.set_once people.increment people.append people.union people.track_charge people.clear_charges people.delete_user".split(" "); for (g = 0; g < i.length; g++) f(c, i[g]); b._i.push([a, e, d]) }; b.__SV = 1.2; a = e.createElement("script"); a.type = "text/javascript"; a.async = !0; a.src = "undefined" !== typeof MIXPANEL_CUSTOM_LIB_URL ? MIXPANEL_CUSTOM_LIB_URL : "file:" === e.location.protocol && "//cdn.mxpnl.com/libs/mixpanel-2-latest.min.js".match(/^\/\//) ? "https://cdn.mxpnl.com/libs/mixpanel-2-latest.min.js" : "//cdn.mxpnl.com/libs/mixpanel-2-latest.min.js"; f = e.getElementsByTagName("script")[0]; f.parentNode.insertBefore(a, f) } })(document, window.mixpanel || []); mixpanel.init("@mpIinstrumentationKey", { cross_subdomain_cookie: true }); var distinct_id = getQueryParam('correlationId'); if (distinct_id) { mixpanel.identify(distinct_id); }
             </script>
         <!-- end Mixpanel -->
         }
-         if (!isAzure)
+        if (!isAzure)
         {
             <link rel="stylesheet" href="../content/styles/app.css">
             <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
@@ -67,7 +68,7 @@
     <div ui-view>
         <header class="azure-header">
             <div class="row column">
-                <a target="_blank" href="https://azure.microsoft.com/"class="logo">
+                <a target="_blank" href="https://azure.microsoft.com/" class="logo">
                     <svg style="display: none; visibility: hidden;">
                         <defs>
                             <symbol id="microsoft-azure" viewBox="0 0 163.985 19.25">
@@ -144,7 +145,7 @@
             <div class="nav-end"></div>
         </header>
         <main class="wa-container" id="main">
-            <section class="section section-size2 section-slate03">
+            <section class="section section-size1 section-slate03">
                 <div class="row row-middled-flex">
                     <div class="column medium-8">
                         <h1>@string.Format(Client.Information_DeployingHeader, "{{formData.templateName}}")  </h1>
@@ -153,9 +154,12 @@
                 </div>
             </section>
             <div class="row row-middled-flex">
-                <div class="column medium-8">
+                <div class="column medium-12">
                     <form id="deploy-form" name="myForm">
                         <div id="form-views" ui-view>
+                            <div class="form-group col-md-6" id="loadingMessage">
+                                <label>@string.Format(Client.Loading)</label>
+                            </div>
                             <div ng-cloak ng-show="formData.params">
                                 <div class="form-group col-md-6">
                                     <label>@Client.Subscription&nbsp;:&nbsp;{{formData.subscription.displayName}}</label>
@@ -168,40 +172,47 @@
                                 </div>
                                 <div class="result-body">
                                     <ul>
-                                        <div ng-show="!formData.deploymentSucceeded" ng-repeat="mesg in formData.statusMesgs">
-                                            {{mesg}}
-                                            <span id="spinnerStatus" ng-if="!$last"><i class="fa fa-check" style="color: green" ng-show="!formData.errorMesg && !formData.deploymentSucceeded"></i></span>
-                                            <span id="spinnerStatus" ng-if="$last"><i class="fa fa-spinner fa-spin" ng-show="!formData.errorMesg && !formData.deploymentSucceeded"></i></span>
-                                        </div>
-                                        <div ng-show="formData.deploymentSucceeded || formData.errorMesg ">
-                                            <div ng-show="formData.deploymentSucceeded">@Client.Information_DeploymentCompleted</div>
-                                            <div ng-show="formData.errorMesg">@Client.Information_DeploymentFailed</div>
-                                            <div class="column small-4 large-2 end">
-                                                <div id="select-template" class="selection product-placement product-placement-same-size">
-                                                    <div class="img-container">
-                                                        <svg style="display: none; visibility: hidden;"><defs><symbol id="app-service-web" viewBox="0 0 50 50"> <path fill="#59B4D9" d="M40.193,44.839c-4.53,3.464-9.867,5.151-15.167,5.151c-7.52,0-14.956-3.376-19.87-9.803 C-3.24,29.225-1.168,13.548,9.814,5.148C14.343,1.663,19.686,0,24.979,0c7.52,0,14.958,3.376,19.87,9.809 C53.247,20.768,51.154,36.448,40.193,44.839"></path> <path fill="#FFFFFF" d="M35.6,29.378c1.816,2.368,5.186,2.796,7.541,1.004c0.123-0.094,0.218-0.208,0.33-0.309 c2.409,1.697,4.082,2.817,5.025,3.459c0.279-0.723,0.472-1.417,0.67-2.142c-0.996-0.741-2.343-1.778-4.29-3.356 c0.639-1.68,0.437-3.64-0.73-5.171c-1.669-2.16-4.626-2.709-6.936-1.377c-2.546-2.284-5.343-4.902-8.293-7.833 c9.165-4.929,15.676-4.207,15.676-4.207c-1.087-1.386-2.305-2.6-3.606-3.697c-3.865-0.597-9.869-0.53-16.729,3.119l-0.002-0.003 l-0.001,0c-2.286-2.393-4.613-4.958-6.983-7.712c-1.134,0.363-2.242,0.812-3.312,1.347c1.749,2.862,4.102,5.749,6.754,8.565h0 c0.005,0.006,0.011,0.011,0.017,0.017c-2.211,1.546-4.673,3.613-6.944,6.015c-0.29,0.309-0.569,0.62-0.842,0.931 c-1.357-0.284-2.784-0.201-4.117,0.282C6.564,13.425,6.746,9.501,7.104,7.478c-0.983,1.03-1.901,2.113-2.692,3.267 C3.821,13.16,3.653,16.643,5.397,20.84c-2.019,2.642-2.114,6.389-0.005,9.153c0.176,0.229,0.364,0.442,0.559,0.645 c-0.921,3.137-1.333,6.163-1.46,8.761c0.237,0.322,0.237,0.582,0.472,0.896c1.199,1.538,2.705,2.834,4.16,4.008 c-0.18-2.75,0.014-6.806,1.714-11.372c1.173,0.089,2.366-0.096,3.483-0.566c0.64,0.563,1.31,1.132,2.025,1.711 c2.453,1.942,4.9,3.453,7.285,4.643c-0.124,1.213,0.18,2.474,0.968,3.518c1.685,2.176,4.805,2.582,6.983,0.919 c0.453-0.347,0.811-0.766,1.108-1.216c3.889,0.866,7.287,1.019,9.806,1.019c0.386,0,2.177-2.436,3.203-3.946 c-1.534,0.321-6.083,0.946-12.3-0.84c-0.15-0.698-0.437-1.376-0.898-1.98c-1.579-2.07-4.466-2.518-6.618-1.133 c-2.161-1.172-4.424-2.641-6.758-4.49c-0.471-0.373-0.923-0.745-1.359-1.118c1.426-2.247,1.578-5.127,0.318-7.55 c0.286-0.286,0.567-0.573,0.871-0.857c2.311-2.159,4.485-3.887,6.519-5.274c-0.082-0.076-0.156-0.156-0.236-0.233 c0.081,0.075,0.157,0.152,0.239,0.227c-0.001,0-0.001,0.001-0.002,0.001c3.121,2.886,6.43,5.621,9.564,8.065 C34.209,25.589,34.339,27.73,35.6,29.378z"></path> </symbol> </defs></svg>
-                                                        <span class="title sd-equalize" style="height: 37px;">@Client.AppService</span>
-                                                    </div>
-                                                </div>
-                                                <div>
-                                                    @string.Format(Client.Information_Redirecting) <a target='_blank' ng-href='{ { formData.portalUrl} }'>@Client.Information_RedirectingClickhere</a>
-                                                </div>
-                                            </div>
+                                        <div ng-show="!formData.deploymentSucceeded || formData.statusMesgs.Count > 0" ng-repeat="mesg in formData.statusMesgs">
+                                            <li>{{mesg}}
+                                                <span id="spinnerStatus" ng-if="!$last"><i class="fa fa-check" style="color: green" ng-show="!formData.errorMesg && !formData.deploymentSucceeded"></i></span>
+                                                <span id="spinnerStatus" ng-if="$last"><i class="fa fa-spinner fa-spin" ng-show="!formData.errorMesg && !formData.deploymentSucceeded"></i></span>
+                                            </li>
                                         </div>
                                     </ul>
-                                    <div ng-show="!timerElapsed">
+                                </div>
+                                    <div ng-show="!timerElapsed && formData.deploymentSucceeded">@Client.Information_DeploymentCompleted</div>
+                                    <div ng-show="!timerElapsed && formData.errorMesg">@Client.Information_DeploymentFailed</div>
+                                    <div ng-show="!timerElapsed && (formData.deploymentSucceeded || formData.errorMesg)">@string.Format(Client.Information_Redirecting) <a ng-href='{{ formData.portalUrl}}'>@Client.Information_RedirectingClickhere</a></div>
+                                    <div ng-show="!timerElapsed && !formData.deploymentSucceeded && !formData.errorMesg">
                                         @Client.Information_RedirectingShortly
                                     </div>
                                     <div ng-show="timerElapsed">
-                                        @string.Format(Client.Information_RedirectTakingTooLong) <a target='_blank' ng-href='{ { formData.portalUrl} }'>@Client.Information_RedirectingClickhere</a>
+                                        @string.Format(Client.Information_RedirectTakingTooLong) <a ng-href='{{ formData.portalUrl}}'>@Client.Information_RedirectingClickhere</a>
                                     </div>
-
-                                </div>
+                                <div style="visibility: hidden" id="submittingMessage">@Client.SubmittingDeployment </div>
+                                <div style="visibility: hidden" id="deployingMessage1">@Client.DeployingMessage1</div>
+                                <div style="visibility: hidden" id="deployingMessage2">@Client.DeployingMessage2</div>
+                                
                             </div>
                         </div>
                     </form>
                 </div>
             </div>
+            <section class="section section-size3 section-palette06">
+                <div class="row row-middled-flex">
+                    <div class="column medium-2 show-for-medium">
+                        <span class="icon icon-size13"><svg><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#app-service"></use></svg></span> 
+                    </div>
+                    <div class="column medium-10">
+                        <div class="row column">
+                            <h2>@string.Format(Client.AppServiceGallery)</h2>
+                        </div>
+                        <div class="row column row-size1"> <h5>@string.Format(Client.CheckoutTheGallery)</h5>
+                        </div>
+                        <div class="row row-size2 column"> </div>
+                    </div>
+                </div>
+            </section>
         </main>
         <footer data-tag-area="footer" data-tag-group="footer" role="contentinfo">
             <div class="row">

@@ -218,7 +218,7 @@ html {
 }
 
 .section.section-size3 {
-  padding: 36px 0;
+  padding: 20px 0;
 }
 
 .section.section-size5 {
@@ -1422,6 +1422,10 @@ h6 .arrowLink:after,.text-heading6 .arrowLink:after,h6.arrowLink:after,.text-hea
   background-color: #f4f4f4;
 }
 
+.section-palette06 {
+    color: #fff;
+    background-color: #1b348e;
+}
 body {
   font-size: 15px;
   line-height: 1.5;
@@ -3124,7 +3128,7 @@ h4 .icon {
 
 @media only screen and (min-width:960px) {
   .wa-container {
-    padding-top: 68px;
+    padding-top: 67px;
   }
 
   .wa-container header {
@@ -3634,7 +3638,7 @@ section#content-container {
 }
 
 .result-body {
-  min-height: 200px;
+  min-height: 100px;
 }
 
 .header-label {
