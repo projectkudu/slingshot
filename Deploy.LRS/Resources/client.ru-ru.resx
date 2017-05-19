@@ -117,57 +117,6 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Action_AllowContact" xml:space="preserve">
-    <value>Разрешить Майкрософт связаться со мной по поводу отзыва</value>
-  </data>
-  <data name="Action_Cancel" xml:space="preserve">
-    <value>Отмена</value>
-  </data>
-  <data name="Action_CreateAppServiceApp" xml:space="preserve">
-    <value>Создать приложение службы приложений Azure</value>
-  </data>
-  <data name="Action_Delete" xml:space="preserve">
-    <value>Удалить</value>
-  </data>
-  <data name="Action_DownloadAppContent" xml:space="preserve">
-    <value>Скачать контент {0}</value>
-  </data>
-  <data name="Action_DownloadPublishingProfile" xml:space="preserve">
-    <value>Скачать профиль публикации</value>
-  </data>
-  <data name="Action_GitClone" xml:space="preserve">
-    <value>Клонировать или передать в GIT</value>
-  </data>
-  <data name="Action_GoToExistingApp" xml:space="preserve">
-    <value>Перейти к существующему приложению</value>
-  </data>
-  <data name="Action_ManageInAzurePortal" xml:space="preserve">
-    <value>Управление на портале Azure</value>
-  </data>
-  <data name="Action_MobileClients" xml:space="preserve">
-    <value>Скачать и запустить мобильное клиентское приложение</value>
-  </data>
-  <data name="Action_Monaco" xml:space="preserve">
-    <value>Изменение кода в Интернете</value>
-  </data>
-  <data name="Action_ReportAnIssue" xml:space="preserve">
-    <value>Сообщить о проблеме</value>
-  </data>
-  <data name="Action_SelectAppType" xml:space="preserve">
-    <value>Выбрать тип приложения</value>
-  </data>
-  <data name="Action_SelectTemplate" xml:space="preserve">
-    <value>Выбрать шаблон и создать {0}</value>
-  </data>
-  <data name="Action_ShareAComment" xml:space="preserve">
-    <value>Поделиться комментарием</value>
-  </data>
-  <data name="Action_Submit" xml:space="preserve">
-    <value>Отправить</value>
-  </data>
-  <data name="Action_Yes" xml:space="preserve">
-    <value>Да</value>
-  </data>
   <data name="Blog" xml:space="preserve">
     <value>Блог</value>
   </data>
@@ -192,9 +141,6 @@
   <data name="Downloads" xml:space="preserve">
     <value>Загрузки</value>
   </data>
-  <data name="Error_SubmittingFeedback" xml:space="preserve">
-    <value>Произошла ошибка при отправке отзыва. Повторите попытку позже.</value>
-  </data>
   <data name="Events" xml:space="preserve">
     <value>События</value>
   </data>
@@ -215,120 +161,6 @@
   </data>
   <data name="GoSocial" xml:space="preserve">
     <value>Социальные сети</value>
-  </data>
-  <data name="Information_APIApp" xml:space="preserve">
-    <value>Приложение API</value>
-  </data>
-  <data name="Information_AppAlreadyExists" xml:space="preserve">
-    <value>Вы уже создали службу приложений. Вы хотите удалить ее и создать новую?</value>
-  </data>
-  <data name="Information_AppHasBeenCreated" xml:space="preserve">
-    <value>Приложение {0} создано!</value>
-  </data>
-  <data name="Information_AspNetBrandingLine1" xml:space="preserve">
-    <value>Бесплатное размещение 10 веб-сайтов ASP.NET в службе приложений Azure</value>
-  </data>
-  <data name="Information_AspNetBrandingLine2" xml:space="preserve">
-    <value>Безопасно, надежно и готово к работе за секунды. Начинайте работу бесплатно и изменяйте масштабы по мере увеличения трафика.</value>
-  </data>
-  <data name="Information_ComingSoon" xml:space="preserve">
-    <value>Ожидается в ближайшее время</value>
-  </data>
-  <data name="Information_DownloadClient" xml:space="preserve">
-    <value>Скачать клиент</value>
-  </data>
-  <data name="Information_DownloadiOSClient" xml:space="preserve">
-    <value>Скачать клиентское приложение iOS</value>
-  </data>
-  <data name="Information_DownloadWindowsClient" xml:space="preserve">
-    <value>Скачать клиентское приложение Windows</value>
-  </data>
-  <data name="Information_DownloadXamarinAndroidClient" xml:space="preserve">
-    <value>Скачать клиентское приложение Xamarin Android</value>
-  </data>
-  <data name="Information_DownloadXamariniOSClient" xml:space="preserve">
-    <value>Скачать клиентское приложение Xamarin iOS</value>
-  </data>
-  <data name="Information_ExperienceComingSoon" xml:space="preserve">
-    <value>Пробная версия Azure {0} еще не доступна, но вы можете создать {0}, зарегистрировавшись для получения бесплатной 30-дневной пробной версии, которая позволяет создать до 10 приложений любого типа</value>
-  </data>
-  <data name="Information_ExperienceNotHereYet" xml:space="preserve">
-    <value>Версия {0} еще не доступна.</value>
-  </data>
-  <data name="Information_ExpireMessage" xml:space="preserve">
-    <value>Бесплатная версия {0} истечет через:</value>
-  </data>
-  <data name="Information_GenericBrandingLine1" xml:space="preserve">
-    <value>Служба приложений Azure — это облачная служба, которая интегрируется со всем, что вам нужно для быстрой и простой сборки веб- и мобильных приложений для любых платформ или устройств.</value>
-  </data>
-  <data name="Information_GenericBrandingLine2" xml:space="preserve">
-    <value>Ознакомьтесь со службой приложений Azure в течение часа без подписки Azure или получите пробную подписку на службу приложений Azure.</value>
-  </data>
-  <data name="Information_GoingBackWillDeleteApp" xml:space="preserve">
-    <value>Если вы вернетесь назад, текущее приложение будет удалено.</value>
-  </data>
-  <data name="Information_InstallVisualStudio" xml:space="preserve">
-    <value>Установить Visual Studio Professional 2015 (с обновлением 2)</value>
-  </data>
-  <data name="Information_InstallXamarinStudio" xml:space="preserve">
-    <value>Установить Xamarin Studio для OS X</value>
-  </data>
-  <data name="Information_InstallXcode" xml:space="preserve">
-    <value>Установить Xcode (v4.4+)</value>
-  </data>
-  <data name="Information_LogicApp" xml:space="preserve">
-    <value>Приложение логики</value>
-  </data>
-  <data name="Information_LoginFirst" xml:space="preserve">
-    <value>Войдите, чтобы создать приложение.</value>
-  </data>
-  <data name="Information_MobileApp" xml:space="preserve">
-    <value>Мобильное приложение</value>
-  </data>
-  <data name="Information_NativeiOS" xml:space="preserve">
-    <value>Приложения iOS с машинным кодом</value>
-  </data>
-  <data name="Information_SelectAppType" xml:space="preserve">
-    <value>Выбрать тип приложения</value>
-  </data>
-  <data name="Information_SelectTemplate" xml:space="preserve">
-    <value>Выбор шаблона</value>
-  </data>
-  <data name="Information_SubmittingFeedback" xml:space="preserve">
-    <value>Идет отправка отзыва...</value>
-  </data>
-  <data name="Information_ThanksForFeedback" xml:space="preserve">
-    <value>Спасибо за отзыв!</value>
-  </data>
-  <data name="Information_VisitWebClient" xml:space="preserve">
-    <value>Перейти в веб-клиент</value>
-  </data>
-  <data name="Information_WantMoreQuestionLine1" xml:space="preserve">
-    <value>Вы хотите получить дополнительные бесплатные возможности?</value>
-  </data>
-  <data name="Information_WantMoreQuestionLine2" xml:space="preserve">
-    <value>Создавайте больше веб- и мобильных приложений, приложений логики и API. Зарегистрируйтесь для получения бесплатной 30-дневной пробной версии и создайте до 10 приложений любого типа.</value>
-  </data>
-  <data name="Information_WebApp" xml:space="preserve">
-    <value>Веб-приложение</value>
-  </data>
-  <data name="Information_WebClient" xml:space="preserve">
-    <value>Веб-портал</value>
-  </data>
-  <data name="Information_Windows" xml:space="preserve">
-    <value>Универсальное для Windows 8.1</value>
-  </data>
-  <data name="Information_WorkWithLogicApps" xml:space="preserve">
-    <value>Для работы с приложением перейдите на портал Azure по ссылке ниже. Вы окажетесь на странице с колонкой ресурсов приложения логики.</value>
-  </data>
-  <data name="Information_WorkWithYourApp" xml:space="preserve">
-    <value>Работать с {0} в </value>
-  </data>
-  <data name="Information_XamarinAndroid" xml:space="preserve">
-    <value>Xamarin Android</value>
-  </data>
-  <data name="Information_XamariniOS" xml:space="preserve">
-    <value>Xamarin iOS</value>
   </data>
   <data name="Logout" xml:space="preserve">
     <value>Выход</value>
@@ -394,7 +226,7 @@
     <value>Поддержка</value>
   </data>
   <data name="Title" xml:space="preserve">
-    <value>Испытайте службу приложений Azure</value>
+    <value>Развертывание службы приложений в Azure</value>
   </data>
   <data name="Trademarks" xml:space="preserve">
     <value>Товарные знаки</value>
@@ -405,109 +237,115 @@
   <data name="Twitter" xml:space="preserve">
     <value>Twitter</value>
   </data>
-  <data name="Information_LogicAppDescription" xml:space="preserve">
-    <value>Приложения логики Azure позволяют разработчикам создавать рабочие процессы, которые запускаются с триггера, а затем выполняют ряд шагов, каждый из которых вызывает приложение API службы приложений, выполнив безопасную проверку подлинности и рекомендации, такие как назначение контрольных точек и длительное выполнение.</value>
-  </data>
-  <data name="Information_LogicAppStep1" xml:space="preserve">
-    <value>1. Взгляните на группу связанных элементов "Сводка", где отображаются сведения о том, когда приложение было запущено в последний раз и был ли запуск успешным.</value>
-  </data>
-  <data name="Information_LogicAppStep2" xml:space="preserve">
-    <value>2. Откройте определение приложения логики, щелкнув ту же часть в группе связанных элементов "Сводка", и взгляните на определение. Вы можете попробовать расширить приложение логики для отправки твитов при каждом сбое проверки связи.</value>
-  </data>
-  <data name="Templates_PingSiteDescription" xml:space="preserve">
-    <value>Шаблон приложения логики будет проверять связь с веб-сайтом по регулярному расписанию. Вы можете расширить его, чтобы предпринять действия в зависимости от результата проверки связи.</value>
-  </data>
-  <data name="Action_Dismiss" xml:space="preserve">
-    <value>Отклонить</value>
-  </data>
-  <data name="Information_AppHasExpired" xml:space="preserve">
-    <value>Срок действия {0} истек. Вы можете попробовать создать другое приложение службы приложений или зарегистрировать бесплатную 30-дневную пробную учетную запись.</value>
-  </data>
-  <data name="Information_Prerequisite" xml:space="preserve">
-    <value>Необходимый компонент</value>
-  </data>
-  <data name="Information_WelcomeFeedback" xml:space="preserve">
-    <value>Мы будем рады получить ваши отзывы!</value>
-  </data>
-  <data name="Action_Create" xml:space="preserve">
-    <value>Создать</value>
-  </data>
-  <data name="Action_GenericWorkWithYourApp" xml:space="preserve">
-    <value>Работать с приложением</value>
-  </data>
-  <data name="Information_YouCantHaveMoreThanOne" xml:space="preserve">
-    <value>У вас не может быть несколько бесплатных ресурсов одновременно.</value>
-  </data>
-  <data name="Next" xml:space="preserve">
-    <value>Далее</value>
-  </data>
   <data name="Previous" xml:space="preserve">
     <value>Назад</value>
   </data>
-  <data name="Information_ApiAppDescription" xml:space="preserve">
-    <value>Пробная версия приложения API Azure еще не доступна, но вы можете создать приложения API, зарегистрировавшись для получения бесплатной 30-дневной пробной версии, которая позволяет создать до 10 приложений любого типа.</value>
+  <data name="Account" xml:space="preserve">
+    <value>Учетная запись</value>
   </data>
-  <data name="Information_MobileAppDescription" xml:space="preserve">
-    <value>Мобильные приложения Azure позволяют легко выполнять вход, отправку и синхронизацию данных в приложении iOS, Android или Windows, глобально масштабировать и подключать приложение к корпоративным системам и локальным ресурсам.</value>
+  <data name="AppService" xml:space="preserve">
+    <value>Служба приложений</value>
   </data>
-  <data name="Information_WebAppDescription" xml:space="preserve">
-    <value>Веб-приложения Azure позволяют разработчикам легко развертывать и масштабировать высококлассные веб-приложения, написанные на разных языках и интегрированные в несколько служб, не беспокоясь об управлении инфраструктурой.</value>
+  <data name="AzureStatusDashboard" xml:space="preserve">
+    <value>Панель мониторинга состояния Azure</value>
   </data>
-  <data name="Information_LogicAppStep3" xml:space="preserve">
-    <value>3. Запустите повторно приложение логики, щелкнув команду "Запустить сейчас" в верхней части колонки.</value>
+  <data name="Careers" xml:space="preserve">
+    <value>Профессии</value>
   </data>
-  <data name="Information_LogicAppStep4" xml:space="preserve">
-    <value>4. Чтобы получить дополнительные сведения о приложении логики, щелкните краткое руководство, которое содержит указатели на документацию.</value>
+  <data name="Datacenters" xml:space="preserve">
+    <value>Центры обработки данных</value>
   </data>
-  <data name="Information_LogicAppStepsIntro" xml:space="preserve">
-    <value>Можно выполнить следующие действия из колонки ресурсов приложения логики.</value>
+  <data name="Findalocalnumber" xml:space="preserve">
+    <value>Найти локальный номер</value>
   </data>
-  <data name="Information_XamarinBrandingLine1" xml:space="preserve">
-    <value>Переходите на мобильные технологии с помощью Xamarin и службы приложений Azure</value>
+  <data name="Findalocalnumbersubmitquery" xml:space="preserve">
+    <value>Найти локальный номер или отправить форму запроса</value>
   </data>
-  <data name="Information_XamarinBrandingLine2" xml:space="preserve">
-    <value>Проверка подлинности, синхронизация и отправка за секунды на любом устройстве. Начните бесплатно и изменяйте масштаб по мере роста приложения.</value>
+  <data name="HellofromSeattle" xml:space="preserve">
+    <value>Новости из Сиэтла.</value>
   </data>
-  <data name="Information_ExtendResourceLifeTimeText" xml:space="preserve">
-    <value>Нужно больше времени? Щелкните здесь, чтобы продлить пробную версию на 24 часа.</value>
+  <data name="Information_DeployingHeader" xml:space="preserve">
+    <value>Развертывается служба приложений {0}</value>
   </data>
-  <data name="Information_Android" xml:space="preserve">
-    <value>Android</value>
+  <data name="Information_DeploymentCompleted" xml:space="preserve">
+    <value>Приложение развернуто</value>
   </data>
-  <data name="Information_DownloadAndroidClient" xml:space="preserve">
-    <value>Скачать клиентское приложение для Android</value>
+  <data name="Information_DeploymentFailed" xml:space="preserve">
+    <value>Произошел сбой при развертывании приложения</value>
   </data>
-  <data name="Information_DownloadWUniversalWindowsPlatformClient" xml:space="preserve">
-    <value>Скачать клиент универсальной платформы Windows (UWP)</value>
+  <data name="Information_Redirecting" xml:space="preserve">
+    <value>Перенаправляем вас на портал Azure. Если портал Azure не открывается, </value>
   </data>
-  <data name="Information_DownloadXamarinFormsClient" xml:space="preserve">
-    <value>Скачать клиентское приложение для Xamarin.Forms</value>
+  <data name="Information_RedirectingClickhere" xml:space="preserve">
+    <value>Щелкните здесь</value>
   </data>
-  <data name="Information_UniversalWindowsPlatform" xml:space="preserve">
-    <value>Универсальная платформа Windows (UWP)</value>
+  <data name="Information_RedirectingShortly" xml:space="preserve">
+    <value>Осталось немного до завершения развертывания приложения. После этого вы перейдете на портал Azure для знакомства с новым приложением службы приложений.</value>
   </data>
-  <data name="Information_XamarinForms" xml:space="preserve">
-    <value>Xamarin.Forms</value>
+  <data name="Information_RedirectTakingTooLong" xml:space="preserve">
+    <value>Похоже, прошло слишком много времени. Чтобы перейти на портал Azure </value>
   </data>
-  <data name="Information_AzurePlatformBrandingLine1" xml:space="preserve">
-    <value>Смотрите, как быстро можно создать приложение Node.js</value>
+  <data name="Location" xml:space="preserve">
+    <value>Расположение</value>
   </data>
-  <data name="Information_AzurePlatformBrandingLine2" xml:space="preserve">
-    <value>Служба приложений Azure — это единственная облачная служба, в которой собрано все необходимое для быстрого создания мобильных и веб-приложений для любых платформ и устройств. Вы можете извлекать данные отовсюду и создавать практически все, что угодно. До одного часа с ней можно поиграть в "песочнице" без оплаты и обязательств.</value>
+  <data name="MemberOffers" xml:space="preserve">
+    <value>Предложения участников</value>
   </data>
-  <data name="Information_InstallAndroidStudio" xml:space="preserve">
-    <value>Скачать Android Studio</value>
+  <data name="Microsoft" xml:space="preserve">
+    <value>Майкрософт</value>
   </data>
-  <data name="Templates_AzureDevOpsDescription" xml:space="preserve">
-    <value>На основе этого шаблона создается Azure Jenkins CI</value>
+  <data name="MicrosoftAzureportal" xml:space="preserve">
+    <value>Портал Microsoft Azure</value>
   </data>
-  <data name="Information_FunctionApp" xml:space="preserve">
-    <value>Приложение-функция</value>
+  <data name="Name" xml:space="preserve">
+    <value>Название</value>
   </data>
-  <data name="Information_FunctionAppDescription" xml:space="preserve">
-    <value>Функции Azure представляют собой безсерверные компоненты на основе событий, которые расширяют существующую платформу службы приложений Azure. Эти нанослужбы могут масштабироваться на основе потребностей в ресурсах; вы оплачиваете только используемые.</value>
+  <data name="Partners" xml:space="preserve">
+    <value>Партнеры</value>
   </data>
-  <data name="TryFunctions" xml:space="preserve">
-    <value>Испробовать функции</value>
+  <data name="QuestionsSales" xml:space="preserve">
+    <value>Возникли вопросы об Azure? Обращайтесь в отдел продаж.</value>
+  </data>
+  <data name="Resources" xml:space="preserve">
+    <value>Ресурсы</value>
+  </data>
+  <data name="Sales" xml:space="preserve">
+    <value>Продажи</value>
+  </data>
+  <data name="Samples" xml:space="preserve">
+    <value>Примеры</value>
+  </data>
+  <data name="Solutions" xml:space="preserve">
+    <value>Решения</value>
+  </data>
+  <data name="Subscription" xml:space="preserve">
+    <value>Подписка</value>
+  </data>
+  <data name="UnitedStates" xml:space="preserve">
+    <value>Соединенные Штаты Америки</value>
+  </data>
+  <data name="WhyAzure" xml:space="preserve">
+    <value>Преимущества Azure</value>
+  </data>
+  <data name="YouTube" xml:space="preserve">
+    <value>YouTube</value>
+  </data>
+  <data name="AppServiceGallery" xml:space="preserve">
+    <value>Marketplace службы приложений</value>
+  </data>
+  <data name="CheckoutTheGallery" xml:space="preserve">
+    <value>После входа на портал Azure найдите в Marketplace службы приложений Azure другие предварительно настроенные приложения, такие как BlogEngine.NET и WordPress</value>
+  </data>
+  <data name="Loading" xml:space="preserve">
+    <value>Загрузка...</value>
+  </data>
+  <data name="SubmittingDeployment" xml:space="preserve">
+    <value>Отправляется развертывание</value>
+  </data>
+  <data name="DeployingMessage1" xml:space="preserve">
+    <value>Пока работаем над этим...</value>
+  </data>
+  <data name="DeployingMessage2" xml:space="preserve">
+    <value>Почти готово...</value>
   </data>
 </root>

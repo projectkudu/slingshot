@@ -117,11 +117,38 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="ARMTemplate_AppPostfix" xml:space="preserve">
+    <value>Aplicação</value>
+  </data>
+  <data name="ARMTemplate_MyPrefix" xml:space="preserve">
+    <value>O Meu</value>
+  </data>
+  <data name="Deployment_CreatingWebApp" xml:space="preserve">
+    <value>A criar Aplicação Web</value>
+  </data>
+  <data name="Deployment_CreatingWebHostingPlan" xml:space="preserve">
+    <value>A criar Plano de Alojamento Web</value>
+  </data>
   <data name="Deployment_DeploymentInProgress" xml:space="preserve">
     <value>Implementação em curso.</value>
   </data>
+  <data name="Deployment_DeploymentStarted" xml:space="preserve">
+    <value>Implementação Iniciada</value>
+  </data>
   <data name="Deployment_GitDeploymentInProgress" xml:space="preserve">
     <value>Implementação de git em curso.</value>
+  </data>
+  <data name="Deployment_SettingupSourceControl" xml:space="preserve">
+    <value>A Configurar Controlo de Origem</value>
+  </data>
+  <data name="Deployment_SubmittingDeployment" xml:space="preserve">
+    <value>A Enviar Implementação</value>
+  </data>
+  <data name="Deployment_Updating" xml:space="preserve">
+    <value>A atualizar</value>
+  </data>
+  <data name="Deployment_UpdatingWebAppConfig" xml:space="preserve">
+    <value>A atualizar Configuração da Aplicação Web</value>
   </data>
   <data name="Error_GeneralErrorMessage" xml:space="preserve">
     <value>Ocorreu um erro. Tente novamente mais tarde.</value>
@@ -138,34 +165,10 @@
   <data name="Error_InvalidUserIdentity" xml:space="preserve">
     <value>Utilizador inválido.</value>
   </data>
-  <data name="Error_MoreThanOneFreeResource" xml:space="preserve">
-    <value>Só pode ter um recurso gratuito de cada vez.</value>
-  </data>
-  <data name="Error_NoFreeResourcesAvailable" xml:space="preserve">
-    <value>Não existem recursos gratuitos disponíveis neste momento. Tente novamente mais tarde.</value>
-  </data>
   <data name="Error_OrgIdNotSupported" xml:space="preserve">
     <value>Lamentamos, mas as contas organizacionais não são suportadas. Utilize uma Conta Microsoft.</value>
   </data>
-  <data name="Error_ResourceExpirationTimeAlreadyExtended" xml:space="preserve">
-    <value>A hora de expiração já foi prolongada antes. Só pode prolongar a hora de expiração uma vez por recurso.</value>
-  </data>
   <data name="Error_UnsupportedPlatform" xml:space="preserve">
     <value>Plataforma não suportada.</value>
-  </data>
-  <data name="Templates_FieldEngineerDescription" xml:space="preserve">
-    <value>Uma aplicação de dashboard móvel para um técnico de uma empresa de serviços por cabo, ou qualquer outra mão-de-obra móvel, disponível para o Xamarin Forms. Exemplo completo em &lt;a href="https://github.com/azure/fieldengineer/" target="_blank"&gt;https://github.com/azure/fieldengineer/&lt;/a&gt;.</value>
-  </data>
-  <data name="Templates_JenkinsDescription" xml:space="preserve">
-    <value>Este modelo irá criar um Azure Jenkins CI</value>
-  </data>
-  <data name="Templates_PingSiteDescription" xml:space="preserve">
-    <value>Este modelo de Aplicação Lógica vai enviar um ping para um Web site de acordo com uma agenda periódica. Pode expandi-lo de modo a efetuar uma ação consoante o resultado do ping.</value>
-  </data>
-  <data name="Templates_TodoListDescription" xml:space="preserve">
-    <value>Esta é uma simples aplicação de uma lista de tarefas, disponível para iOS, Android, Xamarin e HTML/JS.</value>
-  </data>
-  <data name="Templates_XamarinCrmDescription" xml:space="preserve">
-    <value>Uma aplicação CRM de um dashboard de vendas móvel disponível para Formulários Xamarin. Exemplo completo em &lt;a href="https://github.com/xamarin/app-crm/" target="_blank"&gt;https://github.com/xamarin/app-crm/&lt;/a&gt;.</value>
   </data>
 </root>

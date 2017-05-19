@@ -117,11 +117,38 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="ARMTemplate_AppPostfix" xml:space="preserve">
+    <value>App</value>
+  </data>
+  <data name="ARMTemplate_MyPrefix" xml:space="preserve">
+    <value>My</value>
+  </data>
+  <data name="Deployment_CreatingWebApp" xml:space="preserve">
+    <value>Creating Web App</value>
+  </data>
+  <data name="Deployment_CreatingWebHostingPlan" xml:space="preserve">
+    <value>Creating Web Hosting Plan</value>
+  </data>
   <data name="Deployment_DeploymentInProgress" xml:space="preserve">
     <value>Deployment in progress.</value>
   </data>
+  <data name="Deployment_DeploymentStarted" xml:space="preserve">
+    <value>Deployment Started</value>
+  </data>
   <data name="Deployment_GitDeploymentInProgress" xml:space="preserve">
     <value>Git deployment in progress.</value>
+  </data>
+  <data name="Deployment_SettingupSourceControl" xml:space="preserve">
+    <value>Setting up Source Control</value>
+  </data>
+  <data name="Deployment_SubmittingDeployment" xml:space="preserve">
+    <value>Submitting Deployment</value>
+  </data>
+  <data name="Deployment_Updating" xml:space="preserve">
+    <value>Updating</value>
+  </data>
+  <data name="Deployment_UpdatingWebAppConfig" xml:space="preserve">
+    <value>Updating Web App Config</value>
   </data>
   <data name="Error_GeneralErrorMessage" xml:space="preserve">
     <value>An Error occured. Please try again later.</value>
@@ -138,37 +165,10 @@
   <data name="Error_InvalidUserIdentity" xml:space="preserve">
     <value>Invalid user.</value>
   </data>
-  <data name="Error_MoreThanOneFreeResource" xml:space="preserve">
-    <value>You can't have more than 1 free resource at a time.</value>
-  </data>
-  <data name="Error_NoFreeResourcesAvailable" xml:space="preserve">
-    <value>No free resources are available currently. Please try again later.</value>
-  </data>
   <data name="Error_OrgIdNotSupported" xml:space="preserve">
     <value>Sorry Organizational accounts are not supported. Please use a Microsoft Account.</value>
   </data>
-  <data name="Error_ResourceExpirationTimeAlreadyExtended" xml:space="preserve">
-    <value>Resource expiration time was already extended before. You can only extend the expiration time once for a resource.</value>
-  </data>
   <data name="Error_UnsupportedPlatform" xml:space="preserve">
     <value>Unsupported platform.</value>
-  </data>
-  <data name="Templates_APIAppDescription" xml:space="preserve">
-    <value>Azure API Apps make it easy to build, host, and consume APIs written in a variety of languages. Leverage turnkey API security, connectivity to On-premises resources, and Swagger definition support.</value>
-  </data>
-  <data name="Templates_FieldEngineerDescription" xml:space="preserve">
-    <value>A mobile dashboard app for a cable company technician, or any other mobile workforce, available for Xamarin Forms. Full sample at &lt;a href="https://github.com/azure/fieldengineer/" target="_blank"&gt;https://github.com/azure/fieldengineer/&lt;/a&gt;.</value>
-  </data>
-  <data name="Templates_JenkinsDescription" xml:space="preserve">
-    <value>This template will create an Azure Jenkins CI</value>
-  </data>
-  <data name="Templates_PingSiteDescription" xml:space="preserve">
-    <value>This Logic App template will ping a website on a recurring schedule.  You can extend it to take an action depending on the result of the ping.</value>
-  </data>
-  <data name="Templates_TodoListDescription" xml:space="preserve">
-    <value>This is a simple todo list app, available for iOS, Android, Xamarin, and HTML/JS.</value>
-  </data>
-  <data name="Templates_XamarinCrmDescription" xml:space="preserve">
-    <value>A mobile sales dashboard CRM app, available for Xamarin Forms. Full sample at &lt;a href="https://github.com/xamarin/app-crm/" target="_blank"&gt;https://github.com/xamarin/app-crm/&lt;/a&gt;.</value>
   </data>
 </root>

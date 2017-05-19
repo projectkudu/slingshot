@@ -117,11 +117,38 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="ARMTemplate_AppPostfix" xml:space="preserve">
+    <value>應用程式</value>
+  </data>
+  <data name="ARMTemplate_MyPrefix" xml:space="preserve">
+    <value>我的</value>
+  </data>
+  <data name="Deployment_CreatingWebApp" xml:space="preserve">
+    <value>正在建立 Web 應用程式</value>
+  </data>
+  <data name="Deployment_CreatingWebHostingPlan" xml:space="preserve">
+    <value>正在建立 Web 主控方案</value>
+  </data>
   <data name="Deployment_DeploymentInProgress" xml:space="preserve">
     <value>部署進行中。</value>
   </data>
+  <data name="Deployment_DeploymentStarted" xml:space="preserve">
+    <value>部署已開始</value>
+  </data>
   <data name="Deployment_GitDeploymentInProgress" xml:space="preserve">
     <value>Git 部署進行中。</value>
+  </data>
+  <data name="Deployment_SettingupSourceControl" xml:space="preserve">
+    <value>正在設定原始檔控制</value>
+  </data>
+  <data name="Deployment_SubmittingDeployment" xml:space="preserve">
+    <value>正在提交部署</value>
+  </data>
+  <data name="Deployment_Updating" xml:space="preserve">
+    <value>更新</value>
+  </data>
+  <data name="Deployment_UpdatingWebAppConfig" xml:space="preserve">
+    <value>正在更新 Web 應用程式設定</value>
   </data>
   <data name="Error_GeneralErrorMessage" xml:space="preserve">
     <value>發生錯誤。請稍後再試一次。</value>
@@ -138,34 +165,10 @@
   <data name="Error_InvalidUserIdentity" xml:space="preserve">
     <value>無效的使用者。</value>
   </data>
-  <data name="Error_MoreThanOneFreeResource" xml:space="preserve">
-    <value>您無法同時擁有 1 個以上的免費資源。</value>
-  </data>
-  <data name="Error_NoFreeResourcesAvailable" xml:space="preserve">
-    <value>目前沒有免費的資源可供使用。請稍後再試一次。</value>
-  </data>
   <data name="Error_OrgIdNotSupported" xml:space="preserve">
     <value>抱歉! 不支援組織帳戶。請使用 Microsoft 帳戶。</value>
   </data>
-  <data name="Error_ResourceExpirationTimeAlreadyExtended" xml:space="preserve">
-    <value>先前已延長過資源到期時間。您只能為資源延長一次到期時間。</value>
-  </data>
   <data name="Error_UnsupportedPlatform" xml:space="preserve">
     <value>不支援的平台。</value>
-  </data>
-  <data name="Templates_FieldEngineerDescription" xml:space="preserve">
-    <value>專為有線電視公司技術人員或任何其他行動工作力所設計的行動儀表板應用程式，其適用於 Xamarin 格式。如需完整範例，請移至 &lt;a href="https://github.com/azure/fieldengineer/" target="_blank"&gt;https://github.com/azure/fieldengineer/&lt;/a&gt;。</value>
-  </data>
-  <data name="Templates_JenkinsDescription" xml:space="preserve">
-    <value>此範本會建立 Azure Jenkins CI</value>
-  </data>
-  <data name="Templates_PingSiteDescription" xml:space="preserve">
-    <value>此邏輯應用程式範本會依照排程定期 Ping 網站。您可以擴充其功能，依據 Ping 的結果採取動作。</value>
-  </data>
-  <data name="Templates_TodoListDescription" xml:space="preserve">
-    <value>此為簡單待辦事項清單應用程式，適用於 iOS、Android、Xamarin 及 HTML/JS。</value>
-  </data>
-  <data name="Templates_XamarinCrmDescription" xml:space="preserve">
-    <value>行動銷售儀表板 CRM 應用程式，適用於 Xamarin 格式。如需完整範例，請移至 &lt;a href="https://github.com/xamarin/app-crm/" target="_blank"&gt;https://github.com/xamarin/app-crm/&lt;/a&gt;。</value>
   </data>
 </root>

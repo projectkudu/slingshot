@@ -117,11 +117,38 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="ARMTemplate_AppPostfix" xml:space="preserve">
+    <value>App</value>
+  </data>
+  <data name="ARMTemplate_MyPrefix" xml:space="preserve">
+    <value>Meine</value>
+  </data>
+  <data name="Deployment_CreatingWebApp" xml:space="preserve">
+    <value>Die Web-App wird erstellt.</value>
+  </data>
+  <data name="Deployment_CreatingWebHostingPlan" xml:space="preserve">
+    <value>Webhostingplan wird erstellt.</value>
+  </data>
   <data name="Deployment_DeploymentInProgress" xml:space="preserve">
     <value>Die Bereitstellung wird ausgeführt.</value>
   </data>
+  <data name="Deployment_DeploymentStarted" xml:space="preserve">
+    <value>Bereitstellung gestartet</value>
+  </data>
   <data name="Deployment_GitDeploymentInProgress" xml:space="preserve">
     <value>Die Git-Bereitstellung wird ausgeführt.</value>
+  </data>
+  <data name="Deployment_SettingupSourceControl" xml:space="preserve">
+    <value>Quellcodeverwaltung wird eingerichtet.</value>
+  </data>
+  <data name="Deployment_SubmittingDeployment" xml:space="preserve">
+    <value>Bereitstellung wird übermittelt.</value>
+  </data>
+  <data name="Deployment_Updating" xml:space="preserve">
+    <value>Aktualisieren</value>
+  </data>
+  <data name="Deployment_UpdatingWebAppConfig" xml:space="preserve">
+    <value>Web-App-Konfiguration wird aktualisiert.</value>
   </data>
   <data name="Error_GeneralErrorMessage" xml:space="preserve">
     <value>Fehler. Bitte versuchen Sie es später erneut.</value>
@@ -138,34 +165,10 @@
   <data name="Error_InvalidUserIdentity" xml:space="preserve">
     <value>Ungültiger Benutzer.</value>
   </data>
-  <data name="Error_MoreThanOneFreeResource" xml:space="preserve">
-    <value>Sie können nur eine kostenlose Ressource gleichzeitig verwenden.</value>
-  </data>
-  <data name="Error_NoFreeResourcesAvailable" xml:space="preserve">
-    <value>Zurzeit sind keine kostenlosen Ressourcen verfügbar. Bitte versuchen Sie es später erneut.</value>
-  </data>
   <data name="Error_OrgIdNotSupported" xml:space="preserve">
     <value>Leider werden Organisationskonten nicht unterstützt. Bitte verwenden Sie ein Microsoft-Konto.</value>
   </data>
-  <data name="Error_ResourceExpirationTimeAlreadyExtended" xml:space="preserve">
-    <value>Die Ressourcenablaufzeit wurde bereits verlängert. Sie können die Ablaufzeit für eine Ressource nur ein Mal verlängern.</value>
-  </data>
   <data name="Error_UnsupportedPlatform" xml:space="preserve">
     <value>Nicht unterstützte Plattform.</value>
-  </data>
-  <data name="Templates_FieldEngineerDescription" xml:space="preserve">
-    <value>Eine mobile Dashboard-App für Techniker eines Kabelnetzbetreibers oder andere mobile Mitarbeiter, die für Xamarin Forms verfügbar ist. Das vollständige Codebeispiel finden Sie unter "&lt;a href="https://github.com/azure/fieldengineer/" target="_blank"&gt;https://github.com/azure/fieldengineer/&lt;/a&gt;".</value>
-  </data>
-  <data name="Templates_JenkinsDescription" xml:space="preserve">
-    <value>Mit dieser Vorlage wird eine Azure Jenkins-CI erstellt.</value>
-  </data>
-  <data name="Templates_PingSiteDescription" xml:space="preserve">
-    <value>Diese Logik-App-Vorlage führt Ping für eine Website gemäß einer Zeitplanserie aus. Sie können sie so erweitern, dass abhängig vom Ergebnis des Ping-Vorgangs eine Aktion ausgeführt wird.</value>
-  </data>
-  <data name="Templates_TodoListDescription" xml:space="preserve">
-    <value>Dies ist eine einfache Aufgabenlisten-App für iOS, Android, Xamarin und HTML/JS.</value>
-  </data>
-  <data name="Templates_XamarinCrmDescription" xml:space="preserve">
-    <value>Eine mobile Vertriebsdashboard-CRM-App, die für Xamarin Forms verfügbar ist. Das vollständige Codebeispiel finden Sie unter "&lt;a href="https://github.com/xamarin/app-crm/" target="_blank"&gt;https://github.com/xamarin/app-crm/&lt;/a&gt;".</value>
   </data>
 </root>

@@ -117,57 +117,6 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Action_AllowContact" xml:space="preserve">
-    <value>Microsoft'un bu geri bildirimle ilgili olarak benimle iletişim kurmasına izin ver.</value>
-  </data>
-  <data name="Action_Cancel" xml:space="preserve">
-    <value>İptal</value>
-  </data>
-  <data name="Action_CreateAppServiceApp" xml:space="preserve">
-    <value>Azure App Service uygulamanızı oluşturun</value>
-  </data>
-  <data name="Action_Delete" xml:space="preserve">
-    <value>Sil</value>
-  </data>
-  <data name="Action_DownloadAppContent" xml:space="preserve">
-    <value>{0} içeriğini indirin</value>
-  </data>
-  <data name="Action_DownloadPublishingProfile" xml:space="preserve">
-    <value>Yayımlama profilini indirin</value>
-  </data>
-  <data name="Action_GitClone" xml:space="preserve">
-    <value>Kopyalayın veya git ile gönderin</value>
-  </data>
-  <data name="Action_GoToExistingApp" xml:space="preserve">
-    <value>Mevcut uygulamaya gidin</value>
-  </data>
-  <data name="Action_ManageInAzurePortal" xml:space="preserve">
-    <value>Azure Portal'da yönetin</value>
-  </data>
-  <data name="Action_MobileClients" xml:space="preserve">
-    <value>Mobil istemci uygulamanızı indirin ve çalıştırın</value>
-  </data>
-  <data name="Action_Monaco" xml:space="preserve">
-    <value>Kodunuzu online düzenleyin</value>
-  </data>
-  <data name="Action_ReportAnIssue" xml:space="preserve">
-    <value>Bir sorun bildirin</value>
-  </data>
-  <data name="Action_SelectAppType" xml:space="preserve">
-    <value>Uygulama türünü seçin</value>
-  </data>
-  <data name="Action_SelectTemplate" xml:space="preserve">
-    <value>Bir şablon seçin ve {0} öğenizi oluşturun</value>
-  </data>
-  <data name="Action_ShareAComment" xml:space="preserve">
-    <value>Bir yorum paylaşın</value>
-  </data>
-  <data name="Action_Submit" xml:space="preserve">
-    <value>Gönder</value>
-  </data>
-  <data name="Action_Yes" xml:space="preserve">
-    <value>Evet</value>
-  </data>
   <data name="Blog" xml:space="preserve">
     <value>Web Günlüğü</value>
   </data>
@@ -192,9 +141,6 @@
   <data name="Downloads" xml:space="preserve">
     <value>İndirmeler</value>
   </data>
-  <data name="Error_SubmittingFeedback" xml:space="preserve">
-    <value>Geri bildiriminiz gönderilirken hata oluştu. Lütfen daha sonra yeniden deneyin.</value>
-  </data>
   <data name="Events" xml:space="preserve">
     <value>Olaylar</value>
   </data>
@@ -215,120 +161,6 @@
   </data>
   <data name="GoSocial" xml:space="preserve">
     <value>Sosyalleşin</value>
-  </data>
-  <data name="Information_APIApp" xml:space="preserve">
-    <value>API Uygulaması</value>
-  </data>
-  <data name="Information_AppAlreadyExists" xml:space="preserve">
-    <value>Zaten bir App Service oluşturmuşsunuz. Bunu silip yenisini oluşturmak ister misiniz?</value>
-  </data>
-  <data name="Information_AppHasBeenCreated" xml:space="preserve">
-    <value>{0} uygulamanız oluşturuldu!</value>
-  </data>
-  <data name="Information_AspNetBrandingLine1" xml:space="preserve">
-    <value>Azure App Service ile 10 ASP.NET web sitesini ücretsiz barındırın</value>
-  </data>
-  <data name="Information_AspNetBrandingLine2" xml:space="preserve">
-    <value>Güvenli ve güvenilir. Saniyeler içinde işiniz için kullanıma hazır hale getirin. Ücret ödemeden başlayın ve trafiğiniz büyüdükçe ölçeğinizi artırın.</value>
-  </data>
-  <data name="Information_ComingSoon" xml:space="preserve">
-    <value>Çok yakında</value>
-  </data>
-  <data name="Information_DownloadClient" xml:space="preserve">
-    <value>İstemciyi indir</value>
-  </data>
-  <data name="Information_DownloadiOSClient" xml:space="preserve">
-    <value>iOS istemci uygulamasını indir</value>
-  </data>
-  <data name="Information_DownloadWindowsClient" xml:space="preserve">
-    <value>Windows istemci uygulamasını indir</value>
-  </data>
-  <data name="Information_DownloadXamarinAndroidClient" xml:space="preserve">
-    <value>Xamarin Android istemci uygulamasını indir</value>
-  </data>
-  <data name="Information_DownloadXamariniOSClient" xml:space="preserve">
-    <value>Xamarin iOS istemci uygulamasını indir</value>
-  </data>
-  <data name="Information_ExperienceComingSoon" xml:space="preserve">
-    <value>Azure {0} deneme sürümü deneyimi henüz hazır değil. Ancak istediğiniz türdeki 10 adede kadar uygulamayı ücretsiz olarak oluşturmanıza olanak tanıyan 30 günlük ücretsiz denemeye kaydolarak {0} oluşturabilirsiniz</value>
-  </data>
-  <data name="Information_ExperienceNotHereYet" xml:space="preserve">
-    <value>{0} deneyimi henüz hazır değil.</value>
-  </data>
-  <data name="Information_ExpireMessage" xml:space="preserve">
-    <value>Ücretsiz {0} sürümünüzün süresi şu tarihte dolacak:</value>
-  </data>
-  <data name="Information_GenericBrandingLine1" xml:space="preserve">
-    <value>Azure App Service, tüm platform veya cihazlar için hızla ve kolayca web ve mobil uygulamaları oluşturmak için ihtiyacınız olan her şeyi tümleştiren bir bulut uygulama hizmetidir.</value>
-  </data>
-  <data name="Information_GenericBrandingLine2" xml:space="preserve">
-    <value>Azure aboneliğiniz olmadan, hiçbir ücret ödemeden veya taahhütte bulunmadan bir saatlik Azure App Service deneyimi için misafirimiz olun. Ücretsiz Azure deneme aboneliğiyle tam Azure App Service deneyiminizi uzatın.</value>
-  </data>
-  <data name="Information_GoingBackWillDeleteApp" xml:space="preserve">
-    <value>Geri dönerseniz geçerli uygulama silinecek</value>
-  </data>
-  <data name="Information_InstallVisualStudio" xml:space="preserve">
-    <value>Visual Studio Professional 2015'i (Güncelleştirme 2) yükle</value>
-  </data>
-  <data name="Information_InstallXamarinStudio" xml:space="preserve">
-    <value>OS X için Xamarin Studio'yu yükleyin</value>
-  </data>
-  <data name="Information_InstallXcode" xml:space="preserve">
-    <value>Xcode'u (v4.4+) yükle</value>
-  </data>
-  <data name="Information_LogicApp" xml:space="preserve">
-    <value>Mantıksal Uygulama</value>
-  </data>
-  <data name="Information_LoginFirst" xml:space="preserve">
-    <value>Bir uygulama oluşturmak için önce oturum açın</value>
-  </data>
-  <data name="Information_MobileApp" xml:space="preserve">
-    <value>Mobil Uygulama</value>
-  </data>
-  <data name="Information_NativeiOS" xml:space="preserve">
-    <value>Yerel iOS</value>
-  </data>
-  <data name="Information_SelectAppType" xml:space="preserve">
-    <value>Uygulama türünü seçin</value>
-  </data>
-  <data name="Information_SelectTemplate" xml:space="preserve">
-    <value>Şablon seçin</value>
-  </data>
-  <data name="Information_SubmittingFeedback" xml:space="preserve">
-    <value>Geri bildirim gönderiliyor...</value>
-  </data>
-  <data name="Information_ThanksForFeedback" xml:space="preserve">
-    <value>Geri bildiriminiz için teşekkürler!</value>
-  </data>
-  <data name="Information_VisitWebClient" xml:space="preserve">
-    <value>Web tabanlı istemciyi ziyaret edin</value>
-  </data>
-  <data name="Information_WantMoreQuestionLine1" xml:space="preserve">
-    <value>Daha fazlasına ücretsiz olarak sahip olmak ister misiniz?</value>
-  </data>
-  <data name="Information_WantMoreQuestionLine2" xml:space="preserve">
-    <value>Daha fazla web uygulaması, mobil uygulama ve API Apps oluşturun. 30 günlük ücretsiz deneme için kaydolun ve herhangi bir türde 10'a kadar uygulamayı ücretsiz oluşturun.</value>
-  </data>
-  <data name="Information_WebApp" xml:space="preserve">
-    <value>Web Uygulaması</value>
-  </data>
-  <data name="Information_WebClient" xml:space="preserve">
-    <value>Web Portalı</value>
-  </data>
-  <data name="Information_Windows" xml:space="preserve">
-    <value>Evrensel Windows 8.1</value>
-  </data>
-  <data name="Information_WorkWithLogicApps" xml:space="preserve">
-    <value>Uygulamanızın üzerinde çalışmak için aşağıdaki Azure Portal bağlantısına tıklayın. Bu bağlantı sizi Mantıksal Uygulama kaynağı dikey penceresine yönlendirir.</value>
-  </data>
-  <data name="Information_WorkWithYourApp" xml:space="preserve">
-    <value>Şu konumdaki {0} uygulamanızın üzerinde çalışın: </value>
-  </data>
-  <data name="Information_XamarinAndroid" xml:space="preserve">
-    <value>Xamarin Android</value>
-  </data>
-  <data name="Information_XamariniOS" xml:space="preserve">
-    <value>Xamarin iOS</value>
   </data>
   <data name="Logout" xml:space="preserve">
     <value>Oturumu Kapat</value>
@@ -394,7 +226,7 @@
     <value>Destek</value>
   </data>
   <data name="Title" xml:space="preserve">
-    <value>Azure App Service'i deneyin</value>
+    <value>App Service Uygulamanızı Azure'a Dağıtın</value>
   </data>
   <data name="Trademarks" xml:space="preserve">
     <value>Ticari Markalar</value>
@@ -405,109 +237,115 @@
   <data name="Twitter" xml:space="preserve">
     <value>Twitter</value>
   </data>
-  <data name="Information_LogicAppDescription" xml:space="preserve">
-    <value>Azure Logic Apps, geliştiricilerin; bir tetikleyiciyle başlayan ve her adımında bir App Service API'sinin çağrıldığı bir dizi adımı yürütürken aynı zamanda kimlik doğrulama gereksinimlerini yerine getiren, bunların yanı sıra denetim noktası oluşturma ve dayanıklı yürütme gibi en iyi uygulamaları da gerçekleştiren iş akışları tasarlamasına olanak sağlar.</value>
-  </data>
-  <data name="Information_LogicAppStep1" xml:space="preserve">
-    <value>1. Uygulamanın en son ne zaman çalıştırıldığı ve başarılı olup olmadığı gibi bilgileri bulabileceğiniz Özet odağına bakın</value>
-  </data>
-  <data name="Information_LogicAppStep2" xml:space="preserve">
-    <value>2. Özet odağında aynı bölüme tıklayarak Mantıksal Uygulama tanımını açın ve tanıma bakın. Mantıksal Uygulama'yı bir ping başarısız olduğunda tweet gönderecek biçimde genişletmeyi deneyebilirsiniz.</value>
-  </data>
-  <data name="Templates_PingSiteDescription" xml:space="preserve">
-    <value>Bu Mantıksal Uygulama şablonu, yinelenen bir zamanlamaya göre bir web sitesine ping gönderecek.  Şablonu, ping sonucuna göre eylem gerçekleştirecek şekilde genişletebilirsiniz.</value>
-  </data>
-  <data name="Action_Dismiss" xml:space="preserve">
-    <value>Kapat</value>
-  </data>
-  <data name="Information_AppHasExpired" xml:space="preserve">
-    <value>{0} uygulamanızın süresi doldu. Başka bir App Service uygulaması oluşturmayı deneyebilir ya da 30 günlük ücretsiz deneme hesabı için kaydolabilirsiniz.</value>
-  </data>
-  <data name="Information_Prerequisite" xml:space="preserve">
-    <value>Önkoşul</value>
-  </data>
-  <data name="Information_WelcomeFeedback" xml:space="preserve">
-    <value>Geri bildiriminiz bizim için çok önemli!</value>
-  </data>
-  <data name="Action_Create" xml:space="preserve">
-    <value>Oluştur</value>
-  </data>
-  <data name="Action_GenericWorkWithYourApp" xml:space="preserve">
-    <value>Uygulamanızın üzerinde çalışın</value>
-  </data>
-  <data name="Information_YouCantHaveMoreThanOne" xml:space="preserve">
-    <value>Aynı anda 1'den çok ücretsiz kaynağa sahip olamazsınız</value>
-  </data>
-  <data name="Next" xml:space="preserve">
-    <value>İleri</value>
-  </data>
   <data name="Previous" xml:space="preserve">
     <value>Önceki</value>
   </data>
-  <data name="Information_ApiAppDescription" xml:space="preserve">
-    <value>Azure API App deneme sürümü deneyimi henüz hazır değil. Ancak istediğiniz türdeki 10 adede kadar uygulamayı ücretsiz olarak oluşturmanıza olanak tanıyan 30 günlük ücretsiz denemeye kaydolarak API Apps oluşturabilirsiniz.</value>
+  <data name="Account" xml:space="preserve">
+    <value>Hesap</value>
   </data>
-  <data name="Information_MobileAppDescription" xml:space="preserve">
-    <value>Azure Mobile Apps; iOS, Android veya Windows uygulamanıza oturum açma, gönderim ve veri eşitleme özellikleri eklemeyi, uygulamanızı küresel olarak ölçeklendirmeyi ve uygulamanızı kurumsal sistemler ile şirket içi kaynaklara bağlamayı kolaylaştırır.</value>
+  <data name="AppService" xml:space="preserve">
+    <value>Uygulama Hizmeti</value>
   </data>
-  <data name="Information_WebAppDescription" xml:space="preserve">
-    <value>Azure Web Apps, geliştiricilerin altyapı yönetimi konusunda endişe duymasına gerek kalmadan, çeşitli dillerde yazılmış ve birçok hizmetle tümleştirilmiş kurumsal sınıf web uygulamalarını kolayca dağıtmasına ve ölçeklendirmesine olanak sağlar.</value>
+  <data name="AzureStatusDashboard" xml:space="preserve">
+    <value>Azure Durum Panosu</value>
   </data>
-  <data name="Information_LogicAppStep3" xml:space="preserve">
-    <value>3. Dikey pencerenin üstündeki Şimdi Çalıştır komutuna tıklayarak Mantıksal Uygulama'yı yeniden çalıştırın.</value>
+  <data name="Careers" xml:space="preserve">
+    <value>Kariyer</value>
   </data>
-  <data name="Information_LogicAppStep4" xml:space="preserve">
-    <value>4. Logic Apps'in nasıl kullanılacağı hakkında daha fazla bilgi edinmek için, belgelere yönelik işaretçiler sağlayan Hızlı Başlangıç'a tıklayın.</value>
+  <data name="Datacenters" xml:space="preserve">
+    <value>Veri merkezleri</value>
   </data>
-  <data name="Information_LogicAppStepsIntro" xml:space="preserve">
-    <value>Mantıksal Uygulama kaynağı dikey penceresinde aşağıdakileri yapnayı deneyebilirsiniz:</value>
+  <data name="Findalocalnumber" xml:space="preserve">
+    <value>Yerel bir numara bulun</value>
   </data>
-  <data name="Information_XamarinBrandingLine1" xml:space="preserve">
-    <value>Xamarin ve Azure App Service ile Mobil Olun</value>
+  <data name="Findalocalnumbersubmitquery" xml:space="preserve">
+    <value>Yerel bir numara bulun veya sorgu formu gönderin</value>
   </data>
-  <data name="Information_XamarinBrandingLine2" xml:space="preserve">
-    <value>Herhangi bir cihazla saniyeler içinde Kimlik Doğrulayın, Eşitleyin ve Gönderin. Ücret ödemeden başlayın ve uygulamanız büyüdükçe ölçeğinizi artırın.</value>
+  <data name="HellofromSeattle" xml:space="preserve">
+    <value>Seattle'dan merhaba.</value>
   </data>
-  <data name="Information_ExtendResourceLifeTimeText" xml:space="preserve">
-    <value>Daha fazla zamana mı ihtiyacınız var? Deneme sürenizi 24 saate çıkarmak için buraya tıklayın.</value>
+  <data name="Information_DeployingHeader" xml:space="preserve">
+    <value>{0} App Service hizmetiniz dağıtılıyor</value>
   </data>
-  <data name="Information_Android" xml:space="preserve">
-    <value>Android</value>
+  <data name="Information_DeploymentCompleted" xml:space="preserve">
+    <value>Uygulama dağıtımı Tamamlandı</value>
   </data>
-  <data name="Information_DownloadAndroidClient" xml:space="preserve">
-    <value>Android istemci uygulamasını indir</value>
+  <data name="Information_DeploymentFailed" xml:space="preserve">
+    <value>Uygulama dağıtımı Başarısız Oldu</value>
   </data>
-  <data name="Information_DownloadWUniversalWindowsPlatformClient" xml:space="preserve">
-    <value>Evrensel Windows Platformu (UWP) istemcisini indir</value>
+  <data name="Information_Redirecting" xml:space="preserve">
+    <value>Azure portalına yönlendiriliyorsunuz. Azure portalı açılmazsa </value>
   </data>
-  <data name="Information_DownloadXamarinFormsClient" xml:space="preserve">
-    <value>Xamarin.Forms istemci uygulamasını indir</value>
+  <data name="Information_RedirectingClickhere" xml:space="preserve">
+    <value>burayı tıklayın</value>
   </data>
-  <data name="Information_UniversalWindowsPlatform" xml:space="preserve">
-    <value>Evrensel Windows Platformu (UWP)</value>
+  <data name="Information_RedirectingShortly" xml:space="preserve">
+    <value>Uygulama dağıtımı tamamlanana kadar birkaç saniye daha bekleyin. Yeni App Service uygulamanızı keşfetmeniz için sizi Azure Portal'a yönlendireceğiz.</value>
   </data>
-  <data name="Information_XamarinForms" xml:space="preserve">
-    <value>Xamarin.Forms</value>
+  <data name="Information_RedirectTakingTooLong" xml:space="preserve">
+    <value>Bu işlem çok uzun sürüyor gibi görünüyor. Yine de Azure portalına gitmek için </value>
   </data>
-  <data name="Information_AzurePlatformBrandingLine1" xml:space="preserve">
-    <value>Node.js uygulaması oluşturmanın ne kadar kısa sürdüğünü görün</value>
+  <data name="Location" xml:space="preserve">
+    <value>Konum</value>
   </data>
-  <data name="Information_AzurePlatformBrandingLine2" xml:space="preserve">
-    <value>Azure App Service, web uygulamalarını ve mobil uygulamaları istediğiniz platformda kolayca derlemek için ihtiyacınız olan her şeyi tümleştiren tek bulut hizmetidir. Verileri herhangi bir kaynaktan çekebilir ve hemen her şeyi derleyebilirsiniz. Korumalı alanı bir saat süreyle ücretsiz olarak, taahhüt vermeden kullanın.</value>
+  <data name="MemberOffers" xml:space="preserve">
+    <value>Üyelere Özel Teklifler</value>
   </data>
-  <data name="Information_InstallAndroidStudio" xml:space="preserve">
-    <value>Android Studio'yu indir</value>
+  <data name="Microsoft" xml:space="preserve">
+    <value>Microsoft</value>
   </data>
-  <data name="Templates_AzureDevOpsDescription" xml:space="preserve">
-    <value>Bu şablon bir Azure Jenkins CI oluşturur</value>
+  <data name="MicrosoftAzureportal" xml:space="preserve">
+    <value>Microsoft Azure portalı</value>
   </data>
-  <data name="Information_FunctionApp" xml:space="preserve">
-    <value>İşlev Uygulaması</value>
+  <data name="Name" xml:space="preserve">
+    <value>Ad</value>
   </data>
-  <data name="Information_FunctionAppDescription" xml:space="preserve">
-    <value>Azure İşlevleri, mevcut Azure App Service platformunu genişleten, olay odaklı, sunucusuz bir deneyimdir. Bu nano hizmetler isteğe bağlı olarak ölçeklenebilir ve yalnızca tükettiğiniz kaynak kadar ücret ödersiniz.</value>
+  <data name="Partners" xml:space="preserve">
+    <value>İş Ortakları</value>
   </data>
-  <data name="TryFunctions" xml:space="preserve">
-    <value>İşlevler'i deneyin</value>
+  <data name="QuestionsSales" xml:space="preserve">
+    <value>Azure hakkında sorularınız mı var? Satış ekibimizle iletişime geçin.</value>
+  </data>
+  <data name="Resources" xml:space="preserve">
+    <value>Kaynaklar</value>
+  </data>
+  <data name="Sales" xml:space="preserve">
+    <value>Satışlar</value>
+  </data>
+  <data name="Samples" xml:space="preserve">
+    <value>Örnekler</value>
+  </data>
+  <data name="Solutions" xml:space="preserve">
+    <value>Çözümler</value>
+  </data>
+  <data name="Subscription" xml:space="preserve">
+    <value>Abonelik</value>
+  </data>
+  <data name="UnitedStates" xml:space="preserve">
+    <value>ABD</value>
+  </data>
+  <data name="WhyAzure" xml:space="preserve">
+    <value>Neden Azure?</value>
+  </data>
+  <data name="YouTube" xml:space="preserve">
+    <value>YouTube</value>
+  </data>
+  <data name="AppServiceGallery" xml:space="preserve">
+    <value>App Service Market</value>
+  </data>
+  <data name="CheckoutTheGallery" xml:space="preserve">
+    <value>Azure portalında oturum açtıktan sonra, BlogEngine.NET ve WordPress gibi önceden yapılandırılmış diğer uygulamalar için Azure App Service Market'i inceleyin</value>
+  </data>
+  <data name="Loading" xml:space="preserve">
+    <value>Yükleniyor ...</value>
+  </data>
+  <data name="SubmittingDeployment" xml:space="preserve">
+    <value>Dağıtım Gönderiliyor</value>
+  </data>
+  <data name="DeployingMessage1" xml:space="preserve">
+    <value>Üzerinde çalışmaya devam ediyoruz...</value>
+  </data>
+  <data name="DeployingMessage2" xml:space="preserve">
+    <value>Neredeyse bitti...</value>
   </data>
 </root>

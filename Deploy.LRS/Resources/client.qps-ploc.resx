@@ -117,397 +117,235 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Action_AllowContact" xml:space="preserve">
-    <value>[qOR6n][ÖðAllow Microsoft to contact me regarding this feedback. !!! !!! !!! !!! !!! ]</value>
-  </data>
-  <data name="Action_Cancel" xml:space="preserve">
-    <value>[XU9Z7][óÁCancel !!!]</value>
-  </data>
-  <data name="Action_CreateAppServiceApp" xml:space="preserve">
-    <value>[3G5hN][ÌÀCreate your Azure App Service app !!! !!! !!! !]</value>
-  </data>
-  <data name="Action_Delete" xml:space="preserve">
-    <value>[iGOrN][îüDelete !!!]</value>
-  </data>
-  <data name="Action_DownloadAppContent" xml:space="preserve">
-    <value>[LrmrC][©ÎDownload {0} content !!! !!! ]</value>
-  </data>
-  <data name="Action_DownloadPublishingProfile" xml:space="preserve">
-    <value>[KqXnE][Ö¥Download publishing profile !!! !!! !!]</value>
-  </data>
-  <data name="Action_GitClone" xml:space="preserve">
-    <value>[u5UYi][ôíClone or push with git !!! !!! !]</value>
-  </data>
-  <data name="Action_GoToExistingApp" xml:space="preserve">
-    <value>[DLyiS][íâGo to existing app !!! !!!]</value>
-  </data>
-  <data name="Action_ManageInAzurePortal" xml:space="preserve">
-    <value>[7QVh7][ÏüManage in Azure Portal !!! !!! !]</value>
-  </data>
-  <data name="Action_MobileClients" xml:space="preserve">
-    <value>[1RAAm][öÚDownload and run your mobile client app !!! !!! !!! !!!]</value>
-  </data>
-  <data name="Action_Monaco" xml:space="preserve">
-    <value>[WUKdC][ñ¥Edit your code online !!! !!! ]</value>
-  </data>
-  <data name="Action_ReportAnIssue" xml:space="preserve">
-    <value>[QNmD6][ÿÎReport an issue !!! !!]</value>
-  </data>
-  <data name="Action_SelectAppType" xml:space="preserve">
-    <value>[GHz5u][ÆÀSelect app type !!! !!]</value>
-  </data>
-  <data name="Action_SelectTemplate" xml:space="preserve">
-    <value>[Dw0d6][èÎSelect a template and create your {0} !!! !!! !!! !!]</value>
-  </data>
-  <data name="Action_ShareAComment" xml:space="preserve">
-    <value>[20qtn][áÐShare a comment !!! !!]</value>
-  </data>
-  <data name="Action_Submit" xml:space="preserve">
-    <value>[Z1WJQ][ýÈSubmit !!!]</value>
-  </data>
-  <data name="Action_Yes" xml:space="preserve">
-    <value>[NMnYE][æôYes !!]</value>
-  </data>
   <data name="Blog" xml:space="preserve">
-    <value>[NYWpX][ÝæBlog !!]</value>
+    <value>[Tz77p][áÛBlog !!]</value>
   </data>
   <data name="Calculator" xml:space="preserve">
-    <value>[Pirf6][µæCalculator !!! !]</value>
+    <value>[6pCok][ÅòCalculator !!! !]</value>
   </data>
   <data name="CaseStudies" xml:space="preserve">
-    <value>[46jj8][ûÇCase Studies !!! !]</value>
+    <value>[ebgYj][óòCase Studies !!! !]</value>
   </data>
   <data name="Community" xml:space="preserve">
-    <value>[Mhayg][µÓCommunity !!! ]</value>
+    <value>[jGWdt][ÀþCommunity !!! ]</value>
   </data>
   <data name="Compliance" xml:space="preserve">
-    <value>[thjrd][öÛCompliance !!! !]</value>
+    <value>[tH0nr][ÓªCompliance !!! !]</value>
   </data>
   <data name="ContactUs" xml:space="preserve">
-    <value>[SZAde][ËçContact Us !!! !]</value>
+    <value>[jr5Ou][óûContact Us !!! !]</value>
   </data>
   <data name="Documentation" xml:space="preserve">
-    <value>[Kr1YW][Í¢Documentation !!! !!]</value>
+    <value>[SXgvi][ÈñDocumentation !!! !!]</value>
   </data>
   <data name="Downloads" xml:space="preserve">
-    <value>[CPxLy][áòDownloads !!! ]</value>
-  </data>
-  <data name="Error_SubmittingFeedback" xml:space="preserve">
-    <value>[h1pKr][ÉõThere was an error submitting your feedback. Please try again later. !!! !!! !!! !!! !!! !!! !]</value>
+    <value>[U5kXN][ÄòDownloads !!! ]</value>
   </data>
   <data name="Events" xml:space="preserve">
-    <value>[wX7Tm][âÁEvents !!!]</value>
+    <value>[FHdx5][æüEvents !!!]</value>
   </data>
   <data name="Facebook" xml:space="preserve">
-    <value>[AuZAD][ÉÖFacebook !!! ]</value>
+    <value>[dQyoS][å@Facebook !!! ]</value>
   </data>
   <data name="Features" xml:space="preserve">
-    <value>[WEf6l][êäFeatures !!! ]</value>
+    <value>[Ueakb][ìÒFeatures !!! ]</value>
   </data>
   <data name="Feedback" xml:space="preserve">
-    <value>[RtWrV][ÛêFeedback !!! ]</value>
+    <value>[SfbrN][ÝùFeedback !!! ]</value>
   </data>
   <data name="Forums" xml:space="preserve">
-    <value>[rduXV][ÕýForums !!!]</value>
+    <value>[i52u4][äèForums !!!]</value>
   </data>
   <data name="FreeAccount" xml:space="preserve">
-    <value>[gdYKQ][úÝFree Account !!! !]</value>
+    <value>[Yy6NB][ÙÍFree Account !!! !]</value>
   </data>
   <data name="GoSocial" xml:space="preserve">
-    <value>[H5scs][ñðGo Social !!! ]</value>
-  </data>
-  <data name="Information_APIApp" xml:space="preserve">
-    <value>[PuWGh][µªAPI App !!!]</value>
-  </data>
-  <data name="Information_AppAlreadyExists" xml:space="preserve">
-    <value>[hTk7a][ïêYou already have an App Service created. Do you want to delete it and create a new one? !!! !!! !!! !!! !!! !!! !!! !!!]</value>
-  </data>
-  <data name="Information_AppHasBeenCreated" xml:space="preserve">
-    <value>[YJHR5][ÂËYour {0} has been created! !!! !!! !!]</value>
-  </data>
-  <data name="Information_AspNetBrandingLine1" xml:space="preserve">
-    <value>[zIr73][àéHost 10 ASP.NET websites for free with Azure App Service !!! !!! !!! !!! !!! !]</value>
-  </data>
-  <data name="Information_AspNetBrandingLine2" xml:space="preserve">
-    <value>[twi9W][áüSecure, reliable, and business-ready in seconds. Start for free and scale as your traffic grows. !!! !!! !!! !!! !!! !!! !!! !!! !!!]</value>
-  </data>
-  <data name="Information_ComingSoon" xml:space="preserve">
-    <value>[C0URl][¢áComing soon !!! !]</value>
-  </data>
-  <data name="Information_DownloadClient" xml:space="preserve">
-    <value>[rQghN][åýDownload client !!! !!]</value>
-  </data>
-  <data name="Information_DownloadiOSClient" xml:space="preserve">
-    <value>[I6FFG][ÏãDownload the iOS client app !!! !!! !!]</value>
-  </data>
-  <data name="Information_DownloadWindowsClient" xml:space="preserve">
-    <value>[Rs275][ïêDownload the Windows client app !!! !!! !!! ]</value>
-  </data>
-  <data name="Information_DownloadXamarinAndroidClient" xml:space="preserve">
-    <value>[8j0lU][ÙçDownload the Xamarin Android client app !!! !!! !!! !!!]</value>
-  </data>
-  <data name="Information_DownloadXamariniOSClient" xml:space="preserve">
-    <value>[ZI2UY][éÿDownload the Xamarin iOS client app !!! !!! !!! !]</value>
-  </data>
-  <data name="Information_ExperienceComingSoon" xml:space="preserve">
-    <value>[W6Cuy][ÆÄThe Azure {0} trial experience is not here yet, but you can still create {0}s by signing up for a free 30-day trial which enables the creation of up to 10 apps of any type for free !!! !!! !!! !!! !!! !!! !!! !!! !!! !!! !!! !!! !!! !!! !!! !!! ]</value>
-  </data>
-  <data name="Information_ExperienceNotHereYet" xml:space="preserve">
-    <value>[qW8l0][Ò§The {0} experience is not here yet. !!! !!! !!! !]</value>
-  </data>
-  <data name="Information_ExpireMessage" xml:space="preserve">
-    <value>[3glqF][ÃÊYour free {0} will expire in: !!! !!! !!!]</value>
-  </data>
-  <data name="Information_GenericBrandingLine1" xml:space="preserve">
-    <value>[prmyS][ÍÜAzure App Service is a cloud app service that integrates everything you need to quickly and easily build web and mobile apps for any platform or device. !!! !!! !!! !!! !!! !!! !!! !!! !!! !!! !!! !!! !!! !!]</value>
-  </data>
-  <data name="Information_GenericBrandingLine2" xml:space="preserve">
-    <value>[uzWZI][ÚÒBe our guest for up to an hour of Azure App Service experience with no Azure subscription, free of charge and commitment. Stay longer for the full Azure App Service experience with an Azure free trial subscription. !!! !!! !!! !!! !!! !!! !!! !!! !!! !!! !!! !!! !!! !!! !!! !!! !!! !!! !!! ]</value>
-  </data>
-  <data name="Information_GoingBackWillDeleteApp" xml:space="preserve">
-    <value>[PoejD][Ç@Going back will delete the current app !!! !!! !!! !!]</value>
-  </data>
-  <data name="Information_InstallVisualStudio" xml:space="preserve">
-    <value>[uf31H][êÍInstall Visual Studio Professional 2015 (Update 2) !!! !!! !!! !!! !!!]</value>
-  </data>
-  <data name="Information_InstallXamarinStudio" xml:space="preserve">
-    <value>[5GYsp][ÖóInstall Xamarin Studio for OS X !!! !!! !!! ]</value>
-  </data>
-  <data name="Information_InstallXcode" xml:space="preserve">
-    <value>[6NBfl][ìÝInstall Xcode (v4.4+) !!! !!! ]</value>
-  </data>
-  <data name="Information_LogicApp" xml:space="preserve">
-    <value>[qFxuY][óõLogic App !!! ]</value>
-  </data>
-  <data name="Information_LoginFirst" xml:space="preserve">
-    <value>[3JNYu][æÎLogin first to create an app !!! !!! !!!]</value>
-  </data>
-  <data name="Information_MobileApp" xml:space="preserve">
-    <value>[4Ww4l][íðMobile App !!! !]</value>
-  </data>
-  <data name="Information_NativeiOS" xml:space="preserve">
-    <value>[KRCol][¥ÝNative iOS !!! !]</value>
-  </data>
-  <data name="Information_SelectAppType" xml:space="preserve">
-    <value>[YQdHk][ùøSelect app type !!! !!]</value>
-  </data>
-  <data name="Information_SelectTemplate" xml:space="preserve">
-    <value>[oj2ha][ÈÉSelect template !!! !!]</value>
-  </data>
-  <data name="Information_SubmittingFeedback" xml:space="preserve">
-    <value>[gCN9I][äÐSubmitting feedback... !!! !!! !]</value>
-  </data>
-  <data name="Information_ThanksForFeedback" xml:space="preserve">
-    <value>[hGhPz][ÝÛThanks for the feedback! !!! !!! !]</value>
-  </data>
-  <data name="Information_VisitWebClient" xml:space="preserve">
-    <value>[7iqIm][ÖÐVisit the web based client !!! !!! !!]</value>
-  </data>
-  <data name="Information_WantMoreQuestionLine1" xml:space="preserve">
-    <value>[lJcYF][ôèWould you like to get more for free? !!! !!! !!! !!]</value>
-  </data>
-  <data name="Information_WantMoreQuestionLine2" xml:space="preserve">
-    <value>[6Ipza][çÎCreate more web, mobile, logic and API apps. Sign up for a free 30-day trial and create up to 10 apps of any type for free. !!! !!! !!! !!! !!! !!! !!! !!! !!! !!! !!! ]</value>
-  </data>
-  <data name="Information_WebApp" xml:space="preserve">
-    <value>[BQQQV][ùæWeb App !!!]</value>
-  </data>
-  <data name="Information_WebClient" xml:space="preserve">
-    <value>[xzgrQ][ýÎWeb Portal !!! !]</value>
-  </data>
-  <data name="Information_Windows" xml:space="preserve">
-    <value>[z1rGx][ÒÝUniversal Windows 8.1 !!! !!! ]</value>
-  </data>
-  <data name="Information_WorkWithLogicApps" xml:space="preserve">
-    <value>[KckHp][ÍáTo work with your app go to the Azure Portal link below which will take you to the Logic App resource blade. !!! !!! !!! !!! !!! !!! !!! !!! !!! !!!]</value>
-  </data>
-  <data name="Information_WorkWithYourApp" xml:space="preserve">
-    <value>[bOH44][çµWork with your {0} at  !!! !!! !]</value>
-  </data>
-  <data name="Information_XamarinAndroid" xml:space="preserve">
-    <value>[2I581][ÛÛXamarin Android !!! !!]</value>
-  </data>
-  <data name="Information_XamariniOS" xml:space="preserve">
-    <value>[EM0du][ÑøXamarin iOS !!! !]</value>
+    <value>[ijO6B][èÄGo Social !!! ]</value>
   </data>
   <data name="Logout" xml:space="preserve">
-    <value>[ZkY8e][ûóLogout !!!]</value>
+    <value>[GAGn5][óæLogout !!!]</value>
   </data>
   <data name="ManagementPortal" xml:space="preserve">
-    <value>[G8SK8][öèManagement Portal !!! !!!]</value>
+    <value>[VQdIS][ÔÆManagement Portal !!! !!!]</value>
   </data>
   <data name="Marketplace" xml:space="preserve">
-    <value>[bFTFS][§ÅMarketplace !!! !]</value>
+    <value>[4VQKz][ÌÃMarketplace !!! !]</value>
   </data>
   <data name="MicrosoftAzure" xml:space="preserve">
-    <value>[al38e][òûMicrosoft Azure !!! !!]</value>
+    <value>[2xbF9][ÛñMicrosoft Azure !!! !!]</value>
   </data>
   <data name="Mooncake" xml:space="preserve">
-    <value>[rJ2V2][îìMicrosoft Azure in China !!! !!! !]</value>
+    <value>[VkhWp][§îMicrosoft Azure in China !!! !!! !]</value>
   </data>
   <data name="MyAccount" xml:space="preserve">
-    <value>[vzxsU][ó¥My Account !!! !]</value>
+    <value>[8484T][ÙùMy Account !!! !]</value>
   </data>
   <data name="Newsletter" xml:space="preserve">
-    <value>[2ADoU][ÁìNewsletter !!! !]</value>
+    <value>[VbxeT][ðÃNewsletter !!! !]</value>
   </data>
   <data name="Portal" xml:space="preserve">
-    <value>[IOj3f][ÕÊPortal !!!]</value>
+    <value>[fWTrH][ÌîPortal !!!]</value>
   </data>
   <data name="PreviewFeatures" xml:space="preserve">
-    <value>[oziX3][Ý@Preview Features !!! !!!]</value>
+    <value>[TUy26][ïëPreview Features !!! !!!]</value>
   </data>
   <data name="Pricing" xml:space="preserve">
-    <value>[oo78V][öåPricing !!!]</value>
+    <value>[qI8Yi][ëèPricing !!!]</value>
   </data>
   <data name="Privacy" xml:space="preserve">
-    <value>[p3Kol][ûªPrivacy !!!]</value>
+    <value>[iDZ9o][ÂÂPrivacy !!!]</value>
   </data>
   <data name="PrivacyCookies" xml:space="preserve">
-    <value>[ijWTF][ÑÛPrivacy and Cookies !!! !!! ]</value>
+    <value>[uPvML][¥@Privacy  Cookies !!! !!!](&amp; )</value>
   </data>
   <data name="Profile" xml:space="preserve">
-    <value>[Oc9jf][òªProfile !!!]</value>
+    <value>[O52Cs][óÇProfile !!!]</value>
   </data>
   <data name="Regions" xml:space="preserve">
-    <value>[4R2QF][ÈØRegions !!!]</value>
+    <value>[yhXdu][ÜêRegions !!!]</value>
   </data>
   <data name="Rss" xml:space="preserve">
-    <value>[lg1Op][ÈÌRss !!]</value>
+    <value>[t432u][Î¢Rss !!]</value>
   </data>
   <data name="Security" xml:space="preserve">
-    <value>[UseZG][îÁSecurity !!! ]</value>
+    <value>[BvjaT][ÓÏSecurity !!! ]</value>
   </data>
   <data name="ServiceDashboard" xml:space="preserve">
-    <value>[pfsVJ][øßService Dashboard !!! !!!]</value>
+    <value>[Cy06o][üÌService Dashboard !!! !!!]</value>
   </data>
   <data name="Services" xml:space="preserve">
-    <value>[PAj6R][ã@Services !!! ]</value>
+    <value>[81jec][èÌServices !!! ]</value>
   </data>
   <data name="ServiceUpdates" xml:space="preserve">
-    <value>[sRm6x][ò¢Service Updates !!! !!]</value>
+    <value>[dc7C5][æÄService Updates !!! !!]</value>
   </data>
   <data name="Subscriptions" xml:space="preserve">
-    <value>[6JKwB][ÍäSubscriptions !!! !!]</value>
+    <value>[6mwkF][äàSubscriptions !!! !!]</value>
   </data>
   <data name="Support" xml:space="preserve">
-    <value>[6921h][ÜÝSupport !!!]</value>
+    <value>[vLyAT][øíSupport !!!]</value>
   </data>
   <data name="Title" xml:space="preserve">
-    <value>[h0MKy][£ìTry Azure App Service !!! !!! ]</value>
+    <value>[j6Stt][âÏDeploy AppService To Azure !!! !!! !!]</value>
   </data>
   <data name="Trademarks" xml:space="preserve">
-    <value>[rAAB7][ÛÓTrademarks !!! !]</value>
+    <value>[E5DHi][ÆôTrademarks !!! !]</value>
   </data>
   <data name="TrustCenter" xml:space="preserve">
-    <value>[XjpuH][ùãTrust Center !!! !]</value>
+    <value>[W6yyc][é§Trust Center !!! !]</value>
   </data>
   <data name="Twitter" xml:space="preserve">
-    <value>[80czp][ßúTwitter !!!]</value>
-  </data>
-  <data name="Information_LogicAppDescription" xml:space="preserve">
-    <value>[gUzj7][Ú§Azure Logic Apps allow developers to design workflows that start from a trigger and then execute a series of steps, each invoking an App Service API App whilst securely taking care of authentication and best practices like checkpointing and durable execution. !!! !!! !!! !!! !!! !!! !!! !!! !!! !!! !!! !!! !!! !!! !!! !!! !!! !!! !!! !!! !!! !!! !!! ]</value>
-  </data>
-  <data name="Information_LogicAppStep1" xml:space="preserve">
-    <value>[Q5isa][þÌ1. Look at the Summary lens where you will find out information like when it last ran and if it was successful !!! !!! !!! !!! !!! !!! !!! !!! !!! !!!]</value>
-  </data>
-  <data name="Information_LogicAppStep2" xml:space="preserve">
-    <value>[OnLka][ûú2. Open the Logic App definition by clicking on the same part in the Summary lens and look at the definition. You can try to extend the Logic App to send a tweet anytime a ping fails. !!! !!! !!! !!! !!! !!! !!! !!! !!! !!! !!! !!! !!! !!! !!! !!! !]</value>
-  </data>
-  <data name="Templates_PingSiteDescription" xml:space="preserve">
-    <value>[A91u7][áÖThis Logic App template will ping a website on a recurring schedule.  You can extend it to take an action depending on the result of the ping. !!! !!! !!! !!! !!! !!! !!! !!! !!! !!! !!! !!! !!!]</value>
-  </data>
-  <data name="Action_Dismiss" xml:space="preserve">
-    <value>[333gp][Ó§Dismiss !!!]</value>
-  </data>
-  <data name="Information_AppHasExpired" xml:space="preserve">
-    <value>[rgKpL][ÖúYour {0} has expired. You can try creating another app service app or signup for a free 30-day trial account. !!! !!! !!! !!! !!! !!! !!! !!! !!! !!!]</value>
-  </data>
-  <data name="Information_Prerequisite" xml:space="preserve">
-    <value>[z60uY][ÈÝPrerequisite !!! !]</value>
-  </data>
-  <data name="Information_WelcomeFeedback" xml:space="preserve">
-    <value>[mz5to][ÿîWe welcome your feedback! !!! !!! !!]</value>
-  </data>
-  <data name="Action_Create" xml:space="preserve">
-    <value>[KQ7Vm][çµCreate !!!]</value>
-  </data>
-  <data name="Action_GenericWorkWithYourApp" xml:space="preserve">
-    <value>[QhJkc][ÈóWork with your app !!! !!!]</value>
-  </data>
-  <data name="Information_YouCantHaveMoreThanOne" xml:space="preserve">
-    <value>[uTFA0][ùõYou can't have more than 1 free resource at a time !!! !!! !!! !!! !!!]</value>
-  </data>
-  <data name="Next" xml:space="preserve">
-    <value>[Dn0Nr][ÎÑNext !!]</value>
+    <value>[A87m2][¢ÎTwitter !!!]</value>
   </data>
   <data name="Previous" xml:space="preserve">
-    <value>[I4Bok][ÁµPrevious !!! ]</value>
+    <value>[C9WiI][ûíPrevious !!! ]</value>
   </data>
-  <data name="Information_ApiAppDescription" xml:space="preserve">
-    <value>[DCrtM][ëÀThe Azure API App trial experience is not here yet, but you can still create API Apps by signing up for a free 30-day trial which enables the creation of up to 10 apps of any type for free. !!! !!! !!! !!! !!! !!! !!! !!! !!! !!! !!! !!! !!! !!! !!! !!! !!!]</value>
+  <data name="Account" xml:space="preserve">
+    <value>[Zx3P8][ÁªAccount !!!]</value>
   </data>
-  <data name="Information_MobileAppDescription" xml:space="preserve">
-    <value>[HYox0][ªÙAzure Mobile Apps make it easy to add login, push, and data sync to your iOS, Android, or Windows app, to scale globally, and to connect your app to enterprise systems and on-premises resources. !!! !!! !!! !!! !!! !!! !!! !!! !!! !!! !!! !!! !!! !!! !!! !!! !!! !]</value>
+  <data name="AppService" xml:space="preserve">
+    <value>[erH0v][àíApp Service !!! !]</value>
   </data>
-  <data name="Information_WebAppDescription" xml:space="preserve">
-    <value>[8UFG4][ÃèAzure Web Apps enable developers to easily deploy and scale enterprise grade web applications written in a variety of languages and integrated with a multitude of services without ever worrying about infrastructure management. !!! !!! !!! !!! !!! !!! !!! !!! !!! !!! !!! !!! !!! !!! !!! !!! !!! !!! !!! !!! ]</value>
+  <data name="AzureStatusDashboard" xml:space="preserve">
+    <value>[on8mq][æòAzure Status Dashboard !!! !!! !]</value>
   </data>
-  <data name="Information_LogicAppStep3" xml:space="preserve">
-    <value>[robfg][ÌÏ3. Run the Logic App again by clicking on the Run Now command at the top of the blade. !!! !!! !!! !!! !!! !!! !!! !!!]</value>
+  <data name="Careers" xml:space="preserve">
+    <value>[rJXoJ][ÎÆCareers !!!]</value>
   </data>
-  <data name="Information_LogicAppStep4" xml:space="preserve">
-    <value>[oQe0E][òø4. To find out more about how to use Logic Apps click on Quick Start that will provide pointers to documentation. !!! !!! !!! !!! !!! !!! !!! !!! !!! !!! !]</value>
+  <data name="Datacenters" xml:space="preserve">
+    <value>[mx6yc][þÌDatacenters !!! !]</value>
   </data>
-  <data name="Information_LogicAppStepsIntro" xml:space="preserve">
-    <value>[hxVoD][ÚÂFrom the Logic App resource blade you can try the following: !!! !!! !!! !!! !!! !!]</value>
+  <data name="Findalocalnumber" xml:space="preserve">
+    <value>[6zMX6][âïFind a local number !!! !!! ]</value>
   </data>
-  <data name="Information_XamarinBrandingLine1" xml:space="preserve">
-    <value>[GoaoV][ÈÆGo Mobile with Xamarin and Azure App Service !!! !!! !!! !!! ]</value>
+  <data name="Findalocalnumbersubmitquery" xml:space="preserve">
+    <value>[wkkTp][Ö©Find a local number or submit query form !!! !!! !!! !!!]</value>
   </data>
-  <data name="Information_XamarinBrandingLine2" xml:space="preserve">
-    <value>[400C2][äûAuth, Sync, and Push in seconds for any device. Start for free and scale as your app grows. !!! !!! !!! !!! !!! !!! !!! !!! !]</value>
+  <data name="HellofromSeattle" xml:space="preserve">
+    <value>[kRwQi][ý§Hello from Seattle. !!! !!! ]</value>
   </data>
-  <data name="Information_ExtendResourceLifeTimeText" xml:space="preserve">
-    <value>[ppTA2][ÎÔNeed more time? Click here to extend your trial to 24 hours. !!! !!! !!! !!! !!! !!]</value>
+  <data name="Information_DeployingHeader" xml:space="preserve">
+    <value>[A6ev2][ù¥Deploying your {0} App Service !!! !!! !!!]</value>
   </data>
-  <data name="Information_Android" xml:space="preserve">
-    <value>[X6kmT][¢æAndroid !!!]</value>
+  <data name="Information_DeploymentCompleted" xml:space="preserve">
+    <value>[UmSFv][êÇApp deployment Completed !!! !!! !]</value>
   </data>
-  <data name="Information_DownloadAndroidClient" xml:space="preserve">
-    <value>[BOw8T][ÍÑDownload the Android client app !!! !!! !!! ]</value>
+  <data name="Information_DeploymentFailed" xml:space="preserve">
+    <value>[xD6Fi][ÇéApp deployment Failed !!! !!! ]</value>
   </data>
-  <data name="Information_DownloadWUniversalWindowsPlatformClient" xml:space="preserve">
-    <value>[VhKQP][ïÈDownload the Universal Windows Platform (UWP) client !!! !!! !!! !!! !!!]</value>
+  <data name="Information_Redirecting" xml:space="preserve">
+    <value>[wq9vA][ôõRedirecting you to the Azure Portal. If the Azure Portal does not open  !!! !!! !!! !!! !!! !!! !!]</value>
   </data>
-  <data name="Information_DownloadXamarinFormsClient" xml:space="preserve">
-    <value>[ohKUC][ÊýDownload the Xamarin.Forms client app !!! !!! !!! !!]</value>
+  <data name="Information_RedirectingClickhere" xml:space="preserve">
+    <value>[xKUsH][æëclick here !!! !]</value>
   </data>
-  <data name="Information_UniversalWindowsPlatform" xml:space="preserve">
-    <value>[dMjR1][óÑUniversal Windows Platform (UWP) !!! !!! !!! ]</value>
+  <data name="Information_RedirectingShortly" xml:space="preserve">
+    <value>[aSy3s][Ù¥Just a few more seconds, while we complete the app deployment and guide you in to the Azure Portal to explore your new App Service app. !!! !!! !!! !!! !!! !!! !!! !!! !!! !!! !!! !!! ]</value>
   </data>
-  <data name="Information_XamarinForms" xml:space="preserve">
-    <value>[ljjhB][àÆXamarin.Forms !!! !!]</value>
+  <data name="Information_RedirectTakingTooLong" xml:space="preserve">
+    <value>[Mc0oA][ÜÀLooks like its taking too long. To go to the Azure Portal anyway  !!! !!! !!! !!! !!! !!! ]</value>
   </data>
-  <data name="Information_AzurePlatformBrandingLine1" xml:space="preserve">
-    <value>[69v4z][þÑSee how quickly you can create a Node.js app !!! !!! !!! !!! ]</value>
+  <data name="Location" xml:space="preserve">
+    <value>[uDQHk][å¥Location !!! ]</value>
   </data>
-  <data name="Information_AzurePlatformBrandingLine2" xml:space="preserve">
-    <value>[26SsB][êÝAzure App Service is the only cloud service that integrates everything you need to quickly and easily build web and mobile apps for any platform or device.  Pull data from anywhere and build virtually anything.  Play in the sandbox for up to an hour free of charge and commitment. !!! !!! !!! !!! !!! !!! !!! !!! !!! !!! !!! !!! !!! !!! !!! !!! !!! !!! !!! !!! !!! !!! !!! !!! !!!]</value>
+  <data name="MemberOffers" xml:space="preserve">
+    <value>[nRztb][ÉÞMember Offers !!! !!]</value>
   </data>
-  <data name="Information_InstallAndroidStudio" xml:space="preserve">
-    <value>[9pFuz][ÉÚDownload Android Studio !!! !!! !]</value>
+  <data name="Microsoft" xml:space="preserve">
+    <value>[7I0uM][ÉüMicrosoft !!! ]</value>
   </data>
-  <data name="Templates_AzureDevOpsDescription" xml:space="preserve">
-    <value>[CghxQ][ÖúThis template will create an Azure Jenkins CI !!! !!! !!! !!! !]</value>
+  <data name="MicrosoftAzureportal" xml:space="preserve">
+    <value>[LsNYQ][ïµMicrosoft Azure portal !!! !!! !]</value>
   </data>
-  <data name="Information_FunctionApp" xml:space="preserve">
-    <value>[E4W0f][ÑÈFunction App !!! !]</value>
+  <data name="Name" xml:space="preserve">
+    <value>[YAPqw][ÈìName !!]</value>
   </data>
-  <data name="Information_FunctionAppDescription" xml:space="preserve">
-    <value>[CP8Nc][©ûAzure Functions is a serverless event driven experience  that extends the existing Azure App Service platform. These nano-services can scale based on demand and you pay only for the resources you consume. !!! !!! !!! !!! !!! !!! !!! !!! !!! !!! !!! !!! !!! !!! !!! !!! !!! !!! ]</value>
+  <data name="Partners" xml:space="preserve">
+    <value>[tv6mf][ÑüPartners !!! ]</value>
   </data>
-  <data name="TryFunctions" xml:space="preserve">
-    <value>[1ihEb][ðÞTry Functions !!! !!]</value>
+  <data name="QuestionsSales" xml:space="preserve">
+    <value>[34hPM][ØÃQuestions about Azure? Contact our sales team. !!! !!! !!! !!! !]</value>
+  </data>
+  <data name="Resources" xml:space="preserve">
+    <value>[Wxfe4][ÊÌResources !!! ]</value>
+  </data>
+  <data name="Sales" xml:space="preserve">
+    <value>[NqMyY][§ÚSales !!!]</value>
+  </data>
+  <data name="Samples" xml:space="preserve">
+    <value>[BFo6G][øÎSamples !!!]</value>
+  </data>
+  <data name="Solutions" xml:space="preserve">
+    <value>[XdsSw][¥¢Solutions !!! ]</value>
+  </data>
+  <data name="Subscription" xml:space="preserve">
+    <value>[Ig7Z2][ÃïSubscription !!! !]</value>
+  </data>
+  <data name="UnitedStates" xml:space="preserve">
+    <value>[tXqpo][ÂÕUnited States !!! !!]</value>
+  </data>
+  <data name="WhyAzure" xml:space="preserve">
+    <value>[JsrVF][ÐðWhy Azure !!! ]</value>
+  </data>
+  <data name="YouTube" xml:space="preserve">
+    <value>[6YUAx][éøYouTube !!!]</value>
+  </data>
+  <data name="AppServiceGallery" xml:space="preserve">
+    <value>[OQSoc][ÓÏApp Service Marketplace !!! !!! !]</value>
+  </data>
+  <data name="CheckoutTheGallery" xml:space="preserve">
+    <value>[d7VRm][çåOnce you login to the Azure portal, explore the Azure App Service Marketplace for more pre-configured apps like BlogEngine.NET and WordPress !!! !!! !!! !!! !!! !!! !!! !!! !!! !!! !!! !!! !!]</value>
+  </data>
+  <data name="Loading" xml:space="preserve">
+    <value>[SP5eL][ÉâLoading ... !!! !]</value>
+  </data>
+  <data name="SubmittingDeployment" xml:space="preserve">
+    <value>[IjYF0][äïSubmitting Deployment !!! !!! ]</value>
+  </data>
+  <data name="DeployingMessage1" xml:space="preserve">
+    <value>[dN8GP][µåStill working on it ... !!! !!! !]</value>
+  </data>
+  <data name="DeployingMessage2" xml:space="preserve">
+    <value>[e39PL][¢ÜAlmost there ... !!! !!!]</value>
   </data>
 </root>

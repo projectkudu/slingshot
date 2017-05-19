@@ -117,11 +117,38 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="ARMTemplate_AppPostfix" xml:space="preserve">
+    <value>Aplikace</value>
+  </data>
+  <data name="ARMTemplate_MyPrefix" xml:space="preserve">
+    <value>Moje</value>
+  </data>
+  <data name="Deployment_CreatingWebApp" xml:space="preserve">
+    <value>Vytváří se webová aplikace.</value>
+  </data>
+  <data name="Deployment_CreatingWebHostingPlan" xml:space="preserve">
+    <value>Vytváří se plán webhostingu.</value>
+  </data>
   <data name="Deployment_DeploymentInProgress" xml:space="preserve">
     <value>Probíhá nasazení.</value>
   </data>
+  <data name="Deployment_DeploymentStarted" xml:space="preserve">
+    <value>Nasazení začalo.</value>
+  </data>
   <data name="Deployment_GitDeploymentInProgress" xml:space="preserve">
     <value>Probíhá nasazení z Gitu.</value>
+  </data>
+  <data name="Deployment_SettingupSourceControl" xml:space="preserve">
+    <value>Nastavuje se správa zdrojového kódu.</value>
+  </data>
+  <data name="Deployment_SubmittingDeployment" xml:space="preserve">
+    <value>Odesílá se nasazení.</value>
+  </data>
+  <data name="Deployment_Updating" xml:space="preserve">
+    <value>Aktualizace</value>
+  </data>
+  <data name="Deployment_UpdatingWebAppConfig" xml:space="preserve">
+    <value>Aktualizuje se konfigurace webové aplikace.</value>
   </data>
   <data name="Error_GeneralErrorMessage" xml:space="preserve">
     <value>Došlo k chybě. Zkuste to prosím znovu později.</value>
@@ -138,34 +165,10 @@
   <data name="Error_InvalidUserIdentity" xml:space="preserve">
     <value>Uživatel je neplatný.</value>
   </data>
-  <data name="Error_MoreThanOneFreeResource" xml:space="preserve">
-    <value>Vždycky můžete mít jenom jeden volný prostředek.</value>
-  </data>
-  <data name="Error_NoFreeResourcesAvailable" xml:space="preserve">
-    <value>V současnosti nejsou dostupné žádné volné prostředky. Zkuste to prosím znovu později.</value>
-  </data>
   <data name="Error_OrgIdNotSupported" xml:space="preserve">
     <value>Je nám líto, ale účty organizace nejsou podporované. Použijte prosím účet Microsoft.</value>
   </data>
-  <data name="Error_ResourceExpirationTimeAlreadyExtended" xml:space="preserve">
-    <value>Doba konce platnosti pro prostředek už byla prodloužena. Tuto dobu je možné prodloužit pro prostředek jenom jednou.</value>
-  </data>
   <data name="Error_UnsupportedPlatform" xml:space="preserve">
     <value>Platforma není podporovaná.</value>
-  </data>
-  <data name="Templates_FieldEngineerDescription" xml:space="preserve">
-    <value>Mobilní aplikace řídicího panelu pro technického pracovníka kabelové společnosti nebo jakéhokoliv jiného mobilního pracovníka dostupná pro formuláře Xamarin. Úplnou ukázku najdete na adrese &lt;a href="https://github.com/azure/fieldengineer/" target="_blank"&gt;https://github.com/azure/fieldengineer/&lt;/a&gt;.</value>
-  </data>
-  <data name="Templates_JenkinsDescription" xml:space="preserve">
-    <value>Tato šablona vytvoří Azure Jenkins CI.</value>
-  </data>
-  <data name="Templates_PingSiteDescription" xml:space="preserve">
-    <value>Tato šablona aplikace logiky pravidelně odesílá příkaz ping na web. Můžete ji rozšířit, aby na základě výsledku příkazu ping udělala nějakou akci.</value>
-  </data>
-  <data name="Templates_TodoListDescription" xml:space="preserve">
-    <value>Toto je aplikace seznamu úkolů dostupná pro iOS, Android, Xamarin a HTML/JS.</value>
-  </data>
-  <data name="Templates_XamarinCrmDescription" xml:space="preserve">
-    <value>Mobilní aplikace řídicího panelu prodeje CRM dostupná pro formuláře Xamarin. Úplnou ukázku najdete na adrese &lt;a href="https://github.com/xamarin/app-crm/" target="_blank"&gt;https://github.com/xamarin/app-crm/&lt;/a&gt;.</value>
   </data>
 </root>

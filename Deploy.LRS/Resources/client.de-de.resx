@@ -117,57 +117,6 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Action_AllowContact" xml:space="preserve">
-    <value>Microsoft erlauben, bezüglich dieses Feedbacks Kontakt mit mir aufzunehmen.</value>
-  </data>
-  <data name="Action_Cancel" xml:space="preserve">
-    <value>Abbrechen</value>
-  </data>
-  <data name="Action_CreateAppServiceApp" xml:space="preserve">
-    <value>Azure App Service-App erstellen</value>
-  </data>
-  <data name="Action_Delete" xml:space="preserve">
-    <value>Löschen</value>
-  </data>
-  <data name="Action_DownloadAppContent" xml:space="preserve">
-    <value>{0}-Inhalt herunterladen</value>
-  </data>
-  <data name="Action_DownloadPublishingProfile" xml:space="preserve">
-    <value>Veröffentlichungsprofil herunterladen</value>
-  </data>
-  <data name="Action_GitClone" xml:space="preserve">
-    <value>Mit Git klonen oder mithilfe von Push übertragen</value>
-  </data>
-  <data name="Action_GoToExistingApp" xml:space="preserve">
-    <value>Zu vorhandener App wechseln</value>
-  </data>
-  <data name="Action_ManageInAzurePortal" xml:space="preserve">
-    <value>Im Azure-Portal verwalten</value>
-  </data>
-  <data name="Action_MobileClients" xml:space="preserve">
-    <value>Mobile Client-App herunterladen und ausführen</value>
-  </data>
-  <data name="Action_Monaco" xml:space="preserve">
-    <value>Code online bearbeiten</value>
-  </data>
-  <data name="Action_ReportAnIssue" xml:space="preserve">
-    <value>Problem melden</value>
-  </data>
-  <data name="Action_SelectAppType" xml:space="preserve">
-    <value>App-Typ auswählen</value>
-  </data>
-  <data name="Action_SelectTemplate" xml:space="preserve">
-    <value>Vorlage auswählen und Ihre {0} erstellen</value>
-  </data>
-  <data name="Action_ShareAComment" xml:space="preserve">
-    <value>Kommentar teilen</value>
-  </data>
-  <data name="Action_Submit" xml:space="preserve">
-    <value>Absenden</value>
-  </data>
-  <data name="Action_Yes" xml:space="preserve">
-    <value>Ja</value>
-  </data>
   <data name="Blog" xml:space="preserve">
     <value>Blog</value>
   </data>
@@ -181,7 +130,7 @@
     <value>Community</value>
   </data>
   <data name="Compliance" xml:space="preserve">
-    <value>Kompatibilität</value>
+    <value>Konformität</value>
   </data>
   <data name="ContactUs" xml:space="preserve">
     <value>Kontakt</value>
@@ -191,9 +140,6 @@
   </data>
   <data name="Downloads" xml:space="preserve">
     <value>Downloads</value>
-  </data>
-  <data name="Error_SubmittingFeedback" xml:space="preserve">
-    <value>Fehler beim Übermitteln Ihres Feedbacks. Bitte versuchen Sie es später erneut.</value>
   </data>
   <data name="Events" xml:space="preserve">
     <value>Ereignisse</value>
@@ -215,120 +161,6 @@
   </data>
   <data name="GoSocial" xml:space="preserve">
     <value>Soziale Netzwerke</value>
-  </data>
-  <data name="Information_APIApp" xml:space="preserve">
-    <value>API-App</value>
-  </data>
-  <data name="Information_AppAlreadyExists" xml:space="preserve">
-    <value>Sie haben bereits einen App Service erstellt. Möchten Sie diese löschen und eine neue App erstellen?</value>
-  </data>
-  <data name="Information_AppHasBeenCreated" xml:space="preserve">
-    <value>Ihre {0} wurde erstellt!</value>
-  </data>
-  <data name="Information_AspNetBrandingLine1" xml:space="preserve">
-    <value>Hosten Sie 10 ASP.NET-Websites mit Azure App Service kostenlos.</value>
-  </data>
-  <data name="Information_AspNetBrandingLine2" xml:space="preserve">
-    <value>Sicher, zuverlässig und innerhalb von Sekunden verwendungsbereit. Steigen Sie kostenlos ein, und skalieren Sie, wenn Ihr Datenverkehr zunimmt.</value>
-  </data>
-  <data name="Information_ComingSoon" xml:space="preserve">
-    <value>In Kürze verfügbar</value>
-  </data>
-  <data name="Information_DownloadClient" xml:space="preserve">
-    <value>Client herunterladen</value>
-  </data>
-  <data name="Information_DownloadiOSClient" xml:space="preserve">
-    <value>iOS-Client-App herunterladen</value>
-  </data>
-  <data name="Information_DownloadWindowsClient" xml:space="preserve">
-    <value>Windows-Client-App herunterladen</value>
-  </data>
-  <data name="Information_DownloadXamarinAndroidClient" xml:space="preserve">
-    <value>Xamarin Android-Client-App herunterladen</value>
-  </data>
-  <data name="Information_DownloadXamariniOSClient" xml:space="preserve">
-    <value>Xamarin iOS-Client-App herunterladen</value>
-  </data>
-  <data name="Information_ExperienceComingSoon" xml:space="preserve">
-    <value>Die Azure-{0}-Testbenutzeroberfläche ist noch nicht verfügbar. Sie können dennoch {0}s erstellen, indem Sie sich für einen kostenlosen Testzeitraum von 30 Tagen registrieren. Dies ermöglicht das kostenlose Erstellen von bis zu 10 Apps eines beliebigen Typs.</value>
-  </data>
-  <data name="Information_ExperienceNotHereYet" xml:space="preserve">
-    <value>Die {0}-Benutzeroberfläche ist noch nicht verfügbar.</value>
-  </data>
-  <data name="Information_ExpireMessage" xml:space="preserve">
-    <value>Die kostenlose Version von {0} läuft ab in:</value>
-  </data>
-  <data name="Information_GenericBrandingLine1" xml:space="preserve">
-    <value>Azure App Service ist ein Cloud App Service, der alle Funktionen integriert, die zum schnellen und einfachen Erstellen von Web- und mobilen Apps für beliebige Plattformen oder Geräte erforderlich sind.</value>
-  </data>
-  <data name="Information_GenericBrandingLine2" xml:space="preserve">
-    <value>Nutzen Sie als Gast bis zu eine Stunde lang die Azure App Service-Benutzeroberfläche ohne Azure-Abonnement, kostenlos und ohne weitere Verpflichtungen. Verlängern Sie Ihre Erfahrung mit einem kostenlosen Azure-Testabonnement, um Azure App Service umfassend zu erleben.</value>
-  </data>
-  <data name="Information_GoingBackWillDeleteApp" xml:space="preserve">
-    <value>Durch Zurückwechseln wird die aktuelle App gelöscht.</value>
-  </data>
-  <data name="Information_InstallVisualStudio" xml:space="preserve">
-    <value>Visual Studio Professional 2015 (Update 2) installieren</value>
-  </data>
-  <data name="Information_InstallXamarinStudio" xml:space="preserve">
-    <value>Xamarin Studio für OS X installieren</value>
-  </data>
-  <data name="Information_InstallXcode" xml:space="preserve">
-    <value>Xcode (v4.4+) installieren</value>
-  </data>
-  <data name="Information_LogicApp" xml:space="preserve">
-    <value>Logik-App</value>
-  </data>
-  <data name="Information_LoginFirst" xml:space="preserve">
-    <value>Melden Sie sich zuerst an, um eine App zu erstellen.</value>
-  </data>
-  <data name="Information_MobileApp" xml:space="preserve">
-    <value>Mobile App</value>
-  </data>
-  <data name="Information_NativeiOS" xml:space="preserve">
-    <value>Natives iOS</value>
-  </data>
-  <data name="Information_SelectAppType" xml:space="preserve">
-    <value>App-Typ auswählen</value>
-  </data>
-  <data name="Information_SelectTemplate" xml:space="preserve">
-    <value>Vorlage auswählen</value>
-  </data>
-  <data name="Information_SubmittingFeedback" xml:space="preserve">
-    <value>Feedback wird übermittelt...</value>
-  </data>
-  <data name="Information_ThanksForFeedback" xml:space="preserve">
-    <value>Danke für Ihr Feedback!</value>
-  </data>
-  <data name="Information_VisitWebClient" xml:space="preserve">
-    <value>Besuchen Sie den webbasierten Client.</value>
-  </data>
-  <data name="Information_WantMoreQuestionLine1" xml:space="preserve">
-    <value>Möchten Sie weitere Funktionen kostenlos nutzen?</value>
-  </data>
-  <data name="Information_WantMoreQuestionLine2" xml:space="preserve">
-    <value>Erstellen Sie weitere Web-, mobile, Logik- und API-Apps. Registrieren Sie sich für den Zeitraum von 30 Tagen für eine kostenlose Testversion, und erstellen Sie kostenlos bis zu 10 Apps eines beliebigen Typs.</value>
-  </data>
-  <data name="Information_WebApp" xml:space="preserve">
-    <value>Web-App</value>
-  </data>
-  <data name="Information_WebClient" xml:space="preserve">
-    <value>Webportal</value>
-  </data>
-  <data name="Information_Windows" xml:space="preserve">
-    <value>Universal Windows 8.1</value>
-  </data>
-  <data name="Information_WorkWithLogicApps" xml:space="preserve">
-    <value>Wenn Sie mit Ihrer App arbeiten möchten, verwenden Sie den Link unten zum Azure-Portal. Dieser führt Sie zum Ressourcenblatt der Logik-App.</value>
-  </data>
-  <data name="Information_WorkWithYourApp" xml:space="preserve">
-    <value>Mit Ihrer {0} arbeiten unter </value>
-  </data>
-  <data name="Information_XamarinAndroid" xml:space="preserve">
-    <value>Xamarin Android</value>
-  </data>
-  <data name="Information_XamariniOS" xml:space="preserve">
-    <value>Xamarin iOS</value>
   </data>
   <data name="Logout" xml:space="preserve">
     <value>Abmelden</value>
@@ -394,7 +226,7 @@
     <value>Support</value>
   </data>
   <data name="Title" xml:space="preserve">
-    <value>Azure App Service testen</value>
+    <value>AppService in Azure bereitstellen</value>
   </data>
   <data name="Trademarks" xml:space="preserve">
     <value>Marken</value>
@@ -405,109 +237,115 @@
   <data name="Twitter" xml:space="preserve">
     <value>Twitter</value>
   </data>
-  <data name="Information_LogicAppDescription" xml:space="preserve">
-    <value>Azure-Logik-Apps ermöglichen Entwicklern das Entwerfen von Workflows, die durch einen Trigger ausgelöst werden und dann eine Reihe von Schritten ausführen. Jeder dieser Schritte ruft eine App Service-API-App auf. Dabei wird die Authentifizierung sicher ausgeführt, und es werden bewährte Methoden wie z. B. Prüfpunktausführung und permanente Ausführung angewendet.</value>
-  </data>
-  <data name="Information_LogicAppStep1" xml:space="preserve">
-    <value>1. Untersuchen Sie den Zusammenfassungsbereich. Er enthält Informationen zum Zeitpunkt der letzten Ausführung und deren Erfolgsstatus.</value>
-  </data>
-  <data name="Information_LogicAppStep2" xml:space="preserve">
-    <value>2. Öffnen Sie die Definition der Logik-App, indem Sie auf die gleiche Stelle im Zusammenfassungsbereich klicken und die Definition untersuchen. Sie können versuchen, die Logik-App so zu erweitern, dass bei jedem Ping-Fehler ein Tweet gesendet wird.</value>
-  </data>
-  <data name="Templates_PingSiteDescription" xml:space="preserve">
-    <value>Diese Logik-App-Vorlage führt Ping für eine Website gemäß einer Zeitplanserie aus. Sie können sie so erweitern, dass abhängig vom Ergebnis des Ping-Vorgangs eine Aktion ausgeführt wird.</value>
-  </data>
-  <data name="Action_Dismiss" xml:space="preserve">
-    <value>Schließen</value>
-  </data>
-  <data name="Information_AppHasExpired" xml:space="preserve">
-    <value>Ihre {0} ist abgelaufen. Sie können versuchen, eine neue App Service-App zu erstellen, oder registrieren Sie sich für den Zeitraum von 30 Tagen für ein kostenloses Testkonto.</value>
-  </data>
-  <data name="Information_Prerequisite" xml:space="preserve">
-    <value>Voraussetzung</value>
-  </data>
-  <data name="Information_WelcomeFeedback" xml:space="preserve">
-    <value>Wir freuen uns über Ihr Feedback!</value>
-  </data>
-  <data name="Action_Create" xml:space="preserve">
-    <value>Erstellen</value>
-  </data>
-  <data name="Action_GenericWorkWithYourApp" xml:space="preserve">
-    <value>Mit Ihrer App arbeiten</value>
-  </data>
-  <data name="Information_YouCantHaveMoreThanOne" xml:space="preserve">
-    <value>Sie können nur eine kostenlose Ressource gleichzeitig verwenden.</value>
-  </data>
-  <data name="Next" xml:space="preserve">
-    <value>Weiter</value>
-  </data>
   <data name="Previous" xml:space="preserve">
     <value>Zurück</value>
   </data>
-  <data name="Information_ApiAppDescription" xml:space="preserve">
-    <value>Die Azure-API-App-Testbenutzeroberfläche ist noch nicht verfügbar. Sie können dennoch API-Apps erstellen, indem Sie sich für einen kostenlosen Testzeitraum von 30 Tagen registrieren. Dies ermöglicht das kostenlose Erstellen von bis zu 10 Apps eines beliebigen Typs.</value>
+  <data name="Account" xml:space="preserve">
+    <value>Konto</value>
   </data>
-  <data name="Information_MobileAppDescription" xml:space="preserve">
-    <value>Mit Azure Mobile Apps ist es ganz einfach, Ihrer iOS-, Android- oder Windows-App Anmelde-, Push- und Datensynchronisierungsfunktionen hinzuzufügen, die App global zu skalieren und Ihre App mit Unternehmenssystemen und lokalen Ressourcen zu verbinden.</value>
+  <data name="AppService" xml:space="preserve">
+    <value>App-Dienst</value>
   </data>
-  <data name="Information_WebAppDescription" xml:space="preserve">
-    <value>Azure Web Apps ermöglicht Entwicklern das einfache Bereitstellen und Skalieren von Unternehmensanwendungen, die in einer Vielzahl von Sprachen geschrieben und in vielfältige Dienste integriert werden können, ohne sich Gedanken über die Infrastrukturverwaltung machen zu müssen.</value>
+  <data name="AzureStatusDashboard" xml:space="preserve">
+    <value>Dashboard zum Azure-Status</value>
   </data>
-  <data name="Information_LogicAppStep3" xml:space="preserve">
-    <value>3. Führen Sie die Logik-App erneut aus, indem Sie oben auf dem Blatt auf den Befehl "Jetzt ausführen" klicken.</value>
+  <data name="Careers" xml:space="preserve">
+    <value>Karriere</value>
   </data>
-  <data name="Information_LogicAppStep4" xml:space="preserve">
-    <value>4. Weitere Informationen zur Verwendung von Logik-Apps erhalten Sie, indem Sie auf "Schnellstart" klicken und den Links zur Dokumentation folgen.</value>
+  <data name="Datacenters" xml:space="preserve">
+    <value>Datencenter</value>
   </data>
-  <data name="Information_LogicAppStepsIntro" xml:space="preserve">
-    <value>Auf dem Logik-App-Ressourcenblatt können Sie Folgendes versuchen:</value>
+  <data name="Findalocalnumber" xml:space="preserve">
+    <value>Lokale Nummer finden</value>
   </data>
-  <data name="Information_XamarinBrandingLine1" xml:space="preserve">
-    <value>Mobilität durch Xamarin und Azure App Service</value>
+  <data name="Findalocalnumbersubmitquery" xml:space="preserve">
+    <value>Lokale Nummer finden oder Abfrageformular senden</value>
   </data>
-  <data name="Information_XamarinBrandingLine2" xml:space="preserve">
-    <value>Authentifizierung, Synchronisierung und Push für alle Geräte innerhalb von Sekunden. Starten Sie kostenlos, und skalieren Sie, wenn Ihre App wächst.</value>
+  <data name="HellofromSeattle" xml:space="preserve">
+    <value>Grüße aus Seattle.</value>
   </data>
-  <data name="Information_ExtendResourceLifeTimeText" xml:space="preserve">
-    <value>Sie benötigen mehr Zeit? Klicken Sie hier, damit Ihnen Ihre Testversion 24 Stunden lang zur Verfügung steht.</value>
+  <data name="Information_DeployingHeader" xml:space="preserve">
+    <value>Ihr {0} App Service wird bereitgestellt</value>
   </data>
-  <data name="Information_Android" xml:space="preserve">
-    <value>Android</value>
+  <data name="Information_DeploymentCompleted" xml:space="preserve">
+    <value>App-Bereitstellung abgeschlossen</value>
   </data>
-  <data name="Information_DownloadAndroidClient" xml:space="preserve">
-    <value>Android-Client-App herunterladen</value>
+  <data name="Information_DeploymentFailed" xml:space="preserve">
+    <value>Fehler bei App-Bereitstellung.</value>
   </data>
-  <data name="Information_DownloadWUniversalWindowsPlatformClient" xml:space="preserve">
-    <value>UWP-Client (Universelle Windows-Plattform) herunterladen</value>
+  <data name="Information_Redirecting" xml:space="preserve">
+    <value>Sie werden zum Azure-Portal umgeleitet. Wenn das Azure-Portal nicht geöffnet wird: </value>
   </data>
-  <data name="Information_DownloadXamarinFormsClient" xml:space="preserve">
-    <value>Xamarin.Forms-Client-App herunterladen</value>
+  <data name="Information_RedirectingClickhere" xml:space="preserve">
+    <value>klicken Sie hier</value>
   </data>
-  <data name="Information_UniversalWindowsPlatform" xml:space="preserve">
-    <value>Universelle Windows-Plattform (UWP)</value>
+  <data name="Information_RedirectingShortly" xml:space="preserve">
+    <value>Nur noch wenige Sekunden, während wir die App-Bereitstellung abschließen und Sie zum Azure-Portal umleiten, wo Sie sich Ihre neue App Service-App ansehen können.</value>
   </data>
-  <data name="Information_XamarinForms" xml:space="preserve">
-    <value>Xamarin.Forms</value>
+  <data name="Information_RedirectTakingTooLong" xml:space="preserve">
+    <value>Der Vorgang dauert zu lange. So wechseln Sie dennoch zum Azure-Portal: </value>
   </data>
-  <data name="Information_AzurePlatformBrandingLine1" xml:space="preserve">
-    <value>So schnell können Sie eine Node.js-App erstellen</value>
+  <data name="Location" xml:space="preserve">
+    <value>Speicherort</value>
   </data>
-  <data name="Information_AzurePlatformBrandingLine2" xml:space="preserve">
-    <value>Azure App Service ist der einzige Clouddienst, in den alle Funktionen integriert sind, die Sie zum schnellen und einfachen Erstellen von Web- und mobilen Apps für beliebige Plattformen oder Geräte brauchen. Beziehen Sie Daten aus allen erdenklichen Quellen, und lassen Sie Ihrer Kreativität freien Lauf. Probieren Sie Ihre Apps im Sandkasten für bis zu eine Stunde kostenlos und unverbindlich aus.</value>
+  <data name="MemberOffers" xml:space="preserve">
+    <value>Angebote für Mitglieder</value>
   </data>
-  <data name="Information_InstallAndroidStudio" xml:space="preserve">
-    <value>Android Studio herunterladen</value>
+  <data name="Microsoft" xml:space="preserve">
+    <value>Microsoft</value>
   </data>
-  <data name="Templates_AzureDevOpsDescription" xml:space="preserve">
-    <value>Mit dieser Vorlage wird eine Azure Jenkins-CI erstellt.</value>
+  <data name="MicrosoftAzureportal" xml:space="preserve">
+    <value>Microsoft Azure-Portal</value>
   </data>
-  <data name="Information_FunctionApp" xml:space="preserve">
-    <value>Funktions-App</value>
+  <data name="Name" xml:space="preserve">
+    <value>Name</value>
   </data>
-  <data name="Information_FunctionAppDescription" xml:space="preserve">
-    <value>Azure Functions ist eine serverlose, ereignisgesteuerte Oberfläche, die die vorhandene Azure App Service-Plattform erweitert. Diese Nanodienste können bedarfsgemäß skaliert werden, und Sie bezahlen nur für die in Anspruch genommenen Ressourcen.</value>
+  <data name="Partners" xml:space="preserve">
+    <value>Partner</value>
   </data>
-  <data name="TryFunctions" xml:space="preserve">
-    <value>Functions testen</value>
+  <data name="QuestionsSales" xml:space="preserve">
+    <value>Fragen zu Azure? Wenden Sie sich an unser Vertriebsteam.</value>
+  </data>
+  <data name="Resources" xml:space="preserve">
+    <value>Ressourcen</value>
+  </data>
+  <data name="Sales" xml:space="preserve">
+    <value>Vertrieb</value>
+  </data>
+  <data name="Samples" xml:space="preserve">
+    <value>Beispiele</value>
+  </data>
+  <data name="Solutions" xml:space="preserve">
+    <value>Projektmappen</value>
+  </data>
+  <data name="Subscription" xml:space="preserve">
+    <value>Abonnement</value>
+  </data>
+  <data name="UnitedStates" xml:space="preserve">
+    <value>Vereinigte Staaten</value>
+  </data>
+  <data name="WhyAzure" xml:space="preserve">
+    <value>Gründe für Azure</value>
+  </data>
+  <data name="YouTube" xml:space="preserve">
+    <value>YouTube</value>
+  </data>
+  <data name="AppServiceGallery" xml:space="preserve">
+    <value>App Service-Marketplace</value>
+  </data>
+  <data name="CheckoutTheGallery" xml:space="preserve">
+    <value>Erkunden Sie nach Ihrer Anmeldung beim Azure-Portal den Azure App Service-Marketplace, um weitere vorkonfigurierte Apps wie BlogEngine.NET und WordPress zu finden.</value>
+  </data>
+  <data name="Loading" xml:space="preserve">
+    <value>Wird geladen...</value>
+  </data>
+  <data name="SubmittingDeployment" xml:space="preserve">
+    <value>Bereitstellung wird übermittelt.</value>
+  </data>
+  <data name="DeployingMessage1" xml:space="preserve">
+    <value>Wir arbeiten daran...</value>
+  </data>
+  <data name="DeployingMessage2" xml:space="preserve">
+    <value>Wir haben's fast geschafft...</value>
   </data>
 </root>

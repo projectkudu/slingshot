@@ -251,7 +251,7 @@ var constants = constantsObj();
                 }
 
                 function getDeployPayload() {
-                    var dataParams = {}
+                    var dataParams = {};
                     var rg = $scope.formData.newResourceGroup;
                     $scope.formData.finalResourceGroup = rg;
 
@@ -259,7 +259,6 @@ var constants = constantsObj();
                     var locationParam = { name: "appServiceLocation", value: $scope.formData.appServiceLocation };
 
                     dataParams[nameParam.name] = { value: nameParam.value };
-                    dataParams[locationParam.name] = { value: locationParam.value };
                     rg.location = locationParam.value;
                     return {
                         parameters: dataParams,
@@ -272,6 +271,8 @@ var constants = constantsObj();
 
                 function deploy() {
                     var subscriptionId = $scope.formData.subscription.subscriptionId;
+                    $scope.formData.portalUrl = basePortalUrl;
+
                     $scope.formData.deploymentSucceeded = false;
                     telemetry.logDeploy($scope.formData.templateName);
                     $scope.formData.deployPayload = getDeployPayload($scope.formData.params);
@@ -288,6 +289,7 @@ var constants = constantsObj();
                                 telemetry.logDeployFailed('postdeployment');
                                 if (result.data != null && result.data.error != null) {
                                     $scope.formData.errorMesg = result.data.error;
+                                    $window.location.href = $scope.formData.portalUrl;
                                 }
                             });
                 }
