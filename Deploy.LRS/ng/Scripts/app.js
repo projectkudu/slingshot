@@ -55,7 +55,9 @@ var telemetryObj = function () {
                     window.mixpanel.alias(authenticatedUserId);
                 }
             }
-            window.appInsights.setAuthenticatedUserContext(authenticatedUserId, '');
+            if (typeof (window.appInsights) !== 'undefined') {
+                window.appInsights.setAuthenticatedUserContext(authenticatedUserId, '');
+            }
         }
     }
 
@@ -77,21 +79,27 @@ var telemetryObj = function () {
         }
     that.logDeploy = function (templateName) {
         var props = { templateName: templateName };
-        window.appInsights.trackEvent("LRSDeployStarted", { templateName: templateName });
+        if (typeof (window.appInsights) !== 'undefined') {
+            window.appInsights.trackEvent("LRSDeployStarted", { templateName: templateName });
+        }
         if (typeof (window.mixpanel) !== 'undefined')
             window.mixpanel.track('LRSDeployStarted', { page: window.location, properties: that.addMixPanelProperties(props), measurements: null });
     }
         
     that.logDeploySucceeded = function (templateName) {
         var props = { templateName: templateName };
-        window.appInsights.trackEvent("LRSDeploySucceeded", props);
+        if (typeof (window.appInsights) !== 'undefined') {
+            window.appInsights.trackEvent("LRSDeploySucceeded", props);
+        }
         if (typeof (window.mixpanel) !== 'undefined')
             window.mixpanel.track('LRSDeploySucceeded', { page: window.location, properties: that.addMixPanelProperties(props), measurements: null });
     }
 
     that.logDeployFailed = function (templateName) {
         var props = { templateName: templateName };
-        window.appInsights.trackEvent("LRSDeployFailed", props);
+        if (typeof (window.appInsights) !== 'undefined') {
+            window.appInsights.trackEvent("LRSDeployFailed", props);
+        }
         if (typeof (window.mixpanel) !== 'undefined')
             window.mixpanel.track('LRSDeployFailed', { page: window.location, properties: that.addMixPanelProperties(props), measurements: null });
     }
@@ -104,6 +112,7 @@ var constantsObj = function () {
     var paramsObj = function () {
         var that = {};
         that.pollingInterval = 2000;
+        that.templatePollingInterval = 3000;
         that.deployMessage1Interval = 30000;
         that.deployMessage2Interval = 60000;
         that.deployTimeoutInterval = 75000;
@@ -167,7 +176,7 @@ var constants = constantsObj();
                     return that;
                 };
 
-                var portalWebSiteFormat = "https://portal.azure.com/#resource/subscriptions/{0}/resourceGroups/{1}/providers/Microsoft.Web/sites/{2}/QuickStartSetting";
+                var portalWebSiteFormat = "https://portal.azure.com/#resource/subscriptions/{0}/resourceGroups/{1}/providers/Microsoft.Web/sites/{2}/appServices";
                 var portalRGFormat = "https://portal.azure.com/#resource/subscriptions/{0}/resourceGroups/{1}/overview";
                 var basePortalUrl = "https://portal.azure.com/";
 
@@ -294,6 +303,50 @@ var constants = constantsObj();
                             });
                 }
 
+                function getTemplateAndDeploy() {
+                    $http({
+                        method: "get",
+                        url: "api/lrstemplate",
+                        params: {
+                            "templateName": $scope.formData.templateName
+                        }
+                    })
+                    .then(function (result) {
+                        document.getElementById('loadingMessage').style.display = "none";
+                        insertMessageIfNotPresent($scope, result.data.nextStatusMessage);
+                        $scope.formData.subscription = result.data.subscription;
+                        $scope.formData.tenants = result.data.tenants;
+                        $scope.formData.templateName = result.data.templateName;
+                        $scope.formData.appServiceName = result.data.appServiceName;
+                        $scope.formData.appServiceLocation = result.data.appServiceLocation;
+                        $scope.formData.templateNameUrl = result.data.templateUrl;
+                        $scope.formData.email = result.data.email;
+                        $scope.formData.newResourceGroup = {
+                            name: result.data.resourceGroupName,
+                            location: ""
+                        };
+                        telemetry.logAuthenticatedUser($scope.formData.email);
+
+                        $scope.formData.params = [];
+                        var param = paramObject();
+
+                        param.name = "appserviceName";
+                        param.type = "string";
+                        param.value = result.data.appServiceName;
+                        param.defaultValue = result.data.appServiceName;
+
+                        $scope.formData.params.push(param);
+
+                        deploy();
+                    },
+                        function (result) {
+                            if (result.data) {
+                                $scope.formData.errorMesg = result.data.error;
+                                window.setTimeout(getTemplateAndDeploy, constants.params.templatePollingInterval, $scope, $http);
+                            }
+                        });
+                }
+
                 function initialize($scope, $http) { 
                     $scope.formData.templateName = getQueryVariable("templateName");
                     $scope.formData.statusMesgs = [];
@@ -325,46 +378,7 @@ var constants = constantsObj();
 
                     insertMessageIfNotPresent($scope, (document.getElementById('submittingMessage').innerHTML));
 
-                    $http({
-                            method: "get",
-                            url: "api/lrstemplate",
-                            params: {
-                                "templateName": $scope.formData.templateName
-                            }
-                        })
-                        .then(function (result) {
-                                document.getElementById('loadingMessage').style.display = "none";
-                                insertMessageIfNotPresent($scope, result.data.nextStatusMessage);
-                                $scope.formData.subscription = result.data.subscription;
-                                $scope.formData.tenants = result.data.tenants;
-                                $scope.formData.templateName = result.data.templateName;
-                                $scope.formData.appServiceName = result.data.appServiceName;
-                                $scope.formData.appServiceLocation = result.data.appServiceLocation;
-                                $scope.formData.templateNameUrl = result.data.templateUrl;
-                                $scope.formData.email = result.data.email;
-                                $scope.formData.newResourceGroup = {
-                                    name: result.data.resourceGroupName,
-                                    location: ""
-                                };
-                                telemetry.logAuthenticatedUser($scope.formData.email);
-
-                                $scope.formData.params = [];
-                                var param = paramObject();
-
-                                param.name = "appserviceName";
-                                param.type = "string";
-                                param.value = result.data.appServiceName;
-                                param.defaultValue = result.data.appServiceName;
-
-                                $scope.formData.params.push(param);
-
-                                deploy();
-                            },
-                            function(result) {
-                                if (result.data) {
-                                    $scope.formData.errorMesg = result.data.error;
-                                }
-                            });
+                    getTemplateAndDeploy();
                 }
 
                 initialize($scope, $http);
