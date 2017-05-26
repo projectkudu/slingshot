@@ -117,57 +117,6 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Action_AllowContact" xml:space="preserve">
-    <value>Microsoft mag contact met me opnemen over deze feedback.</value>
-  </data>
-  <data name="Action_Cancel" xml:space="preserve">
-    <value>Annuleren</value>
-  </data>
-  <data name="Action_CreateAppServiceApp" xml:space="preserve">
-    <value>Een Azure App Service-app maken</value>
-  </data>
-  <data name="Action_Delete" xml:space="preserve">
-    <value>Verwijderen</value>
-  </data>
-  <data name="Action_DownloadAppContent" xml:space="preserve">
-    <value>{0}-inhoud downloaden</value>
-  </data>
-  <data name="Action_DownloadPublishingProfile" xml:space="preserve">
-    <value>Publicatieprofiel downloaden</value>
-  </data>
-  <data name="Action_GitClone" xml:space="preserve">
-    <value>Klonen of pushen met Git</value>
-  </data>
-  <data name="Action_GoToExistingApp" xml:space="preserve">
-    <value>Naar de bestaande app gaan</value>
-  </data>
-  <data name="Action_ManageInAzurePortal" xml:space="preserve">
-    <value>Beheren in de Azure Portal</value>
-  </data>
-  <data name="Action_MobileClients" xml:space="preserve">
-    <value>Uw mobiele clientapp downloaden en uitvoeren</value>
-  </data>
-  <data name="Action_Monaco" xml:space="preserve">
-    <value>Uw code online bewerken</value>
-  </data>
-  <data name="Action_ReportAnIssue" xml:space="preserve">
-    <value>Een probleem melden</value>
-  </data>
-  <data name="Action_SelectAppType" xml:space="preserve">
-    <value>Een app-type selecteren</value>
-  </data>
-  <data name="Action_SelectTemplate" xml:space="preserve">
-    <value>Selecteer een sjabloon en maak uw eigen {0}</value>
-  </data>
-  <data name="Action_ShareAComment" xml:space="preserve">
-    <value>Een opmerking delen</value>
-  </data>
-  <data name="Action_Submit" xml:space="preserve">
-    <value>Verzenden</value>
-  </data>
-  <data name="Action_Yes" xml:space="preserve">
-    <value>Ja</value>
-  </data>
   <data name="Blog" xml:space="preserve">
     <value>Blog</value>
   </data>
@@ -192,9 +141,6 @@
   <data name="Downloads" xml:space="preserve">
     <value>Downloads</value>
   </data>
-  <data name="Error_SubmittingFeedback" xml:space="preserve">
-    <value>Er is een fout opgetreden bij het verzenden van uw feedback. Probeer het later opnieuw.</value>
-  </data>
   <data name="Events" xml:space="preserve">
     <value>Gebeurtenissen</value>
   </data>
@@ -215,120 +161,6 @@
   </data>
   <data name="GoSocial" xml:space="preserve">
     <value>Gebruik van sociale media</value>
-  </data>
-  <data name="Information_APIApp" xml:space="preserve">
-    <value>API-app</value>
-  </data>
-  <data name="Information_AppAlreadyExists" xml:space="preserve">
-    <value>U hebt al een App Service gemaakt. Wilt u die verwijderen en een nieuwe maken?</value>
-  </data>
-  <data name="Information_AppHasBeenCreated" xml:space="preserve">
-    <value>Uw {0} is gemaakt.</value>
-  </data>
-  <data name="Information_AspNetBrandingLine1" xml:space="preserve">
-    <value>Host gratis tien ASP.NET-websites met de Azure App Service</value>
-  </data>
-  <data name="Information_AspNetBrandingLine2" xml:space="preserve">
-    <value>In slechts enkele seconden beveiligd, betrouwbaar en klaar voor gebruik. Beginnen kost niets en zodra er meer verkeer komt, kunt u opschalen.</value>
-  </data>
-  <data name="Information_ComingSoon" xml:space="preserve">
-    <value>Binnenkort beschikbaar</value>
-  </data>
-  <data name="Information_DownloadClient" xml:space="preserve">
-    <value>Client downloaden</value>
-  </data>
-  <data name="Information_DownloadiOSClient" xml:space="preserve">
-    <value>De iOS-clientapp downloaden</value>
-  </data>
-  <data name="Information_DownloadWindowsClient" xml:space="preserve">
-    <value>De Windows-clientapp downloaden</value>
-  </data>
-  <data name="Information_DownloadXamarinAndroidClient" xml:space="preserve">
-    <value>De Xamarin Android-clientapp downloaden</value>
-  </data>
-  <data name="Information_DownloadXamariniOSClient" xml:space="preserve">
-    <value>De Xamarin iOS-clientapp downloaden</value>
-  </data>
-  <data name="Information_ExperienceComingSoon" xml:space="preserve">
-    <value>Er bestaat nog geen gratis versie van Azure {0}, maar u kunt wel een {0} maken door u aan te melden voor een gratis proefperiode van 30 dagen waarbij u gratis maximaal 10 apps kunt maken.</value>
-  </data>
-  <data name="Information_ExperienceNotHereYet" xml:space="preserve">
-    <value>U kunt de {0} nog niet zelf ervaren.</value>
-  </data>
-  <data name="Information_ExpireMessage" xml:space="preserve">
-    <value>Uw gratis {0} verloopt over:</value>
-  </data>
-  <data name="Information_GenericBrandingLine1" xml:space="preserve">
-    <value>Azure App Service is een app-service in de cloud waarmee alles wordt geïntegreerd dat u nodig hebt om snel en eenvoudig Web Apps en Mobile Apps te ontwikkelen voor alle platforms en apparaten.</value>
-  </data>
-  <data name="Information_GenericBrandingLine2" xml:space="preserve">
-    <value>Maak maximaal een uur gratis gebruik van de Azure App Service zonder dat u daarvoor een abonnement hoeft te nemen of u hoeft vast te leggen. Als u nog langer van de Azure App Service gebruik wilt maken, neemt u een gratis Azure-proefabonnement.</value>
-  </data>
-  <data name="Information_GoingBackWillDeleteApp" xml:space="preserve">
-    <value>Als u terugkeert, wordt de huidige app verwijderd</value>
-  </data>
-  <data name="Information_InstallVisualStudio" xml:space="preserve">
-    <value>Visual Studio Professional 2015 (update 2) installeren</value>
-  </data>
-  <data name="Information_InstallXamarinStudio" xml:space="preserve">
-    <value>Xamarin Studio voor OS X installeren</value>
-  </data>
-  <data name="Information_InstallXcode" xml:space="preserve">
-    <value>Xcode (v4.4+) installeren</value>
-  </data>
-  <data name="Information_LogicApp" xml:space="preserve">
-    <value>Logische app</value>
-  </data>
-  <data name="Information_LoginFirst" xml:space="preserve">
-    <value>Meld u aan om een app te maken</value>
-  </data>
-  <data name="Information_MobileApp" xml:space="preserve">
-    <value>Mobiele app</value>
-  </data>
-  <data name="Information_NativeiOS" xml:space="preserve">
-    <value>Systeemeigen iOS</value>
-  </data>
-  <data name="Information_SelectAppType" xml:space="preserve">
-    <value>Een app-type selecteren</value>
-  </data>
-  <data name="Information_SelectTemplate" xml:space="preserve">
-    <value>Sjabloon selecteren</value>
-  </data>
-  <data name="Information_SubmittingFeedback" xml:space="preserve">
-    <value>Feedback verzenden...</value>
-  </data>
-  <data name="Information_ThanksForFeedback" xml:space="preserve">
-    <value>Bedankt voor uw feedback.</value>
-  </data>
-  <data name="Information_VisitWebClient" xml:space="preserve">
-    <value>Naar de internetclient gaan</value>
-  </data>
-  <data name="Information_WantMoreQuestionLine1" xml:space="preserve">
-    <value>Wilt u graag meer gratis opties?</value>
-  </data>
-  <data name="Information_WantMoreQuestionLine2" xml:space="preserve">
-    <value>Maak nog meer Web Apps, Mobile Apps, Logic Apps en API Apps. Meld u aan voor een gratis proefversie van 30 dagen en maak gratis maximaal 10 apps van welk type dan ook.</value>
-  </data>
-  <data name="Information_WebApp" xml:space="preserve">
-    <value>Web-app</value>
-  </data>
-  <data name="Information_WebClient" xml:space="preserve">
-    <value>Webportal</value>
-  </data>
-  <data name="Information_Windows" xml:space="preserve">
-    <value>Universeel Windows 8.1</value>
-  </data>
-  <data name="Information_WorkWithLogicApps" xml:space="preserve">
-    <value>Als u met uw app aan de slag wilt, klikt u op de Azure Portal-koppeling hieronder. U gaat dan naar de resourceblade van logische apps.</value>
-  </data>
-  <data name="Information_WorkWithYourApp" xml:space="preserve">
-    <value>Werk hier met uw {0}: </value>
-  </data>
-  <data name="Information_XamarinAndroid" xml:space="preserve">
-    <value>Xamarin Android</value>
-  </data>
-  <data name="Information_XamariniOS" xml:space="preserve">
-    <value>Xamarin iOS</value>
   </data>
   <data name="Logout" xml:space="preserve">
     <value>Afmelden</value>
@@ -394,7 +226,7 @@
     <value>Ondersteuning</value>
   </data>
   <data name="Title" xml:space="preserve">
-    <value>De Azure App Service uitproberen</value>
+    <value>App Service in Azure implementeren</value>
   </data>
   <data name="Trademarks" xml:space="preserve">
     <value>Merkrechten</value>
@@ -405,109 +237,115 @@
   <data name="Twitter" xml:space="preserve">
     <value>Twitter</value>
   </data>
-  <data name="Information_LogicAppDescription" xml:space="preserve">
-    <value>Met logische apps van Azure kunnen ontwikkelaars werkstromen ontwerpen die na een trigger worden gestart. Vervolgens wordt een aantal stappen uitgevoerd waarbij steeds een App Service API-app wordt aangeroepen terwijl er zorgvuldig wordt gelet op de verificatie en best practices, zoals het plaatsen van controlepunten en een duurzame uitvoering.</value>
-  </data>
-  <data name="Information_LogicAppStep1" xml:space="preserve">
-    <value>1. Bekijk het overzicht; daar vindt u informatie over wanneer deze voor het laatst is uitgevoerd en of dat goed is verlopen</value>
-  </data>
-  <data name="Information_LogicAppStep2" xml:space="preserve">
-    <value>2. Open de definitie van logische apps door op het bijbehorende deel te klikken in het overzicht en de definitie te bekijken. U kunt logische apps zodanig instellen dat er altijd een tweet wordt verzonden wanneer het pingen mislukt.</value>
-  </data>
-  <data name="Templates_PingSiteDescription" xml:space="preserve">
-    <value>Dit sjabloon voor logische apps pingt een website volgens een vaste planning. U kunt ook instellen dat er, afhankelijk van het resultaat van het pingen, actie wordt ondernomen.</value>
-  </data>
-  <data name="Action_Dismiss" xml:space="preserve">
-    <value>Sluiten</value>
-  </data>
-  <data name="Information_AppHasExpired" xml:space="preserve">
-    <value>Uw {0} is verlopen. U kunt een nieuwe App Service-app maken of u aanmelden voor een gratis proefaccount dat 30 dagen kan worden gebruikt.</value>
-  </data>
-  <data name="Information_Prerequisite" xml:space="preserve">
-    <value>Vereiste</value>
-  </data>
-  <data name="Information_WelcomeFeedback" xml:space="preserve">
-    <value>We stellen uw feedback op prijs.</value>
-  </data>
-  <data name="Action_Create" xml:space="preserve">
-    <value>Maken</value>
-  </data>
-  <data name="Action_GenericWorkWithYourApp" xml:space="preserve">
-    <value>Werken met uw app</value>
-  </data>
-  <data name="Information_YouCantHaveMoreThanOne" xml:space="preserve">
-    <value>U mag maar één gratis resource tegelijk gebruiken</value>
-  </data>
-  <data name="Next" xml:space="preserve">
-    <value>Volgende</value>
-  </data>
   <data name="Previous" xml:space="preserve">
     <value>Vorige</value>
   </data>
-  <data name="Information_ApiAppDescription" xml:space="preserve">
-    <value>Er bestaat nog geen gratis versie van Azure API Apps, maar u kunt wel API Apps maken door u aan te melden voor een gratis proefperiode van 30 dagen waarbij u gratis maximaal 10 apps kunt maken.</value>
+  <data name="Account" xml:space="preserve">
+    <value>Account</value>
   </data>
-  <data name="Information_MobileAppDescription" xml:space="preserve">
-    <value>Met Azure Mobile Apps kunt u eenvoudig aanmeld-, push- en gegevenssynchronisatiefunctionaliteit toevoegen aan uw iOS-, Android- of Windows-app zodat u wereldwijd kunt schalen en uw app kunt koppelen aan het bedrijfssysteem en on-premises resources.</value>
+  <data name="AppService" xml:space="preserve">
+    <value>App Service</value>
   </data>
-  <data name="Information_WebAppDescription" xml:space="preserve">
-    <value>Met Azure Web Apps kunnen ontwikkelaars eenvoudig bedrijfswebtoepassingen implementeren en schalen die zijn geschreven in verschillende talen en die zijn geïntegreerd met meerdere services zonder zich zorgen te hoeven maken over infrastructuurbeheer.</value>
+  <data name="AzureStatusDashboard" xml:space="preserve">
+    <value>Azure Status Dashboard</value>
   </data>
-  <data name="Information_LogicAppStep3" xml:space="preserve">
-    <value>3. Voer de logische app opnieuw uit door boven aan de blade op Nu uitvoeren te klikken.</value>
+  <data name="Careers" xml:space="preserve">
+    <value>Carrières</value>
   </data>
-  <data name="Information_LogicAppStep4" xml:space="preserve">
-    <value>4. Voor meer informatie over logische apps klikt u op Snel starten. Daar vindt u koppelingen naar documentatie.</value>
+  <data name="Datacenters" xml:space="preserve">
+    <value>Datacenters</value>
   </data>
-  <data name="Information_LogicAppStepsIntro" xml:space="preserve">
-    <value>Vanaf de resourceblade van logische apps kunt u het volgende doen:</value>
+  <data name="Findalocalnumber" xml:space="preserve">
+    <value>Een lokaal nummer zoeken</value>
   </data>
-  <data name="Information_XamarinBrandingLine1" xml:space="preserve">
-    <value>Kies voor mobiel met Xamarin en Azure App Service</value>
+  <data name="Findalocalnumbersubmitquery" xml:space="preserve">
+    <value>Een lokaal nummer zoeken of een queryformulier verzenden</value>
   </data>
-  <data name="Information_XamarinBrandingLine2" xml:space="preserve">
-    <value>In enkele seconden verifiëren, synchroniseren of pushen voor elk apparaat. Begin gratis en schaal omhoog wanneer uw app groeit.</value>
+  <data name="HellofromSeattle" xml:space="preserve">
+    <value>Groeten uit Seattle.</value>
   </data>
-  <data name="Information_ExtendResourceLifeTimeText" xml:space="preserve">
-    <value>Meer tijd nodig? Klik hier om uw proefversie te verlengen tot 24 uur.</value>
+  <data name="Information_DeployingHeader" xml:space="preserve">
+    <value>Uw {0} App Service implementeren</value>
   </data>
-  <data name="Information_Android" xml:space="preserve">
-    <value>Android</value>
+  <data name="Information_DeploymentCompleted" xml:space="preserve">
+    <value>Kan app is geïmplementeerd</value>
   </data>
-  <data name="Information_DownloadAndroidClient" xml:space="preserve">
-    <value>De Android-clientapp downloaden</value>
+  <data name="Information_DeploymentFailed" xml:space="preserve">
+    <value>Kan de app niet implementeren</value>
   </data>
-  <data name="Information_DownloadWUniversalWindowsPlatformClient" xml:space="preserve">
-    <value>De UWP-client (universeel Windows-platform) downloaden</value>
+  <data name="Information_Redirecting" xml:space="preserve">
+    <value>U wordt omgeleid naar Azure Portal. Als Azure Portal niet wordt geopend </value>
   </data>
-  <data name="Information_DownloadXamarinFormsClient" xml:space="preserve">
-    <value>De Xamarin.Forms-clientapp downloaden</value>
+  <data name="Information_RedirectingClickhere" xml:space="preserve">
+    <value>klikt u hier</value>
   </data>
-  <data name="Information_UniversalWindowsPlatform" xml:space="preserve">
-    <value>Universeel Windows-platform (UWP)</value>
+  <data name="Information_RedirectingShortly" xml:space="preserve">
+    <value>De implementatie van de app is over een paar seconden voltooid, waarna u naar Azure Portal wordt geleid waar u de nieuwe App Service-app kunt verkennen.</value>
   </data>
-  <data name="Information_XamarinForms" xml:space="preserve">
-    <value>Xamarin.Forms</value>
+  <data name="Information_RedirectTakingTooLong" xml:space="preserve">
+    <value>De bewerking neemt te veel tijd in beslag. Als u toch naar Azure Portal wilt gaan </value>
   </data>
-  <data name="Information_AzurePlatformBrandingLine1" xml:space="preserve">
-    <value>Bekijk hoe snel u een Node.js-app kunt maken</value>
+  <data name="Location" xml:space="preserve">
+    <value>Locatie</value>
   </data>
-  <data name="Information_AzurePlatformBrandingLine2" xml:space="preserve">
-    <value>Azure App Service is de enige cloudservice waarin alles is geïntegreerd dat u nodig hebt om snel en eenvoudig Web Apps en Mobile Apps te maken voor elk platform of apparaat. Gebruik gegevens vanaf elke locatie en bouw vrijwel alles. Speel tot een uur gratis en zonder enige verplichtingen in de sandbox.</value>
+  <data name="MemberOffers" xml:space="preserve">
+    <value>Aanbiedingen voor leden</value>
   </data>
-  <data name="Information_InstallAndroidStudio" xml:space="preserve">
-    <value>Android Studio downloaden</value>
+  <data name="Microsoft" xml:space="preserve">
+    <value>Microsoft</value>
   </data>
-  <data name="Templates_AzureDevOpsDescription" xml:space="preserve">
-    <value>Met deze sjabloon maakt u een Azure Jenkins-oplossing voor continue integratie</value>
+  <data name="MicrosoftAzureportal" xml:space="preserve">
+    <value>Microsoft Azure-portal</value>
   </data>
-  <data name="Information_FunctionApp" xml:space="preserve">
-    <value>Functie-app</value>
+  <data name="Name" xml:space="preserve">
+    <value>Naam</value>
   </data>
-  <data name="Information_FunctionAppDescription" xml:space="preserve">
-    <value>Azure Functions is een gebeurtenisgestuurde ervaring zonder server die een uitbreiding is voor het bestaande Azure App Service-platform. Deze nano-services kunnen on-demand worden geschaald en u betaalt alleen voor de resources die u gebruikt.</value>
+  <data name="Partners" xml:space="preserve">
+    <value>Partners</value>
   </data>
-  <data name="TryFunctions" xml:space="preserve">
-    <value>Functies uitproberen</value>
+  <data name="QuestionsSales" xml:space="preserve">
+    <value>Hebt u vragen over Azure? Neem contact op met het verkoopteam.</value>
+  </data>
+  <data name="Resources" xml:space="preserve">
+    <value>Bronnen</value>
+  </data>
+  <data name="Sales" xml:space="preserve">
+    <value>Sales</value>
+  </data>
+  <data name="Samples" xml:space="preserve">
+    <value>Voorbeelden</value>
+  </data>
+  <data name="Solutions" xml:space="preserve">
+    <value>Oplossingen</value>
+  </data>
+  <data name="Subscription" xml:space="preserve">
+    <value>Abonnement</value>
+  </data>
+  <data name="UnitedStates" xml:space="preserve">
+    <value>Verenigde Staten</value>
+  </data>
+  <data name="WhyAzure" xml:space="preserve">
+    <value>Waarom Azure?</value>
+  </data>
+  <data name="YouTube" xml:space="preserve">
+    <value>YouTube</value>
+  </data>
+  <data name="AppServiceGallery" xml:space="preserve">
+    <value>App Service Marketplace</value>
+  </data>
+  <data name="CheckoutTheGallery" xml:space="preserve">
+    <value>Nadat u zich hebt aangemeld bij Azure Portal, kunt u Azure App Service Marketplace verkennen voor meer vooraf geconfigureerde apps, zoals BlogEngine.NET en WordPress</value>
+  </data>
+  <data name="Loading" xml:space="preserve">
+    <value>Laden ...</value>
+  </data>
+  <data name="SubmittingDeployment" xml:space="preserve">
+    <value>Implementatie verzenden...</value>
+  </data>
+  <data name="DeployingMessage1" xml:space="preserve">
+    <value>De bewerking wordt nog steeds uitgevoerd...</value>
+  </data>
+  <data name="DeployingMessage2" xml:space="preserve">
+    <value>Bijna klaar ...</value>
   </data>
 </root>

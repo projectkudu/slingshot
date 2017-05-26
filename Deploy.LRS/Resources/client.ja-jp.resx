@@ -117,57 +117,6 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Action_AllowContact" xml:space="preserve">
-    <value>このフィードバックに関して、Microsoft からご連絡を差し上げることに同意したものと見なされます。</value>
-  </data>
-  <data name="Action_Cancel" xml:space="preserve">
-    <value>キャンセル</value>
-  </data>
-  <data name="Action_CreateAppServiceApp" xml:space="preserve">
-    <value>Azure App Service アプリケーションの作成</value>
-  </data>
-  <data name="Action_Delete" xml:space="preserve">
-    <value>削除</value>
-  </data>
-  <data name="Action_DownloadAppContent" xml:space="preserve">
-    <value>{0} コンテンツのダウンロード</value>
-  </data>
-  <data name="Action_DownloadPublishingProfile" xml:space="preserve">
-    <value>発行プロファイルのダウンロード</value>
-  </data>
-  <data name="Action_GitClone" xml:space="preserve">
-    <value>Git による複製またはプッシュ</value>
-  </data>
-  <data name="Action_GoToExistingApp" xml:space="preserve">
-    <value>既存のアプリケーションに移動</value>
-  </data>
-  <data name="Action_ManageInAzurePortal" xml:space="preserve">
-    <value>Azure Portal での管理</value>
-  </data>
-  <data name="Action_MobileClients" xml:space="preserve">
-    <value>あなたのモバイル クライアント アプリをダウンロードして実行する</value>
-  </data>
-  <data name="Action_Monaco" xml:space="preserve">
-    <value>コードをオンラインで編集する</value>
-  </data>
-  <data name="Action_ReportAnIssue" xml:space="preserve">
-    <value>問題の報告</value>
-  </data>
-  <data name="Action_SelectAppType" xml:space="preserve">
-    <value>アプリケーションの種類の選択</value>
-  </data>
-  <data name="Action_SelectTemplate" xml:space="preserve">
-    <value>テンプレートを選択して {0} を作成する</value>
-  </data>
-  <data name="Action_ShareAComment" xml:space="preserve">
-    <value>コメントの共有</value>
-  </data>
-  <data name="Action_Submit" xml:space="preserve">
-    <value>送信</value>
-  </data>
-  <data name="Action_Yes" xml:space="preserve">
-    <value>はい</value>
-  </data>
   <data name="Blog" xml:space="preserve">
     <value>ブログ</value>
   </data>
@@ -192,9 +141,6 @@
   <data name="Downloads" xml:space="preserve">
     <value>ダウンロード</value>
   </data>
-  <data name="Error_SubmittingFeedback" xml:space="preserve">
-    <value>フィードバックの送信中にエラーが発生しました。後でもう一度実行してください。</value>
-  </data>
   <data name="Events" xml:space="preserve">
     <value>イベント</value>
   </data>
@@ -215,120 +161,6 @@
   </data>
   <data name="GoSocial" xml:space="preserve">
     <value>ソーシャル ネットワーク</value>
-  </data>
-  <data name="Information_APIApp" xml:space="preserve">
-    <value>API App</value>
-  </data>
-  <data name="Information_AppAlreadyExists" xml:space="preserve">
-    <value>既に App Service を作成しています。それを削除して、新規作成しますか?</value>
-  </data>
-  <data name="Information_AppHasBeenCreated" xml:space="preserve">
-    <value>{0} が作成されました。</value>
-  </data>
-  <data name="Information_AspNetBrandingLine1" xml:space="preserve">
-    <value>Azure App Service によって 10 個の ASP.NET Web サイトを無料でホストします</value>
-  </data>
-  <data name="Information_AspNetBrandingLine2" xml:space="preserve">
-    <value>数秒で、セキュリティ保護された信頼性の高いビジネス対応のレベルになります。初めは無料で、トラフィックの増大に応じて拡張できます。</value>
-  </data>
-  <data name="Information_ComingSoon" xml:space="preserve">
-    <value>近日中にご利用になれます</value>
-  </data>
-  <data name="Information_DownloadClient" xml:space="preserve">
-    <value>クライアントのダウンロード</value>
-  </data>
-  <data name="Information_DownloadiOSClient" xml:space="preserve">
-    <value>iOS クライアント アプリケーションのダウンロード</value>
-  </data>
-  <data name="Information_DownloadWindowsClient" xml:space="preserve">
-    <value>Windows クライアント アプリケーションのダウンロード</value>
-  </data>
-  <data name="Information_DownloadXamarinAndroidClient" xml:space="preserve">
-    <value>Xamarin Android クライアント アプリケーションのダウンロード</value>
-  </data>
-  <data name="Information_DownloadXamariniOSClient" xml:space="preserve">
-    <value>Xamarin iOS クライアント アプリケーションのダウンロード</value>
-  </data>
-  <data name="Information_ExperienceComingSoon" xml:space="preserve">
-    <value>Azure {0} の試用エクスペリエンスはまだ提供されていませんが、30 日間の無料試用版にサインアップして、{0} を作成できます。任意の種類のアプリを無料で 10 個まで作成できます。</value>
-  </data>
-  <data name="Information_ExperienceNotHereYet" xml:space="preserve">
-    <value>{0} エクスペリエンスはまだ提供されていません。</value>
-  </data>
-  <data name="Information_ExpireMessage" xml:space="preserve">
-    <value>無料の {0} が期限切れになるまでの時間:</value>
-  </data>
-  <data name="Information_GenericBrandingLine1" xml:space="preserve">
-    <value>Azure App Service は、あらゆるプラットフォームまたはデバイス用の Web およびモバイル アプリケーションをすばやく簡単に作成するために必要なすべてのものを統合するクラウド アプリケーション サービスです。</value>
-  </data>
-  <data name="Information_GenericBrandingLine2" xml:space="preserve">
-    <value>Azure サブスクリプション、料金、コミットメントのいずれも不要で、最大 1 時間の Azure App Service エクスペリエンスをゲストとしてご利用いただけます。無料評価版サブスクリプションにより、さらに長時間、Azure App Service エクスペリエンスのすべての機能をご利用いただけます。</value>
-  </data>
-  <data name="Information_GoingBackWillDeleteApp" xml:space="preserve">
-    <value>戻ると現在のアプリケーションが削除されます</value>
-  </data>
-  <data name="Information_InstallVisualStudio" xml:space="preserve">
-    <value>Visual Studio Professional 2015 (Update 2) のインストール</value>
-  </data>
-  <data name="Information_InstallXamarinStudio" xml:space="preserve">
-    <value>Xamarin Studio for OS X のインストール</value>
-  </data>
-  <data name="Information_InstallXcode" xml:space="preserve">
-    <value>Xcode (v4.4 以上) のインストール</value>
-  </data>
-  <data name="Information_LogicApp" xml:space="preserve">
-    <value>Logic App</value>
-  </data>
-  <data name="Information_LoginFirst" xml:space="preserve">
-    <value>まずログインしてアプリケーションを作成する</value>
-  </data>
-  <data name="Information_MobileApp" xml:space="preserve">
-    <value>Mobile App</value>
-  </data>
-  <data name="Information_NativeiOS" xml:space="preserve">
-    <value>ネイティブ iOS</value>
-  </data>
-  <data name="Information_SelectAppType" xml:space="preserve">
-    <value>アプリケーションの種類の選択</value>
-  </data>
-  <data name="Information_SelectTemplate" xml:space="preserve">
-    <value>テンプレートの選択</value>
-  </data>
-  <data name="Information_SubmittingFeedback" xml:space="preserve">
-    <value>フィードバックを送信しています...</value>
-  </data>
-  <data name="Information_ThanksForFeedback" xml:space="preserve">
-    <value>フィードバックをありがとうございます。</value>
-  </data>
-  <data name="Information_VisitWebClient" xml:space="preserve">
-    <value>Web ベースのクライアントへのアクセス</value>
-  </data>
-  <data name="Information_WantMoreQuestionLine1" xml:space="preserve">
-    <value>無料でもっと試しますか?</value>
-  </data>
-  <data name="Information_WantMoreQuestionLine2" xml:space="preserve">
-    <value>さらに Web、モバイル、ロジック、および API アプリケーションを作成できます。30 日間の無料の試用版にサインアップし、無料で任意の種類のアプリケーションを 10 個まで作成できます。</value>
-  </data>
-  <data name="Information_WebApp" xml:space="preserve">
-    <value>Web App</value>
-  </data>
-  <data name="Information_WebClient" xml:space="preserve">
-    <value>Web ポータル</value>
-  </data>
-  <data name="Information_Windows" xml:space="preserve">
-    <value>ユニバーサル Windows 8.1</value>
-  </data>
-  <data name="Information_WorkWithLogicApps" xml:space="preserve">
-    <value>アプリを操作するには、下の Azure Portal リンクに移動し、Logic App リソース ブレードに移動します。</value>
-  </data>
-  <data name="Information_WorkWithYourApp" xml:space="preserve">
-    <value>{0} を操作する場所 </value>
-  </data>
-  <data name="Information_XamarinAndroid" xml:space="preserve">
-    <value>Xamarin Android</value>
-  </data>
-  <data name="Information_XamariniOS" xml:space="preserve">
-    <value>Xamarin iOS</value>
   </data>
   <data name="Logout" xml:space="preserve">
     <value>ログアウト</value>
@@ -394,7 +226,7 @@
     <value>サポート</value>
   </data>
   <data name="Title" xml:space="preserve">
-    <value>Azure App Service を使ってみる</value>
+    <value>Azure に App Service をデプロイする</value>
   </data>
   <data name="Trademarks" xml:space="preserve">
     <value>商標</value>
@@ -405,109 +237,115 @@
   <data name="Twitter" xml:space="preserve">
     <value>ツイッター</value>
   </data>
-  <data name="Information_LogicAppDescription" xml:space="preserve">
-    <value>Azure Logic Apps により、開発者はトリガーから始め、認証とチェックポイント処理や永続的実行などのベスト プラクティスに安全に対処しながら、それぞれ App Service API App を呼び出す一連の手順を実行するワークフローを設計できます。</value>
-  </data>
-  <data name="Information_LogicAppStep1" xml:space="preserve">
-    <value>1. サマリー レンズを確認します。最後に実行した時とそれが成功したかどうかなどの情報を確認することができます</value>
-  </data>
-  <data name="Information_LogicAppStep2" xml:space="preserve">
-    <value>2. サマリー レンズの同じ部分をクリックして、Logic App 定義を開き、定義を確認します。ping が失敗したときにいつでも Logic App を展開して、ツイートの送信を試みることができます。</value>
-  </data>
-  <data name="Templates_PingSiteDescription" xml:space="preserve">
-    <value>この Logic App テンプレートは、定期的なスケジュールで Web サイトを ping します。ping の結果に応じて、それを拡張して、対応策を取ることができます。</value>
-  </data>
-  <data name="Action_Dismiss" xml:space="preserve">
-    <value>閉じる</value>
-  </data>
-  <data name="Information_AppHasExpired" xml:space="preserve">
-    <value>{0} の期限が切れました。別の App Service アプリを作成するか、30 日間の無料の試用アカウントにサインアップできます。</value>
-  </data>
-  <data name="Information_Prerequisite" xml:space="preserve">
-    <value>前提条件</value>
-  </data>
-  <data name="Information_WelcomeFeedback" xml:space="preserve">
-    <value>フィードバックをお待ちしております。</value>
-  </data>
-  <data name="Action_Create" xml:space="preserve">
-    <value>作成</value>
-  </data>
-  <data name="Action_GenericWorkWithYourApp" xml:space="preserve">
-    <value>アプリケーションの操作</value>
-  </data>
-  <data name="Information_YouCantHaveMoreThanOne" xml:space="preserve">
-    <value>同時に複数の無料リソースを使用することはできません</value>
-  </data>
-  <data name="Next" xml:space="preserve">
-    <value>次へ</value>
-  </data>
   <data name="Previous" xml:space="preserve">
     <value>前へ</value>
   </data>
-  <data name="Information_ApiAppDescription" xml:space="preserve">
-    <value>Azure API App の試用エクスペリエンスはまだ提供されていませんが、30 日間の無料試用版にサインアップして、API Apps を作成できます。任意の種類のアプリを無料で 10 個まで作成できます。</value>
+  <data name="Account" xml:space="preserve">
+    <value>アカウント</value>
   </data>
-  <data name="Information_MobileAppDescription" xml:space="preserve">
-    <value>Azure Mobile App により簡単に、iOS、Android、または Windows アプリにログイン、プッシュ、およびデータ同期を追加して、グローバルに拡大縮小し、アプリをエンタープライズ システムおよびオンプレミス リソースに接続できます。</value>
+  <data name="AppService" xml:space="preserve">
+    <value>App Service</value>
   </data>
-  <data name="Information_WebAppDescription" xml:space="preserve">
-    <value>Azure Web Apps により、開発者はインフラストラクチャの管理に関して心配することなく、多様な言語で作成され、多くのサービスと統合されるエンタープライズ レベルの Web アプリケーションを簡単にデプロイし、拡大縮小できます。</value>
+  <data name="AzureStatusDashboard" xml:space="preserve">
+    <value>Azure の状態ダッシュボード</value>
   </data>
-  <data name="Information_LogicAppStep3" xml:space="preserve">
-    <value>3. ブレードの上部にある [今すぐ実行] コマンドをクリックして、Logic App を再度実行します。</value>
+  <data name="Careers" xml:space="preserve">
+    <value>キャリア</value>
   </data>
-  <data name="Information_LogicAppStep4" xml:space="preserve">
-    <value>4. Logic Apps の使用方法の詳細は、[クイック スタート] をクリックすると表示される、ドキュメントへのポインターから参照してください。</value>
+  <data name="Datacenters" xml:space="preserve">
+    <value>データセンター</value>
   </data>
-  <data name="Information_LogicAppStepsIntro" xml:space="preserve">
-    <value>Logic App リソース ブレードから、次を実行できます。</value>
+  <data name="Findalocalnumber" xml:space="preserve">
+    <value>ローカルの番号を検索する</value>
   </data>
-  <data name="Information_XamarinBrandingLine1" xml:space="preserve">
-    <value>Xamarin と Azure App Service でモバイルへ移行</value>
+  <data name="Findalocalnumbersubmitquery" xml:space="preserve">
+    <value>ローカルの番号を検索するか、クエリ フォームを送信する</value>
   </data>
-  <data name="Information_XamarinBrandingLine2" xml:space="preserve">
-    <value>どのデバイスでも数秒で、認証、同期、プッシュが行えます。無料で始めて、アプリの成長に合わせて拡張できます。</value>
+  <data name="HellofromSeattle" xml:space="preserve">
+    <value>Hello from Seattle.</value>
   </data>
-  <data name="Information_ExtendResourceLifeTimeText" xml:space="preserve">
-    <value>さらに時間が必要な場合は、ここをクリックすると、試用を 24 時間に延長できます。</value>
+  <data name="Information_DeployingHeader" xml:space="preserve">
+    <value>{0} App Service をデプロイしています</value>
   </data>
-  <data name="Information_Android" xml:space="preserve">
-    <value>Android</value>
+  <data name="Information_DeploymentCompleted" xml:space="preserve">
+    <value>アプリのデプロイが完了しました</value>
   </data>
-  <data name="Information_DownloadAndroidClient" xml:space="preserve">
-    <value>Android クライアント アプリケーションのダウンロード</value>
+  <data name="Information_DeploymentFailed" xml:space="preserve">
+    <value>アプリのデプロイに失敗しました</value>
   </data>
-  <data name="Information_DownloadWUniversalWindowsPlatformClient" xml:space="preserve">
-    <value>ユニバーサル Windows プラットフォーム (UWP) クライアントのダウンロード</value>
+  <data name="Information_Redirecting" xml:space="preserve">
+    <value>Azure Portal にリダイレクトしています。Azure Portal が開かない場合には、</value>
   </data>
-  <data name="Information_DownloadXamarinFormsClient" xml:space="preserve">
-    <value>Xamarin.Forms クライアント アプリケーションのダウンロード</value>
+  <data name="Information_RedirectingClickhere" xml:space="preserve">
+    <value>ここをクリックしてください。</value>
   </data>
-  <data name="Information_UniversalWindowsPlatform" xml:space="preserve">
-    <value>ユニバーサル Windows プラットフォーム (UWP)</value>
+  <data name="Information_RedirectingShortly" xml:space="preserve">
+    <value>あと何秒かお待ちください。間もなくアプリのデプロイが完了し、Azure Portal に移動しますので、そこで新しい App Service アプリを確認できます。</value>
   </data>
-  <data name="Information_XamarinForms" xml:space="preserve">
-    <value>Xamarin.Forms</value>
+  <data name="Information_RedirectTakingTooLong" xml:space="preserve">
+    <value>処理に時間がかかりすぎているようです。Azure Portal に移動するには、</value>
   </data>
-  <data name="Information_AzurePlatformBrandingLine1" xml:space="preserve">
-    <value>どれほどすばやく Node.js アプリを作成できるか、お試しください</value>
+  <data name="Location" xml:space="preserve">
+    <value>場所</value>
   </data>
-  <data name="Information_AzurePlatformBrandingLine2" xml:space="preserve">
-    <value>Azure App Service は、あらゆるプラットフォームやデバイス向けの Web アプリとモバイル アプリをすばやく簡単に作成するために必要なものがすべて統合された、他に類を見ないクラウド サービスです。どこからでもデータを取得し、なんでも作成できます。サンドボックスを最大 1 時間、無料で使用できます。コミットメントが発生することはありません。</value>
+  <data name="MemberOffers" xml:space="preserve">
+    <value>メンバー特典</value>
   </data>
-  <data name="Information_InstallAndroidStudio" xml:space="preserve">
-    <value>Android Studio のダウンロード</value>
+  <data name="Microsoft" xml:space="preserve">
+    <value>Microsoft</value>
   </data>
-  <data name="Templates_AzureDevOpsDescription" xml:space="preserve">
-    <value>このテンプレートでは、Azure Jenkins CI を作成します</value>
+  <data name="MicrosoftAzureportal" xml:space="preserve">
+    <value>Microsoft Azure Portal</value>
   </data>
-  <data name="Information_FunctionApp" xml:space="preserve">
-    <value>Function App</value>
+  <data name="Name" xml:space="preserve">
+    <value>名前</value>
   </data>
-  <data name="Information_FunctionAppDescription" xml:space="preserve">
-    <value>Azure Functions は、サーバーなしのイベント駆動型エクスペリエンスで、既存の Azure App Service プラットフォームを拡張するものです。これらのナノサービスは、需要に応じて規模を調節でき、消費したリソースのみ支払いが発生します。</value>
+  <data name="Partners" xml:space="preserve">
+    <value>パートナー</value>
   </data>
-  <data name="TryFunctions" xml:space="preserve">
-    <value>Functions を試す</value>
+  <data name="QuestionsSales" xml:space="preserve">
+    <value>Azure に関する質問は、セールス チームまでお問い合わせください。</value>
+  </data>
+  <data name="Resources" xml:space="preserve">
+    <value>リソース</value>
+  </data>
+  <data name="Sales" xml:space="preserve">
+    <value>営業</value>
+  </data>
+  <data name="Samples" xml:space="preserve">
+    <value>サンプル</value>
+  </data>
+  <data name="Solutions" xml:space="preserve">
+    <value>ソリューション</value>
+  </data>
+  <data name="Subscription" xml:space="preserve">
+    <value>サブスクリプション</value>
+  </data>
+  <data name="UnitedStates" xml:space="preserve">
+    <value>アメリカ合衆国</value>
+  </data>
+  <data name="WhyAzure" xml:space="preserve">
+    <value>Azure を選ぶ理由</value>
+  </data>
+  <data name="YouTube" xml:space="preserve">
+    <value>YouTube</value>
+  </data>
+  <data name="AppServiceGallery" xml:space="preserve">
+    <value>App Service Marketplace</value>
+  </data>
+  <data name="CheckoutTheGallery" xml:space="preserve">
+    <value>Azure Portal にログインしたら、Azure App Service Marketplace をご覧ください。BlogEngine.NET や WordPress など、事前に構成済みのアプリが多数見つかります</value>
+  </data>
+  <data name="Loading" xml:space="preserve">
+    <value>読み込み中...</value>
+  </data>
+  <data name="SubmittingDeployment" xml:space="preserve">
+    <value>デプロイを送信しています</value>
+  </data>
+  <data name="DeployingMessage1" xml:space="preserve">
+    <value>操作がまだ進行中です...</value>
+  </data>
+  <data name="DeployingMessage2" xml:space="preserve">
+    <value>もう少しで終了します...</value>
   </data>
 </root>

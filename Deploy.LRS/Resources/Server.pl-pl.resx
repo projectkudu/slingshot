@@ -117,11 +117,38 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="ARMTemplate_AppPostfix" xml:space="preserve">
+    <value>Aplikacja</value>
+  </data>
+  <data name="ARMTemplate_MyPrefix" xml:space="preserve">
+    <value>Moje</value>
+  </data>
+  <data name="Deployment_CreatingWebApp" xml:space="preserve">
+    <value>Tworzenie aplikacji sieci Web</value>
+  </data>
+  <data name="Deployment_CreatingWebHostingPlan" xml:space="preserve">
+    <value>Tworzenie planu hostingu w sieci Web</value>
+  </data>
   <data name="Deployment_DeploymentInProgress" xml:space="preserve">
     <value>Wdrażanie jest w toku.</value>
   </data>
+  <data name="Deployment_DeploymentStarted" xml:space="preserve">
+    <value>Rozpoczęto wdrażanie</value>
+  </data>
   <data name="Deployment_GitDeploymentInProgress" xml:space="preserve">
     <value>Wdrażanie Git jest w toku.</value>
+  </data>
+  <data name="Deployment_SettingupSourceControl" xml:space="preserve">
+    <value>Konfigurowanie kontroli źródła</value>
+  </data>
+  <data name="Deployment_SubmittingDeployment" xml:space="preserve">
+    <value>Przesyłanie wdrożenia</value>
+  </data>
+  <data name="Deployment_Updating" xml:space="preserve">
+    <value>Aktualizowanie</value>
+  </data>
+  <data name="Deployment_UpdatingWebAppConfig" xml:space="preserve">
+    <value>Aktualizowanie konfiguracji aplikacji sieci Web</value>
   </data>
   <data name="Error_GeneralErrorMessage" xml:space="preserve">
     <value>Wystąpił błąd. Spróbuj ponownie później.</value>
@@ -138,34 +165,10 @@
   <data name="Error_InvalidUserIdentity" xml:space="preserve">
     <value>Nieprawidłowy użytkownik.</value>
   </data>
-  <data name="Error_MoreThanOneFreeResource" xml:space="preserve">
-    <value>Nie możesz mieć więcej niż jednego bezpłatnego zasobu naraz.</value>
-  </data>
-  <data name="Error_NoFreeResourcesAvailable" xml:space="preserve">
-    <value>Obecnie brak jest dostępnych bezpłatnych zasobów. Spróbuj ponownie później.</value>
-  </data>
   <data name="Error_OrgIdNotSupported" xml:space="preserve">
     <value>Konta organizacyjne nie są obsługiwane. Użyj konta Microsoft.</value>
   </data>
-  <data name="Error_ResourceExpirationTimeAlreadyExtended" xml:space="preserve">
-    <value>Czas wygaśnięcia zasobu był już wydłużany wcześniej. Dla każdego zasobu czas wygaśnięcia można wydłużyć tylko raz.</value>
-  </data>
   <data name="Error_UnsupportedPlatform" xml:space="preserve">
     <value>Nieobsługiwana platforma.</value>
-  </data>
-  <data name="Templates_FieldEngineerDescription" xml:space="preserve">
-    <value>Aplikacja mobilnego pulpitu nawigacyjnego dla techników w firmie dostarczającej telewizję kablową i dla wszystkich innych pracowników pracujących w terenie, dostępna dla platformy Xamarin Forms. Pełny przykład można znaleźć pod adresem &lt;a href="https://github.com/azure/fieldengineer/" target="_blank"&gt;https://github.com/azure/fieldengineer/&lt;/a&gt;.</value>
-  </data>
-  <data name="Templates_JenkinsDescription" xml:space="preserve">
-    <value>Za pomocą tego szablonu zostanie utworzone rozwiązanie ciągłej integracji (CI) Azure Jenkins</value>
-  </data>
-  <data name="Templates_PingSiteDescription" xml:space="preserve">
-    <value>Szablon aplikacji logiki będzie cyklicznie badać witrynę internetową za pomocą polecenia ping. Możesz go tak rozszerzyć, aby podejmować działanie na podstawie wyniku polecenia ping.</value>
-  </data>
-  <data name="Templates_TodoListDescription" xml:space="preserve">
-    <value>To jest prosta aplikacja z listą rzeczy do zrobienia, dostępna dla systemów iOS i Android oraz platform Xamarin i HTML/JS.</value>
-  </data>
-  <data name="Templates_XamarinCrmDescription" xml:space="preserve">
-    <value>Aplikacja CRM mobilnego pulpitu nawigacyjnego sprzedaży, dostępna dla platformy Xamarin Forms. Pełny przykład można znaleźć pod adresem &lt;a href="https://github.com/xamarin/app-crm/" target="_blank"&gt;https://github.com/xamarin/app-crm/&lt;/a&gt;.</value>
   </data>
 </root>

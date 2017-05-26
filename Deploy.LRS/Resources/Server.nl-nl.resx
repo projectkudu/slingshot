@@ -117,11 +117,38 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="ARMTemplate_AppPostfix" xml:space="preserve">
+    <value>App</value>
+  </data>
+  <data name="ARMTemplate_MyPrefix" xml:space="preserve">
+    <value>Mijn</value>
+  </data>
+  <data name="Deployment_CreatingWebApp" xml:space="preserve">
+    <value>Web-app maken...</value>
+  </data>
+  <data name="Deployment_CreatingWebHostingPlan" xml:space="preserve">
+    <value>Webhostingabonnement maken...</value>
+  </data>
   <data name="Deployment_DeploymentInProgress" xml:space="preserve">
     <value>De implementatie wordt uitgevoerd.</value>
   </data>
+  <data name="Deployment_DeploymentStarted" xml:space="preserve">
+    <value>De implementatie is gestart</value>
+  </data>
   <data name="Deployment_GitDeploymentInProgress" xml:space="preserve">
     <value>De Git-implementatie wordt uitgevoerd.</value>
+  </data>
+  <data name="Deployment_SettingupSourceControl" xml:space="preserve">
+    <value>Broncodebeheer instellen...</value>
+  </data>
+  <data name="Deployment_SubmittingDeployment" xml:space="preserve">
+    <value>Implementatie verzenden...</value>
+  </data>
+  <data name="Deployment_Updating" xml:space="preserve">
+    <value>Bijwerken</value>
+  </data>
+  <data name="Deployment_UpdatingWebAppConfig" xml:space="preserve">
+    <value>Configuratie van de web-app bijwerken...</value>
   </data>
   <data name="Error_GeneralErrorMessage" xml:space="preserve">
     <value>Er is een fout opgetreden. Probeer het later opnieuw.</value>
@@ -138,34 +165,10 @@
   <data name="Error_InvalidUserIdentity" xml:space="preserve">
     <value>Ongeldige gebruiker.</value>
   </data>
-  <data name="Error_MoreThanOneFreeResource" xml:space="preserve">
-    <value>U mag maar één gratis resource tegelijk gebruiken.</value>
-  </data>
-  <data name="Error_NoFreeResourcesAvailable" xml:space="preserve">
-    <value>Er zijn momenteel geen gratis resources beschikbaar. Probeer het later opnieuw.</value>
-  </data>
   <data name="Error_OrgIdNotSupported" xml:space="preserve">
     <value>Organisatieaccounts worden niet ondersteund. Gebruik een Microsoft-account.</value>
   </data>
-  <data name="Error_ResourceExpirationTimeAlreadyExtended" xml:space="preserve">
-    <value>De vervaltijd van de resource is al eerder verlengd. U kunt de vervaltijd slechts één keer verlengen voor een resource.</value>
-  </data>
   <data name="Error_UnsupportedPlatform" xml:space="preserve">
     <value>Niet-ondersteund platform.</value>
-  </data>
-  <data name="Templates_FieldEngineerDescription" xml:space="preserve">
-    <value>Een mobiele dashboard-app voor een technicus van een kabelbedrijf of andere mobiele werknemers beschikbaar voor Xamarin Forms. Het volledige voorbeeld is beschikbaar op &lt;a href="https://github.com/azure/fieldengineer/" target="_blank"&gt;https://github.com/azure/fieldengineer/&lt;/a&gt;.</value>
-  </data>
-  <data name="Templates_JenkinsDescription" xml:space="preserve">
-    <value>Met deze sjabloon maakt u een Azure Jenkins-oplossing voor continue integratie</value>
-  </data>
-  <data name="Templates_PingSiteDescription" xml:space="preserve">
-    <value>Dit sjabloon voor logische apps pingt een website volgens een vaste planning. U kunt ook instellen dat er, afhankelijk van het resultaat van het pingen, actie wordt ondernomen.</value>
-  </data>
-  <data name="Templates_TodoListDescription" xml:space="preserve">
-    <value>Dit een eenvoudige app voor takenlijstjes, beschikbaar voor iOS, Android, Xamarin en HTML/JS.</value>
-  </data>
-  <data name="Templates_XamarinCrmDescription" xml:space="preserve">
-    <value>Een CRM-app met een mobiele verkoopdashboard, beschikbaar voor Xamarin Forms. Het volledige voorbeeld is beschikbaar op &lt;a href="https://github.com/xamarin/app-crm/" target="_blank"&gt;https://github.com/xamarin/app-crm/&lt;/a&gt;.</value>
   </data>
 </root>

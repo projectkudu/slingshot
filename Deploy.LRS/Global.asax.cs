@@ -6,6 +6,7 @@ using System.Web;
 using System.Web.Http;
 //using System.Web.Optimization;
 using System.Web.Routing;
+using Deploy.Concrete;
 
 namespace Deploy
 {
@@ -24,6 +25,5 @@ namespace Deploy
             GlobalizationManager.SetCurrentCulture(context);
 
         }
-
     }
 }

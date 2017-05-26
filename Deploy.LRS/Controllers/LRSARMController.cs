@@ -21,6 +21,7 @@ using Deploy.Concrete;
 using Deploy.Helpers;
 using Deploy.Models;
 using Deploy.Resources;
+using Newtonsoft.Json;
 
 namespace Deploy.Controllers
 {
@@ -89,6 +90,7 @@ namespace Deploy.Controllers
         [HttpPost]
         public async Task<HttpResponseMessage> Deploy(DeployInputs inputs)
         {
+            Telemetry.LogEvent("DeploymentPOSTed", new Dictionary<string, string>() { { "inputs", JsonConvert.SerializeObject(inputs)} });
             CreateDeploymentResponse responseObj = new CreateDeploymentResponse();
             HttpResponseMessage response = null;
 
@@ -96,13 +98,15 @@ namespace Deploy.Controllers
             {
                 using (var client = GetRMClient(inputs.subscriptionId))
                 {
+                    Telemetry.LogEvent("RegisteringProviders", new Dictionary<string, string>() { { "SubscriptionId", inputs.subscriptionId } });
                     await RegisterProviders(client);
+                    Telemetry.LogEvent("CreatingRG", new Dictionary<string, string>() { { "name", inputs.resourceGroup.name} , { "location", inputs.resourceGroup.location } });
                     await client.ResourceGroups.CreateOrUpdateAsync(
                         inputs.resourceGroup.name,
                         new ResourceGroup { Location = inputs.resourceGroup.location });
-
+                    Telemetry.LogEvent("GetDeploymentPayload", new Dictionary<string, string>() { { "name", inputs.resourceGroup.name }, { "location", inputs.resourceGroup.location } });
                     Deployment basicDeployment = await this.GetDeploymentPayload(inputs);
-
+                    Telemetry.LogEvent("DeployingPayload", new Dictionary<string, string>() { { "name", ""} });
                     await client.Deployments.CreateOrUpdateAsync(
                         inputs.resourceGroup.name,
                         inputs.resourceGroup.name,
@@ -212,6 +216,9 @@ namespace Deploy.Controllers
             await Task.WhenAll(subscriptionTask);
 
             var subscription = subscriptionTask.Result.Where(s => s.state == "Enabled").OrderBy(s => s.displayName).ToArray().FirstOrDefault();
+            if (subscription ==null)
+                throw new Exception($"No subscription was returned. templateName:{templateName}, token: {token}");
+
             var email = GetHeaderValue(Constants.Headers.X_MS_CLIENT_PRINCIPAL_NAME);
             var userDisplayName = GetHeaderValue(Constants.Headers.X_MS_CLIENT_DISPLAY_NAME) ?? email;
             returnObj["email"] = email;
