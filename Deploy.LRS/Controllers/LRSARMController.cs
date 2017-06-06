@@ -22,6 +22,7 @@ using Deploy.Helpers;
 using Deploy.Models;
 using Deploy.Resources;
 using Newtonsoft.Json;
+using Deploy.Modules;
 
 namespace Deploy.Controllers
 {
@@ -203,10 +204,10 @@ namespace Deploy.Controllers
 
         [Authorize]
         [HttpGet]
-        public async Task<HttpResponseMessage> GetTemplate(string templateName)
+        public async Task<HttpResponseMessage> GetTemplate(string templateName, int attempt = 1)
         {
             templateName = HttpUtility.UrlDecode(templateName);
-            Telemetry.LogEvent("GetTemplate", new Dictionary<string, string>() { { "templateName", templateName } });
+            Telemetry.LogEvent("GetTemplate", new Dictionary<string, string>() { { "templateName", templateName }, { "attempt", attempt.ToString() } }, new Dictionary<string, double>() { { "attempt", attempt } });
             HttpResponseMessage response = null;
             JObject returnObj = new JObject();
             string token = GetTokenFromHeader();
@@ -216,8 +217,17 @@ namespace Deploy.Controllers
             await Task.WhenAll(subscriptionTask);
 
             var subscription = subscriptionTask.Result.Where(s => s.state == "Enabled").OrderBy(s => s.displayName).ToArray().FirstOrDefault();
-            if (subscription ==null)
-                throw new Exception($"No subscription was returned. templateName:{templateName}, token: {token}");
+            if (subscription == null)
+            //redirect to refresh the token
+            {
+                Telemetry.LogEvent("RedirectNoSubs", new Dictionary<string, string>() { { "templateName", templateName }, { "attempt", attempt.ToString() } }, new Dictionary<string, double>() { { "attempt", attempt } });
+                await Task.Delay(TimeSpan.FromSeconds(Math.Exp(attempt % 3)));
+                var application = HttpContext.Current.ApplicationInstance as HttpApplication;
+                ARMOAuthModule.RemoveSessionCookie(application);
+                var loginUrl = ARMOAuthModule.GetTryReLoginUrl(application, templateName,attempt);
+                response = Request.CreateResponse(HttpStatusCode.NotAcceptable, loginUrl);
+                return response;
+            }
 
             var email = GetHeaderValue(Constants.Headers.X_MS_CLIENT_PRINCIPAL_NAME);
             var userDisplayName = GetHeaderValue(Constants.Headers.X_MS_CLIENT_DISPLAY_NAME) ?? email;

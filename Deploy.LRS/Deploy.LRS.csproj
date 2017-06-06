@@ -32,6 +32,7 @@
     <UseGlobalApplicationHostFile />
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <ApplicationInsightsAnnotationResourceId>/subscriptions/42dd9e47-0678-4332-b469-370f5640d0cc/resourcegroups/Default-ApplicationInsights-CentralUS/providers/microsoft.insights/components/Slingshot.Api</ApplicationInsightsAnnotationResourceId>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -317,6 +318,9 @@
       <Project>{37603203-843e-469d-9186-137533d4da33}</Project>
       <Name>Slingshot.Api</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

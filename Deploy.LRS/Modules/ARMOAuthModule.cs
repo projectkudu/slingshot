@@ -1,5 +1,4 @@
-﻿using Deploy.Modules;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IdentityModel.Selectors;
@@ -159,7 +158,36 @@ namespace Deploy.Modules
 
             return strb.ToString();
         }
+        public static string GetTryReLoginUrl(HttpApplication application, string templateName, int attempt, string tenantId = null, string state = null)
+        {
+            const string scope = "user_impersonation openid";
+            const string site_id = "500879";
 
+            var config = OpenIdConfiguration.Current;
+            var request = application.Context.Request;
+            var response_type = "id_token code";
+            var issuerAddress = config.GetAuthorizationEndpoint(tenantId);
+            //var redirect_uri = request.Url.GetLeftPart(UriPartial.Authority);
+            var redirect_uri = request.UrlReferrer ?? new Uri($"https://deploy.azure.com/try/?templateName={templateName}&attempt={attempt}");
+            var client_id = AADClientId;
+            var nonce = GenerateNonce();
+            var response_mode = "form_post";
+
+            StringBuilder strb = new StringBuilder();
+            strb.Append(issuerAddress);
+            strb.AppendFormat("?response_type={0}", WebUtility.UrlEncode(response_type));
+            strb.AppendFormat("&redirect_uri={0}", WebUtility.UrlEncode(redirect_uri.ToString()));
+            strb.AppendFormat("&client_id={0}", WebUtility.UrlEncode(client_id));
+            strb.AppendFormat("&resource={0}", WebUtility.UrlEncode(ManagementResource));
+            strb.AppendFormat("&scope={0}", WebUtility.UrlEncode(scope));
+            strb.AppendFormat("&nonce={0}", WebUtility.UrlEncode(nonce));
+            strb.AppendFormat("&site_id={0}", WebUtility.UrlEncode(site_id));
+            strb.AppendFormat("&response_mode={0}", WebUtility.UrlEncode(response_mode));
+            //strb.AppendFormat("&state={0}", WebUtility.UrlEncode(state ?? request.Url.PathAndQuery));
+            strb.AppendFormat("&state={0}", WebUtility.UrlEncode(state ?? request.Url.Query));
+
+            return strb.ToString();
+        }
         public static string GetLogoutUrl(HttpApplication application)
         {
             var config = OpenIdConfiguration.Current;
