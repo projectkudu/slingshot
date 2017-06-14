@@ -308,7 +308,8 @@ var constants = constantsObj();
                         method: "get",
                         url: "api/lrstemplate",
                         params: {
-                            "templateName": $scope.formData.templateName
+                            "templateName": $scope.formData.templateName,
+                            "attempt": $scope.formData.attempt 
                         }
                     })
                     .then(function (result) {
@@ -340,8 +341,13 @@ var constants = constantsObj();
                         deploy();
                     },
                         function (result) {
+
+                            $scope.formData.errorMesg = result.data.error;
                             if (result.data) {
-                                $scope.formData.errorMesg = result.data.error;
+                                if (result.status == 406)
+                                {
+                                    $window.location.href = result.data;
+                                }
                                 window.setTimeout(getTemplateAndDeploy, constants.params.templatePollingInterval, $scope, $http);
                             }
                         });
@@ -349,6 +355,11 @@ var constants = constantsObj();
 
                 function initialize($scope, $http) { 
                     $scope.formData.templateName = getQueryVariable("templateName");
+                    var attempt = -1;
+                    var queryAttemptValue = parseInt(getQueryVariable("attempt")) || 0;
+                    attempt = queryAttemptValue + 1;
+
+                    $scope.formData.attempt = attempt;
                     $scope.formData.statusMesgs = [];
                     insertMessageIfNotPresent($scope, (document.getElementById('submittingMessage').innerHTML));
 
@@ -377,8 +388,12 @@ var constants = constantsObj();
                     $scope.formData.statusMesgs = [];
 
                     insertMessageIfNotPresent($scope, (document.getElementById('submittingMessage').innerHTML));
-
-                    getTemplateAndDeploy();
+                    if ($scope.formData.attempt <= 3) {
+                        getTemplateAndDeploy();
+                    } else if ($scope.formData.attempt > 3) {
+                        telemetry.logDeployFailed('unabletogetsubs');
+                        $window.location.href = "https://portal.azure.com";
+                    }
                 }
 
                 initialize($scope, $http);
