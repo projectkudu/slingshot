@@ -4,12 +4,12 @@ SlingShot is a service that enable one click deploy your web app from your repos
 
 All you need to do is place below markdown to your README.md file.
 ````
-[![Deploy to Azure](http://azuredeploy.net/deploybutton.svg)](https://azuredeploy.net/)
+[![Deploy to Azure](https://azuredeploy.net/deploybutton.svg)](https://azuredeploy.net/)
 ````
 or HTML if you like
 ````
 <a href="https://azuredeploy.net/" target="_blank">
-    <img src="http://azuredeploy.net/deploybutton.svg"/>
+    <img src="https://azuredeploy.net/deploybutton.svg"/>
 </a>
 ````
 
@@ -23,13 +23,13 @@ Github (public repository only)
   * Query string "ptmpl" : any public url pointing to parameter json file or relative path from current repository
 
 ````
-[![Deploy to Azure](http://azuredeploy.net/deploybutton.svg)](https://deploy.azure.com/?repository={your repo url}?ptmpl={url to paramter json file or relative path from current repo})
+[![Deploy to Azure](https://azuredeploy.net/deploybutton.svg)](https://deploy.azure.com/?repository={your repo url}?ptmpl={url to paramter json file or relative path from current repo})
 
 e.g
 
-[![Deploy to Azure](http://azuredeploy.net/deploybutton.svg)](https://deploy.azure.com/?repository=https://github.com/shrimpy/ArmParamterTemplateTest?ptmpl=https://raw.githubusercontent.com/shrimpy/ArmParamterTemplateTest/master/parameters.azuredeploy.json)
+[![Deploy to Azure](https://azuredeploy.net/deploybutton.svg)](https://deploy.azure.com/?repository=https://github.com/shrimpy/ArmParamterTemplateTest?ptmpl=https://raw.githubusercontent.com/shrimpy/ArmParamterTemplateTest/master/parameters.azuredeploy.json)
 
-[![Deploy to Azure](http://azuredeploy.net/deploybutton.svg)](https://deploy.azure.com/?repository=https://github.com/shrimpy/ArmParamterTemplateTest?ptmpl=parameters.azuredeploy.json)
+[![Deploy to Azure](https://azuredeploy.net/deploybutton.svg)](https://deploy.azure.com/?repository=https://github.com/shrimpy/ArmParamterTemplateTest?ptmpl=parameters.azuredeploy.json)
 ````
 
 Bitbucket (public and private repository)
@@ -39,41 +39,41 @@ Bitbucket (public and private repository)
 
 ````
 
-[![Deploy to Azure](http://azuredeploy.net/deploybutton.svg)](https://deploy.azure.com/?repository={your repo url}?ptmpl={url to paramter json file or relative path from current repo})
+[![Deploy to Azure](https://azuredeploy.net/deploybutton.svg)](https://deploy.azure.com/?repository={your repo url}?ptmpl={url to paramter json file or relative path from current repo})
 
 e.g 
 
-[![Deploy to Azure](http://azuredeploy.net/deploybutton.svg)](https://localhost:44300/?repository=https://bitbucket.org/shrimpywu/armparametertemplatetest?ptmpl=https://bitbucket.org/shrimpywu/armparametertemplatetest/raw/master/parameters.azuredeploy.json)
+[![Deploy to Azure](https://azuredeploy.net/deploybutton.svg)](https://localhost:44300/?repository=https://bitbucket.org/shrimpywu/armparametertemplatetest?ptmpl=https://bitbucket.org/shrimpywu/armparametertemplatetest/raw/master/parameters.azuredeploy.json)
 
-[![Deploy to Azure](http://azuredeploy.net/deploybutton.svg)](https://localhost:44300/?repository=https://bitbucket.org/shrimpywu/armparametertemplatetest?ptmpl=parameters.azuredeploy.json)
+[![Deploy to Azure](https://azuredeploy.net/deploybutton.svg)](https://localhost:44300/?repository=https://bitbucket.org/shrimpywu/armparametertemplatetest?ptmpl=parameters.azuredeploy.json)
 ````
 
  * Deploy from a pull request
   * Query string "pr" : pull request id
 
 ````
-[![Deploy to Azure](http://azuredeploy.net/deploybutton.svg)](https://localhost:44300/?repository={repository url}?pr={pull request id})
+[![Deploy to Azure](https://azuredeploy.net/deploybutton.svg)](https://localhost:44300/?repository={repository url}?pr={pull request id})
 
 e.g
 
-[![Deploy to Azure](http://azuredeploy.net/deploybutton.svg)](https://localhost:44300/?repository=https://bitbucket.org/shrimpywu/armparametertemplatetest?pr=1)
+[![Deploy to Azure](https://azuredeploy.net/deploybutton.svg)](https://localhost:44300/?repository=https://bitbucket.org/shrimpywu/armparametertemplatetest?pr=1)
 ````
 
  * Enable continues deployment
   * Query string "manual" : true/false, default is false. Require single-sign-on with Azure.
 
 ````
-[![Deploy to Azure](http://azuredeploy.net/deploybutton.svg)](https://localhost:44300/?repository={repository url}?manual={true/false})
+[![Deploy to Azure](https://azuredeploy.net/deploybutton.svg)](https://localhost:44300/?repository={repository url}?manual={true/false})
 
 e.g
 
-[![Deploy to Azure](http://azuredeploy.net/deploybutton.svg)](https://localhost:44300/?repository=https://bitbucket.org/shrimpywu/armparametertemplatetest?manual=true)
+[![Deploy to Azure](https://azuredeploy.net/deploybutton.svg)](https://localhost:44300/?repository=https://bitbucket.org/shrimpywu/armparametertemplatetest?manual=true)
 ````
 
 - Combine query strings
 
 ````
-[![Deploy to Azure](http://azuredeploy.net/deploybutton.svg)](https://localhost:44300/?repository=https://bitbucket.org/shrimpywu/armparametertemplatetest?ptmpl=https://bitbucket.org/shrimpywu/armparametertemplatetest/raw/master/parameters.azuredeploy.json&pr=1)
+[![Deploy to Azure](https://azuredeploy.net/deploybutton.svg)](https://localhost:44300/?repository=https://bitbucket.org/shrimpywu/armparametertemplatetest?ptmpl=https://bitbucket.org/shrimpywu/armparametertemplatetest/raw/master/parameters.azuredeploy.json&pr=1)
 ````
 
 Instructions for how to run SlingShot locally
