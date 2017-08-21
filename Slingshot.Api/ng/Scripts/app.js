@@ -280,7 +280,10 @@ function IsSiteLocationParam(paramName) {
                 $scope.formData.requireOAuth = isRequireOAuth();
 
                 $scope.performOAuth = function () {
-                    var encodedRepoUrl = encodeURIComponent(sessionStorage.repositoryUrl)
+
+                    var repoUrl = sessionStorage.repositoryUrl && sessionStorage.repositoryUrl.split('?')[0];
+                    var encodedRepoUrl = encodeURIComponent(repoUrl);
+
                     // FOR TESTING:
                     // window.location.assign("https://portal.azure.com/?feature.canmodifyextensions=true&websitesextension_sslink=https%3A%2F%2Fdeploy.azure.com%2F%3Frepository%3D" + encodedRepoUrl + "#blade/WebsitesExtension/SetupOAuthBlade/internal_bladeCallId/3/internal_bladeCallerParams/{\"initialData\":{\"v\":{\"userName\":{\"t\":1,\"v\":\"\"},\"organizations\":{\"t\":1,\"v\":\"\"},\"providerType\":{\"t\":1,\"v\":12},\"oAuthUrl\":{\"t\":1,\"v\":\"\"},\"oAuthSetupToken\":{\"t\":1,\"v\":\"\"},\"oAuthSetupTokenSecret\":{\"t\":1,\"v\":\"\"},\"oAuthSetupRefreshToken\":{\"t\":1,\"v\":\"\"},\"folders\":{\"t\":1,\"v\":\"\"},\"siteName\":{\"t\":1,\"v\":\"\"}},\"#fxSerialized#\":true},\"providerConfig\":null}/internal_bladeCallerResult/undefined");
                     // REAL:
