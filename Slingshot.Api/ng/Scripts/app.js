@@ -281,7 +281,7 @@ function IsSiteLocationParam(paramName) {
 
                 $scope.performOAuth = function () {
 
-                    var repoUrl = sessionStorage.repositoryUrl && sessionStorage.repositoryUrl.split('?')[0];
+                    var repoUrl = sessionStorage.repositoryUrl && decodeURIComponent(sessionStorage.repositoryUrl).split('?')[0];
                     var encodedRepoUrl = encodeURIComponent(repoUrl);
 
                     // FOR TESTING:
