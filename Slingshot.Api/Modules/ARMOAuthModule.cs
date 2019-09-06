@@ -125,6 +125,23 @@ namespace Slingshot.Modules
                 return;
             }
 
+            var requestHost = HttpContext.Current.Request.UrlReferrer != null ? HttpContext.Current.Request.UrlReferrer.Host : null;
+            if(requestHost != null)
+            {
+                // For Azure scenarios we do extra checks for cross domains
+                if (!string.IsNullOrEmpty(Environment.GetEnvironmentVariable("WEBSITE_HOSTNAME")))
+                {
+                    if(!string.Equals(requestHost, "deploy.azure.com", StringComparison.OrdinalIgnoreCase) &&
+                        !string.Equals(requestHost,"deploy-staging.azure.com", StringComparison.OrdinalIgnoreCase))
+                    {
+                        response.StatusCode = 400;
+                        response.Write("Invalid request domain");
+                        return;
+                    }
+                }
+            }
+
+
             HttpContext.Current.User = principal;
             Thread.CurrentPrincipal = principal;
         }
