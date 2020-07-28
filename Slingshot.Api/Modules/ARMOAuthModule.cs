@@ -139,7 +139,7 @@ namespace Slingshot.Modules
             var response_type = "id_token code";
             var issuerAddress = config.GetAuthorizationEndpoint(tenantId);
             //var redirect_uri = request.Url.GetLeftPart(UriPartial.Authority);
-            var redirect_uri = request.Url.ToString();
+            var redirect_uri = new Uri(request.Url, request.RawUrl).ToString();
             var client_id = AADClientId;
             var nonce = GenerateNonce();
             var response_mode = "form_post";
